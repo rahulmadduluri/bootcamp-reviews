@@ -1,0 +1,18 @@
+type School {
+  id: ID!
+  name: String!
+}
+
+type Occupation {
+  id: ID!
+  name: String!
+}
+
+type Query {
+  school(uuid: ID!): School
+  occupation(uuid: ID!): Occupation
+}
+
+# type Mutation {
+#   # createSchool(input: NewSchool!): School!
+# }
