@@ -43,9 +43,9 @@ func main() {
 	// Set up Router to route to landing page & playground
 	r := mux.NewRouter()
 	r.HandleFunc("/", landingPage)
-	r.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(http.Dir("../web/js"))))
-	r.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("../web/css"))))
-	r.PathPrefix("/img/").Handler(http.StripPrefix("/img/", http.FileServer(http.Dir("../web/img"))))
+	r.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(http.Dir("../../web/js"))))
+	r.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("../../web/css"))))
+	r.PathPrefix("/img/").Handler(http.StripPrefix("/img/", http.FileServer(http.Dir("../../web/img"))))
 	if auth.IsEnvPlayground() == true {
 		r.HandleFunc("/playground", handler.Playground("GraphQL playground", "/api"))
 	}
@@ -75,7 +75,7 @@ func main() {
 
 func landingPage(w http.ResponseWriter, r *http.Request) {
 	t, err := template.ParseFiles(
-		"../web/index.html",
+		"../../web/index.html",
 	)
 	if err != nil {
 		log.Println("template parsing error: ", err)
@@ -88,7 +88,7 @@ func landingPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func serveResource(w http.ResponseWriter, req *http.Request) {
-	path := "../web" + req.URL.Path
+	path := "../../web" + req.URL.Path
 	http.ServeFile(w, req, path)
 }
 
