@@ -21,12 +21,11 @@ type SchoolSearchParams struct {
 	Country                         *string `json:"country"`
 	Track                           *string `json:"track"`
 	TuitionPaymentType              *string `json:"tuitionPaymentType"`
-	SortByLengthLowToHigh           *bool   `json:"sortByLengthLowToHigh"`
-	SortByLengthHighToLow           *bool   `json:"sortByLengthHighToLow"`
 	SortByTuitionLowToHigh          *bool   `json:"sortByTuitionLowToHigh"`
 	SortByTuitionHighToLow          *bool   `json:"sortByTuitionHighToLow"`
 	SortByGraduateSalaryHighToLow   *bool   `json:"sortByGraduateSalaryHighToLow"`
 	SortByJobPlacementRateHighToLow *bool   `json:"sortByJobPlacementRateHighToLow"`
+	MinLength                       *int    `json:"minLength"`
 	IsOnline                        *bool   `json:"isOnline"`
 }
 

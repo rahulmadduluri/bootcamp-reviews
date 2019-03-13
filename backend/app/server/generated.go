@@ -339,12 +339,11 @@ input SchoolSearchParams {
 	country: ID
 	track: ID
 	tuitionPaymentType: String
-	sortByLengthLowToHigh: Boolean
-	sortByLengthHighToLow: Boolean
 	sortByTuitionLowToHigh: Boolean
 	sortByTuitionHighToLow: Boolean
 	sortByGraduateSalaryHighToLow: Boolean
 	sortByJobPlacementRateHighToLow: Boolean
+	minLength: Int
 	isOnline: Boolean
 }
 
@@ -1810,18 +1809,6 @@ func (ec *executionContext) unmarshalInputSchoolSearchParams(ctx context.Context
 			if err != nil {
 				return it, err
 			}
-		case "sortByLengthLowToHigh":
-			var err error
-			it.SortByLengthLowToHigh, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "sortByLengthHighToLow":
-			var err error
-			it.SortByLengthHighToLow, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
-			if err != nil {
-				return it, err
-			}
 		case "sortByTuitionLowToHigh":
 			var err error
 			it.SortByTuitionLowToHigh, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
@@ -1843,6 +1830,12 @@ func (ec *executionContext) unmarshalInputSchoolSearchParams(ctx context.Context
 		case "sortByJobPlacementRateHighToLow":
 			var err error
 			it.SortByJobPlacementRateHighToLow, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "minLength":
+			var err error
+			it.MinLength, err = ec.unmarshalOInt2ᚖint(ctx, v)
 			if err != nil {
 				return it, err
 			}

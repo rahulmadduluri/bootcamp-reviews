@@ -7,18 +7,15 @@ import (
 )
 
 const (
-	_schoolQueriesPath     = "db/sql/schoolQueries.sql"
-	_occupationQueriesPath = "db/sql/occupationQueries.sql"
+	_schoolQueriesPath = "db/sql/schoolQueries.sql"
 )
 
 type SQLDB interface {
-	// SchoolDB
-	// OccupationDB
+	SchoolDB
 }
 
 type sqlQueries struct {
-	schoolQueries     goyesql.Queries
-	occupationQueries goyesql.Queries
+	schoolQueries goyesql.Queries
 }
 
 type sqlDB struct {
@@ -28,9 +25,7 @@ type sqlDB struct {
 
 func generateQueries() sqlQueries {
 	schoolQueries := goyesql.MustParseFile(_schoolQueriesPath)
-	occupationQueries := goyesql.MustParseFile(_occupationQueriesPath)
 	return sqlQueries{
-		schoolQueries:     schoolQueries,
-		occupationQueries: occupationQueries,
+		schoolQueries: schoolQueries,
 	}
 }

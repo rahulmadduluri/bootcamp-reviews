@@ -5,10 +5,10 @@ export APP_ENV=playground
 
 To start MySQL database:
 mysql -u {user} -p {password}
-use raft-education;
+use raft;
 
 To populate MySQL:
-source {GOPATH}/src/Raft/db-util/create_db.sql
+source {path to raft-education}/raft-education/backend/db-util/create_db.sql
 
 To Run Server: 
 go run app/main/main.go

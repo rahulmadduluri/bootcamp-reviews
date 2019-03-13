@@ -3,7 +3,7 @@ package server
 import (
 	"context"
 
-	"github.com/rahulmadduluri/raft-education/backend/app/models"
+	models "github.com/rahulmadduluri/raft-education/backend/app/models"
 )
 
 func (r *queryResolver) School(ctx context.Context, uuid string) (*models.School, error) {

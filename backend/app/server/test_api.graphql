@@ -1,0 +1,25 @@
+# Get User
+query GetSchool {
+	School(uuid: "uuid-1") {
+		uuid
+		name
+		avgGraduateSalary
+		acceptanceRate
+		jobPlacementRate
+		lengthInWeeks
+		isOnline
+		city
+		country
+		photoURI
+		tuition {
+			uuid
+			name
+			basePrice
+			paymentType
+		}
+		tracks {
+			uuid
+			name
+		}
+	}
+}
