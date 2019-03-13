@@ -1,18 +1,44 @@
 type School {
-  id: ID!
-  name: String!
+	uuid: ID!
+	name: String!
+	avgGraduateSalary: Float
+	acceptanceRate: Float
+	jobPlacementRate: Float
+	lengthInWeeks: Int
+	isOnline: Boolean
+	city: String
+	country: String
+	photoURI: String
+	tracks: [Track!]
+	tuition: Tuition
 }
 
-type Occupation {
-  id: ID!
-  name: String!
+type Track {
+	uuid: ID!
+	name: String!
+}
+
+type Tuition {
+	uuid: ID!
+	name: String!
+	basePrice: Int!
+	paymentType: String! # e.g. ISA, Upfront
+}
+
+input SchoolSearchParams {
+	country: ID
+	track: ID
+	tuitionPaymentType: String
+	sortByLengthLowToHigh: Boolean
+	sortByLengthHighToLow: Boolean
+	sortByTuitionLowToHigh: Boolean
+	sortByTuitionHighToLow: Boolean
+	sortByGraduateSalaryHighToLow: Boolean
+	sortByJobPlacementRateHighToLow: Boolean
+	isOnline: Boolean
 }
 
 type Query {
-  school(uuid: ID!): School
-  occupation(uuid: ID!): Occupation
+	school(uuid: ID!): School
+	schools(params: SchoolSearchParams!): [School!]!
 }
-
-# type Mutation {
-#   # createSchool(input: NewSchool!): School!
-# }
