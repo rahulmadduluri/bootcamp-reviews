@@ -41,6 +41,12 @@ type DirectiveRoot struct {
 }
 
 type ComplexityRoot struct {
+	Location struct {
+		UUID    func(childComplexity int) int
+		City    func(childComplexity int) int
+		Country func(childComplexity int) int
+	}
+
 	Query struct {
 		School  func(childComplexity int, uuid string) int
 		Schools func(childComplexity int, params models.SchoolSearchParams) int
@@ -56,21 +62,16 @@ type ComplexityRoot struct {
 		IsOnline          func(childComplexity int) int
 		City              func(childComplexity int) int
 		Country           func(childComplexity int) int
+		BasePrice         func(childComplexity int) int
+		PaymentType       func(childComplexity int) int
 		PhotoURI          func(childComplexity int) int
+		Locations         func(childComplexity int) int
 		Tracks            func(childComplexity int) int
-		Tuition           func(childComplexity int) int
 	}
 
 	Track struct {
 		UUID func(childComplexity int) int
 		Name func(childComplexity int) int
-	}
-
-	Tuition struct {
-		UUID        func(childComplexity int) int
-		Name        func(childComplexity int) int
-		BasePrice   func(childComplexity int) int
-		PaymentType func(childComplexity int) int
 	}
 }
 
@@ -93,6 +94,27 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 	ec := executionContext{nil, e}
 	_ = ec
 	switch typeName + "." + field {
+
+	case "Location.UUID":
+		if e.complexity.Location.UUID == nil {
+			break
+		}
+
+		return e.complexity.Location.UUID(childComplexity), true
+
+	case "Location.City":
+		if e.complexity.Location.City == nil {
+			break
+		}
+
+		return e.complexity.Location.City(childComplexity), true
+
+	case "Location.Country":
+		if e.complexity.Location.Country == nil {
+			break
+		}
+
+		return e.complexity.Location.Country(childComplexity), true
 
 	case "Query.School":
 		if e.complexity.Query.School == nil {
@@ -181,6 +203,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.School.Country(childComplexity), true
 
+	case "School.BasePrice":
+		if e.complexity.School.BasePrice == nil {
+			break
+		}
+
+		return e.complexity.School.BasePrice(childComplexity), true
+
+	case "School.PaymentType":
+		if e.complexity.School.PaymentType == nil {
+			break
+		}
+
+		return e.complexity.School.PaymentType(childComplexity), true
+
 	case "School.PhotoURI":
 		if e.complexity.School.PhotoURI == nil {
 			break
@@ -188,19 +224,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.School.PhotoURI(childComplexity), true
 
+	case "School.Locations":
+		if e.complexity.School.Locations == nil {
+			break
+		}
+
+		return e.complexity.School.Locations(childComplexity), true
+
 	case "School.Tracks":
 		if e.complexity.School.Tracks == nil {
 			break
 		}
 
 		return e.complexity.School.Tracks(childComplexity), true
-
-	case "School.Tuition":
-		if e.complexity.School.Tuition == nil {
-			break
-		}
-
-		return e.complexity.School.Tuition(childComplexity), true
 
 	case "Track.UUID":
 		if e.complexity.Track.UUID == nil {
@@ -215,34 +251,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Track.Name(childComplexity), true
-
-	case "Tuition.UUID":
-		if e.complexity.Tuition.UUID == nil {
-			break
-		}
-
-		return e.complexity.Tuition.UUID(childComplexity), true
-
-	case "Tuition.Name":
-		if e.complexity.Tuition.Name == nil {
-			break
-		}
-
-		return e.complexity.Tuition.Name(childComplexity), true
-
-	case "Tuition.BasePrice":
-		if e.complexity.Tuition.BasePrice == nil {
-			break
-		}
-
-		return e.complexity.Tuition.BasePrice(childComplexity), true
-
-	case "Tuition.PaymentType":
-		if e.complexity.Tuition.PaymentType == nil {
-			break
-		}
-
-		return e.complexity.Tuition.PaymentType(childComplexity), true
 
 	}
 	return 0, false
@@ -318,21 +326,22 @@ var parsedSchema = gqlparser.MustLoadSchema(
 	isOnline: Boolean
 	city: String
 	country: String
+	basePrice: Int
+	paymentType: String # e.g. ISA, Upfront
 	photoURI: String
+	locations: [Location!]
 	tracks: [Track!]
-	tuition: Tuition
+}
+
+type Location {
+	uuid: ID!
+	city: String
+	country: String!
 }
 
 type Track {
 	uuid: ID!
 	name: String!
-}
-
-type Tuition {
-	uuid: ID!
-	name: String!
-	basePrice: Int!
-	paymentType: String! # e.g. ISA, Upfront
 }
 
 input SchoolSearchParams {
@@ -431,6 +440,81 @@ func (ec *executionContext) field___Type_fields_args(ctx context.Context, rawArg
 // endregion ***************************** args.gotpl *****************************
 
 // region    **************************** field.gotpl *****************************
+
+func (ec *executionContext) _Location_uuid(ctx context.Context, field graphql.CollectedField, obj *models.Location) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object: "Location",
+		Field:  field,
+		Args:   nil,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UUID, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNID2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Location_city(ctx context.Context, field graphql.CollectedField, obj *models.Location) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object: "Location",
+		Field:  field,
+		Args:   nil,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.City, nil
+	})
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Location_country(ctx context.Context, field graphql.CollectedField, obj *models.Location) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object: "Location",
+		Field:  field,
+		Args:   nil,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Country, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
 
 func (ec *executionContext) _Query_school(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
@@ -761,6 +845,52 @@ func (ec *executionContext) _School_country(ctx context.Context, field graphql.C
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _School_basePrice(ctx context.Context, field graphql.CollectedField, obj *models.School) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object: "School",
+		Field:  field,
+		Args:   nil,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BasePrice, nil
+	})
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _School_paymentType(ctx context.Context, field graphql.CollectedField, obj *models.School) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object: "School",
+		Field:  field,
+		Args:   nil,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PaymentType, nil
+	})
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _School_photoURI(ctx context.Context, field graphql.CollectedField, obj *models.School) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
@@ -784,6 +914,29 @@ func (ec *executionContext) _School_photoURI(ctx context.Context, field graphql.
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _School_locations(ctx context.Context, field graphql.CollectedField, obj *models.School) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object: "School",
+		Field:  field,
+		Args:   nil,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Locations, nil
+	})
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]models.Location)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalOLocation2ᚕgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐLocation(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _School_tracks(ctx context.Context, field graphql.CollectedField, obj *models.School) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
@@ -805,29 +958,6 @@ func (ec *executionContext) _School_tracks(ctx context.Context, field graphql.Co
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
 	return ec.marshalOTrack2ᚕgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐTrack(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _School_tuition(ctx context.Context, field graphql.CollectedField, obj *models.School) graphql.Marshaler {
-	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
-	rctx := &graphql.ResolverContext{
-		Object: "School",
-		Field:  field,
-		Args:   nil,
-	}
-	ctx = graphql.WithResolverContext(ctx, rctx)
-	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
-	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Tuition, nil
-	})
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*models.Tuition)
-	rctx.Result = res
-	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalOTuition2ᚖgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐTuition(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Track_uuid(ctx context.Context, field graphql.CollectedField, obj *models.Track) graphql.Marshaler {
@@ -869,110 +999,6 @@ func (ec *executionContext) _Track_name(ctx context.Context, field graphql.Colle
 	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return obj.Name, nil
-	})
-	if resTmp == nil {
-		if !ec.HasError(rctx) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	rctx.Result = res
-	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Tuition_uuid(ctx context.Context, field graphql.CollectedField, obj *models.Tuition) graphql.Marshaler {
-	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
-	rctx := &graphql.ResolverContext{
-		Object: "Tuition",
-		Field:  field,
-		Args:   nil,
-	}
-	ctx = graphql.WithResolverContext(ctx, rctx)
-	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
-	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.UUID, nil
-	})
-	if resTmp == nil {
-		if !ec.HasError(rctx) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	rctx.Result = res
-	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNID2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Tuition_name(ctx context.Context, field graphql.CollectedField, obj *models.Tuition) graphql.Marshaler {
-	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
-	rctx := &graphql.ResolverContext{
-		Object: "Tuition",
-		Field:  field,
-		Args:   nil,
-	}
-	ctx = graphql.WithResolverContext(ctx, rctx)
-	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
-	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Name, nil
-	})
-	if resTmp == nil {
-		if !ec.HasError(rctx) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	rctx.Result = res
-	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Tuition_basePrice(ctx context.Context, field graphql.CollectedField, obj *models.Tuition) graphql.Marshaler {
-	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
-	rctx := &graphql.ResolverContext{
-		Object: "Tuition",
-		Field:  field,
-		Args:   nil,
-	}
-	ctx = graphql.WithResolverContext(ctx, rctx)
-	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
-	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.BasePrice, nil
-	})
-	if resTmp == nil {
-		if !ec.HasError(rctx) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int)
-	rctx.Result = res
-	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNInt2int(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Tuition_paymentType(ctx context.Context, field graphql.CollectedField, obj *models.Tuition) graphql.Marshaler {
-	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
-	rctx := &graphql.ResolverContext{
-		Object: "Tuition",
-		Field:  field,
-		Args:   nil,
-	}
-	ctx = graphql.WithResolverContext(ctx, rctx)
-	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
-	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.PaymentType, nil
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -1859,6 +1885,40 @@ func (ec *executionContext) unmarshalInputSchoolSearchParams(ctx context.Context
 
 // region    **************************** object.gotpl ****************************
 
+var locationImplementors = []string{"Location"}
+
+func (ec *executionContext) _Location(ctx context.Context, sel ast.SelectionSet, obj *models.Location) graphql.Marshaler {
+	fields := graphql.CollectFields(ctx, sel, locationImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	invalid := false
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Location")
+		case "uuid":
+			out.Values[i] = ec._Location_uuid(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "city":
+			out.Values[i] = ec._Location_city(ctx, field, obj)
+		case "country":
+			out.Values[i] = ec._Location_country(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalid {
+		return graphql.Null
+	}
+	return out
+}
+
 var queryImplementors = []string{"Query"}
 
 func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) graphql.Marshaler {
@@ -1949,12 +2009,16 @@ func (ec *executionContext) _School(ctx context.Context, sel ast.SelectionSet, o
 			out.Values[i] = ec._School_city(ctx, field, obj)
 		case "country":
 			out.Values[i] = ec._School_country(ctx, field, obj)
+		case "basePrice":
+			out.Values[i] = ec._School_basePrice(ctx, field, obj)
+		case "paymentType":
+			out.Values[i] = ec._School_paymentType(ctx, field, obj)
 		case "photoURI":
 			out.Values[i] = ec._School_photoURI(ctx, field, obj)
+		case "locations":
+			out.Values[i] = ec._School_locations(ctx, field, obj)
 		case "tracks":
 			out.Values[i] = ec._School_tracks(ctx, field, obj)
-		case "tuition":
-			out.Values[i] = ec._School_tuition(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -1984,48 +2048,6 @@ func (ec *executionContext) _Track(ctx context.Context, sel ast.SelectionSet, ob
 			}
 		case "name":
 			out.Values[i] = ec._Track_name(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch()
-	if invalid {
-		return graphql.Null
-	}
-	return out
-}
-
-var tuitionImplementors = []string{"Tuition"}
-
-func (ec *executionContext) _Tuition(ctx context.Context, sel ast.SelectionSet, obj *models.Tuition) graphql.Marshaler {
-	fields := graphql.CollectFields(ctx, sel, tuitionImplementors)
-
-	out := graphql.NewFieldSet(fields)
-	invalid := false
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("Tuition")
-		case "uuid":
-			out.Values[i] = ec._Tuition_uuid(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
-		case "name":
-			out.Values[i] = ec._Tuition_name(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
-		case "basePrice":
-			out.Values[i] = ec._Tuition_basePrice(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
-		case "paymentType":
-			out.Values[i] = ec._Tuition_paymentType(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
@@ -2301,12 +2323,8 @@ func (ec *executionContext) marshalNID2string(ctx context.Context, sel ast.Selec
 	return graphql.MarshalID(v)
 }
 
-func (ec *executionContext) unmarshalNInt2int(ctx context.Context, v interface{}) (int, error) {
-	return graphql.UnmarshalInt(v)
-}
-
-func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.SelectionSet, v int) graphql.Marshaler {
-	return graphql.MarshalInt(v)
+func (ec *executionContext) marshalNLocation2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐLocation(ctx context.Context, sel ast.SelectionSet, v models.Location) graphql.Marshaler {
+	return ec._Location(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNSchool2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐSchool(ctx context.Context, sel ast.SelectionSet, v models.School) graphql.Marshaler {
@@ -2672,6 +2690,43 @@ func (ec *executionContext) marshalOInt2ᚖint(ctx context.Context, sel ast.Sele
 	return ec.marshalOInt2int(ctx, sel, *v)
 }
 
+func (ec *executionContext) marshalOLocation2ᚕgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐLocation(ctx context.Context, sel ast.SelectionSet, v []models.Location) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		rctx := &graphql.ResolverContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithResolverContext(ctx, rctx)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNLocation2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐLocation(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+	return ret
+}
+
 func (ec *executionContext) marshalOSchool2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐSchool(ctx context.Context, sel ast.SelectionSet, v models.School) graphql.Marshaler {
 	return ec._School(ctx, sel, &v)
 }
@@ -2741,17 +2796,6 @@ func (ec *executionContext) marshalOTrack2ᚕgithubᚗcomᚋrahulmadduluriᚋraf
 	}
 	wg.Wait()
 	return ret
-}
-
-func (ec *executionContext) marshalOTuition2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐTuition(ctx context.Context, sel ast.SelectionSet, v models.Tuition) graphql.Marshaler {
-	return ec._Tuition(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalOTuition2ᚖgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐTuition(ctx context.Context, sel ast.SelectionSet, v *models.Tuition) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._Tuition(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalO__EnumValue2ᚕgithubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚋintrospectionᚐEnumValue(ctx context.Context, sel ast.SelectionSet, v []introspection.EnumValue) graphql.Marshaler {

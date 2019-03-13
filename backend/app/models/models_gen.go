@@ -2,19 +2,27 @@
 
 package models
 
+type Location struct {
+	UUID    string  `json:"uuid"`
+	City    *string `json:"city"`
+	Country string  `json:"country"`
+}
+
 type School struct {
-	UUID              string   `json:"uuid"`
-	Name              string   `json:"name"`
-	AvgGraduateSalary *float64 `json:"avgGraduateSalary"`
-	AcceptanceRate    *float64 `json:"acceptanceRate"`
-	JobPlacementRate  *float64 `json:"jobPlacementRate"`
-	LengthInWeeks     *int     `json:"lengthInWeeks"`
-	IsOnline          *bool    `json:"isOnline"`
-	City              *string  `json:"city"`
-	Country           *string  `json:"country"`
-	PhotoURI          *string  `json:"photoURI"`
-	Tracks            []Track  `json:"tracks"`
-	Tuition           *Tuition `json:"tuition"`
+	UUID              string     `json:"uuid"`
+	Name              string     `json:"name"`
+	AvgGraduateSalary *float64   `json:"avgGraduateSalary"`
+	AcceptanceRate    *float64   `json:"acceptanceRate"`
+	JobPlacementRate  *float64   `json:"jobPlacementRate"`
+	LengthInWeeks     *int       `json:"lengthInWeeks"`
+	IsOnline          *bool      `json:"isOnline"`
+	City              *string    `json:"city"`
+	Country           *string    `json:"country"`
+	BasePrice         *int       `json:"basePrice"`
+	PaymentType       *string    `json:"paymentType"`
+	PhotoURI          *string    `json:"photoURI"`
+	Locations         []Location `json:"locations"`
+	Tracks            []Track    `json:"tracks"`
 }
 
 type SchoolSearchParams struct {
@@ -32,11 +40,4 @@ type SchoolSearchParams struct {
 type Track struct {
 	UUID string `json:"uuid"`
 	Name string `json:"name"`
-}
-
-type Tuition struct {
-	UUID        string `json:"uuid"`
-	Name        string `json:"name"`
-	BasePrice   int    `json:"basePrice"`
-	PaymentType string `json:"paymentType"`
 }

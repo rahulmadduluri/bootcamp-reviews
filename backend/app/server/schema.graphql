@@ -8,7 +8,7 @@ type School {
 	isOnline: Boolean
 	city: String
 	country: String
-	baseTuition: Int
+	basePrice: Int
 	paymentType: String # e.g. ISA, Upfront
 	photoURI: String
 	locations: [Location!]
@@ -29,9 +29,9 @@ type Track {
 input SchoolSearchParams {
 	country: ID
 	track: ID
-	tuitionPaymentType: String
-	sortByTuitionLowToHigh: Boolean
-	sortByTuitionHighToLow: Boolean
+	paymentType: String
+	sortByPriceLowToHigh: Boolean
+	sortByPriceHighToLow: Boolean
 	sortByGraduateSalaryHighToLow: Boolean
 	sortByJobPlacementRateHighToLow: Boolean
 	minLength: Int
