@@ -22,7 +22,7 @@ query GetSchool {
 query GetSchools {
 	schools(params: {
 		country: "USA"
-		onlineAllowed: true,
+		isOnline: true,
 		paymentType: "ISA"
 	})
 }

@@ -16,8 +16,6 @@ type School struct {
 	JobPlacementRate  *float64   `json:"jobPlacementRate"`
 	LengthInWeeks     *int       `json:"lengthInWeeks"`
 	IsOnline          *bool      `json:"isOnline"`
-	City              *string    `json:"city"`
-	Country           *string    `json:"country"`
 	BasePrice         *int       `json:"basePrice"`
 	PaymentType       *string    `json:"paymentType"`
 	PhotoURI          *string    `json:"photoURI"`
@@ -27,14 +25,14 @@ type School struct {
 
 type SchoolSearchParams struct {
 	Country                         *string `json:"country"`
-	Track                           *string `json:"track"`
+	TrackUUID                       *string `json:"trackUUID"`
 	PaymentType                     *string `json:"paymentType"`
 	SortByPriceLowToHigh            *bool   `json:"sortByPriceLowToHigh"`
 	SortByPriceHighToLow            *bool   `json:"sortByPriceHighToLow"`
 	SortByGraduateSalaryHighToLow   *bool   `json:"sortByGraduateSalaryHighToLow"`
 	SortByJobPlacementRateHighToLow *bool   `json:"sortByJobPlacementRateHighToLow"`
 	MinLength                       *int    `json:"minLength"`
-	OnlineAllowed                   *bool   `json:"onlineAllowed"`
+	IsOnline                        *bool   `json:"isOnline"`
 }
 
 type Track struct {

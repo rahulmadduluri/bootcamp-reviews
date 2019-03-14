@@ -60,8 +60,6 @@ type ComplexityRoot struct {
 		JobPlacementRate  func(childComplexity int) int
 		LengthInWeeks     func(childComplexity int) int
 		IsOnline          func(childComplexity int) int
-		City              func(childComplexity int) int
-		Country           func(childComplexity int) int
 		BasePrice         func(childComplexity int) int
 		PaymentType       func(childComplexity int) int
 		PhotoURI          func(childComplexity int) int
@@ -189,20 +187,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.School.IsOnline(childComplexity), true
 
-	case "School.City":
-		if e.complexity.School.City == nil {
-			break
-		}
-
-		return e.complexity.School.City(childComplexity), true
-
-	case "School.Country":
-		if e.complexity.School.Country == nil {
-			break
-		}
-
-		return e.complexity.School.Country(childComplexity), true
-
 	case "School.BasePrice":
 		if e.complexity.School.BasePrice == nil {
 			break
@@ -324,8 +308,6 @@ var parsedSchema = gqlparser.MustLoadSchema(
 	jobPlacementRate: Float
 	lengthInWeeks: Int
 	isOnline: Boolean
-	city: String
-	country: String
 	basePrice: Int
 	paymentType: String # e.g. ISA, Upfront
 	photoURI: String
@@ -346,14 +328,14 @@ type Track {
 
 input SchoolSearchParams {
 	country: String
-	track: ID
+	trackUUID: ID
 	paymentType: String
 	sortByPriceLowToHigh: Boolean
 	sortByPriceHighToLow: Boolean
 	sortByGraduateSalaryHighToLow: Boolean
 	sortByJobPlacementRateHighToLow: Boolean
 	minLength: Int
-	onlineAllowed: Boolean
+	isOnline: Boolean
 }
 
 type Query {
@@ -797,52 +779,6 @@ func (ec *executionContext) _School_isOnline(ctx context.Context, field graphql.
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
 	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _School_city(ctx context.Context, field graphql.CollectedField, obj *models.School) graphql.Marshaler {
-	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
-	rctx := &graphql.ResolverContext{
-		Object: "School",
-		Field:  field,
-		Args:   nil,
-	}
-	ctx = graphql.WithResolverContext(ctx, rctx)
-	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
-	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.City, nil
-	})
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	rctx.Result = res
-	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _School_country(ctx context.Context, field graphql.CollectedField, obj *models.School) graphql.Marshaler {
-	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
-	rctx := &graphql.ResolverContext{
-		Object: "School",
-		Field:  field,
-		Args:   nil,
-	}
-	ctx = graphql.WithResolverContext(ctx, rctx)
-	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
-	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Country, nil
-	})
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	rctx.Result = res
-	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _School_basePrice(ctx context.Context, field graphql.CollectedField, obj *models.School) graphql.Marshaler {
@@ -1823,9 +1759,9 @@ func (ec *executionContext) unmarshalInputSchoolSearchParams(ctx context.Context
 			if err != nil {
 				return it, err
 			}
-		case "track":
+		case "trackUUID":
 			var err error
-			it.Track, err = ec.unmarshalOID2ᚖstring(ctx, v)
+			it.TrackUUID, err = ec.unmarshalOID2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -1865,9 +1801,9 @@ func (ec *executionContext) unmarshalInputSchoolSearchParams(ctx context.Context
 			if err != nil {
 				return it, err
 			}
-		case "onlineAllowed":
+		case "isOnline":
 			var err error
-			it.OnlineAllowed, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			it.IsOnline, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -2005,10 +1941,6 @@ func (ec *executionContext) _School(ctx context.Context, sel ast.SelectionSet, o
 			out.Values[i] = ec._School_lengthInWeeks(ctx, field, obj)
 		case "isOnline":
 			out.Values[i] = ec._School_isOnline(ctx, field, obj)
-		case "city":
-			out.Values[i] = ec._School_city(ctx, field, obj)
-		case "country":
-			out.Values[i] = ec._School_country(ctx, field, obj)
 		case "basePrice":
 			out.Values[i] = ec._School_basePrice(ctx, field, obj)
 		case "paymentType":

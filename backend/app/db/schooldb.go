@@ -4,18 +4,30 @@ import (
 	"log"
 
 	models "github.com/rahulmadduluri/raft-education/backend/app/models"
+
+	goyesql "github.com/nleof/goyesql"
 )
 
 const (
-	_GetSchool          = "getSchool"
-	_GetSchoolTracks    = "getSchoolTracks"
-	_GetSchoolLocations = "getSchoolLocations"
-	_GetAllSchools      = "getAllSchools"
+	_GetSchool                  = "getSchool"
+	_GetSchoolTracks            = "getSchoolTracks"
+	_GetSchoolLocations         = "getSchoolLocations"
+	_GetAllSchools              = "getAllSchools"
+	_GetSchoolsWithCountry      = "getSchoolsWithCountry"
+	_GetSchoolsWithTrack        = "getSchoolsWithTrack"
+	_GetSchoolsWithPaymentType  = "getSchoolsWithPaymentType"
+	_GetSchoolsWithMinLength    = "getSchoolsWithMinLength"
+	_GetSchoolsWithOnlineStatus = "getSchoolsWithOnlineStatus"
 )
 
 type SchoolDB interface {
 	GetSchool(schoolUUID string) (models.School, error)
 	GetAllSchools() ([]models.School, error)
+	GetSchoolsWithCountry(country string) ([]models.School, error)
+	GetSchoolsWithTrack(trackUUID string) ([]models.School, error)
+	GetSchoolsWithPaymentType(paymentType string) ([]models.School, error)
+	GetSchoolsWithMinLength(minLength int) ([]models.School, error)
+	GetSchoolsWithOnlineStatus(isOnline bool) ([]models.School, error)
 }
 
 func (sql *sqlDB) GetSchool(schoolUUID string) (models.School, error) {
@@ -113,11 +125,51 @@ func (sql *sqlDB) GetSchoolLocations(schoolUUID string) ([]models.Location, erro
 }
 
 func (sql *sqlDB) GetAllSchools() ([]models.School, error) {
+	schools, err := sql.getSchools(_GetAllSchools, map[string]interface{}{})
+	return schools, err
+}
+
+func (sql *sqlDB) GetSchoolsWithCountry(country string) ([]models.School, error) {
+	schools, err := sql.getSchools(_GetSchoolsWithCountry, map[string]interface{}{
+		"country": country,
+	})
+	return schools, err
+}
+func (sql *sqlDB) GetSchoolsWithTrack(trackUUID string) ([]models.School, error) {
+	schools, err := sql.getSchools(_GetSchoolsWithTrack, map[string]interface{}{
+		"track_uuid": trackUUID,
+	})
+	return schools, err
+
+}
+func (sql *sqlDB) GetSchoolsWithPaymentType(paymentType string) ([]models.School, error) {
+	schools, err := sql.getSchools(_GetSchoolsWithPaymentType, map[string]interface{}{
+		"payment_type": paymentType,
+	})
+	return schools, err
+
+}
+func (sql *sqlDB) GetSchoolsWithMinLength(minLength int) ([]models.School, error) {
+	schools, err := sql.getSchools(_GetSchoolsWithMinLength, map[string]interface{}{
+		"min_length": minLength,
+	})
+	return schools, err
+
+}
+func (sql *sqlDB) GetSchoolsWithOnlineStatus(isOnline bool) ([]models.School, error) {
+	schools, err := sql.getSchools(_GetSchoolsWithOnlineStatus, map[string]interface{}{
+		"is_online": isOnline,
+	})
+	return schools, err
+
+}
+
+func (sql *sqlDB) getSchools(queryName goyesql.Tag, params map[string]interface{}) ([]models.School, error) {
 	schools := []models.School{}
 
 	rows, err := sql.db.NamedQuery(
-		sql.queries.schoolQueries[_GetAllSchools],
-		map[string]interface{}{},
+		sql.queries.schoolQueries[queryName],
+		params,
 	)
 	if err != nil {
 		return schools, err
