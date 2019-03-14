@@ -15,5 +15,12 @@ func (r *queryResolver) School(ctx context.Context, uuid string) (*models.School
 	return &school, err
 }
 func (r *queryResolver) Schools(ctx context.Context, params models.SchoolSearchParams) ([]models.School, error) {
-	panic("not implemented")
+	schools := []models.School{}
+
+	allSchools, err := db.Handler().SQL().GetAllSchools()
+	if err != nil {
+		return schools, err
+	}
+
+	return allSchools, err
 }

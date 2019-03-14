@@ -345,15 +345,15 @@ type Track {
 }
 
 input SchoolSearchParams {
-	country: ID
+	country: String
 	track: ID
-	tuitionPaymentType: String
-	sortByTuitionLowToHigh: Boolean
-	sortByTuitionHighToLow: Boolean
+	paymentType: String
+	sortByPriceLowToHigh: Boolean
+	sortByPriceHighToLow: Boolean
 	sortByGraduateSalaryHighToLow: Boolean
 	sortByJobPlacementRateHighToLow: Boolean
 	minLength: Int
-	isOnline: Boolean
+	onlineAllowed: Boolean
 }
 
 type Query {
@@ -1819,7 +1819,7 @@ func (ec *executionContext) unmarshalInputSchoolSearchParams(ctx context.Context
 		switch k {
 		case "country":
 			var err error
-			it.Country, err = ec.unmarshalOID2ᚖstring(ctx, v)
+			it.Country, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -1829,21 +1829,21 @@ func (ec *executionContext) unmarshalInputSchoolSearchParams(ctx context.Context
 			if err != nil {
 				return it, err
 			}
-		case "tuitionPaymentType":
+		case "paymentType":
 			var err error
-			it.TuitionPaymentType, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			it.PaymentType, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
-		case "sortByTuitionLowToHigh":
+		case "sortByPriceLowToHigh":
 			var err error
-			it.SortByTuitionLowToHigh, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			it.SortByPriceLowToHigh, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
 			if err != nil {
 				return it, err
 			}
-		case "sortByTuitionHighToLow":
+		case "sortByPriceHighToLow":
 			var err error
-			it.SortByTuitionHighToLow, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			it.SortByPriceHighToLow, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -1865,9 +1865,9 @@ func (ec *executionContext) unmarshalInputSchoolSearchParams(ctx context.Context
 			if err != nil {
 				return it, err
 			}
-		case "isOnline":
+		case "onlineAllowed":
 			var err error
-			it.IsOnline, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			it.OnlineAllowed, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
 			if err != nil {
 				return it, err
 			}

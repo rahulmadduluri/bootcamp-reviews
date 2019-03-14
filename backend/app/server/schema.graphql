@@ -6,8 +6,6 @@ type School {
 	jobPlacementRate: Float
 	lengthInWeeks: Int
 	isOnline: Boolean
-	city: String
-	country: String
 	basePrice: Int
 	paymentType: String # e.g. ISA, Upfront
 	photoURI: String
@@ -27,7 +25,7 @@ type Track {
 }
 
 input SchoolSearchParams {
-	country: ID
+	country: String
 	track: ID
 	paymentType: String
 	sortByPriceLowToHigh: Boolean
@@ -35,7 +33,7 @@ input SchoolSearchParams {
 	sortByGraduateSalaryHighToLow: Boolean
 	sortByJobPlacementRateHighToLow: Boolean
 	minLength: Int
-	isOnline: Boolean
+	onlineAllowed: Boolean
 }
 
 type Query {

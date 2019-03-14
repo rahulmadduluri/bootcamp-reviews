@@ -1,6 +1,6 @@
-# Get User
+# Get School
 query GetSchool {
-	School(uuid: "uuid-1") {
+	school(uuid: "uuid-1") {
 		uuid
 		name
 		avgGraduateSalary
@@ -8,18 +8,21 @@ query GetSchool {
 		jobPlacementRate
 		lengthInWeeks
 		isOnline
-		city
-		country
 		photoURI
-		tuition {
-			uuid
-			name
-			basePrice
-			paymentType
+	    basePrice
+	    paymentType
+			tracks {
+				uuid
+				name
+			}
 		}
-		tracks {
-			uuid
-			name
-		}
-	}
+}
+
+# Get Schools
+query GetSchools {
+	schools(params: {
+		country: "USA"
+		onlineAllowed: true,
+		paymentType: "ISA"
+	})
 }
