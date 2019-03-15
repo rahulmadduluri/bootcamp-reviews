@@ -24,15 +24,14 @@ type School struct {
 }
 
 type SchoolSearchParams struct {
-	Country                         *string `json:"country"`
-	TrackUUID                       *string `json:"trackUUID"`
-	PaymentType                     *string `json:"paymentType"`
-	SortByPriceLowToHigh            *bool   `json:"sortByPriceLowToHigh"`
-	SortByPriceHighToLow            *bool   `json:"sortByPriceHighToLow"`
-	SortByGraduateSalaryHighToLow   *bool   `json:"sortByGraduateSalaryHighToLow"`
-	SortByJobPlacementRateHighToLow *bool   `json:"sortByJobPlacementRateHighToLow"`
-	MinLength                       *int    `json:"minLength"`
-	IsOnline                        *bool   `json:"isOnline"`
+	Country             *string  `json:"country"`
+	TrackUUID           *string  `json:"trackUUID"`
+	PaymentType         *string  `json:"paymentType"`
+	MaxPrice            *int     `json:"maxPrice"`
+	MinGraduateSalary   *float64 `json:"minGraduateSalary"`
+	MinJobPlacementRate *float64 `json:"minJobPlacementRate"`
+	MinLength           *int     `json:"minLength"`
+	IsOnline            *bool    `json:"isOnline"`
 }
 
 type Track struct {

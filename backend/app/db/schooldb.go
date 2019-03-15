@@ -9,15 +9,18 @@ import (
 )
 
 const (
-	_GetSchool                  = "getSchool"
-	_GetSchoolTracks            = "getSchoolTracks"
-	_GetSchoolLocations         = "getSchoolLocations"
-	_GetAllSchools              = "getAllSchools"
-	_GetSchoolsWithCountry      = "getSchoolsWithCountry"
-	_GetSchoolsWithTrack        = "getSchoolsWithTrack"
-	_GetSchoolsWithPaymentType  = "getSchoolsWithPaymentType"
-	_GetSchoolsWithMinLength    = "getSchoolsWithMinLength"
-	_GetSchoolsWithOnlineStatus = "getSchoolsWithOnlineStatus"
+	_GetSchool                         = "getSchool"
+	_GetSchoolTracks                   = "getSchoolTracks"
+	_GetSchoolLocations                = "getSchoolLocations"
+	_GetAllSchools                     = "getAllSchools"
+	_GetSchoolsWithCountry             = "getSchoolsWithCountry"
+	_GetSchoolsWithTrack               = "getSchoolsWithTrack"
+	_GetSchoolsWithPaymentType         = "getSchoolsWithPaymentType"
+	_GetSchoolsWithMaxPrice            = "getSchoolsWithMaxPrice"
+	_GetSchoolsWithMinGraduateSalary   = "getSchoolsWithMinGraduateSalary"
+	_GetSchoolsWithMinJobPlacementRate = "getSchoolsWithMinJobPlacementRate"
+	_GetSchoolsWithMinLength           = "getSchoolsWithMinLength"
+	_GetSchoolsWithOnlineStatus        = "getSchoolsWithOnlineStatus"
 )
 
 type SchoolDB interface {
@@ -26,6 +29,9 @@ type SchoolDB interface {
 	GetSchoolsWithCountry(country string) ([]models.School, error)
 	GetSchoolsWithTrack(trackUUID string) ([]models.School, error)
 	GetSchoolsWithPaymentType(paymentType string) ([]models.School, error)
+	GetSchoolsWithMaxPrice(maxPrice int) ([]models.School, error)
+	GetSchoolsWithMinGraduateSalary(minGraduateSalary float64) ([]models.School, error)
+	GetSchoolsWithMinJobPlacementRate(minJobPlacementRate float64) ([]models.School, error)
 	GetSchoolsWithMinLength(minLength int) ([]models.School, error)
 	GetSchoolsWithOnlineStatus(isOnline bool) ([]models.School, error)
 }
@@ -140,28 +146,42 @@ func (sql *sqlDB) GetSchoolsWithTrack(trackUUID string) ([]models.School, error)
 		"track_uuid": trackUUID,
 	})
 	return schools, err
-
 }
 func (sql *sqlDB) GetSchoolsWithPaymentType(paymentType string) ([]models.School, error) {
 	schools, err := sql.getSchools(_GetSchoolsWithPaymentType, map[string]interface{}{
 		"payment_type": paymentType,
 	})
 	return schools, err
-
+}
+func (sql *sqlDB) GetSchoolsWithMaxPrice(maxPrice int) ([]models.School, error) {
+	schools, err := sql.getSchools(_GetSchoolsWithMaxPrice, map[string]interface{}{
+		"max_price": maxPrice,
+	})
+	return schools, err
+}
+func (sql *sqlDB) GetSchoolsWithMinGraduateSalary(minGraduateSalary float64) ([]models.School, error) {
+	schools, err := sql.getSchools(_GetSchoolsWithMinGraduateSalary, map[string]interface{}{
+		"min_graduate_salary": minGraduateSalary,
+	})
+	return schools, err
+}
+func (sql *sqlDB) GetSchoolsWithMinJobPlacementRate(minJobPlacementRate float64) ([]models.School, error) {
+	schools, err := sql.getSchools(_GetSchoolsWithMinJobPlacementRate, map[string]interface{}{
+		"min_job_placement_rate": minJobPlacementRate,
+	})
+	return schools, err
 }
 func (sql *sqlDB) GetSchoolsWithMinLength(minLength int) ([]models.School, error) {
 	schools, err := sql.getSchools(_GetSchoolsWithMinLength, map[string]interface{}{
 		"min_length": minLength,
 	})
 	return schools, err
-
 }
 func (sql *sqlDB) GetSchoolsWithOnlineStatus(isOnline bool) ([]models.School, error) {
 	schools, err := sql.getSchools(_GetSchoolsWithOnlineStatus, map[string]interface{}{
 		"is_online": isOnline,
 	})
 	return schools, err
-
 }
 
 func (sql *sqlDB) getSchools(queryName goyesql.Tag, params map[string]interface{}) ([]models.School, error) {

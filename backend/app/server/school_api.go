@@ -26,9 +26,7 @@ func (r *queryResolver) Schools(ctx context.Context, params models.SchoolSearchP
 		return filteredSchools, err
 	}
 
-	sortedSchools := r.sortSchools(filteredSchools, params)
-
-	return sortedSchools, err
+	return filteredSchools, err
 }
 
 func (r *queryResolver) filterSchools(schools []models.School, params models.SchoolSearchParams) ([]models.School, error) {
@@ -53,6 +51,30 @@ func (r *queryResolver) filterSchools(schools []models.School, params models.Sch
 
 	if params.PaymentType != nil {
 		f, err := db.Handler().SQL().GetSchoolsWithPaymentType(*params.PaymentType)
+		if err != nil {
+			return filteredSchools, err
+		}
+		filteredSchools = intersectionOfSchools(filteredSchools, f)
+	}
+
+	if params.MaxPrice != nil {
+		f, err := db.Handler().SQL().GetSchoolsWithMaxPrice(*params.MaxPrice)
+		if err != nil {
+			return filteredSchools, err
+		}
+		filteredSchools = intersectionOfSchools(filteredSchools, f)
+	}
+
+	if params.MinGraduateSalary != nil {
+		f, err := db.Handler().SQL().GetSchoolsWithMinGraduateSalary(*params.MinGraduateSalary)
+		if err != nil {
+			return filteredSchools, err
+		}
+		filteredSchools = intersectionOfSchools(filteredSchools, f)
+	}
+
+	if params.MinJobPlacementRate != nil {
+		f, err := db.Handler().SQL().GetSchoolsWithMinJobPlacementRate(*params.MinJobPlacementRate)
 		if err != nil {
 			return filteredSchools, err
 		}
@@ -89,8 +111,4 @@ func intersectionOfSchools(groupA []models.School, groupB []models.School) []mod
 		}
 	}
 	return intersection
-}
-
-func (r *queryResolver) sortSchools(schools []models.School, params models.SchoolSearchParams) []models.School {
-	return schools
 }

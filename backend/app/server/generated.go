@@ -330,10 +330,9 @@ input SchoolSearchParams {
 	country: String
 	trackUUID: ID
 	paymentType: String
-	sortByPriceLowToHigh: Boolean
-	sortByPriceHighToLow: Boolean
-	sortByGraduateSalaryHighToLow: Boolean
-	sortByJobPlacementRateHighToLow: Boolean
+	maxPrice: Int
+	minGraduateSalary: Float
+	minJobPlacementRate: Float
 	minLength: Int
 	isOnline: Boolean
 }
@@ -1771,27 +1770,21 @@ func (ec *executionContext) unmarshalInputSchoolSearchParams(ctx context.Context
 			if err != nil {
 				return it, err
 			}
-		case "sortByPriceLowToHigh":
+		case "maxPrice":
 			var err error
-			it.SortByPriceLowToHigh, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			it.MaxPrice, err = ec.unmarshalOInt2ᚖint(ctx, v)
 			if err != nil {
 				return it, err
 			}
-		case "sortByPriceHighToLow":
+		case "minGraduateSalary":
 			var err error
-			it.SortByPriceHighToLow, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			it.MinGraduateSalary, err = ec.unmarshalOFloat2ᚖfloat64(ctx, v)
 			if err != nil {
 				return it, err
 			}
-		case "sortByGraduateSalaryHighToLow":
+		case "minJobPlacementRate":
 			var err error
-			it.SortByGraduateSalaryHighToLow, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "sortByJobPlacementRateHighToLow":
-			var err error
-			it.SortByJobPlacementRateHighToLow, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			it.MinJobPlacementRate, err = ec.unmarshalOFloat2ᚖfloat64(ctx, v)
 			if err != nil {
 				return it, err
 			}

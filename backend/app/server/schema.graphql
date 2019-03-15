@@ -28,10 +28,9 @@ input SchoolSearchParams {
 	country: String
 	trackUUID: ID
 	paymentType: String
-	sortByPriceLowToHigh: Boolean
-	sortByPriceHighToLow: Boolean
-	sortByGraduateSalaryHighToLow: Boolean
-	sortByJobPlacementRateHighToLow: Boolean
+	maxPrice: Int
+	minGraduateSalary: Float
+	minJobPlacementRate: Float
 	minLength: Int
 	isOnline: Boolean
 }
