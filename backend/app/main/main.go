@@ -43,9 +43,9 @@ func main() {
 	// Set up Router to route to landing page & playground
 	r := mux.NewRouter()
 	r.HandleFunc("/", landingPage)
-	r.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(http.Dir("../../web/js"))))
-	r.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("../../web/css"))))
-	r.PathPrefix("/img/").Handler(http.StripPrefix("/img/", http.FileServer(http.Dir("../../web/img"))))
+	// r.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(http.Dir("../../web/js"))))
+	// r.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("../../web/css"))))
+	// r.PathPrefix("/img/").Handler(http.StripPrefix("/img/", http.FileServer(http.Dir("../../web/img"))))
 	if auth.IsEnvPlayground() == true {
 		r.HandleFunc("/playground", handler.Playground("GraphQL playground", "/api"))
 	}
@@ -57,11 +57,11 @@ func main() {
 	))
 
 	// serve images from s3
-	static := mux.NewRouter()
-	static.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.HandlerFunc(serveFromS3)))
+	s3router := mux.NewRouter()
+	s3router.PathPrefix("/s3/").Handler(http.StripPrefix("/s3/", http.HandlerFunc(serveFromS3)))
 
 	r.PathPrefix("/api").Handler(negroni.New(negroni.Wrap(api)))
-	r.PathPrefix("/static/").Handler(negroni.New(negroni.Wrap(static)))
+	r.PathPrefix("/s3/").Handler(negroni.New(negroni.Wrap(s3router)))
 
 	// Run Server
 	port := os.Getenv(_PortKey)
@@ -75,7 +75,7 @@ func main() {
 
 func landingPage(w http.ResponseWriter, r *http.Request) {
 	t, err := template.ParseFiles(
-		"../../web/index.html",
+		"../../web/public/index.html",
 	)
 	if err != nil {
 		log.Println("template parsing error: ", err)
