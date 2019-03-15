@@ -20,9 +20,24 @@ query GetSchool {
 
 # Get Schools
 query GetSchools {
-	schools(params: {
-		country: "USA"
-		isOnline: true,
-		paymentType: "ISA"
-	})
+	schools(params:{minJobPlacementRate:68.33, maxPrice:35000, isOnline:false}) {
+		uuid
+		name
+		avgGraduateSalary
+		acceptanceRate
+		jobPlacementRate
+		lengthInWeeks
+		isOnline
+		photoURI
+	    basePrice
+	    paymentType
+			tracks {
+				uuid
+				name
+			}
+	    locations {
+	      city
+	      country
+	    }
+	}
 }
