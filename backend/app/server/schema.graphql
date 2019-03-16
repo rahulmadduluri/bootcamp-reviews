@@ -25,7 +25,7 @@ type Track {
 }
 
 input SchoolSearchParams {
-	country: String
+	locationUUID: ID
 	trackUUID: ID
 	paymentType: String
 	maxPrice: Int

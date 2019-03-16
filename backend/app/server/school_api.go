@@ -32,8 +32,8 @@ func (r *queryResolver) Schools(ctx context.Context, params models.SchoolSearchP
 func (r *queryResolver) filterSchools(schools []models.School, params models.SchoolSearchParams) ([]models.School, error) {
 	filteredSchools := schools
 
-	if params.Country != nil {
-		f, err := db.Handler().SQL().GetSchoolsWithCountry(*params.Country)
+	if params.LocationUUID != nil {
+		f, err := db.Handler().SQL().GetSchoolsWithLocation(*params.LocationUUID)
 		if err != nil {
 			return filteredSchools, err
 		}

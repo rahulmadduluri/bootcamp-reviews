@@ -24,7 +24,7 @@ type School struct {
 }
 
 type SchoolSearchParams struct {
-	Country             *string  `json:"country"`
+	LocationUUID        *string  `json:"locationUUID"`
 	TrackUUID           *string  `json:"trackUUID"`
 	PaymentType         *string  `json:"paymentType"`
 	MaxPrice            *int     `json:"maxPrice"`

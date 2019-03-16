@@ -54,7 +54,7 @@ select
 from schools
 ;
 
--- name: getSchoolsWithCountry
+-- name: getSchoolsWithLocation
 select
 	schools.uuid as uuid,
 	schools.name as name,
@@ -71,7 +71,7 @@ join school_locations
 	on school_locations.school_id = schools.id
 join locations
 	on locations.id = school_locations.location_id
-where locations.country = :country
+where locations.uuid = :location_uuid
 ;
 
 -- name: getSchoolsWithTrack

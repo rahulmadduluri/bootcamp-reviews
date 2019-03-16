@@ -7,17 +7,20 @@ import gql from "graphql-tag";
 class Search extends Component {
 
   render() {
+
+const schoolsQuery = gql`
+  query GetSchools($searchParams: SchoolSearchParams!) {
+    schools(params: $searchParams) {
+      uuid
+      name
+      basePrice
+    }
+  }
+`;
     return (
       <Query
-        query={gql`
-          {
-            schools(params: {}) {
-              uuid
-              name
-              basePrice
-            }
-          }
-        `}
+        query={schoolsQuery}
+        variables={ { searchParams:this.props.currentSearchParams } }
       >
         {({ loading, error, data }) => {
           if (loading) return <p>Loading...</p>;
