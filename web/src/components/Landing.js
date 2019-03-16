@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import backgroundImage from '../raft-education-background.png';
-import '../Landing.css';
-import ContainedButtons from "./contained_button";
+import './Landing.css';
+import ContainedButton from "./contained_button";
 
 class Landing extends Component {
+
   render() {
     return (
       <div className="App">
@@ -22,7 +23,7 @@ class Landing extends Component {
             <p>Select a Location</p>
           </div>
         </div>
-        <ContainedButtons />
+        <ContainedButton onClick={this.props.onSearch}/>
         </div>
         <div className="Landing">
       </div>
