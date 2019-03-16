@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik:200,400,500|Merriweather:700');
+
 .App {
   text-align: center;
 }
@@ -8,7 +10,49 @@
     width: 1250px;
     right: 0;
     position: absolute;
-    z-index: 1;
     background-position: top right;
     background-size: cover;
+}
+
+.Search-Area {
+  z-index: 2;
+  margin-left: 200px;
+  position: absolute;
+}
+
+.Title {
+  color: #3A00DF;
+  font-family: Merriweather;
+  font-weight: 700;
+  font-size: 100px;
+  position: relative;
+  text-align: left;
+  margin-bottom: -140px;
+}
+
+.Subtitle {
+  color: #828282;
+  font-family: Rubik;
+  font-weight: 300;
+  font-size: 18px;
+  position: relative;
+  text-align: left;
+  margin-bottom: 50px;
+}
+
+.Landing-Filter {
+  font-family: Rubik;
+  position: relative;
+  text-align: left;
+  width: 250px;
+}
+
+.Landing-Filter > p {
+  color: #828282;
+  font-weight: 300;
+  font-size: 16px;
+}
+
+.Dropdown {
+  
 }
