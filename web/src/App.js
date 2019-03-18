@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import backgroundImage from './raft-education-background.png';
-import ContainedButtons from "./components/contained_button";
 import Landing from "./components/Landing.js";
 import Search from "./components/Search.js";
 

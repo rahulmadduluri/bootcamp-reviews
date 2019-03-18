@@ -11,11 +11,15 @@ query GetSchool {
 		photoURI
 	    basePrice
 	    paymentType
-			tracks {
-				uuid
-				name
-			}
+		tracks {
+			uuid
+			name
 		}
+	    locations {
+	      city
+	      country
+	    }
+	}
 }
 
 # Get Schools
@@ -31,10 +35,10 @@ query GetSchools {
 		photoURI
 	    basePrice
 	    paymentType
-			tracks {
-				uuid
-				name
-			}
+		tracks {
+			uuid
+			name
+		}
 	    locations {
 	      city
 	      country

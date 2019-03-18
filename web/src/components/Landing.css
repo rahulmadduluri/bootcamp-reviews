@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik:200,400,500|Merriweather:700');
 
 .App {
-  text-align: center;
 }
 
 .Landing {
@@ -21,7 +20,7 @@
 }
 
 .Title {
-  color: #3A00DF;
+  color: #3F44B5;
   font-family: Merriweather;
   font-weight: 700;
   font-size: 100px;
@@ -55,4 +54,7 @@
 
 .Dropdown {
   
+}
+
+.Search-Button {
 }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './Search.css';
-import ContainedButton from "./contained_button";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
@@ -13,7 +12,22 @@ const schoolsQuery = gql`
     schools(params: $searchParams) {
       uuid
       name
-      basePrice
+      avgGraduateSalary
+      acceptanceRate
+      jobPlacementRate
+      lengthInWeeks
+      isOnline
+      photoURI
+        basePrice
+        paymentType
+      tracks {
+        uuid
+        name
+      }
+      locations {
+        city
+        country
+      }
     }
   }
 `;
