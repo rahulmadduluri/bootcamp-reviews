@@ -25,8 +25,8 @@ type Track {
 }
 
 input SchoolSearchParams {
-	locationUUID: ID
 	trackUUID: ID
+	locationUUID: ID
 	paymentType: String
 	maxPrice: Int
 	minGraduateSalary: Float
@@ -35,7 +35,14 @@ input SchoolSearchParams {
 	isOnline: Boolean
 }
 
+type Filters {
+	tracks: [Track!]!
+	locations: [Location!]!
+	paymentTypes: [String!]!
+}
+
 type Query {
 	school(uuid: ID!): School
 	schools(params: SchoolSearchParams!): [School!]!
+	filters: Filters
 }

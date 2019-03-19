@@ -8,7 +8,6 @@ import { ApolloProvider } from "react-apollo";
 import gql from "graphql-tag";
 
 
-
 const client = new ApolloClient({
 	uri: "api"
 });

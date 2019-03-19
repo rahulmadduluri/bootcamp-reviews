@@ -45,3 +45,19 @@ query GetSchools {
 	    }
 	}
 }
+
+# Get Schools
+query GetFilters {
+	filters {
+		tracks {
+			uuid
+			name
+		}
+		locations {
+			uuid
+			city
+			country
+		}
+		paymentTypes
+	}
+}

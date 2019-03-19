@@ -2,6 +2,12 @@
 
 package models
 
+type Filters struct {
+	Tracks       []Track    `json:"tracks"`
+	Locations    []Location `json:"locations"`
+	PaymentTypes []string   `json:"paymentTypes"`
+}
+
 type Location struct {
 	UUID    string  `json:"uuid"`
 	City    *string `json:"city"`
@@ -24,8 +30,8 @@ type School struct {
 }
 
 type SchoolSearchParams struct {
-	LocationUUID        *string  `json:"locationUUID"`
 	TrackUUID           *string  `json:"trackUUID"`
+	LocationUUID        *string  `json:"locationUUID"`
 	PaymentType         *string  `json:"paymentType"`
 	MaxPrice            *int     `json:"maxPrice"`
 	MinGraduateSalary   *float64 `json:"minGraduateSalary"`

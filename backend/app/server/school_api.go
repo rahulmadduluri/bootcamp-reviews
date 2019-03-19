@@ -112,3 +112,11 @@ func intersectionOfSchools(groupA []models.School, groupB []models.School) []mod
 	}
 	return intersection
 }
+
+func (r *queryResolver) Filters(ctx context.Context) (*models.Filters, error) {
+	filters, err := db.Handler().SQL().GetFilters()
+	if err != nil {
+		return nil, err
+	}
+	return &filters, err
+}
