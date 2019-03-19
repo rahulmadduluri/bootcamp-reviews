@@ -21,8 +21,7 @@ const styles = theme => ({
 
 class DropdownSearch extends React.Component {
   state = {
-    track: '',
-    name: 'hai',
+    trackUUID: '',
     labelWidth: 0,
   };
 
@@ -33,7 +32,10 @@ class DropdownSearch extends React.Component {
   }
 
   handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ "trackUUID": event.target.value });
+    if (event.target.value !== null && event.target.value !== '') {
+      this.props.onSelect({ "trackUUID": event.target.value });
+    }
   };
 
   render() {
@@ -61,7 +63,7 @@ class DropdownSearch extends React.Component {
           </InputLabel>
           <Select
             className={classes.select}
-            value={this.state.track}
+            value={this.state.trackUUID}
             onChange={this.handleChange}
             input={
               <OutlinedInput
@@ -74,9 +76,9 @@ class DropdownSearch extends React.Component {
             <MenuItem value="">
               All Tracks (Default)
             </MenuItem>
-            <MenuItem value={"uuid-1"}>Web</MenuItem>
-            <MenuItem value={"uuid-2"}>iOS</MenuItem>
-            <MenuItem value={"uuid-3"}>Android</MenuItem>
+            { this.props.searchOptions.tracks.map(track => 
+              <MenuItem key={track.uuid} value={track.uuid}>{track.name}</MenuItem>
+            )}
           </Select>
         </FormControl>
       </form>

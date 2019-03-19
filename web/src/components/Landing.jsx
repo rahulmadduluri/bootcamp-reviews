@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Landing.css';
-import ContainedButton from "./contained_button";
-import DropdownSearch from "./dropdown_search";
+import ContainedButton from "./contained_button.jsx";
+import DropdownSearch from "./dropdown_search.jsx";
 
 class Landing extends Component {
 
@@ -16,10 +16,10 @@ class Landing extends Component {
             <p>trustworthy statistics and reviews for software engineering schools</p>
           </div>
           <div className="Landing-Filter">
-            <DropdownSearch/>
+            <DropdownSearch searchOptions={this.props.searchOptions} onSelect={this.props.onSetSearchParams}/>
           </div>
           <div className="Button-Wrapper">
-            <ContainedButton onClick={this.props.onSearch}/>
+            <ContainedButton onClick={this.props.onGo}/>
           </div>
         </div>
         <div className="Landing-Background">
