@@ -12,18 +12,28 @@ const client = new ApolloClient({
 	uri: "api"
 });
 
+const filtersQuery = gql`
+  query GetFilters {
+    filters {
+      tracks {
+        uuid
+        name
+      }
+      locations {
+        uuid
+        city
+        country
+      }
+      paymentTypes
+    }
+  }
+`;
+
 client
   .query({
-    query: gql`
-      {
-        school(uuid: "uuid-1") {
-          uuid
-          name
-        }
-      }
-    `
+    query: filtersQuery
   })
-  .then(result => console.log(result));
+  .then(result => console.log(result.data));
 
 ReactDOM.render(
   <ApolloProvider client={client}>

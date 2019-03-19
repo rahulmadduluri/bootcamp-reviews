@@ -7,30 +7,31 @@ class Search extends Component {
 
   render() {
 
-const schoolsQuery = gql`
-  query GetSchools($searchParams: SchoolSearchParams!) {
-    schools(params: $searchParams) {
-      uuid
-      name
-      avgGraduateSalary
-      acceptanceRate
-      jobPlacementRate
-      lengthInWeeks
-      isOnline
-      photoURI
-        basePrice
-        paymentType
-      tracks {
-        uuid
-        name
+    const schoolsQuery = gql`
+      query GetSchools($searchParams: SchoolSearchParams!) {
+        schools(params: $searchParams) {
+          uuid
+          name
+          avgGraduateSalary
+          acceptanceRate
+          jobPlacementRate
+          lengthInWeeks
+          isOnline
+          photoURI
+            basePrice
+            paymentType
+          tracks {
+            uuid
+            name
+          }
+          locations {
+            uuid
+            city
+            country
+          }
+        }
       }
-      locations {
-        city
-        country
-      }
-    }
-  }
-`;
+    `;
     return (
       <Query
         query={schoolsQuery}

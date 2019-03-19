@@ -2,10 +2,31 @@ import React, { Component } from 'react';
 import './Landing.css';
 import ContainedButton from "./contained_button.jsx";
 import DropdownSearch from "./dropdown_search.jsx";
+import { Query } from "react-apollo";
+import gql from "graphql-tag";
+
 
 class Landing extends Component {
 
   render() {
+
+    const filtersQuery = gql`
+      query GetFilters {
+        filters {
+          tracks {
+            uuid
+            name
+          }
+          locations {
+            uuid
+            city
+            country
+          }
+          paymentTypes
+        }
+      }
+    `;
+
     return (
       <div>
         <div className="Search-Area">
@@ -16,7 +37,17 @@ class Landing extends Component {
             <p>trustworthy statistics and reviews for software engineering schools</p>
           </div>
           <div className="Landing-Filter">
-            <DropdownSearch searchOptions={this.props.searchOptions} onSelect={this.props.onSetSearchParams}/>
+
+            <Query
+              query={filtersQuery}
+            >
+              {({ loading, error, data }) => {
+                if (loading) return <p>Loading...</p>;
+                if (error) return <p>Error :(</p>;
+
+                return <DropdownSearch searchOptions={ data.filters } onSelect={this.props.onSetSearchParams}/>
+              }}
+            </Query>      
           </div>
           <div className="Button-Wrapper">
             <ContainedButton onClick={this.props.onGo}/>
