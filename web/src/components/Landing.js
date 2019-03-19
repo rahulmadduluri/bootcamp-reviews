@@ -1,31 +1,29 @@
 import React, { Component } from 'react';
 import './Landing.css';
 import ContainedButton from "./contained_button";
+import DropdownSearch from "./dropdown_search";
 
 class Landing extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div>
         <div className="Search-Area">
-        <div className="Title">
-              <h4>Raft</h4>
-        </div>
-        <div className="Subtitle">
-          <p>trustworthy statistics and reviews for software engineering schools</p>
-        </div>
-        <div>
-          <div className="Landing-Filter">
-            <p>Select a Track</p>
+          <div className="Title">
+                <h4>Raft</h4>
+          </div>
+          <div className="Subtitle">
+            <p>trustworthy statistics and reviews for software engineering schools</p>
           </div>
           <div className="Landing-Filter">
-            <p>Select a Location</p>
+            <DropdownSearch/>
+          </div>
+          <div className="Button-Wrapper">
+            <ContainedButton onClick={this.props.onSearch}/>
           </div>
         </div>
-        <ContainedButton className="Search-Button" onClick={this.props.onSearch}/>
+        <div className="Landing-Background">
         </div>
-        <div className="Landing">
-      </div>
       </div>
     );
   }

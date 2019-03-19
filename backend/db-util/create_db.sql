@@ -68,9 +68,9 @@ INSERT INTO school_locations VALUES
 	(3, 2),
 	(4, 2);
 INSERT INTO tracks VALUES
-	(NULL, 'uuid-1', 'iOS Development', 500),
-	(NULL, 'uuid-2', 'Web Development', 500),
-	(NULL, 'uuid-3', 'Android Development', 500);
+	(NULL, 'uuid-1', 'Web', 500),
+	(NULL, 'uuid-2', 'iOS', 500),
+	(NULL, 'uuid-3', 'Android', 500);
 INSERT INTO school_tracks VALUES
 	(1, 1),
 	(1, 2),
