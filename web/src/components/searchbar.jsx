@@ -1,13 +1,22 @@
 import React from 'react';
 import SearchBar from 'material-ui-search-bar';
-import "./searchbar.css"
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+  input: {
+    fontFamily: 'Rubik'
+  },
+});
 
 function SmartSearchBar(props) {
+
+  const { classes } = props;
+
   return(
     <SearchBar
       onChange={() => console.log('onChange')}
       onRequestSearch={() => console.log('onRequestSearch')}
-      className='LOL'
+      classes={classes}
       style={{
         margin: '0 auto'
       }}
@@ -15,4 +24,4 @@ function SmartSearchBar(props) {
   );
 }
 
-export default SmartSearchBar;
+export default withStyles(styles)(SmartSearchBar);
