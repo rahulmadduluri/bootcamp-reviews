@@ -17,7 +17,6 @@ class App extends Component {
   };
 
   onLandingTransition = () => {
-    console.log(this.state);
   	this.setState({ page: 'Main' });
   };
 

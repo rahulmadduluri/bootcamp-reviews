@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik:200,400,500');
+
+nav {
+  background-color: #203;
+  overflow: hidden;
+  padding: 1em;
+}
+nav a {
+  color: #FFF;
+}
+nav .navWide {
+  font-family: 'Rubik';
+  position: relative;
+}
+
+nav .navWide .searchBar {
+  display: inline-block;
+  width: 400px;
+  margin-left: 50px;
+}
+
+nav .navWide .navLinks {
+  position: absolute;
+  display: inline-block;
+  line-height: 50px;
+  right: 0px;
+}
+
+nav .navWide .navLinks a {
+  font-weight: 500;
+  text-decoration: none;
+  padding: 0 1.5em;
+}
+
+@media (min-width: 480px) {
+  nav .navWide {
+    display: block;
+  }
+}
