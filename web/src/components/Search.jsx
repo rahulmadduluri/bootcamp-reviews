@@ -58,7 +58,25 @@ const List = ({ schools }) => (
       {
         schools.map(({ uuid, name, avgGraduateSalary, jobPlacementRate, lengthInWeeks, isOnline, photoURI, basePrice, paymentType, tracks, locations }) => (
           <div className="list-row" key={uuid}>
-            <p>{name}: {basePrice}</p>
+            <div className="schoolInfoWrapper">
+              <div className="name">
+                {name}
+              </div>
+              <div className="location">
+              </div>
+              <div className="price">
+                ${basePrice}
+              </div>
+              <div className="length">
+                {lengthInWeeks} weeks
+              </div>
+              <div className="graduateSalary">
+                Average Graduate Salary ${avgGraduateSalary}
+              </div>
+              <div className="jobPlacementRate">
+                Job Placement Rate {jobPlacementRate}%
+              </div>
+            </div>
           </div>
         ))
       }
