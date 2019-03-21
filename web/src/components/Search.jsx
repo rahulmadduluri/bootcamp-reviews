@@ -14,13 +14,12 @@ class Search extends Component {
           uuid
           name
           avgGraduateSalary
-          acceptanceRate
           jobPlacementRate
           lengthInWeeks
           isOnline
           photoURI
-            basePrice
-            paymentType
+          basePrice
+          paymentType
           tracks {
             uuid
             name
@@ -45,16 +44,26 @@ class Search extends Component {
             if (loading) return <p>Loading...</p>;
             if (error) return <p>Error :(</p>;
 
-            return data.schools.map(({ uuid, name, basePrice }) => (
-              <div key={uuid}>
-                <p>{name}: {basePrice}</p>
-              </div>
-            ));
+            return <List schools={data.schools}/>
           }}
         </Query>      
       </div>
     );
   }
 }
+
+const List = ({ schools }) => (
+  <div>
+    <div className="list">
+      {
+        schools.map(({ uuid, name, avgGraduateSalary, jobPlacementRate, lengthInWeeks, isOnline, photoURI, basePrice, paymentType, tracks, locations }) => (
+          <div className="list-row" key={uuid}>
+            <p>{name}: {basePrice}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+);
 
 export default Search;

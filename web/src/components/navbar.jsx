@@ -1,6 +1,7 @@
 import React from 'react';
 import './navbar.css';
 import SmartSearchBar from "./searchbar.jsx";
+import raftSquare from "../raft_square.png";
 
 class Navbar extends React.Component {
 
@@ -15,6 +16,9 @@ class Navbar extends React.Component {
     return (
       <nav>
         <div className="navWide">
+          <div className="raftSquare">
+            <img src={raftSquare} alt="Logo"/>
+          </div>
           <div className="searchBar">
             <SmartSearchBar />
           </div>
