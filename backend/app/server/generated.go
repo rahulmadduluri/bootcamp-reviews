@@ -42,9 +42,9 @@ type DirectiveRoot struct {
 
 type ComplexityRoot struct {
 	Filters struct {
-		Tracks       func(childComplexity int) int
-		Locations    func(childComplexity int) int
-		PaymentTypes func(childComplexity int) int
+		Tracks          func(childComplexity int) int
+		CampusLocations func(childComplexity int) int
+		PaymentTypes    func(childComplexity int) int
 	}
 
 	Location struct {
@@ -70,7 +70,7 @@ type ComplexityRoot struct {
 		BasePrice         func(childComplexity int) int
 		PaymentType       func(childComplexity int) int
 		PhotoURI          func(childComplexity int) int
-		Locations         func(childComplexity int) int
+		CampusLocations   func(childComplexity int) int
 		Tracks            func(childComplexity int) int
 	}
 
@@ -108,12 +108,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Filters.Tracks(childComplexity), true
 
-	case "Filters.Locations":
-		if e.complexity.Filters.Locations == nil {
+	case "Filters.CampusLocations":
+		if e.complexity.Filters.CampusLocations == nil {
 			break
 		}
 
-		return e.complexity.Filters.Locations(childComplexity), true
+		return e.complexity.Filters.CampusLocations(childComplexity), true
 
 	case "Filters.PaymentTypes":
 		if e.complexity.Filters.PaymentTypes == nil {
@@ -244,12 +244,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.School.PhotoURI(childComplexity), true
 
-	case "School.Locations":
-		if e.complexity.School.Locations == nil {
+	case "School.CampusLocations":
+		if e.complexity.School.CampusLocations == nil {
 			break
 		}
 
-		return e.complexity.School.Locations(childComplexity), true
+		return e.complexity.School.CampusLocations(childComplexity), true
 
 	case "School.Tracks":
 		if e.complexity.School.Tracks == nil {
@@ -347,7 +347,8 @@ var parsedSchema = gqlparser.MustLoadSchema(
 	basePrice: Int
 	paymentType: String # e.g. ISA, Upfront
 	photoURI: String
-	locations: [Location!]
+	#countries available
+	campusLocations: [Location!]
 	tracks: [Track!]
 }
 
@@ -364,7 +365,7 @@ type Track {
 
 input SchoolSearchParams {
 	trackUUID: ID
-	locationUUID: ID
+	campusLocationUUID: ID
 	paymentType: String
 	maxPrice: Int
 	minGraduateSalary: Float
@@ -375,7 +376,7 @@ input SchoolSearchParams {
 
 type Filters {
 	tracks: [Track!]!
-	locations: [Location!]!
+	campusLocations: [Location!]!
 	paymentTypes: [String!]!
 }
 
@@ -491,7 +492,7 @@ func (ec *executionContext) _Filters_tracks(ctx context.Context, field graphql.C
 	return ec.marshalNTrack2ᚕgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐTrack(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Filters_locations(ctx context.Context, field graphql.CollectedField, obj *models.Filters) graphql.Marshaler {
+func (ec *executionContext) _Filters_campusLocations(ctx context.Context, field graphql.CollectedField, obj *models.Filters) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
@@ -503,7 +504,7 @@ func (ec *executionContext) _Filters_locations(ctx context.Context, field graphq
 	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Locations, nil
+		return obj.CampusLocations, nil
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -993,7 +994,7 @@ func (ec *executionContext) _School_photoURI(ctx context.Context, field graphql.
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _School_locations(ctx context.Context, field graphql.CollectedField, obj *models.School) graphql.Marshaler {
+func (ec *executionContext) _School_campusLocations(ctx context.Context, field graphql.CollectedField, obj *models.School) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
@@ -1005,7 +1006,7 @@ func (ec *executionContext) _School_locations(ctx context.Context, field graphql
 	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Locations, nil
+		return obj.CampusLocations, nil
 	})
 	if resTmp == nil {
 		return graphql.Null
@@ -1902,9 +1903,9 @@ func (ec *executionContext) unmarshalInputSchoolSearchParams(ctx context.Context
 			if err != nil {
 				return it, err
 			}
-		case "locationUUID":
+		case "campusLocationUUID":
 			var err error
-			it.LocationUUID, err = ec.unmarshalOID2ᚖstring(ctx, v)
+			it.CampusLocationUUID, err = ec.unmarshalOID2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -1974,8 +1975,8 @@ func (ec *executionContext) _Filters(ctx context.Context, sel ast.SelectionSet, 
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
-		case "locations":
-			out.Values[i] = ec._Filters_locations(ctx, field, obj)
+		case "campusLocations":
+			out.Values[i] = ec._Filters_campusLocations(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
@@ -2132,8 +2133,8 @@ func (ec *executionContext) _School(ctx context.Context, sel ast.SelectionSet, o
 			out.Values[i] = ec._School_paymentType(ctx, field, obj)
 		case "photoURI":
 			out.Values[i] = ec._School_photoURI(ctx, field, obj)
-		case "locations":
-			out.Values[i] = ec._School_locations(ctx, field, obj)
+		case "campusLocations":
+			out.Values[i] = ec._School_campusLocations(ctx, field, obj)
 		case "tracks":
 			out.Values[i] = ec._School_tracks(ctx, field, obj)
 		default:

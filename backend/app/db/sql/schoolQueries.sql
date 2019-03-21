@@ -26,7 +26,7 @@ join school_tracks
 where tracks.id = school_tracks.track_id
 ;
 
--- name: getSchoolLocations
+-- name: getSchoolCampusLocations
 select
 	locations.uuid as uuid,
 	locations.city as city,
@@ -34,9 +34,9 @@ select
 from locations
 join schools
 	on schools.uuid = :school_uuid
-join school_locations
-	on school_locations.school_id = schools.id
-where locations.id = school_locations.location_id
+join campus_locations
+	on campus_locations.school_id = schools.id
+where locations.id = campus_locations.location_id
 ;
 
 -- name: getAllSchools
@@ -54,7 +54,7 @@ select
 from schools
 ;
 
--- name: getSchoolsWithLocation
+-- name: getSchoolsWithCampusLocation
 select
 	schools.uuid as uuid,
 	schools.name as name,
@@ -67,10 +67,10 @@ select
 	schools.payment_type as paymenttype,
 	schools.photo_uri as photouri
 from schools
-join school_locations
-	on school_locations.school_id = schools.id
+join campus_locations
+	on campus_locations.school_id = schools.id
 join locations
-	on locations.id = school_locations.location_id
+	on locations.id = campus_locations.location_id
 where locations.uuid = :location_uuid
 ;
 

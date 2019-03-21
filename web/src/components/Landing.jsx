@@ -17,7 +17,7 @@ class Landing extends Component {
             uuid
             name
           }
-          locations {
+          campusLocations {
             uuid
             city
             country

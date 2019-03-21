@@ -3,9 +3,9 @@
 package models
 
 type Filters struct {
-	Tracks       []Track    `json:"tracks"`
-	Locations    []Location `json:"locations"`
-	PaymentTypes []string   `json:"paymentTypes"`
+	Tracks          []Track    `json:"tracks"`
+	CampusLocations []Location `json:"campusLocations"`
+	PaymentTypes    []string   `json:"paymentTypes"`
 }
 
 type Location struct {
@@ -25,13 +25,13 @@ type School struct {
 	BasePrice         *int       `json:"basePrice"`
 	PaymentType       *string    `json:"paymentType"`
 	PhotoURI          *string    `json:"photoURI"`
-	Locations         []Location `json:"locations"`
+	CampusLocations   []Location `json:"campusLocations"`
 	Tracks            []Track    `json:"tracks"`
 }
 
 type SchoolSearchParams struct {
 	TrackUUID           *string  `json:"trackUUID"`
-	LocationUUID        *string  `json:"locationUUID"`
+	CampusLocationUUID  *string  `json:"campusLocationUUID"`
 	PaymentType         *string  `json:"paymentType"`
 	MaxPrice            *int     `json:"maxPrice"`
 	MinGraduateSalary   *float64 `json:"minGraduateSalary"`

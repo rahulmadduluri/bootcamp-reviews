@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS locations (
 	PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS school_locations (
+CREATE TABLE IF NOT EXISTS campus_locations (
 	school_id  				int 			NOT NULL,
 	location_id				int 			NOT NULL,
 	FOREIGN KEY (school_id) REFERENCES schools (id),
@@ -57,16 +57,14 @@ INSERT INTO schools VALUES
 	(NULL, 'uuid-3', 'App Academy', 56500, 15.80, 70.32, 30, 0, 35000, 'Upfront', 'appacademy', 1000),
 	(NULL, 'uuid-4', 'Make School', 66500, 10.80, 72.18, 100, 0, 60000, 'ISA', 'makeschool', 1000);
 INSERT INTO locations VALUES
-	(NULL, 'uuid-1', 'ALL_CITIES', 'USA', 500),
-	(NULL, 'uuid-2', 'San Francisco', 'USA', 500),
-	(NULL, 'uuid-3', 'ALL_CITIES', 'France', 500),
-	(NULL, 'uuid-4', 'Paris', 'France', 500);
-INSERT INTO school_locations VALUES
-	(1, 1),
-	(1, 3),
-	(2, 1),
+	(NULL, 'uuid-1', 'San Francisco', 'USA', 500),
+	(NULL, 'uuid-2', 'New York', 'USA', 500),
+	(NULL, 'uuid-3', 'Los Angeles', 'USA', 500);
+INSERT INTO campus_locations VALUES
+	(3, 1),
 	(3, 2),
-	(4, 2);
+	(3, 3),
+	(4, 1);
 INSERT INTO tracks VALUES
 	(NULL, 'uuid-1', 'Web', 500),
 	(NULL, 'uuid-2', 'iOS', 500),

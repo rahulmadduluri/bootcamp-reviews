@@ -11,9 +11,9 @@ import (
 const (
 	_GetSchool                         = "getSchool"
 	_GetSchoolTracks                   = "getSchoolTracks"
-	_GetSchoolLocations                = "getSchoolLocations"
+	_GetSchoolCampusLocations          = "getSchoolCampusLocations"
 	_GetAllSchools                     = "getAllSchools"
-	_GetSchoolsWithLocation            = "getSchoolsWithLocation"
+	_GetSchoolsWithCampusLocation      = "getSchoolsWithCampusLocation"
 	_GetSchoolsWithTrack               = "getSchoolsWithTrack"
 	_GetSchoolsWithPaymentType         = "getSchoolsWithPaymentType"
 	_GetSchoolsWithMaxPrice            = "getSchoolsWithMaxPrice"
@@ -26,7 +26,7 @@ const (
 type SchoolDB interface {
 	GetSchool(schoolUUID string) (models.School, error)
 	GetAllSchools() ([]models.School, error)
-	GetSchoolsWithLocation(country string) ([]models.School, error)
+	GetSchoolsWithCampusLocation(country string) ([]models.School, error)
 	GetSchoolsWithTrack(trackUUID string) ([]models.School, error)
 	GetSchoolsWithPaymentType(paymentType string) ([]models.School, error)
 	GetSchoolsWithMaxPrice(maxPrice int) ([]models.School, error)
@@ -67,11 +67,11 @@ func (sql *sqlDB) GetSchool(schoolUUID string) (models.School, error) {
 	school.Tracks = tracks
 
 	// get school locations
-	locations, err := sql.GetSchoolLocations(schoolUUID)
+	locations, err := sql.GetSchoolCampusLocations(schoolUUID)
 	if err != nil {
 		return school, err
 	}
-	school.Locations = locations
+	school.CampusLocations = locations
 
 	return school, err
 }
@@ -103,11 +103,11 @@ func (sql *sqlDB) GetSchoolTracks(schoolUUID string) ([]models.Track, error) {
 	return tracks, err
 }
 
-func (sql *sqlDB) GetSchoolLocations(schoolUUID string) ([]models.Location, error) {
+func (sql *sqlDB) GetSchoolCampusLocations(schoolUUID string) ([]models.Location, error) {
 	locations := []models.Location{}
 
 	rows, err := sql.db.NamedQuery(
-		sql.queries.schoolQueries[_GetSchoolLocations],
+		sql.queries.schoolQueries[_GetSchoolCampusLocations],
 		map[string]interface{}{
 			"school_uuid": schoolUUID,
 		},
@@ -135,9 +135,9 @@ func (sql *sqlDB) GetAllSchools() ([]models.School, error) {
 	return schools, err
 }
 
-func (sql *sqlDB) GetSchoolsWithLocation(locationUUID string) ([]models.School, error) {
-	schools, err := sql.getSchools(_GetSchoolsWithLocation, map[string]interface{}{
-		"location_uuid": locationUUID,
+func (sql *sqlDB) GetSchoolsWithCampusLocation(locationUUID string) ([]models.School, error) {
+	schools, err := sql.getSchools(_GetSchoolsWithCampusLocation, map[string]interface{}{
+		"campus_location_uuid": locationUUID,
 	})
 	return schools, err
 }
@@ -216,11 +216,11 @@ func (sql *sqlDB) getSchools(queryName goyesql.Tag, params map[string]interface{
 		school.Tracks = tracks
 
 		// get school locations
-		locations, err := sql.GetSchoolLocations(school.UUID)
+		locations, err := sql.GetSchoolCampusLocations(school.UUID)
 		if err != nil {
 			return schools, err
 		}
-		school.Locations = locations
+		school.CampusLocations = locations
 
 		schools[i] = school
 	}

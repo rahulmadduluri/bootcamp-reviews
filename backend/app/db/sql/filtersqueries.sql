@@ -5,7 +5,7 @@ select
 from tracks
 ;
 
--- name: getLocations
+-- name: getCampusLocations
 select
 	locations.uuid as uuid,
 	locations.city as city,

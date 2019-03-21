@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	_GetTracks       = "getTracks"
-	_GetLocations    = "getLocations"
-	_GetPaymentTypes = "getPaymentTypes"
+	_GetTracks          = "getTracks"
+	_GetCampusLocations = "getCampusLocations"
+	_GetPaymentTypes    = "getPaymentTypes"
 )
 
 type FiltersDB interface {
@@ -44,7 +44,7 @@ func (sql *sqlDB) GetFilters() (models.Filters, error) {
 	// Get Locations
 	locations := []models.Location{}
 	rows, err = sql.db.NamedQuery(
-		sql.queries.filtersQueries[_GetLocations],
+		sql.queries.filtersQueries[_GetCampusLocations],
 		map[string]interface{}{},
 	)
 	if err != nil {
@@ -61,7 +61,7 @@ func (sql *sqlDB) GetFilters() (models.Filters, error) {
 		}
 		locations = append(locations, l)
 	}
-	filters.Locations = locations
+	filters.CampusLocations = locations
 
 	// Get Payment Types
 	paymentTypes := []string{}

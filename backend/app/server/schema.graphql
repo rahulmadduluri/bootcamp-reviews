@@ -9,7 +9,8 @@ type School {
 	basePrice: Int
 	paymentType: String # e.g. ISA, Upfront
 	photoURI: String
-	locations: [Location!]
+	#countries available
+	campusLocations: [Location!]
 	tracks: [Track!]
 }
 
@@ -26,7 +27,7 @@ type Track {
 
 input SchoolSearchParams {
 	trackUUID: ID
-	locationUUID: ID
+	campusLocationUUID: ID
 	paymentType: String
 	maxPrice: Int
 	minGraduateSalary: Float
@@ -37,7 +38,7 @@ input SchoolSearchParams {
 
 type Filters {
 	tracks: [Track!]!
-	locations: [Location!]!
+	campusLocations: [Location!]!
 	paymentTypes: [String!]!
 }
 
