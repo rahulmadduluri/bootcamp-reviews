@@ -58,12 +58,14 @@ class Search extends Component {
   }
 }
 
+// image URL: localhost:8080/s3/schools/{uri}
 const List = ({ schools }) => (
   <div>
     <div className="list">
       {
         schools.map(({ uuid, name, avgGraduateSalary, jobPlacementRate, lengthInWeeks, isOnline, photoURI, basePrice, paymentType, tracks, campusLocations }) => (
           <div className="list-row" key={uuid}>
+            <SchoolLogo photoURI={photoURI} />
             <div className="schoolInfoWrapper">
               <div className="name">
                 {name}
@@ -80,6 +82,13 @@ const List = ({ schools }) => (
     </div>
   </div>
 );
+
+function SchoolLogo(uriWrapper) {
+  let uri = uriWrapper.photoURI;
+  let url = "http://localhost:8080/s3/schools/" + uri;
+  console.log(uriWrapper);
+  return <img src={url} alt="SchoolLogo"/>
+};
 
 function LocationBar(isOnlineWrapper) {
   if (isOnlineWrapper.isOnline === true) {

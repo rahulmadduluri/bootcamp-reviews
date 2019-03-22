@@ -53,9 +53,9 @@ CREATE TABLE IF NOT EXISTS school_tracks (
 
 INSERT INTO schools VALUES
 	(NULL, 'uuid-1', 'Lambda School', 75920, 5.34, 75.32, 35, 1, 30000, 'ISA', 'lambda', 1000),
-	(NULL, 'uuid-2', 'MissionU', 68392, 12.90, 65.32, 30, 1, 20000, 'ISA', 'missionu', 1000),
-	(NULL, 'uuid-3', 'App Academy', 56500, 15.80, 70.32, 30, 0, 35000, 'Upfront', 'appacademy', 1000),
-	(NULL, 'uuid-4', 'Make School', 66500, 10.80, 72.18, 100, 0, 60000, 'ISA', 'makeschool', 1000);
+	(NULL, 'uuid-2', 'Holberton School', 68392, 12.90, 65.32, 30, 1, 20000, 'ISA', 'holberton', 1000),
+	(NULL, 'uuid-3', 'Flatiron School', 56500, 15.80, 70.32, 30, 0, 35000, 'Upfront', 'flatiron', 1000),
+	(NULL, 'uuid-4', 'Make School', 66500, 10.80, 72.18, 100, 0, 60000, 'ISA', 'make', 1000);
 INSERT INTO locations VALUES
 	(NULL, 'uuid-1', 'San Francisco', 'USA', 500),
 	(NULL, 'uuid-2', 'New York', 'USA', 500),
