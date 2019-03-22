@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Rubik:200,400,500');
+@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,700');
 
 .list {
   margin: 0 auto;
@@ -8,14 +8,12 @@
 }
 
 .list-row {
-  height: 120px;
+  height: 150px;
   display: flex;
   white-space: nowrap;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  padding: 10px;
+  padding: 5px;
   border-bottom: 1px solid #e3e3e3;
-  background-color: red;
+  background-color: white;
   font-family: 'Rubik';
 }
 
@@ -27,29 +25,109 @@
 
 .schoolInfoWrapper .name {
 	font-weight: 500;
-	font-size: 18px;
+	font-size: 22px;
 }
 
+/* Location */
 .schoolInfoWrapper .location {
-
+	margin-top: 3px;
+	display: flex;
+}
+.schoolInfoWrapper .location > img {
+	width: 8px;
+	height: 11px;
+	display: inline-block;
+}
+.schoolInfoWrapper .location .campusLocations {
+	display: inline-block;
+	font-size: 11px;
+	color: #828282;
+	font-weight: 300px;
+	margin-left: 5px;
 }
 
+/* Price */
 .schoolInfoWrapper .price {
+	margin-top: 12px;
+	margin-bottom: 12px;
+	display: flex;
+}
+.schoolInfoWrapper .price .basePrice {
+	font-weight: 500;
+	font-size: 15px;
+	display: inline-block;
+}
+.schoolInfoWrapper .price .paymentType {
+	display: inline-block;
+	margin-left: 5px;
+}
+.schoolInfoWrapper .price .paymentType > img {
+	height: 16px;
+	display: flex;
+}
+
+/* Length */
+.schoolInfoWrapper .length {
+	margin-top: 7px;
+	display: flex;
+}
+.schoolInfoWrapper .length > img {
+	width: 13px;
+	height: 13px;
+	display: inline-block;
+}
+.schoolInfoWrapper .length .lengthInWeeks {
+	display: inline-block;
+	color: #828282;
+	font-weight: 400;
+	font-size: 12px;
+	margin-left: 5px;
+}
+
+/* Salary */
+.schoolInfoWrapper .salary {
+	margin-top: 7px;
+	display: flex;
+}
+.schoolInfoWrapper .salary > img {
+	width: 13px;
+	height: 13px;
+	display: inline-block;
+}
+.schoolInfoWrapper .salary .avgGraduateSalaryLabel {
+	display: inline-block;
+	color: #828282;
+	font-weight: 400;
+	font-size: 12px;
+	margin-left: 5px;
+}
+.schoolInfoWrapper .salary .avgGraduateSalary {
+	display: inline-block;
 	font-weight: 500;
 	font-size: 12px;
+	margin-left: 5px;
 }
 
-.schoolInfoWrapper .length {
-	font-weight: 400;
-	font-size: 12px;
+/* Job Placement */
+.schoolInfoWrapper .jobPlacement {
+	margin-top: 7px;
+	display: flex;
 }
-
-.schoolInfoWrapper .graduateSalary {
-	font-weight: 400;
-	font-size: 12px;
+.schoolInfoWrapper .jobPlacement > img {
+	width: 13px;
+	height: 13px;
+	display: inline-block;
 }
-
-.schoolInfoWrapper .jobPlacementRate {
+.schoolInfoWrapper .jobPlacement .jobPlacementRateLabel {
+	display: inline-block;
+	color: #828282;
 	font-weight: 400;
 	font-size: 12px;
+	margin-left: 5px;
+}
+.schoolInfoWrapper .jobPlacement .jobPlacementRate {
+	display: inline-block;
+	font-weight: 500;
+	font-size: 12px;
+	margin-left: 5px;
 }
