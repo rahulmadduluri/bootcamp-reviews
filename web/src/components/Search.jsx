@@ -84,9 +84,12 @@ const List = ({ schools }) => (
 );
 
 function SchoolLogo(uriWrapper) {
-  let uri = uriWrapper.photoURI;
-  let url = "http://localhost:8080/s3/schools/" + uri;
-  console.log(uriWrapper);
+  let url;
+  if (process.env.NODE_ENV === 'development') {
+    url = window.location.protocol + "//localhost:8080/s3/schools/" + uriWrapper.photoURI;
+  } else {
+    url = window.location.protocol + window.location.hostname + "/s3/schools/" + uriWrapper.photoURI;
+  }
   return <img src={url} alt="SchoolLogo"/>
 };
 
