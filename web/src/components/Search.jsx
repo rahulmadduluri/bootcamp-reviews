@@ -70,7 +70,7 @@ const List = ({ schools }) => (
               <div className="name">
                 {name}
               </div>
-              <LocationBar isOnline={isOnline} />
+              <LocationBar isOnline={isOnline} campusLocations={campusLocations} />
               <PriceBar basePrice={basePrice} paymentType={paymentType} />
               <LengthBar length={lengthInWeeks}/>
               <SalaryBar avgGraduateSalary={avgGraduateSalary} />
@@ -93,8 +93,9 @@ function SchoolLogo(uriWrapper) {
   return <img src={url} alt="SchoolLogo"/>
 };
 
-function LocationBar(isOnlineWrapper) {
-  if (isOnlineWrapper.isOnline === true) {
+function LocationBar(locationWrapper) {
+  console.log(locationWrapper);
+  if (locationWrapper.isOnline === true) {
     return (
       <div className="location">
         <img src={LocationIcon} alt="Location"/>
@@ -102,10 +103,21 @@ function LocationBar(isOnlineWrapper) {
       </div>
     );
   }
+  let list = "";
+  if (locationWrapper.campusLocations != null) {
+    for (let i = 0; i < locationWrapper.campusLocations.length; i++) { 
+      list += locationWrapper.campusLocations[i].city
+      if (i !== locationWrapper.campusLocations.length - 1) {
+        list += ", "
+      }
+    }
+  }
   return (
     <div className="location">
       <img src={LocationIcon} alt="Location"/>
-      <div className="campusLocations">Not Online</div>
+      <div className="campusLocations">
+        {list}
+      </div>
     </div>
   );
 };
