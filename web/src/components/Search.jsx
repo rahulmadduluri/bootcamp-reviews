@@ -3,6 +3,7 @@ import './Search.css';
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import Navbar from './navbar.jsx';
+import FilterBar from './filterbar.jsx';
 import LocationIcon from '../location_icon.png';
 import ISAPayment from '../isa_payment.png';
 import UpfrontPayment from '../upfront_payment.png';
@@ -42,6 +43,7 @@ class Search extends Component {
     return (
       <div>
         <Navbar />
+        <FilterBar onSetSearchParams={this.props.onSetSearchParams} currentSearchParams={this.props.currentSearchParams}/>
         <Query
           query={schoolsQuery}
           variables={ { searchParams:this.props.currentSearchParams } }
@@ -58,7 +60,6 @@ class Search extends Component {
   }
 }
 
-// image URL: localhost:8080/s3/schools/{uri}
 const List = ({ schools }) => (
   <div>
     <div className="list">
@@ -94,7 +95,6 @@ function SchoolLogo(uriWrapper) {
 };
 
 function LocationBar(locationWrapper) {
-  console.log(locationWrapper);
   if (locationWrapper.isOnline === true) {
     return (
       <div className="location">
@@ -147,6 +147,7 @@ function LengthBar(lengthWrapper) {
   return (
     <div className="length">
       <img src={LengthIcon} alt="Length"/>
+      <div className="lengthInWeeksLabel">Length</div>
       <div className="lengthInWeeks">{lengthWrapper.length} weeks</div>
     </div>
   );

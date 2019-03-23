@@ -31,8 +31,14 @@ class App extends Component {
 	    );
   	} else {
   		const currentSearchParams = {
-  			trackUUID: this.state.trackUUID
-  		};
+  			trackUUID: this.state.trackUUID,
+        isOnline: this.state.isOnline,
+        maxPrice: this.state.maxPrice,
+        minGraduateSalary: this.state.minGraduateSalary,
+        minJobPlacementRate: this.state.minJobPlacementRate,
+        minLength: this.state.minLength
+      };
+
 	    return (
 	      <Search onSetSearchParams={this.onSetSearchParams} currentSearchParams={currentSearchParams}/>
 	    );

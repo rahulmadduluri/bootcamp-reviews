@@ -87,10 +87,16 @@
 	height: 13px;
 	display: inline-block;
 }
-.schoolInfoWrapper .length .lengthInWeeks {
+.schoolInfoWrapper .length .lengthInWeeksLabel {
 	display: inline-block;
 	color: #828282;
 	font-weight: 400;
+	font-size: 12px;
+	margin-left: 5px;
+}
+.schoolInfoWrapper .length .lengthInWeeks {
+	display: inline-block;
+	font-weight: 500;
 	font-size: 12px;
 	margin-left: 5px;
 }
