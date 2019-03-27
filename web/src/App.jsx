@@ -29,11 +29,12 @@ class App extends Component {
   		const currentSearchParams = {
   			trackUUID: this.state.trackUUID,
         campusLocationUUID: this.state.campusLocationUUID,
-        isOnline: this.state.isOnline,
+        paymentType: this.state.paymentType,
         maxPrice: this.state.maxPrice,
         minGraduateSalary: this.state.minGraduateSalary,
         minJobPlacementRate: this.state.minJobPlacementRate,
-        minLength: this.state.minLength
+        minLength: this.state.minLength,
+        isOnline: this.state.isOnline
       };
 	    return (
 	      <Search onSetSearchParams={this.onSetSearchParams} currentSearchParams={currentSearchParams}/>
