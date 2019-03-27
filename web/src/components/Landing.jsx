@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Landing.css';
 import ContainedButton from "./contained_button.jsx";
-import DropdownSearch from "./dropdown_search.jsx";
+import LandingTrackButton from "./landing_track_button.jsx";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
@@ -45,7 +45,7 @@ class Landing extends Component {
                 if (loading) return <p>Loading...</p>;
                 if (error) return <p>Error :(</p>;
 
-                return <DropdownSearch searchOptions={ data.filters } onSelect={this.props.onSetSearchParams}/>
+                return <LandingTrackButton searchOptions={ data.filters } onSelect={this.props.onSetSearchParams}/>
               }}
             </Query>      
           </div>

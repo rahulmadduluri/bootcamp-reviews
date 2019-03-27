@@ -23,9 +23,9 @@ class Navbar extends React.Component {
             <SmartSearchBar />
           </div>
           <div className="navLinks">
-            <a href="#">Write a Review</a>
-            <a href="#">Help</a>
-            <a href="#">About Us</a>
+            <a href="http://www.google.com">Write a Review</a>
+            <a href="http://www.google.com">Help</a>
+            <a href="http://www.google.com">About Us</a>
           </div>
         </div>
       </nav>

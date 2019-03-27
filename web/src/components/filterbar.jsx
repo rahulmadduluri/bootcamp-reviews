@@ -2,18 +2,9 @@ import React from 'react';
 import './filterbar.css';
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
+import FilterButton from './filter_button.jsx';
 
 class FilterBar extends React.Component {
-
-  state = {
-    trackFilter: null,
-    priceFilter: null,
-    campusLocationFilter: null,
-    paymentTypeFilter: null
-  };
-
-  onSelectFilter = (filter) => {
-  };
 
   render() {
     const filtersQuery = gql`
@@ -52,7 +43,7 @@ const FilterList = ({ searchOptions, currentSearchParams, onSelect }) => (
   <div>
     <div className="FilterBar">
       <div className="Track">
-        <TracksFilter currentTrack={currentSearchParams.trackUUID} allTracks={searchOptions.tracks} />
+        <FilterButton currentOption={currentSearchParams.trackUUID} filterType="Track" allOptions={searchOptions.tracks} onSelect={onSelect}/>
       </div>
       <div className="OnlineStatus">
       </div>
@@ -63,13 +54,5 @@ const FilterList = ({ searchOptions, currentSearchParams, onSelect }) => (
     </div>
   </div>
 );
-
-function TracksFilter(tracksWrapper) {
-  if (tracksWrapper.currentTrack == null) {
-    return <div>a</div>;
-  } else {
-    return <div>b</div>;
-  }
-};
 
 export default FilterBar;

@@ -6,10 +6,6 @@ class App extends Component {
 
   state = {
   	page: 'Landing',
-  	// allSearchOptions: {
-  	// 	locations: [{uuid: 'uuid-1', country:'USA', city:'ALL_CITIES'},{uuid: 'uuid-2', country:'USA', city:'San Francisco'}, {uuid: 'uuid-3', country:'France', city:'ALL_CITIES'}, {uuid: 'uuid-4', country:'France', city:'Paris'}],
-  	// 	tracks: [{uuid: 'uuid-1', name: 'iOS'}, {uuid: 'uuid-2', name: 'Web'}, {uuid: 'uuid-3', name: 'Android'}]
-  	// },
     
   	// add country, track, etc. here. for example:
   	//locationUUID: 'uuid-1',

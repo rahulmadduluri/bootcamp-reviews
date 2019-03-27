@@ -19,7 +19,7 @@ const styles = theme => ({
   },
 });
 
-class DropdownSearch extends React.Component {
+class LandingTrackButton extends React.Component {
   state = {
     trackUUID: '',
     labelWidth: 0,
@@ -88,4 +88,4 @@ class DropdownSearch extends React.Component {
   }
 }
 
-export default withStyles(styles)(DropdownSearch);
+export default withStyles(styles)(LandingTrackButton);
