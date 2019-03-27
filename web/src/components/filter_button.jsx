@@ -15,13 +15,13 @@ const styles = theme => ({
   },
   formControl: {
     width: 140,
-    maxHeight: 45,
     borderRadius: 5,
     padding: 5,
   },
   inputLabel: {
     textAlign: 'center',
-    width: 120,
+    width: 120
+
   },
   select: {
     textAlign: 'center',
@@ -61,7 +61,6 @@ class FilterSearchButton extends React.Component {
   };
 
   render() {
-
     const { classes } = this.props;
     const theme = createMuiTheme({
       typography: {
@@ -105,7 +104,7 @@ class FilterSearchButton extends React.Component {
             }
            >
             <MenuItem value="">
-              None
+              Any
             </MenuItem>
             { this.props.allOptions.map(filter => 
               {
@@ -113,6 +112,8 @@ class FilterSearchButton extends React.Component {
                   return <MenuItem key={filter.uuid} value={filter.uuid}>{filter.name}</MenuItem>;
                 } else if (this.props.filterType === "Campus Location") {
                   return <MenuItem key={filter.uuid} value={filter.uuid}>{filter.city}</MenuItem>;
+                } else if (this.props.filterType === "Payment Type") {
+                  return <MenuItem key={filter} value={filter}>{filter}</MenuItem>;
                 } else {
                   return <div key={""}></div>;
                 }

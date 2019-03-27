@@ -39,19 +39,16 @@ class FilterBar extends React.Component {
 }
 
 const FilterList = ({ searchOptions, currentSearchParams, onSelect }) => (
-  <div>
+  <div className="FilterWrapper">
     <div className="FilterBar">
       <div className="Track">
         <FilterButton currentOption={currentSearchParams.trackUUID} filterType="Track" allOptions={searchOptions.tracks} onSelect={onSelect}/>
       </div>
       <div className="CampusLocation">
-        <FilterButton currentOption={currentSearchParams.trackUUID} filterType="Campus Location" allOptions={searchOptions.campusLocations} onSelect={onSelect}/>
-      </div>
-      <div className="OnlineStatus">
-      </div>
-      <div className="Price">
+        <FilterButton currentOption={currentSearchParams.campusLocationUUID} filterType="Campus Location" allOptions={searchOptions.campusLocations} onSelect={onSelect}/>
       </div>
       <div className="PaymentType">
+        <FilterButton filterType="Payment Type" allOptions={searchOptions.paymentTypes} onSelect={onSelect}/>
       </div>
     </div>
   </div>
