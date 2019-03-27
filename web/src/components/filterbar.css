@@ -1,11 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik:200,400,500');
 
 .FilterWrapper {
-  margin-top: 5px;
   max-height: 55px;
   border-bottom: 0.5px solid #e3e3e3;
   overflow: hidden;
-  padding-bottom: 5px;
+  padding-bottom: 10px;
 }
 
 .FilterBar {

@@ -27,6 +27,20 @@ class Navbar extends React.Component {
             <a href="http://www.google.com">Help</a>
             <a href="http://www.google.com">About Us</a>
           </div>
+          <div className="menuLinks">
+
+            <input type="checkbox" />
+            
+            <span></span>
+            <span></span>
+            <span></span>
+            
+            <ul id="menu">
+              <a href="#"><li>Home</li></a>
+              <a href="#"><li>About</li></a>
+              <a href="#"><li>Info</li></a>
+            </ul>
+          </div>
         </div>
       </nav>
     );
