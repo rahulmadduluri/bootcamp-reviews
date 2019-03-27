@@ -13,14 +13,14 @@ const styles = theme => ({
     flexWrap: 'wrap',
   },
   formControl: {
-    width: 125,
+    width: 140,
     maxHeight: 45,
     borderRadius: 5,
     padding: 5,
   },
   inputLabel: {
     textAlign: 'center',
-    width: 105,
+    width: 120,
   },
   select: {
     textAlign: 'center',
@@ -47,9 +47,15 @@ class FilterSearchButton extends React.Component {
   }
 
   handleChange = event => {
-    this.setState({ "selectedOption": event.target.value });
-    if (event.target.value !== null && event.target.value !== '') {
-      this.props.onSelect({ "trackUUID": event.target.value });
+    let value = null;
+    if (event.target.value !== '') {
+      value = event.target.value;
+    }
+    this.setState({ "selectedOption": value });
+    if (this.props.filterType === "Track") {
+      this.props.onSelect({ "trackUUID": value });
+    } else if (this.props.filterType === "Campus Location") {
+      this.props.onSelect({ "campusLocationUUID": value });
     }
   };
 
@@ -64,11 +70,6 @@ class FilterSearchButton extends React.Component {
         useNextVariants: true,
       },
     });
-
-    let value = '';
-    if (this.state.selectedOption != null) {
-      value = this.state.selectedOption;
-    }
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -85,7 +86,7 @@ class FilterSearchButton extends React.Component {
           </InputLabel>
           <Select
             className={classes.select}
-            value={value}
+            value={''}
             onChange={this.handleChange}
             IconComponent={() => (<div></div>)}
             input={
@@ -101,7 +102,15 @@ class FilterSearchButton extends React.Component {
               None
             </MenuItem>
             { this.props.allOptions.map(filter => 
-              <FilterMenuItem key={filter.uuid} filter={filter} filterType={this.props.filterType}/>
+              {
+                if (this.props.filterType === "Track") {
+                  return <MenuItem key={filter.uuid} value={filter.uuid}>{filter.name}</MenuItem>;
+                } else if (this.props.filterType === "Campus Location") {
+                  return <MenuItem key={filter.uuid} value={filter.city}>{filter.city}</MenuItem>;
+                } else {
+                  return <div key={""}></div>;
+                }
+              }
             )}
           </Select>
         </FormControl>
@@ -111,15 +120,5 @@ class FilterSearchButton extends React.Component {
     );
   }
 }
-
-function FilterMenuItem(props) {
-  if (props.filterType === "Track") {
-    return <MenuItem key={props.filter.uuid} value={props.filter.uuid}>{props.filter.name}</MenuItem>
-  } else {
-    return <MenuItem key={props.filter.name} value={props.filter.name}>{props.filter.name}</MenuItem>
-  }
-}
-
-
 
 export default withStyles(styles)(FilterSearchButton);

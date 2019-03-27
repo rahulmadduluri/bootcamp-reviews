@@ -71,7 +71,7 @@ join campus_locations
 	on campus_locations.school_id = schools.id
 join locations
 	on locations.id = campus_locations.location_id
-where locations.uuid = :location_uuid
+where locations.uuid = :campus_location_uuid
 ;
 
 -- name: getSchoolsWithTrack

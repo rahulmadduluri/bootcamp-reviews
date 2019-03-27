@@ -40,6 +40,8 @@ class Search extends Component {
       }
     `;
 
+    console.log(this.props.currentSearchParams);
+
     return (
       <div>
         <Navbar />

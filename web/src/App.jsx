@@ -8,7 +8,7 @@ class App extends Component {
   	page: 'Landing',
     
   	// add country, track, etc. here. for example:
-  	//locationUUID: 'uuid-1',
+  	//campusLocationUUID: 'uuid-1',
   	//trackUUID: 'uuid-1'
   };
 
@@ -28,13 +28,13 @@ class App extends Component {
   	} else {
   		const currentSearchParams = {
   			trackUUID: this.state.trackUUID,
+        campusLocationUUID: this.state.campusLocationUUID,
         isOnline: this.state.isOnline,
         maxPrice: this.state.maxPrice,
         minGraduateSalary: this.state.minGraduateSalary,
         minJobPlacementRate: this.state.minJobPlacementRate,
         minLength: this.state.minLength
       };
-
 	    return (
 	      <Search onSetSearchParams={this.onSetSearchParams} currentSearchParams={currentSearchParams}/>
 	    );

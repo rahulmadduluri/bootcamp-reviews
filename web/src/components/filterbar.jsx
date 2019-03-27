@@ -31,7 +31,6 @@ class FilterBar extends React.Component {
         {({ loading, error, data }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error :(</p>;
-
           return <FilterList searchOptions={ data.filters } currentSearchParams={this.props.currentSearchParams} onSelect={this.props.onSetSearchParams}/>
         }}
       </Query>
@@ -44,6 +43,9 @@ const FilterList = ({ searchOptions, currentSearchParams, onSelect }) => (
     <div className="FilterBar">
       <div className="Track">
         <FilterButton currentOption={currentSearchParams.trackUUID} filterType="Track" allOptions={searchOptions.tracks} onSelect={onSelect}/>
+      </div>
+      <div className="CampusLocation">
+        <FilterButton currentOption={currentSearchParams.trackUUID} filterType="Campus Location" allOptions={searchOptions.campusLocations} onSelect={onSelect}/>
       </div>
       <div className="OnlineStatus">
       </div>

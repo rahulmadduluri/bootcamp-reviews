@@ -9,7 +9,6 @@ import gql from "graphql-tag";
 class Landing extends Component {
 
   render() {
-
     const filtersQuery = gql`
       query GetFilters {
         filters {

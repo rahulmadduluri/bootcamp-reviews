@@ -26,7 +26,7 @@ const (
 type SchoolDB interface {
 	GetSchool(schoolUUID string) (models.School, error)
 	GetAllSchools() ([]models.School, error)
-	GetSchoolsWithCampusLocation(country string) ([]models.School, error)
+	GetSchoolsWithCampusLocation(campusLocationUUID string) ([]models.School, error)
 	GetSchoolsWithTrack(trackUUID string) ([]models.School, error)
 	GetSchoolsWithPaymentType(paymentType string) ([]models.School, error)
 	GetSchoolsWithMaxPrice(maxPrice int) ([]models.School, error)
@@ -135,9 +135,9 @@ func (sql *sqlDB) GetAllSchools() ([]models.School, error) {
 	return schools, err
 }
 
-func (sql *sqlDB) GetSchoolsWithCampusLocation(locationUUID string) ([]models.School, error) {
+func (sql *sqlDB) GetSchoolsWithCampusLocation(campusLocationUUID string) ([]models.School, error) {
 	schools, err := sql.getSchools(_GetSchoolsWithCampusLocation, map[string]interface{}{
-		"campus_location_uuid": locationUUID,
+		"campus_location_uuid": campusLocationUUID,
 	})
 	return schools, err
 }
