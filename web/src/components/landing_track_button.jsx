@@ -33,7 +33,7 @@ class LandingTrackButton extends React.Component {
 
   handleChange = event => {
     this.setState({ "trackUUID": event.target.value });
-    if (event.target.value !== null && event.target.value !== '') {
+    if (event.target.value && event.target.value !== '') {
       this.props.onSelect({ "trackUUID": event.target.value });
     }
   };

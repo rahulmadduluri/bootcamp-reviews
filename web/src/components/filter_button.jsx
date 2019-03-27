@@ -11,6 +11,7 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
+    marginLeft: 5,
   },
   formControl: {
     width: 140,
@@ -71,6 +72,11 @@ class FilterSearchButton extends React.Component {
       },
     });
 
+    let currentOption = this.state.selectedOption;
+    if (!currentOption) {
+      currentOption = '';
+    }
+
     return (
       <MuiThemeProvider theme={theme}>
       <form className={classes.root} autoComplete="off">
@@ -86,7 +92,7 @@ class FilterSearchButton extends React.Component {
           </InputLabel>
           <Select
             className={classes.select}
-            value={''}
+            value={currentOption}
             onChange={this.handleChange}
             IconComponent={() => (<div></div>)}
             input={
@@ -106,7 +112,7 @@ class FilterSearchButton extends React.Component {
                 if (this.props.filterType === "Track") {
                   return <MenuItem key={filter.uuid} value={filter.uuid}>{filter.name}</MenuItem>;
                 } else if (this.props.filterType === "Campus Location") {
-                  return <MenuItem key={filter.uuid} value={filter.city}>{filter.city}</MenuItem>;
+                  return <MenuItem key={filter.uuid} value={filter.uuid}>{filter.city}</MenuItem>;
                 } else {
                   return <div key={""}></div>;
                 }
