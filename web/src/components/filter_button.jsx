@@ -57,6 +57,8 @@ class FilterSearchButton extends React.Component {
       this.props.onSelect({ "trackUUID": value });
     } else if (this.props.filterType === "Campus Location") {
       this.props.onSelect({ "campusLocationUUID": value });
+    } else if (this.props.filterType === "Payment Type") {
+      this.props.onSelect({ "paymentType": value });
     }
   };
 
