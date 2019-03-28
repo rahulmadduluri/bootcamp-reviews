@@ -4,6 +4,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import Navbar from './navbar.jsx';
 import FilterBar from './filterbar.jsx';
+import Pagination from './pagination.jsx';
 import LocationIcon from '../location_icon.png';
 import ISAPayment from '../isa_payment.png';
 import UpfrontPayment from '../upfront_payment.png';
@@ -57,6 +58,12 @@ class Search extends Component {
             return <List schools={data.schools}/>
           }}
         </Query>      
+        <Pagination
+          currentPage={this.props.currentSearchParams.pageNumber}
+          totalItems={10}
+          onPageChoice={(pageNum) => { console.log('pagenum: ', pageNum); }}
+
+        />
       </div>
     )
   }
