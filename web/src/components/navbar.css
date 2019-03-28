@@ -4,182 +4,22 @@
 nav {
   overflow: hidden;
   padding: 1em;
+  font-family: 'Rubik';
 }
 nav a {
   color: #FFF;
 }
-nav .navWide {
-  font-family: 'Rubik';
-  position: relative;
-}
 
-nav .navWide .raftSquare {
-  display: inline-block;
-  height: 35px;
-  width: 35px;
-  vertical-align: middle;
-}
-nav .navWide .raftSquare > img {
-  width: 100%;
-  height: 100%;
-}
-
-nav .navWide .searchBar {
-  position: relative;
+nav .searchBar {
   display: inline-block;
   width: 400px;
-  margin-left: 40px;
-}
-
-nav .navWide .navLinks {
-  position: absolute;
-  display: inline-block;
-  line-height: 50px;
-  right: 0px;
-}
-
-nav .navWide .navLinks a {
-  color: #828282;
-  font-weight: 500;
-  text-decoration: none;
-  padding: 0 1.5em;
-}
-
-nav .navWide .menuLinks {
-  display: none;
+  margin-left: 20px;
 }
 
 @media (max-width: 600px) {
-  nav .navWide .searchBar {
-    position: relative;
+  nav .searchBar {
     display: inline-block;
     width: 250px;
-    margin-left: 40px;
-  }
-
-  nav .navWide .navLinks {
-    display: none;
-  }
-
-/* Hamburger Menu */
-
-  nav .navWide .menuLinks {
-    display: inline-block;
-    position: relative;
-    vertical-align: middle;
-
-    z-index: 1;
-    top: 2px;
-    left: 20px;
-
-    -webkit-user-select: none;
-    user-select: none;
-  }
-  nav .navWide .menuLinks input {
-    display: block;
-    width: 40px;
-    height: 32px;
-    position: absolute;
-    top: -7px;
-    left: -5px;
-
-    cursor: pointer;
-    
-    opacity: 0; /* hide this */
-    z-index: 2; /* and place it over the hamburger */
-    
-    -webkit-touch-callout: none;
-  }
-  nav .navWide .menuLinks span
-  {
-    display: block;
-    width: 33px;
-    height: 4px;
-    margin-bottom: 5px;
-    position: relative;
-    
-    background: #cdcdcd;
-    border-radius: 3px;
-    
-    z-index: 1;
-    
-    transform-origin: 4px 0px;
-    
-    transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-                background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-                opacity 0.55s ease;
-  }
-  nav .navWide .menuLinks span:first-child
-  {
-    transform-origin: 0% 0%;
-  }
-  nav .navWide .menuLinks span:nth-last-child(2)
-  {
-    transform-origin: 0% 100%;
-  }
-  /* 
-   * Transform all the slices of hamburger
-   * into a crossmark.
-   */
-  nav .navWide .menuLinks input:checked ~ span
-  {
-    opacity: 1;
-    transform: rotate(45deg) translate(-2px, -1px);
-    background: #828282;
-  }
-  /*
-   * But let's hide the middle one.
-   */
-  nav .navWide .menuLinks input:checked ~ span:nth-last-child(3)
-  {
-    opacity: 0;
-    transform: rotate(0deg) scale(0.2, 0.2);
-  }
-  /*
-   * Ohyeah and the last one should go the other direction
-   */
-  nav .navWide .menuLinks input:checked ~ span:nth-last-child(2)
-  {
-    opacity: 1;
-    transform: rotate(-45deg) translate(0, -1px);
-  }
-  /*
-   * And let's fade it in from the left
-  */
-  nav .navWide .menuLinks input:checked ~ ul
-  {
-    transform: scale(1.0, 1.0);
-    opacity: 1.0;
-  }
-    /*
-   * Make this absolute positioned
-   * at the top left of the screen
-   */
-  nav .navWide .menuLinks .menu
-  {
-    position: absolute;
-    width: 200px;
-    margin: -100px 0 0 0;
-    padding: 50px;
-    /*padding-top: 125px;*/
-    right: -100px;
-
-    background: pink;
-    list-style-type: none;
-    -webkit-font-smoothing: antialiased;
-    /* to stop flickering of text in safari */
-    
-    transform-origin: 0% 0%;
-    transform: translate(100%, 0);
-    
-    transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
-  }
-
-  nav .navWide .menuLinks .menu li
-  {
-    color: green;
-    z-index: 2;
-    padding: 10px 0;
-    font-size: 22px;
+    margin-left: 20px;
   }
 }

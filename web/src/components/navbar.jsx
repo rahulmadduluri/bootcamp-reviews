@@ -50,18 +50,18 @@ class Navbar extends React.Component {
           </a>
         </div>
 
+        <div className="navbar-start searchBar">
+          <SmartSearchBar onSearch={this.onSearch}/>
+        </div>
+
         <div
           id="navbarItems"
           className={`navbar-menu ${
             this.state.hamburgerActive ? 'is-active' : ''
           }`}
         >
-          <div className="navbar-start">
-            <SmartSearchBar onSearch={this.onSearch}/>
-            <a className="navbar-item">Write a Review</a>
-          </div>
-
           <div className="navbar-end">
+            <a className="navbar-item">Write a Review</a>
             <a className="navbar-item">About Us</a>
             <a className="navbar-item">Help</a>
             <div className="navbar-item">
