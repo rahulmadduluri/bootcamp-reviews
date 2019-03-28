@@ -17,6 +17,7 @@ span {
 
 .Search-Area {
   z-index: 2;
+  margin-top: 100px;
   margin-left: 200px;
   position: absolute;
 }
@@ -28,7 +29,7 @@ span {
   font-size: 100px;
   position: relative;
   text-align: left;
-  margin-bottom: -140px;
+  margin-bottom: -20px;
 }
 
 .Subtitle {
@@ -58,4 +59,47 @@ span {
 .Button-Wrapper {
   margin-top: 60px;
   text-transform: none;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+
+  .Search-Area {
+    z-index: 2;
+    margin-left: 75px;
+    position: absolute;
+    margin-top: 10px;
+  }
+
+  .Title {
+    color: #3F44B5;
+    font-family: Merriweather;
+    font-weight: 700;
+    font-size: 100px;
+    text-align: left;
+    margin-bottom: -20px;
+  }
+
+  .Subtitle {
+    color: #828282;
+    font-family: Rubik;
+    font-weight: 300;
+    font-size: 18px;
+    position: relative;
+    text-align: left;
+    margin-bottom: 20px;
+  }
+
+  .Button-Wrapper {
+    margin-top: 30px;
+    text-transform: none;
+  }
+
+  .Landing-Background {
+      background-image: url(../raft_background_mobile.png);
+      height: 100%;
+      width: 100%;
+      right: 0;
+      background-position: bottom right;
+  }
 }

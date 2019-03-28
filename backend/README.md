@@ -1,5 +1,8 @@
 For Local Development:
 
+firt install MYSQL
+brew install mysql
+
 To add app environment
 export APP_ENV=playground
 
