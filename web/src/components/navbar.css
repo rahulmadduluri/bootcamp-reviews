@@ -68,6 +68,7 @@ nav .navWide .menuLinks {
     vertical-align: middle;
 
     z-index: 1;
+    top: 2px;
     left: 20px;
 
     -webkit-user-select: none;
@@ -123,7 +124,7 @@ nav .navWide .menuLinks {
   {
     opacity: 1;
     transform: rotate(45deg) translate(-2px, -1px);
-    background: #232323;
+    background: #828282;
   }
   /*
    * But let's hide the middle one.
@@ -153,17 +154,16 @@ nav .navWide .menuLinks {
    * Make this absolute positioned
    * at the top left of the screen
    */
-  nav .navWide .menuLinks #menu
+  nav .navWide .menuLinks .menu
   {
-    background-color: pink;
     position: absolute;
-    width: 300px;
+    width: 200px;
     margin: -100px 0 0 0;
     padding: 50px;
-    padding-top: 125px;
+    /*padding-top: 125px;*/
     right: -100px;
-    
-    background: #ededed;
+
+    background: pink;
     list-style-type: none;
     -webkit-font-smoothing: antialiased;
     /* to stop flickering of text in safari */
@@ -174,8 +174,10 @@ nav .navWide .menuLinks {
     transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
   }
 
-  nav .navWide .menuLinks #menu li
+  nav .navWide .menuLinks .menu li
   {
+    color: green;
+    z-index: 2;
     padding: 10px 0;
     font-size: 22px;
   }

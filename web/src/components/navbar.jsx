@@ -35,7 +35,7 @@ class Navbar extends React.Component {
             <span></span>
             <span></span>
             
-            <ul id="menu">
+            <ul className="menu">
               <a href="#"><li>Home</li></a>
               <a href="#"><li>About</li></a>
               <a href="#"><li>Info</li></a>

@@ -55,7 +55,15 @@ INSERT INTO schools VALUES
 	(NULL, 'uuid-1', 'Lambda School', 75920, 5.34, 75.32, 35, 1, 30000, 'ISA', 'lambda', 1000),
 	(NULL, 'uuid-2', 'Holberton School', 68392, 12.90, 65.32, 30, 1, 20000, 'ISA', 'holberton', 1000),
 	(NULL, 'uuid-3', 'Flatiron School', 56500, 15.80, 70.32, 30, 0, 35000, 'Upfront', 'flatiron', 1000),
-	(NULL, 'uuid-4', 'Make School', 66500, 10.80, 72.18, 100, 0, 60000, 'ISA', 'make', 1000);
+	(NULL, 'uuid-4', 'Make School', 66500, 10.80, 72.18, 100, 0, 60000, 'ISA', 'make', 1000),
+	(NULL, 'uuid-5', 'Rando School', 75920, 5.34, 75.32, 35, 1, 30000, 'ISA', 'lambda', 1000),
+	(NULL, 'uuid-6', 'Big Bird School', 68392, 12.90, 65.32, 30, 1, 20000, 'ISA', 'holberton', 1000),
+	(NULL, 'uuid-7', 'Popeye School', 56500, 15.80, 70.32, 30, 0, 35000, 'Upfront', 'flatiron', 1000),
+	(NULL, 'uuid-8', 'Fake School', 66500, 10.80, 72.18, 100, 0, 60000, 'ISA', 'make', 1000),
+	(NULL, 'uuid-9', 'Delta School', 75920, 5.34, 75.32, 35, 1, 30000, 'ISA', 'lambda', 1000),
+	(NULL, 'uuid-10', 'Holy Moly School', 68392, 12.90, 65.32, 30, 1, 20000, 'ISA', 'holberton', 1000),
+	(NULL, 'uuid-11', 'Circle Iron School', 56500, 15.80, 70.32, 30, 0, 35000, 'Upfront', 'flatiron', 1000),
+	(NULL, 'uuid-12', 'Baking School', 66500, 10.80, 72.18, 100, 0, 60000, 'ISA', 'make', 1000);
 INSERT INTO locations VALUES
 	(NULL, 'uuid-1', 'San Francisco', 'USA', 500),
 	(NULL, 'uuid-2', 'New York', 'USA', 500),
@@ -64,7 +72,15 @@ INSERT INTO campus_locations VALUES
 	(3, 1),
 	(3, 2),
 	(3, 3),
-	(4, 1);
+	(4, 1),
+	(7, 1),
+	(7, 2),
+	(7, 3),
+	(8, 1),
+	(11, 1),
+	(11, 2),
+	(11, 3),
+	(12, 1);
 INSERT INTO tracks VALUES
 	(NULL, 'uuid-1', 'Web', 500),
 	(NULL, 'uuid-2', 'iOS', 500),
@@ -81,4 +97,32 @@ INSERT INTO school_tracks VALUES
 	(3, 3),
 	(4, 1),
 	(4, 2),
-	(4, 3);
+	(4, 3),
+
+	(5, 1),
+	(5, 2),
+	(5, 3),
+	(6, 1),
+	(6, 2),
+	(6, 3),
+	(7, 1),
+	(7, 2),
+	(7, 3),
+	(8, 1),
+	(8, 2),
+	(8, 3),
+
+	(9, 1),
+	(9, 2),
+	(9, 3),
+	(10, 1),
+	(10, 2),
+	(10, 3),
+	(11, 1),
+	(11, 2),
+	(11, 3),
+	(12, 1),
+	(12, 2),
+	(12, 3);
+
+
