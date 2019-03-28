@@ -429,6 +429,16 @@
         "fields": null,
         "inputFields": [
           {
+            "name": "searchText",
+            "description": "",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
             "name": "trackUUID",
             "description": "",
             "type": {

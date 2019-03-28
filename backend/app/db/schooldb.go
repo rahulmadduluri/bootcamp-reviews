@@ -9,10 +9,12 @@ import (
 )
 
 const (
-	_GetSchool                         = "getSchool"
-	_GetSchoolTracks                   = "getSchoolTracks"
-	_GetSchoolCampusLocations          = "getSchoolCampusLocations"
-	_GetAllSchools                     = "getAllSchools"
+	_GetSchool                = "getSchool"
+	_GetSchoolTracks          = "getSchoolTracks"
+	_GetSchoolCampusLocations = "getSchoolCampusLocations"
+	_GetAllSchools            = "getAllSchools"
+
+	_GetSchoolsWithSearchText          = "getSchoolsWithSearchText"
 	_GetSchoolsWithCampusLocation      = "getSchoolsWithCampusLocation"
 	_GetSchoolsWithTrack               = "getSchoolsWithTrack"
 	_GetSchoolsWithPaymentType         = "getSchoolsWithPaymentType"
@@ -26,6 +28,8 @@ const (
 type SchoolDB interface {
 	GetSchool(schoolUUID string) (models.School, error)
 	GetAllSchools() ([]models.School, error)
+
+	GetSchoolsWithSearchText(searchText string) ([]models.School, error)
 	GetSchoolsWithCampusLocation(campusLocationUUID string) ([]models.School, error)
 	GetSchoolsWithTrack(trackUUID string) ([]models.School, error)
 	GetSchoolsWithPaymentType(paymentType string) ([]models.School, error)
@@ -132,6 +136,14 @@ func (sql *sqlDB) GetSchoolCampusLocations(schoolUUID string) ([]models.Location
 
 func (sql *sqlDB) GetAllSchools() ([]models.School, error) {
 	schools, err := sql.getSchools(_GetAllSchools, map[string]interface{}{})
+	return schools, err
+}
+
+func (sql *sqlDB) GetSchoolsWithSearchText(searchText string) ([]models.School, error) {
+	completeSearchText := "%" + searchText + "%"
+	schools, err := sql.getSchools(_GetSchoolsWithSearchText, map[string]interface{}{
+		"search_text": completeSearchText,
+	})
 	return schools, err
 }
 

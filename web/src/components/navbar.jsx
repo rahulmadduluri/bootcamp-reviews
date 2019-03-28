@@ -4,6 +4,7 @@ import SmartSearchBar from './searchbar.jsx';
 import raftSquare from '../raft_square.png';
 
 class Navbar extends React.Component {
+
   constructor() {
     super();
 
@@ -13,7 +14,10 @@ class Navbar extends React.Component {
 
     this.toggleHamburgerMenu = this.toggleHamburgerMenu.bind(this);
   }
-  onSearch = searchText => {};
+
+  onSearch = searchText => {
+    this.props.onSearch({ searchText: searchText });
+  };
 
   onTapLink = () => {};
   toggleHamburgerMenu() {
@@ -53,7 +57,7 @@ class Navbar extends React.Component {
           }`}
         >
           <div className="navbar-start">
-            <SmartSearchBar />
+            <SmartSearchBar onSearch={this.onSearch}/>
             <a className="navbar-item">Write a Review</a>
           </div>
 

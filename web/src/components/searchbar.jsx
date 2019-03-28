@@ -15,7 +15,7 @@ function SmartSearchBar(props) {
   return(
     <SearchBar
       onChange={() => console.log('onChange')}
-      onRequestSearch={() => console.log('onRequestSearch')}
+      onRequestSearch={props.onSearch}
       classes={classes}
       style={{
         margin: '0 auto'

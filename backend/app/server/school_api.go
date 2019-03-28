@@ -32,6 +32,14 @@ func (r *queryResolver) Schools(ctx context.Context, params models.SchoolSearchP
 func (r *queryResolver) filterSchools(schools []models.School, params models.SchoolSearchParams) ([]models.School, error) {
 	filteredSchools := schools
 
+	if params.SearchText != nil {
+		f, err := db.Handler().SQL().GetSchoolsWithSearchText(*params.SearchText)
+		if err != nil {
+			return filteredSchools, err
+		}
+		filteredSchools = intersectionOfSchools(filteredSchools, f)
+	}
+
 	if params.CampusLocationUUID != nil {
 		f, err := db.Handler().SQL().GetSchoolsWithCampusLocation(*params.CampusLocationUUID)
 		if err != nil {

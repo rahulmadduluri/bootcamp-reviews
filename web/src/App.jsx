@@ -27,6 +27,7 @@ class App extends Component {
 	    );
   	} else {
   		const currentSearchParams = {
+        searchText: this.state.searchText,
   			trackUUID: this.state.trackUUID,
         campusLocationUUID: this.state.campusLocationUUID,
         paymentType: this.state.paymentType,

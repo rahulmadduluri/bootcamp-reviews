@@ -26,6 +26,7 @@ type Track {
 }
 
 input SchoolSearchParams {
+	searchText: String
 	trackUUID: ID
 	campusLocationUUID: ID
 	paymentType: String

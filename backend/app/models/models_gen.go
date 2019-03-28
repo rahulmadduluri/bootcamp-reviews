@@ -30,6 +30,7 @@ type School struct {
 }
 
 type SchoolSearchParams struct {
+	SearchText          *string  `json:"searchText"`
 	TrackUUID           *string  `json:"trackUUID"`
 	CampusLocationUUID  *string  `json:"campusLocationUUID"`
 	PaymentType         *string  `json:"paymentType"`

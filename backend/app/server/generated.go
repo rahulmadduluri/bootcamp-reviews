@@ -364,6 +364,7 @@ type Track {
 }
 
 input SchoolSearchParams {
+	searchText: String
 	trackUUID: ID
 	campusLocationUUID: ID
 	paymentType: String
@@ -1897,6 +1898,12 @@ func (ec *executionContext) unmarshalInputSchoolSearchParams(ctx context.Context
 
 	for k, v := range asMap {
 		switch k {
+		case "searchText":
+			var err error
+			it.SearchText, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
 		case "trackUUID":
 			var err error
 			it.TrackUUID, err = ec.unmarshalOID2ᚖstring(ctx, v)
