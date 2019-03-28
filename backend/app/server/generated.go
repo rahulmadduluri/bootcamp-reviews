@@ -364,6 +364,7 @@ type Track {
 }
 
 input SchoolSearchParams {
+	pageNumber: Int! # each page has 10 elements
 	searchText: String
 	trackUUID: ID
 	campusLocationUUID: ID
@@ -1898,6 +1899,12 @@ func (ec *executionContext) unmarshalInputSchoolSearchParams(ctx context.Context
 
 	for k, v := range asMap {
 		switch k {
+		case "pageNumber":
+			var err error
+			it.PageNumber, err = ec.unmarshalNInt2int(ctx, v)
+			if err != nil {
+				return it, err
+			}
 		case "searchText":
 			var err error
 			it.SearchText, err = ec.unmarshalOString2ᚖstring(ctx, v)
@@ -2446,6 +2453,14 @@ func (ec *executionContext) unmarshalNID2string(ctx context.Context, v interface
 
 func (ec *executionContext) marshalNID2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
 	return graphql.MarshalID(v)
+}
+
+func (ec *executionContext) unmarshalNInt2int(ctx context.Context, v interface{}) (int, error) {
+	return graphql.UnmarshalInt(v)
+}
+
+func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.SelectionSet, v int) graphql.Marshaler {
+	return graphql.MarshalInt(v)
 }
 
 func (ec *executionContext) marshalNLocation2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐLocation(ctx context.Context, sel ast.SelectionSet, v models.Location) graphql.Marshaler {

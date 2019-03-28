@@ -7,6 +7,7 @@ class App extends Component {
   state = {
   	page: 'Landing',
     
+    pageNumber: 0,
   	// add country, track, etc. here. for example:
   	//campusLocationUUID: 'uuid-1',
   	//trackUUID: 'uuid-1'
@@ -27,6 +28,7 @@ class App extends Component {
 	    );
   	} else {
   		const currentSearchParams = {
+        pageNumber: this.state.pageNumber,
         searchText: this.state.searchText,
   			trackUUID: this.state.trackUUID,
         campusLocationUUID: this.state.campusLocationUUID,

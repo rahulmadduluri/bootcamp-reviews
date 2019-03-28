@@ -26,6 +26,7 @@ type Track {
 }
 
 input SchoolSearchParams {
+	pageNumber: Int! # each page has 10 elements
 	searchText: String
 	trackUUID: ID
 	campusLocationUUID: ID

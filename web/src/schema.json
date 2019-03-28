@@ -429,6 +429,20 @@
         "fields": null,
         "inputFields": [
           {
+            "name": "pageNumber",
+            "description": "",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
             "name": "searchText",
             "description": "",
             "type": {

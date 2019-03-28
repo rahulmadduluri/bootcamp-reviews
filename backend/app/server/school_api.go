@@ -26,7 +26,14 @@ func (r *queryResolver) Schools(ctx context.Context, params models.SchoolSearchP
 		return filteredSchools, err
 	}
 
+	lowerBound := params.PageNumber * 10
+	upperBound := lowerBound + 9
+
+	if len(filteredSchools) > 9 {
+		return filteredSchools[lowerBound:upperBound], err
+	}
 	return filteredSchools, err
+
 }
 
 func (r *queryResolver) filterSchools(schools []models.School, params models.SchoolSearchParams) ([]models.School, error) {
