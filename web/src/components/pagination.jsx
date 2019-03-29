@@ -7,37 +7,28 @@ class Pagination extends React.Component {
     const {
       totalItems = null,
       currentPage = null,
-      pageLimit = 9,
-      onPageChoice = () => {},
+      pageLimit = 10,
     } = props;
 
     this.state = {
+      currentPage: currentPage,
       totalPages: Math.ceil(totalItems / pageLimit),
     };
   }
 
+  onPageChoice = (pageNum) => {
+    this.props.onSetSearchParams({ pageNumber: pageNum });
+  };
+
   render() {
     return (
       <nav className="pagination" role="navigation" aria-label="pagination">
-        <a
-          className="pagination-previous"
-          title="This is the first page"
-          onClick={() => this.props.onPageChoice(this.props.currentPage - 1)}
-          disabled={this.props.currentPage == 0}
-        >
-          Previous
-        </a>
-        <a
-          className="pagination-next"
-          onClick={() => this.props.onPageChoice(this.props.currentPage + 1)}
-          disabled={this.props.currentPage == this.state.totalPages - 1}
-        >Next page</a>
         <ul className="pagination-list">
           {[...Array(this.state.totalPages).keys()].map(num => {
             return (
               <li key={num}>
                 <a
-                  onClick={() => this.props.onPageChoice(num)}
+                  onClick={() => this.onPageChoice(num)}
                   className={`pagination-link ${
                     num === this.props.currentPage ? 'is-current' : ''
                   }`}

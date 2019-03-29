@@ -14,6 +14,12 @@ type School {
 	tracks: [Track!]
 }
 
+type SchoolQueryResult {
+	totalNumResults: Int! # How many total results are there (regardless of page #)
+	pageNumber: Int!
+	schoolResults: [School!]!
+}
+
 type Location {
 	uuid: ID!
 	city: String
@@ -46,6 +52,6 @@ type Filters {
 
 type Query {
 	school(uuid: ID!): School
-	schools(params: SchoolSearchParams!): [School!]!
+	schools(params: SchoolSearchParams!): SchoolQueryResult!
 	filters: Filters
 }

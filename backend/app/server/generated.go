@@ -74,6 +74,12 @@ type ComplexityRoot struct {
 		Tracks            func(childComplexity int) int
 	}
 
+	SchoolQueryResult struct {
+		TotalNumResults func(childComplexity int) int
+		PageNumber      func(childComplexity int) int
+		SchoolResults   func(childComplexity int) int
+	}
+
 	Track struct {
 		UUID func(childComplexity int) int
 		Name func(childComplexity int) int
@@ -82,7 +88,7 @@ type ComplexityRoot struct {
 
 type QueryResolver interface {
 	School(ctx context.Context, uuid string) (*models.School, error)
-	Schools(ctx context.Context, params models.SchoolSearchParams) ([]models.School, error)
+	Schools(ctx context.Context, params models.SchoolSearchParams) (*models.SchoolQueryResult, error)
 	Filters(ctx context.Context) (*models.Filters, error)
 }
 
@@ -258,6 +264,27 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.School.Tracks(childComplexity), true
 
+	case "SchoolQueryResult.TotalNumResults":
+		if e.complexity.SchoolQueryResult.TotalNumResults == nil {
+			break
+		}
+
+		return e.complexity.SchoolQueryResult.TotalNumResults(childComplexity), true
+
+	case "SchoolQueryResult.PageNumber":
+		if e.complexity.SchoolQueryResult.PageNumber == nil {
+			break
+		}
+
+		return e.complexity.SchoolQueryResult.PageNumber(childComplexity), true
+
+	case "SchoolQueryResult.SchoolResults":
+		if e.complexity.SchoolQueryResult.SchoolResults == nil {
+			break
+		}
+
+		return e.complexity.SchoolQueryResult.SchoolResults(childComplexity), true
+
 	case "Track.UUID":
 		if e.complexity.Track.UUID == nil {
 			break
@@ -352,6 +379,12 @@ var parsedSchema = gqlparser.MustLoadSchema(
 	tracks: [Track!]
 }
 
+type SchoolQueryResult {
+	totalNumResults: Int! # How many total results are there (regardless of page #)
+	pageNumber: Int!
+	schoolResults: [School!]!
+}
+
 type Location {
 	uuid: ID!
 	city: String
@@ -384,7 +417,7 @@ type Filters {
 
 type Query {
 	school(uuid: ID!): School
-	schools(params: SchoolSearchParams!): [School!]!
+	schools(params: SchoolSearchParams!): SchoolQueryResult!
 	filters: Filters
 }
 `},
@@ -678,10 +711,10 @@ func (ec *executionContext) _Query_schools(ctx context.Context, field graphql.Co
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]models.School)
+	res := resTmp.(*models.SchoolQueryResult)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNSchool2ᚕgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐSchool(ctx, field.Selections, res)
+	return ec.marshalNSchoolQueryResult2ᚖgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐSchoolQueryResult(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_filters(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
@@ -1040,6 +1073,84 @@ func (ec *executionContext) _School_tracks(ctx context.Context, field graphql.Co
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
 	return ec.marshalOTrack2ᚕgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐTrack(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _SchoolQueryResult_totalNumResults(ctx context.Context, field graphql.CollectedField, obj *models.SchoolQueryResult) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object: "SchoolQueryResult",
+		Field:  field,
+		Args:   nil,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TotalNumResults, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _SchoolQueryResult_pageNumber(ctx context.Context, field graphql.CollectedField, obj *models.SchoolQueryResult) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object: "SchoolQueryResult",
+		Field:  field,
+		Args:   nil,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PageNumber, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _SchoolQueryResult_schoolResults(ctx context.Context, field graphql.CollectedField, obj *models.SchoolQueryResult) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object: "SchoolQueryResult",
+		Field:  field,
+		Args:   nil,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.SchoolResults, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.School)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNSchool2ᚕgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐSchool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Track_uuid(ctx context.Context, field graphql.CollectedField, obj *models.Track) graphql.Marshaler {
@@ -2162,6 +2273,43 @@ func (ec *executionContext) _School(ctx context.Context, sel ast.SelectionSet, o
 	return out
 }
 
+var schoolQueryResultImplementors = []string{"SchoolQueryResult"}
+
+func (ec *executionContext) _SchoolQueryResult(ctx context.Context, sel ast.SelectionSet, obj *models.SchoolQueryResult) graphql.Marshaler {
+	fields := graphql.CollectFields(ctx, sel, schoolQueryResultImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	invalid := false
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("SchoolQueryResult")
+		case "totalNumResults":
+			out.Values[i] = ec._SchoolQueryResult_totalNumResults(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "pageNumber":
+			out.Values[i] = ec._SchoolQueryResult_pageNumber(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "schoolResults":
+			out.Values[i] = ec._SchoolQueryResult_schoolResults(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalid {
+		return graphql.Null
+	}
+	return out
+}
+
 var trackImplementors = []string{"Track"}
 
 func (ec *executionContext) _Track(ctx context.Context, sel ast.SelectionSet, obj *models.Track) graphql.Marshaler {
@@ -2543,6 +2691,20 @@ func (ec *executionContext) marshalNSchool2ᚕgithubᚗcomᚋrahulmadduluriᚋra
 	}
 	wg.Wait()
 	return ret
+}
+
+func (ec *executionContext) marshalNSchoolQueryResult2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐSchoolQueryResult(ctx context.Context, sel ast.SelectionSet, v models.SchoolQueryResult) graphql.Marshaler {
+	return ec._SchoolQueryResult(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNSchoolQueryResult2ᚖgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐSchoolQueryResult(ctx context.Context, sel ast.SelectionSet, v *models.SchoolQueryResult) graphql.Marshaler {
+	if v == nil {
+		if !ec.HasError(graphql.GetResolverContext(ctx)) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	return ec._SchoolQueryResult(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNSchoolSearchParams2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐSchoolSearchParams(ctx context.Context, v interface{}) (models.SchoolSearchParams, error) {

@@ -1,17 +1,33 @@
-@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Rubik:300,500,700');
+
+.searchHeader {
+	font-family: 'Rubik';
+	text-align: center;
+	max-width: 600;
+	background-color: red;
+}
+.searchHeader .searchTitle {
+	font-weight: 500;
+	font-size: 20px;
+	background-color: blue;
+}
+.searchHeader .searchSubtitle {
+	font-weight: 300;
+	font-size: 18px;
+}
 
 .list {
   margin: 0 auto;
-  margin-top: 10px;
   text-align: center;
   max-width: 600px;
 }
 
 .list-row {
-  height: 150px;
+  height: 100%;
   display: flex;
   white-space: nowrap;
-  padding: 5px;
+  padding-left: 5px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #e3e3e3;
   background-color: white;
   font-family: 'Rubik';

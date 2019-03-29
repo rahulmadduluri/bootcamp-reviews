@@ -29,6 +29,12 @@ type School struct {
 	Tracks            []Track    `json:"tracks"`
 }
 
+type SchoolQueryResult struct {
+	TotalNumResults int      `json:"totalNumResults"`
+	PageNumber      int      `json:"pageNumber"`
+	SchoolResults   []School `json:"schoolResults"`
+}
+
 type SchoolSearchParams struct {
 	PageNumber          int      `json:"pageNumber"`
 	SearchText          *string  `json:"searchText"`

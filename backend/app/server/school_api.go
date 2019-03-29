@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"math"
 
 	db "github.com/rahulmadduluri/raft-education/backend/app/db"
 	models "github.com/rahulmadduluri/raft-education/backend/app/models"
@@ -15,24 +16,31 @@ func (r *queryResolver) School(ctx context.Context, uuid string) (*models.School
 	return &school, err
 }
 
-func (r *queryResolver) Schools(ctx context.Context, params models.SchoolSearchParams) ([]models.School, error) {
+func (r *queryResolver) Schools(ctx context.Context, params models.SchoolSearchParams) (*models.SchoolQueryResult, error) {
+	queryResults := models.SchoolQueryResult{}
+
 	allSchools, err := db.Handler().SQL().GetAllSchools()
 	if err != nil {
-		return allSchools, err
+		return nil, err
 	}
 
 	filteredSchools, err := r.filterSchools(allSchools, params)
 	if err != nil {
-		return filteredSchools, err
+		return nil, err
 	}
+	queryResults.PageNumber = params.PageNumber
+	queryResults.TotalNumResults = len(filteredSchools)
 
 	lowerBound := params.PageNumber * 10
-	upperBound := lowerBound + 9
+	upperBound := int(math.Min(float64(lowerBound+10), float64(len(filteredSchools))))
 
-	if len(filteredSchools) > 9 {
-		return filteredSchools[lowerBound:upperBound], err
+	if upperBound <= lowerBound {
+		queryResults.SchoolResults = []models.School{}
+		return &queryResults, err
 	}
-	return filteredSchools, err
+
+	queryResults.SchoolResults = filteredSchools[lowerBound:upperBound]
+	return &queryResults, err
 
 }
 

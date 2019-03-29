@@ -19,23 +19,27 @@ class Search extends Component {
     const schoolsQuery = gql`
       query GetSchools($searchParams: SchoolSearchParams!) {
         schools(params: $searchParams) {
-          uuid
-          name
-          avgGraduateSalary
-          jobPlacementRate
-          lengthInWeeks
-          isOnline
-          photoURI
-          basePrice
-          paymentType
-          tracks {
+          totalNumResults
+          pageNumber
+          schoolResults {
             uuid
             name
-          }
-          campusLocations {
-            uuid
-            city
-            country
+            avgGraduateSalary
+            jobPlacementRate
+            lengthInWeeks
+            isOnline
+            photoURI
+            basePrice
+            paymentType
+            tracks {
+              uuid
+              name
+            }
+            campusLocations {
+              uuid
+              city
+              country
+            }
           }
         }
       }
@@ -55,15 +59,22 @@ class Search extends Component {
             if (loading) return <p>Loading...</p>;
             if (error) return <p>Error :(</p>;
 
-            return <List schools={data.schools}/>
+            return (
+              <div>
+                <div className="searchHeader">
+                  <div className="searchTitle">Software Engineering Schools</div>
+                  <div className="searchSubtitle">find schools that can prepare you for a fantastic career</div>
+                </div>
+                <List schools={data.schools.schoolResults}/>
+                <Pagination
+                  currentPage={this.props.currentSearchParams.pageNumber}
+                  totalItems={data.schools.totalNumResults}
+                  onSetSearchParams={this.props.onSetSearchParams}
+                />
+              </div>
+            );
           }}
         </Query>      
-        <Pagination
-          currentPage={this.props.currentSearchParams.pageNumber}
-          totalItems={10}
-          onPageChoice={(pageNum) => { console.log('pagenum: ', pageNum); }}
-
-        />
       </div>
     )
   }
