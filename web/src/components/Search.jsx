@@ -51,30 +51,31 @@ class Search extends Component {
       <div>
         <Navbar onSearch={this.props.onSetSearchParams}/>
         <FilterBar onSetSearchParams={this.props.onSetSearchParams} currentSearchParams={this.props.currentSearchParams}/>
-        <Query
-          query={schoolsQuery}
-          variables={ { searchParams:this.props.currentSearchParams } }
-        >
-          {({ loading, error, data }) => {
-            if (loading) return <p>Loading...</p>;
-            if (error) return <p>Error :(</p>;
+        <div className="searchBackground">
+          <Query
+            query={schoolsQuery}
+            variables={ { searchParams:this.props.currentSearchParams } }
+          >
+            {({ loading, error, data }) => {
+              if (loading) return <p>Loading...</p>;
+              if (error) return <p>Error :(</p>;
 
-            return (
-              <div>
-                <div className="searchHeader">
-                  <div className="searchTitle">Software Engineering Schools</div>
-                  <div className="searchSubtitle">find schools that can prepare you for a fantastic career</div>
+              return (
+                <div className="searchResults">
+                  <div className="searchHeader">
+                    <div className="searchTitle">Software Engineering Schools</div>
+                  </div>
+                  <List schools={data.schools.schoolResults}/>
+                  <Pagination
+                    currentPage={this.props.currentSearchParams.pageNumber}
+                    totalItems={data.schools.totalNumResults}
+                    onSetSearchParams={this.props.onSetSearchParams}
+                  />
                 </div>
-                <List schools={data.schools.schoolResults}/>
-                <Pagination
-                  currentPage={this.props.currentSearchParams.pageNumber}
-                  totalItems={data.schools.totalNumResults}
-                  onSetSearchParams={this.props.onSetSearchParams}
-                />
-              </div>
-            );
-          }}
-        </Query>      
+              );
+            }}
+          </Query>      
+        </div>
       </div>
     )
   }
@@ -82,10 +83,10 @@ class Search extends Component {
 
 const List = ({ schools }) => (
   <div>
-    <div className="list">
+    <div className="schoolList">
       {
         schools.map(({ uuid, name, avgGraduateSalary, jobPlacementRate, lengthInWeeks, isOnline, photoURI, basePrice, paymentType, tracks, campusLocations }) => (
-          <div className="list-row" key={uuid}>
+          <div className="card" key={uuid}>
             <SchoolLogo photoURI={photoURI} />
             <div className="schoolInfoWrapper">
               <div className="name">
