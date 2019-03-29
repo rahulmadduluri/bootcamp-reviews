@@ -13,13 +13,12 @@ nav a {
 nav .searchBar {
   display: inline-block;
   width: 400px;
-  margin-left: 20px;
+  margin-left: 15px;
 }
 
 @media (max-width: 600px) {
   nav .searchBar {
     display: inline-block;
     width: 250px;
-    margin-left: 20px;
   }
 }

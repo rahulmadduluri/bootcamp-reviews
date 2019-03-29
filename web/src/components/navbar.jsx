@@ -34,6 +34,10 @@ class Navbar extends React.Component {
             <img src={raftSquare} alt="Logo" />
           </a>
 
+          <div className="navbar-start searchBar">
+            <SmartSearchBar onSearch={this.onSearch}/>
+          </div>
+
           <a
             onClick={this.toggleHamburgerMenu}
             role="button"
@@ -48,10 +52,6 @@ class Navbar extends React.Component {
             <span aria-hidden="true" />
             <span aria-hidden="true" />
           </a>
-        </div>
-
-        <div className="navbar-start searchBar">
-          <SmartSearchBar onSearch={this.onSearch}/>
         </div>
 
         <div
