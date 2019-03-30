@@ -93,34 +93,39 @@
 
 /* Price */
 .schoolInfoWrapper .price {
-	color: #000000;
 	margin-top: 12px;
 	margin-bottom: 12px;
-	display: flex;
 }
 .schoolInfoWrapper .price .basePrice {
+	color: #000000;
 	font-weight: 500;
 	font-size: 15px;
 	display: inline-block;
 }
 .schoolInfoWrapper .price .paymentType {
-	display: inline-block;
 	margin-left: 5px;
+	display: inline-block;
 }
 .schoolInfoWrapper .price .paymentType > img {
-	height: 16px;
-	display: flex;
+	height: 18px;
+	width: auto;
+	vertical-align: middle;
+	margin-bottom: 2px;
 }
 
 /* Length */
 .schoolInfoWrapper .length {
+	margin-top: 5px;
 	margin-top: 7px;
-	display: flex;
+	vertical-align: middle;
 }
-.schoolInfoWrapper .length > img {
+.schoolInfoWrapper .length .lengthImage {
+	display: inline-block;
+}
+.schoolInfoWrapper .length .lengthImage > img {
 	width: 13px;
 	height: 13px;
-	display: inline-block;
+	vertical-align: middle;
 }
 .schoolInfoWrapper .length .lengthInWeeksLabel {
 	display: inline-block;
@@ -131,6 +136,7 @@
 }
 .schoolInfoWrapper .length .lengthInWeeks {
 	display: inline-block;
+	color: #000000;
 	font-weight: 500;
 	font-size: 12px;
 	margin-left: 5px;
@@ -138,13 +144,16 @@
 
 /* Salary */
 .schoolInfoWrapper .salary {
-	margin-top: 7px;
-	display: flex;
+	margin-top: 5px;
+	vertical-align: middle;
 }
-.schoolInfoWrapper .salary > img {
+.schoolInfoWrapper .salary .salaryImage {
+	display: inline-block;
+}
+.schoolInfoWrapper .salary .salaryImage > img {
 	width: 13px;
 	height: 13px;
-	display: inline-block;
+	vertical-align: middle;
 }
 .schoolInfoWrapper .salary .avgGraduateSalaryLabel {
 	display: inline-block;
@@ -158,17 +167,21 @@
 	font-weight: 500;
 	font-size: 12px;
 	margin-left: 5px;
+	color: #000000;
 }
 
 /* Job Placement */
 .schoolInfoWrapper .jobPlacement {
-	margin-top: 7px;
-	display: flex;
+	margin-top: 5px;
+	vertical-align: middle;
 }
-.schoolInfoWrapper .jobPlacement > img {
+.schoolInfoWrapper .jobPlacement .jobPlacementImage {
+	display: inline-block;
+}
+.schoolInfoWrapper .jobPlacement .jobPlacementImage > img {
 	width: 13px;
 	height: 13px;
-	display: inline-block;
+	vertical-align: middle;
 }
 .schoolInfoWrapper .jobPlacement .jobPlacementRateLabel {
 	display: inline-block;
@@ -182,4 +195,5 @@
 	font-weight: 500;
 	font-size: 12px;
 	margin-left: 5px;
+	color: #000000;
 }

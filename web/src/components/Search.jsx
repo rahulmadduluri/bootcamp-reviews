@@ -11,6 +11,7 @@ import UpfrontPayment from '../upfront_payment.png';
 import LengthIcon from '../length_icon.png';
 import SalaryIcon from '../salary_icon.png';
 import JobPlacementIcon from '../job_placement_icon.png';
+import { numToString } from "../helpers/helpers.js";
 
 class Search extends Component {
 
@@ -155,7 +156,7 @@ function PriceBar(priceWrapper) {
   return (
     <div className="price">
       <div className="basePrice">
-        ${priceWrapper.basePrice}
+        ${numToString(priceWrapper.basePrice)}
       </div>
       <div className="paymentType">
         {paymentType}
@@ -167,7 +168,7 @@ function PriceBar(priceWrapper) {
 function LengthBar(lengthWrapper) {
   return (
     <div className="length">
-      <img src={LengthIcon} alt="Length"/>
+      <div className="lengthImage"><img src={LengthIcon} alt="Length"/></div>
       <div className="lengthInWeeksLabel">Length</div>
       <div className="lengthInWeeks">{lengthWrapper.length} weeks</div>
     </div>
@@ -177,9 +178,9 @@ function LengthBar(lengthWrapper) {
 function SalaryBar(salaryWrapper) {
   return (
     <div className="salary">
-      <img src={SalaryIcon} alt="Salary"/>
+      <div className="salaryImage"><img src={SalaryIcon} alt="Salary"/></div>
       <div className="avgGraduateSalaryLabel">Average Graduate Salary</div>
-      <div className="avgGraduateSalary">${salaryWrapper.avgGraduateSalary}</div>
+      <div className="avgGraduateSalary">${numToString(salaryWrapper.avgGraduateSalary)}</div>
     </div>
   );
 };
@@ -187,7 +188,7 @@ function SalaryBar(salaryWrapper) {
 function JobPlacementBar(jobPlacementWrapper) {
   return (
     <div className="jobPlacement">
-      <img src={JobPlacementIcon} alt="Job Placement"/>
+      <div className="jobPlacementImage"><img src={JobPlacementIcon} alt="Job Placement"/></div>
       <div className="jobPlacementRateLabel">Job Placement Rate</div>
       <div className="jobPlacementRate">{jobPlacementWrapper.jobPlacementRate}%</div>
     </div>
