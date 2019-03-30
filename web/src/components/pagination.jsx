@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import "./pagination.css"
 
 class Pagination extends React.Component {
   constructor(props) {
@@ -22,26 +23,28 @@ class Pagination extends React.Component {
 
   render() {
     return (
-      <nav className="pagination" role="navigation" aria-label="pagination">
-        <ul className="pagination-list">
-          {[...Array(this.state.totalPages).keys()].map(num => {
-            return (
-              <li key={num}>
-                <a
-                  onClick={() => this.onPageChoice(num)}
-                  className={`pagination-link ${
-                    num === this.props.currentPage ? 'is-current' : ''
-                  }`}
-                  aria-label={`Page ${num}`}
-                  aria-current="page"
-                >
-                  {num + 1}
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+      <div className="paginationWrapper">
+        <nav className="pagination" role="navigation" aria-label="pagination">
+          <ul className="pagination-list">
+            {[...Array(this.state.totalPages).keys()].map(num => {
+              return (
+                <li key={num}>
+                  <a
+                    onClick={() => this.onPageChoice(num)}
+                    className={`pagination-link ${
+                      num === this.props.currentPage ? 'is-current' : ''
+                    }`}
+                    aria-label={`Page ${num}`}
+                    aria-current="page"
+                  >
+                    {num + 1}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </div>
     );
   }
 }

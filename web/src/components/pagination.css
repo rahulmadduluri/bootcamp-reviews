@@ -1,0 +1,6 @@
+@import '../../node_modules/bulma/css/bulma.css';
+
+.paginationWrapper {
+  margin: 0 auto;
+  max-width: 600px;
+}
