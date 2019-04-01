@@ -4,7 +4,9 @@ go 1.12
 
 require (
 	github.com/99designs/gqlgen v0.8.1
+	github.com/auth0/go-jwt-middleware v0.0.0-20170425171159-5493cabe49f7
 	github.com/aws/aws-sdk-go v1.17.14
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/gorilla/mux v1.7.0
 	github.com/gorilla/websocket v1.4.0

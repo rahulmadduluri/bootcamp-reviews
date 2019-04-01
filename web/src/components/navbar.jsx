@@ -1,7 +1,7 @@
 import React from 'react';
 import './navbar.css';
 import SmartSearchBar from './searchbar.jsx';
-import raftSquare from '../raft_square.png';
+import raftSquare from '../images/raft_square.png';
 
 class Navbar extends React.Component {
 

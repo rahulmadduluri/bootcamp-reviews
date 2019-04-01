@@ -5,12 +5,12 @@ import gql from "graphql-tag";
 import Navbar from './navbar.jsx';
 import FilterBar from './filterbar.jsx';
 import Pagination from './pagination.jsx';
-import LocationIcon from '../location_icon.png';
-import ISAPayment from '../isa_payment.png';
-import UpfrontPayment from '../upfront_payment.png';
-import LengthIcon from '../length_icon.png';
-import SalaryIcon from '../salary_icon.png';
-import JobPlacementIcon from '../job_placement_icon.png';
+import LocationIcon from '../images/location_icon.png';
+import ISAPayment from '../images/isa_payment.png';
+import UpfrontPayment from '../images/upfront_payment.png';
+import LengthIcon from '../images/length_icon.png';
+import SalaryIcon from '../images/salary_icon.png';
+import JobPlacementIcon from '../images/job_placement_icon.png';
 import { numToString } from "../helpers/helpers.js";
 
 class Search extends Component {

@@ -32,7 +32,7 @@ func main() {
 		}
 	}
 
-	// config MySQL & Redis
+	// config MySQL
 	log.Println("Starting application")
 	db.ConfigHandler()
 	defer db.Handler().Close()
@@ -43,9 +43,7 @@ func main() {
 	// Set up Router to route to landing page & playground
 	r := mux.NewRouter()
 	r.HandleFunc("/", landingPage)
-	// r.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(http.Dir("../../web/js"))))
-	// r.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("../../web/css"))))
-	// r.PathPrefix("/img/").Handler(http.StripPrefix("/img/", http.FileServer(http.Dir("../../web/img"))))
+
 	if auth.IsEnvPlayground() == true {
 		r.HandleFunc("/playground", handler.Playground("GraphQL playground", "/api"))
 	}
@@ -59,6 +57,17 @@ func main() {
 	// serve images from s3
 	s3router := mux.NewRouter()
 	s3router.PathPrefix("/s3/").Handler(http.StripPrefix("/s3/", http.HandlerFunc(serveFromS3)))
+
+	if auth.IsEnvPlayground() == true {
+		r.PathPrefix("/api").Handler(negroni.New(negroni.Wrap(api)))
+	} else {
+		jwtMiddleware := auth.JWTMiddleware()
+		r.PathPrefix("/api").Handler(negroni.New(
+			negroni.HandlerFunc(jwtMiddleware.HandlerWithNext),
+			negroni.HandlerFunc(auth.AddUUIDToContext),
+			negroni.Wrap(api),
+		))
+	}
 
 	r.PathPrefix("/api").Handler(negroni.New(negroni.Wrap(api)))
 	r.PathPrefix("/s3/").Handler(negroni.New(negroni.Wrap(s3router)))
