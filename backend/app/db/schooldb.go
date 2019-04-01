@@ -9,14 +9,12 @@ import (
 )
 
 const (
-	_GetSchool                = "getSchool"
-	_GetSchoolTracks          = "getSchoolTracks"
-	_GetSchoolCampusLocations = "getSchoolCampusLocations"
-	_GetAllSchools            = "getAllSchools"
+	_GetSchool                  = "getSchool"
+	_GetSchoolCampusLocationsDB = "getSchoolCampusLocationsDB"
+	_GetAllSchools              = "getAllSchools"
 
 	_GetSchoolsWithSearchText          = "getSchoolsWithSearchText"
-	_GetSchoolsWithCampusLocation      = "getSchoolsWithCampusLocation"
-	_GetSchoolsWithTrack               = "getSchoolsWithTrack"
+	_GetSchoolsWithLocation            = "getSchoolsWithLocation"
 	_GetSchoolsWithPaymentType         = "getSchoolsWithPaymentType"
 	_GetSchoolsWithMaxPrice            = "getSchoolsWithMaxPrice"
 	_GetSchoolsWithMinGraduateSalary   = "getSchoolsWithMinGraduateSalary"
@@ -30,8 +28,7 @@ type SchoolDB interface {
 	GetAllSchools() ([]models.School, error)
 
 	GetSchoolsWithSearchText(searchText string) ([]models.School, error)
-	GetSchoolsWithCampusLocation(campusLocationUUID string) ([]models.School, error)
-	GetSchoolsWithTrack(trackUUID string) ([]models.School, error)
+	GetSchoolsWithLocation(locationUUID string) ([]models.School, error)
 	GetSchoolsWithPaymentType(paymentType string) ([]models.School, error)
 	GetSchoolsWithMaxPrice(maxPrice int) ([]models.School, error)
 	GetSchoolsWithMinGraduateSalary(minGraduateSalary float64) ([]models.School, error)
@@ -63,15 +60,8 @@ func (sql *sqlDB) GetSchool(schoolUUID string) (models.School, error) {
 		break
 	}
 
-	// get school tracks
-	tracks, err := sql.GetSchoolTracks(schoolUUID)
-	if err != nil {
-		return school, err
-	}
-	school.Tracks = tracks
-
 	// get school locations
-	locations, err := sql.GetSchoolCampusLocations(schoolUUID)
+	locations, err := sql.getSchoolCampusLocations(schoolUUID)
 	if err != nil {
 		return school, err
 	}
@@ -80,58 +70,47 @@ func (sql *sqlDB) GetSchool(schoolUUID string) (models.School, error) {
 	return school, err
 }
 
-func (sql *sqlDB) GetSchoolTracks(schoolUUID string) ([]models.Track, error) {
-	tracks := []models.Track{}
+func (sql *sqlDB) getSchoolCampusLocations(schoolUUID string) ([]models.CampusLocation, error) {
+	campusLocations := []models.CampusLocation{}
+	campusLocationsDB := []models.CampusLocationDBModel{}
 
 	rows, err := sql.db.NamedQuery(
-		sql.queries.schoolQueries[_GetSchoolTracks],
+		sql.queries.schoolQueries[_GetSchoolCampusLocationsDB],
 		map[string]interface{}{
 			"school_uuid": schoolUUID,
 		},
 	)
 	if err != nil {
-		return tracks, err
+		return campusLocations, err
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		var t models.Track
-		err := rows.StructScan(&t)
-		if err != nil {
-			log.Println("scan error: ", err)
-			continue
-		}
-		tracks = append(tracks, t)
-	}
-
-	return tracks, err
-}
-
-func (sql *sqlDB) GetSchoolCampusLocations(schoolUUID string) ([]models.Location, error) {
-	locations := []models.Location{}
-
-	rows, err := sql.db.NamedQuery(
-		sql.queries.schoolQueries[_GetSchoolCampusLocations],
-		map[string]interface{}{
-			"school_uuid": schoolUUID,
-		},
-	)
-	if err != nil {
-		return locations, err
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		var l models.Location
+		var l models.CampusLocationDBModel
 		err := rows.StructScan(&l)
 		if err != nil {
 			log.Println("scan error: ", err)
 			continue
 		}
-		locations = append(locations, l)
+		campusLocationsDB = append(campusLocationsDB, l)
 	}
 
-	return locations, err
+	for _, cl := range campusLocationsDB {
+		l, err := sql.getLocationForID(cl.LocationID)
+		if err != nil {
+			return campusLocations, err
+		}
+		ags := cl.AvgGraduateSalary
+		jpr := cl.JobPlacementRate
+		campusLocation := models.CampusLocation{
+			Location:          l,
+			AvgGraduateSalary: &ags,
+			JobPlacementRate:  &jpr,
+		}
+		campusLocations = append(campusLocations, campusLocation)
+	}
+
+	return campusLocations, err
 }
 
 func (sql *sqlDB) GetAllSchools() ([]models.School, error) {
@@ -147,15 +126,9 @@ func (sql *sqlDB) GetSchoolsWithSearchText(searchText string) ([]models.School, 
 	return schools, err
 }
 
-func (sql *sqlDB) GetSchoolsWithCampusLocation(campusLocationUUID string) ([]models.School, error) {
-	schools, err := sql.getSchools(_GetSchoolsWithCampusLocation, map[string]interface{}{
-		"campus_location_uuid": campusLocationUUID,
-	})
-	return schools, err
-}
-func (sql *sqlDB) GetSchoolsWithTrack(trackUUID string) ([]models.School, error) {
-	schools, err := sql.getSchools(_GetSchoolsWithTrack, map[string]interface{}{
-		"track_uuid": trackUUID,
+func (sql *sqlDB) GetSchoolsWithLocation(locationUUID string) ([]models.School, error) {
+	schools, err := sql.getSchools(_GetSchoolsWithLocation, map[string]interface{}{
+		"location_uuid": locationUUID,
 	})
 	return schools, err
 }
@@ -220,15 +193,8 @@ func (sql *sqlDB) getSchools(queryName goyesql.Tag, params map[string]interface{
 
 	for i, _ := range schools {
 		school := schools[i]
-		// get school tracks
-		tracks, err := sql.GetSchoolTracks(school.UUID)
-		if err != nil {
-			return schools, err
-		}
-		school.Tracks = tracks
-
 		// get school locations
-		locations, err := sql.GetSchoolCampusLocations(school.UUID)
+		locations, err := sql.getSchoolCampusLocations(school.UUID)
 		if err != nil {
 			return schools, err
 		}

@@ -25,21 +25,19 @@ class Search extends Component {
           schoolResults {
             uuid
             name
-            avgGraduateSalary
-            jobPlacementRate
             lengthInWeeks
             isOnline
             photoURI
             basePrice
             paymentType
-            tracks {
-              uuid
-              name
-            }
             campusLocations {
-              uuid
-              city
-              country
+              location {
+                uuid
+                city
+                country
+              }
+              avgGraduateSalary
+              jobPlacementRate
             }
           }
         }
@@ -86,7 +84,7 @@ const List = ({ schools }) => (
   <div>
     <div className="schoolList">
       {
-        schools.map(({ uuid, name, avgGraduateSalary, jobPlacementRate, lengthInWeeks, isOnline, photoURI, basePrice, paymentType, tracks, campusLocations }) => (
+        schools.map(({ uuid, name, lengthInWeeks, isOnline, photoURI, basePrice, paymentType, campusLocations }) => (
           <div className="card" key={uuid}>
             <SchoolLogo photoURI={photoURI} />
             <div className="schoolInfoWrapper">
@@ -96,8 +94,8 @@ const List = ({ schools }) => (
               <LocationBar isOnline={isOnline} campusLocations={campusLocations} />
               <PriceBar basePrice={basePrice} paymentType={paymentType} />
               <LengthBar length={lengthInWeeks}/>
-              <SalaryBar avgGraduateSalary={avgGraduateSalary} />
-              <JobPlacementBar jobPlacementRate={jobPlacementRate} />
+              <SalaryBar campusLocations={campusLocations} />
+              <JobPlacementBar campusLocations={campusLocations} />
             </div>
           </div>
         ))
@@ -126,9 +124,9 @@ function LocationBar(locationWrapper) {
     );
   }
   let list = "";
-  if (locationWrapper.campusLocations != null) {
-    for (let i = 0; i < locationWrapper.campusLocations.length; i++) { 
-      list += locationWrapper.campusLocations[i].city
+  if (locationWrapper.campusLocations) {
+    for (let i = 0; i < locationWrapper.campusLocations.length; i++) {
+      list += locationWrapper.campusLocations[i].location.city
       if (i !== locationWrapper.campusLocations.length - 1) {
         list += ", "
       }
@@ -175,22 +173,40 @@ function LengthBar(lengthWrapper) {
   );
 };
 
-function SalaryBar(salaryWrapper) {
+function SalaryBar(locationWrapper) {
+  let avgGraduateSalary = 0;
+
+  for (let i = 0; i < locationWrapper.campusLocations.length; i++) { 
+    avgGraduateSalary += locationWrapper.campusLocations[i].avgGraduateSalary
+  }
+  if (locationWrapper.campusLocations.length > 0) {
+    avgGraduateSalary = Math.round(avgGraduateSalary / locationWrapper.campusLocations.length);
+  }
+
   return (
     <div className="salary">
       <div className="salaryImage"><img src={SalaryIcon} alt="Salary"/></div>
       <div className="avgGraduateSalaryLabel">Average Graduate Salary</div>
-      <div className="avgGraduateSalary">${numToString(salaryWrapper.avgGraduateSalary)}</div>
+      <div className="avgGraduateSalary">${numToString(avgGraduateSalary)}</div>
     </div>
   );
 };
 
-function JobPlacementBar(jobPlacementWrapper) {
+function JobPlacementBar(locationWrapper) {
+  let jobPlacementRate = 0;
+
+  for (let i = 0; i < locationWrapper.campusLocations.length; i++) { 
+    jobPlacementRate += locationWrapper.campusLocations[i].jobPlacementRate
+  }
+  if (locationWrapper.campusLocations.length > 0) {
+    jobPlacementRate = Math.round(jobPlacementRate / locationWrapper.campusLocations.length * 100) / 100;
+  }
+
   return (
     <div className="jobPlacement">
       <div className="jobPlacementImage"><img src={JobPlacementIcon} alt="Job Placement"/></div>
       <div className="jobPlacementRateLabel">Job Placement Rate</div>
-      <div className="jobPlacementRate">{jobPlacementWrapper.jobPlacementRate}%</div>
+      <div className="jobPlacementRate">{jobPlacementRate}%</div>
     </div>
   );
 };

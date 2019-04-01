@@ -7,7 +7,6 @@ import (
 )
 
 const (
-	_GetTracks          = "getTracks"
 	_GetCampusLocations = "getCampusLocations"
 	_GetPaymentTypes    = "getPaymentTypes"
 )
@@ -19,31 +18,9 @@ type FiltersDB interface {
 func (sql *sqlDB) GetFilters() (models.Filters, error) {
 	var filters models.Filters
 
-	// Get Tracks
-	tracks := []models.Track{}
-	rows, err := sql.db.NamedQuery(
-		sql.queries.filtersQueries[_GetTracks],
-		map[string]interface{}{},
-	)
-	if err != nil {
-		return filters, err
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		var t models.Track
-		err := rows.StructScan(&t)
-		if err != nil {
-			log.Fatal("scan error: ", err)
-			return filters, err
-		}
-		tracks = append(tracks, t)
-	}
-	filters.Tracks = tracks
-
 	// Get Locations
 	locations := []models.Location{}
-	rows, err = sql.db.NamedQuery(
+	rows, err := sql.db.NamedQuery(
 		sql.queries.filtersQueries[_GetCampusLocations],
 		map[string]interface{}{},
 	)
@@ -61,7 +38,7 @@ func (sql *sqlDB) GetFilters() (models.Filters, error) {
 		}
 		locations = append(locations, l)
 	}
-	filters.CampusLocations = locations
+	filters.Locations = locations
 
 	// Get Payment Types
 	paymentTypes := []string{}

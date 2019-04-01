@@ -2,10 +2,15 @@
 
 package models
 
+type CampusLocation struct {
+	Location          Location `json:"location"`
+	AvgGraduateSalary *float64 `json:"avgGraduateSalary"`
+	JobPlacementRate  *float64 `json:"jobPlacementRate"`
+}
+
 type Filters struct {
-	Tracks          []Track    `json:"tracks"`
-	CampusLocations []Location `json:"campusLocations"`
-	PaymentTypes    []string   `json:"paymentTypes"`
+	Locations    []Location `json:"locations"`
+	PaymentTypes []string   `json:"paymentTypes"`
 }
 
 type Location struct {
@@ -15,18 +20,14 @@ type Location struct {
 }
 
 type School struct {
-	UUID              string     `json:"uuid"`
-	Name              string     `json:"name"`
-	AvgGraduateSalary *float64   `json:"avgGraduateSalary"`
-	AcceptanceRate    *float64   `json:"acceptanceRate"`
-	JobPlacementRate  *float64   `json:"jobPlacementRate"`
-	LengthInWeeks     *int       `json:"lengthInWeeks"`
-	IsOnline          *bool      `json:"isOnline"`
-	BasePrice         *int       `json:"basePrice"`
-	PaymentType       *string    `json:"paymentType"`
-	PhotoURI          *string    `json:"photoURI"`
-	CampusLocations   []Location `json:"campusLocations"`
-	Tracks            []Track    `json:"tracks"`
+	UUID            string           `json:"uuid"`
+	Name            string           `json:"name"`
+	LengthInWeeks   *int             `json:"lengthInWeeks"`
+	IsOnline        *bool            `json:"isOnline"`
+	BasePrice       *int             `json:"basePrice"`
+	PaymentType     *string          `json:"paymentType"`
+	PhotoURI        *string          `json:"photoURI"`
+	CampusLocations []CampusLocation `json:"campusLocations"`
 }
 
 type SchoolQueryResult struct {
@@ -38,17 +39,10 @@ type SchoolQueryResult struct {
 type SchoolSearchParams struct {
 	PageNumber          int      `json:"pageNumber"`
 	SearchText          *string  `json:"searchText"`
-	TrackUUID           *string  `json:"trackUUID"`
-	CampusLocationUUID  *string  `json:"campusLocationUUID"`
+	LocationUUID        *string  `json:"locationUUID"`
 	PaymentType         *string  `json:"paymentType"`
 	MaxPrice            *int     `json:"maxPrice"`
 	MinGraduateSalary   *float64 `json:"minGraduateSalary"`
 	MinJobPlacementRate *float64 `json:"minJobPlacementRate"`
 	MinLength           *int     `json:"minLength"`
-	IsOnline            *bool    `json:"isOnline"`
-}
-
-type Track struct {
-	UUID string `json:"uuid"`
-	Name string `json:"name"`
 }

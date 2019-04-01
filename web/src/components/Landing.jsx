@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Landing.css';
 import ContainedButton from "./contained_button.jsx";
-import LandingTrackButton from "./landing_track_button.jsx";
+import LandingLocationButton from "./landing_location_button.jsx";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
@@ -12,11 +12,7 @@ class Landing extends Component {
     const filtersQuery = gql`
       query GetFilters {
         filters {
-          tracks {
-            uuid
-            name
-          }
-          campusLocations {
+          locations {
             uuid
             city
             country
@@ -44,7 +40,7 @@ class Landing extends Component {
                 if (loading) return <p>Loading...</p>;
                 if (error) return <p>Error :(</p>;
 
-                return <LandingTrackButton searchOptions={ data.filters } onSelect={this.props.onSetSearchParams}/>
+                return <LandingLocationButton searchOptions={ data.filters } onSelect={this.props.onSetSearchParams}/>
               }}
             </Query>      
           </div>

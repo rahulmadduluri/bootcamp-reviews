@@ -8,8 +8,8 @@ class App extends Component {
   	page: 'Landing',
     
     pageNumber: 0,
-  	// add country, track, etc. here. for example:
-  	//campusLocationUUID: 'uuid-1',
+  	// Search Params
+  	//locationUUID: 'uuid-1',
   	//trackUUID: 'uuid-1'
   };
 
@@ -30,8 +30,7 @@ class App extends Component {
   		const currentSearchParams = {
         pageNumber: this.state.pageNumber,
         searchText: this.state.searchText,
-  			trackUUID: this.state.trackUUID,
-        campusLocationUUID: this.state.campusLocationUUID,
+        locationUUID: this.state.locationUUID,
         paymentType: this.state.paymentType,
         maxPrice: this.state.maxPrice,
         minGraduateSalary: this.state.minGraduateSalary,

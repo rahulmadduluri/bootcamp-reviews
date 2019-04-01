@@ -20,6 +20,7 @@ func (r *queryResolver) Schools(ctx context.Context, params models.SchoolSearchP
 	queryResults := models.SchoolQueryResult{}
 
 	allSchools, err := db.Handler().SQL().GetAllSchools()
+
 	if err != nil {
 		return nil, err
 	}
@@ -55,16 +56,8 @@ func (r *queryResolver) filterSchools(schools []models.School, params models.Sch
 		filteredSchools = intersectionOfSchools(filteredSchools, f)
 	}
 
-	if params.CampusLocationUUID != nil {
-		f, err := db.Handler().SQL().GetSchoolsWithCampusLocation(*params.CampusLocationUUID)
-		if err != nil {
-			return filteredSchools, err
-		}
-		filteredSchools = intersectionOfSchools(filteredSchools, f)
-	}
-
-	if params.TrackUUID != nil {
-		f, err := db.Handler().SQL().GetSchoolsWithTrack(*params.TrackUUID)
+	if params.LocationUUID != nil {
+		f, err := db.Handler().SQL().GetSchoolsWithLocation(*params.LocationUUID)
 		if err != nil {
 			return filteredSchools, err
 		}
@@ -105,14 +98,6 @@ func (r *queryResolver) filterSchools(schools []models.School, params models.Sch
 
 	if params.MinLength != nil {
 		f, err := db.Handler().SQL().GetSchoolsWithMinLength(*params.MinLength)
-		if err != nil {
-			return filteredSchools, err
-		}
-		filteredSchools = intersectionOfSchools(filteredSchools, f)
-	}
-
-	if params.IsOnline != nil {
-		f, err := db.Handler().SQL().GetSchoolsWithOnlineStatus(*params.IsOnline)
 		if err != nil {
 			return filteredSchools, err
 		}

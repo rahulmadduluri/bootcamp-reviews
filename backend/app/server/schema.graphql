@@ -1,17 +1,13 @@
 type School {
 	uuid: ID!
 	name: String!
-	avgGraduateSalary: Float
-	acceptanceRate: Float
-	jobPlacementRate: Float
 	lengthInWeeks: Int
 	isOnline: Boolean
 	basePrice: Int
 	paymentType: String # e.g. ISA, Upfront
 	photoURI: String
 	#countries available
-	campusLocations: [Location!]
-	tracks: [Track!]
+	campusLocations: [CampusLocation!]
 }
 
 type SchoolQueryResult {
@@ -26,27 +22,26 @@ type Location {
 	country: String!
 }
 
-type Track {
-	uuid: ID!
-	name: String!
+type CampusLocation {
+	location: Location!
+	avgGraduateSalary: Float
+	jobPlacementRate: Float
 }
+
 
 input SchoolSearchParams {
 	pageNumber: Int! # each page has 10 elements
 	searchText: String
-	trackUUID: ID
-	campusLocationUUID: ID
+	locationUUID: ID
 	paymentType: String
 	maxPrice: Int
 	minGraduateSalary: Float
 	minJobPlacementRate: Float
 	minLength: Int
-	isOnline: Boolean
 }
 
 type Filters {
-	tracks: [Track!]!
-	campusLocations: [Location!]!
+	locations: [Location!]!
 	paymentTypes: [String!]!
 }
 

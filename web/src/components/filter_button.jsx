@@ -53,10 +53,8 @@ class FilterSearchButton extends React.Component {
       value = event.target.value;
     }
     this.setState({ "selectedOption": value });
-    if (this.props.filterType === "Track") {
-      this.props.onSelect({ "trackUUID": value });
-    } else if (this.props.filterType === "Campus Location") {
-      this.props.onSelect({ "campusLocationUUID": value });
+    if (this.props.filterType === "Location") {
+      this.props.onSelect({ "locationUUID": value });
     } else if (this.props.filterType === "Payment Type") {
       this.props.onSelect({ "paymentType": value });
     }
@@ -87,7 +85,7 @@ class FilterSearchButton extends React.Component {
               this.InputLabelRef = ref;
             }}
             className={classes.inputLabel}
-            htmlFor="outlined-track-simple"
+            htmlFor="outlined-filter-simple"
           >
             {this.props.filterType}
           </InputLabel>
@@ -110,9 +108,7 @@ class FilterSearchButton extends React.Component {
             </MenuItem>
             { this.props.allOptions.map(filter => 
               {
-                if (this.props.filterType === "Track") {
-                  return <MenuItem key={filter.uuid} value={filter.uuid}>{filter.name}</MenuItem>;
-                } else if (this.props.filterType === "Campus Location") {
+                if (this.props.filterType === "Location") {
                   return <MenuItem key={filter.uuid} value={filter.uuid}>{filter.city}</MenuItem>;
                 } else if (this.props.filterType === "Payment Type") {
                   return <MenuItem key={filter} value={filter}>{filter}</MenuItem>;

@@ -10,11 +10,7 @@ class FilterBar extends React.Component {
     const filtersQuery = gql`
       query GetFilters {
         filters {
-          tracks {
-            uuid
-            name
-          }
-          campusLocations {
+          locations {
             uuid
             city
             country
@@ -41,11 +37,8 @@ class FilterBar extends React.Component {
 const FilterList = ({ searchOptions, currentSearchParams, onSelect }) => (
   <div className="FilterWrapper">
     <div className="FilterBar">
-      <div className="Track">
-        <FilterButton currentOption={currentSearchParams.trackUUID} filterType="Track" allOptions={searchOptions.tracks} onSelect={onSelect}/>
-      </div>
       <div className="CampusLocation">
-        <FilterButton currentOption={currentSearchParams.campusLocationUUID} filterType="Campus Location" allOptions={searchOptions.campusLocations} onSelect={onSelect}/>
+        <FilterButton currentOption={currentSearchParams.locationUUID} filterType="Location" allOptions={searchOptions.locations} onSelect={onSelect}/>
       </div>
       <div className="PaymentType">
         <FilterButton filterType="Payment Type" allOptions={searchOptions.paymentTypes} onSelect={onSelect}/>

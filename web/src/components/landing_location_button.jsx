@@ -19,9 +19,9 @@ const styles = theme => ({
   },
 });
 
-class LandingTrackButton extends React.Component {
+class LandingLocationButton extends React.Component {
   state = {
-    trackUUID: '',
+    locationUUID: '',
     labelWidth: 0,
   };
 
@@ -32,9 +32,9 @@ class LandingTrackButton extends React.Component {
   }
 
   handleChange = event => {
-    this.setState({ "trackUUID": event.target.value });
+    this.setState({ "locationUUID": event.target.value });
     if (event.target.value && event.target.value !== '') {
-      this.props.onSelect({ "trackUUID": event.target.value });
+      this.props.onSelect({ "locationUUID": event.target.value });
     }
   };
 
@@ -57,27 +57,27 @@ class LandingTrackButton extends React.Component {
             ref={ref => {
               this.InputLabelRef = ref;
             }}
-            htmlFor="outlined-track-simple"
+            htmlFor="outlined-location-simple"
           >
-            Career Track
+            Location
           </InputLabel>
           <Select
             className={classes.select}
-            value={this.state.trackUUID}
+            value={this.state.locationUUID}
             onChange={this.handleChange}
             input={
               <OutlinedInput
                 labelWidth={this.state.labelWidth}
-                name="track"
-                id="outlined-track-simple"
+                name="location"
+                id="outlined-location-simple"
               />
             }
            >
             <MenuItem value="">
-              All Tracks (Default)
+              Any
             </MenuItem>
-            { this.props.searchOptions.tracks.map(track => 
-              <MenuItem key={track.uuid} value={track.uuid}>{track.name}</MenuItem>
+            { this.props.searchOptions.locations.map(location => 
+              <MenuItem key={location.uuid} value={location.uuid}>{location.city}</MenuItem>
             )}
           </Select>
         </FormControl>
@@ -88,4 +88,4 @@ class LandingTrackButton extends React.Component {
   }
 }
 
-export default withStyles(styles)(LandingTrackButton);
+export default withStyles(styles)(LandingLocationButton);

@@ -2,9 +2,6 @@
 select
 	schools.uuid as uuid,
 	schools.name as name,
-	schools.avg_graduate_salary as avggraduatesalary,
-	schools.acceptance_rate as acceptancerate,
-	schools.job_placement_rate as jobplacementrate,
 	schools.length_in_weeks as lengthinweeks,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,
@@ -14,38 +11,22 @@ from schools
 where schools.uuid = :school_uuid
 ;
 
--- name: getSchoolTracks
+-- name: getSchoolCampusLocationsDB
 select
-	tracks.uuid as uuid,
-	tracks.name as name
-from tracks
-join schools
-	on schools.uuid = :school_uuid
-join school_tracks
-	on school_tracks.school_id = schools.id
-where tracks.id = school_tracks.track_id
-;
-
--- name: getSchoolCampusLocations
-select
-	locations.uuid as uuid,
-	locations.city as city,
-	locations.country as country
-from locations
-join schools
-	on schools.uuid = :school_uuid
+	campus_locations.school_id as schoolid,
+	campus_locations.location_id as locationid,
+	campus_locations.avg_graduate_salary as avggraduatesalary,
+	campus_locations.job_placement_rate as jobplacementrate
+from schools
 join campus_locations
 	on campus_locations.school_id = schools.id
-where locations.id = campus_locations.location_id
+where schools.uuid = :school_uuid
 ;
 
 -- name: getAllSchools
 select
 	schools.uuid as uuid,
 	schools.name as name,
-	schools.avg_graduate_salary as avggraduatesalary,
-	schools.acceptance_rate as acceptancerate,
-	schools.job_placement_rate as jobplacementrate,
 	schools.length_in_weeks as lengthinweeks,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,
@@ -58,9 +39,6 @@ from schools
 select
 	schools.uuid as uuid,
 	schools.name as name,
-	schools.avg_graduate_salary as avggraduatesalary,
-	schools.acceptance_rate as acceptancerate,
-	schools.job_placement_rate as jobplacementrate,
 	schools.length_in_weeks as lengthinweeks,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,
@@ -70,13 +48,10 @@ from schools
 where schools.name like :search_text
 ;
 
--- name: getSchoolsWithCampusLocation
+-- name: getSchoolsWithLocation
 select
 	schools.uuid as uuid,
 	schools.name as name,
-	schools.avg_graduate_salary as avggraduatesalary,
-	schools.acceptance_rate as acceptancerate,
-	schools.job_placement_rate as jobplacementrate,
 	schools.length_in_weeks as lengthinweeks,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,
@@ -87,36 +62,13 @@ join campus_locations
 	on campus_locations.school_id = schools.id
 join locations
 	on locations.id = campus_locations.location_id
-where locations.uuid = :campus_location_uuid
-;
-
--- name: getSchoolsWithTrack
-select
-	schools.uuid as uuid,
-	schools.name as name,
-	schools.avg_graduate_salary as avggraduatesalary,
-	schools.acceptance_rate as acceptancerate,
-	schools.job_placement_rate as jobplacementrate,
-	schools.length_in_weeks as lengthinweeks,
-	schools.is_online as isonline,
-	schools.base_price as baseprice,
-	schools.payment_type as paymenttype,
-	schools.photo_uri as photouri
-from schools
-join school_tracks
-	on school_tracks.school_id = schools.id
-join tracks
-	on tracks.id = school_tracks.track_id
-where tracks.uuid = :track_uuid
+where locations.uuid = :location_uuid
 ;
 
 -- name: getSchoolsWithPaymentType
 select
 	schools.uuid as uuid,
 	schools.name as name,
-	schools.avg_graduate_salary as avggraduatesalary,
-	schools.acceptance_rate as acceptancerate,
-	schools.job_placement_rate as jobplacementrate,
 	schools.length_in_weeks as lengthinweeks,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,
@@ -130,9 +82,6 @@ where schools.payment_type = :payment_type
 select
 	schools.uuid as uuid,
 	schools.name as name,
-	schools.avg_graduate_salary as avggraduatesalary,
-	schools.acceptance_rate as acceptancerate,
-	schools.job_placement_rate as jobplacementrate,
 	schools.length_in_weeks as lengthinweeks,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,
@@ -146,9 +95,6 @@ where schools.base_price <= :max_price
 select
 	schools.uuid as uuid,
 	schools.name as name,
-	schools.avg_graduate_salary as avggraduatesalary,
-	schools.acceptance_rate as acceptancerate,
-	schools.job_placement_rate as jobplacementrate,
 	schools.length_in_weeks as lengthinweeks,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,
@@ -162,9 +108,6 @@ where schools.avg_graduate_salary >= :min_graduate_salary
 select
 	schools.uuid as uuid,
 	schools.name as name,
-	schools.avg_graduate_salary as avggraduatesalary,
-	schools.acceptance_rate as acceptancerate,
-	schools.job_placement_rate as jobplacementrate,
 	schools.length_in_weeks as lengthinweeks,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,
@@ -178,9 +121,6 @@ where schools.job_placement_rate >= :min_job_placement_rate
 select
 	schools.uuid as uuid,
 	schools.name as name,
-	schools.avg_graduate_salary as avggraduatesalary,
-	schools.acceptance_rate as acceptancerate,
-	schools.job_placement_rate as jobplacementrate,
 	schools.length_in_weeks as lengthinweeks,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,
@@ -194,9 +134,6 @@ where schools.length_in_weeks >= :min_length
 select
 	schools.uuid as uuid,
 	schools.name as name,
-	schools.avg_graduate_salary as avggraduatesalary,
-	schools.acceptance_rate as acceptancerate,
-	schools.job_placement_rate as jobplacementrate,
 	schools.length_in_weeks as lengthinweeks,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,

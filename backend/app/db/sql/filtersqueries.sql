@@ -1,10 +1,3 @@
--- name: getTracks
-select
-	tracks.uuid as uuid,
-	tracks.name as name
-from tracks
-;
-
 -- name: getCampusLocations
 select
 	locations.uuid as uuid,
