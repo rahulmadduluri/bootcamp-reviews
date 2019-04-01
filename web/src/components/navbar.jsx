@@ -69,7 +69,6 @@ class Navbar extends React.Component {
                 <a className="button is-primary">
                   <strong>Sign up</strong>
                 </a>
-                <a className="button is-light">Log in</a>
               </div>
             </div>
           </div>
