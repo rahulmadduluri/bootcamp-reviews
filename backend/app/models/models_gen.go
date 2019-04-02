@@ -3,9 +3,9 @@
 package models
 
 type CampusLocation struct {
-	Location          Location `json:"location"`
-	AvgGraduateSalary *float64 `json:"avgGraduateSalary"`
-	JobPlacementRate  *float64 `json:"jobPlacementRate"`
+	Location             Location `json:"location"`
+	MedianGraduateSalary *float64 `json:"medianGraduateSalary"`
+	JobPlacementRate     *float64 `json:"jobPlacementRate"`
 }
 
 type Filters struct {

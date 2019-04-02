@@ -15,7 +15,7 @@ where schools.uuid = :school_uuid
 select
 	campus_locations.school_id as schoolid,
 	campus_locations.location_id as locationid,
-	campus_locations.avg_graduate_salary as avggraduatesalary,
+	campus_locations.median_graduate_salary as mediangraduatesalary,
 	campus_locations.job_placement_rate as jobplacementrate
 from schools
 join campus_locations
@@ -101,7 +101,7 @@ select
 	schools.payment_type as paymenttype,
 	schools.photo_uri as photouri
 from schools
-where schools.avg_graduate_salary >= :min_graduate_salary
+where schools.median_graduate_salary >= :min_graduate_salary
 ;
 
 -- name: getSchoolsWithMinJobPlacementRate

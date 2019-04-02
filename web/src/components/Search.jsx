@@ -36,7 +36,7 @@ class Search extends Component {
                 city
                 country
               }
-              avgGraduateSalary
+              medianGraduateSalary
               jobPlacementRate
             }
           }
@@ -91,7 +91,7 @@ const List = ({ schools }) => (
               <div className="name">
                 {name}
               </div>
-              <LocationBar isOnline={isOnline} campusLocations={campusLocations} />
+              <LocationBar campusLocations={campusLocations} />
               <PriceBar basePrice={basePrice} paymentType={paymentType} />
               <LengthBar length={lengthInWeeks}/>
               <SalaryBar campusLocations={campusLocations} />
@@ -115,14 +115,6 @@ function SchoolLogo(uriWrapper) {
 };
 
 function LocationBar(locationWrapper) {
-  if (locationWrapper.isOnline === true) {
-    return (
-      <div className="location">
-        <img src={LocationIcon} alt="Location"/>
-        <div className="campusLocations">Online</div>
-      </div>
-    );
-  }
   let list = "";
   if (locationWrapper.campusLocations) {
     for (let i = 0; i < locationWrapper.campusLocations.length; i++) {
@@ -174,20 +166,20 @@ function LengthBar(lengthWrapper) {
 };
 
 function SalaryBar(locationWrapper) {
-  let avgGraduateSalary = 0;
+  let medianGraduateSalary = 0;
 
   for (let i = 0; i < locationWrapper.campusLocations.length; i++) { 
-    avgGraduateSalary += locationWrapper.campusLocations[i].avgGraduateSalary
+    medianGraduateSalary += locationWrapper.campusLocations[i].medianGraduateSalary
   }
   if (locationWrapper.campusLocations.length > 0) {
-    avgGraduateSalary = Math.round(avgGraduateSalary / locationWrapper.campusLocations.length);
+    medianGraduateSalary = Math.round(medianGraduateSalary / locationWrapper.campusLocations.length);
   }
 
   return (
     <div className="salary">
       <div className="salaryImage"><img src={SalaryIcon} alt="Salary"/></div>
-      <div className="avgGraduateSalaryLabel">Average Graduate Salary</div>
-      <div className="avgGraduateSalary">${numToString(avgGraduateSalary)}</div>
+      <div className="medianGraduateSalaryLabel">Median Graduate Salary</div>
+      <div className="medianGraduateSalary">${numToString(medianGraduateSalary)}</div>
     </div>
   );
 };

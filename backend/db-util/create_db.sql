@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS locations (
 CREATE TABLE IF NOT EXISTS campus_locations (
 	school_id  				int 			NOT NULL,
 	location_id				int 			NOT NULL,
-	avg_graduate_salary     double,
+	median_graduate_salary     double,
 	job_placement_rate 		double,
 	FOREIGN KEY (school_id) REFERENCES schools (id),
 	FOREIGN KEY (location_id) REFERENCES locations (id)

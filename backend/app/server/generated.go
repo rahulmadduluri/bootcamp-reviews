@@ -42,9 +42,9 @@ type DirectiveRoot struct {
 
 type ComplexityRoot struct {
 	CampusLocation struct {
-		Location          func(childComplexity int) int
-		AvgGraduateSalary func(childComplexity int) int
-		JobPlacementRate  func(childComplexity int) int
+		Location             func(childComplexity int) int
+		MedianGraduateSalary func(childComplexity int) int
+		JobPlacementRate     func(childComplexity int) int
 	}
 
 	Filters struct {
@@ -110,12 +110,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.CampusLocation.Location(childComplexity), true
 
-	case "CampusLocation.AvgGraduateSalary":
-		if e.complexity.CampusLocation.AvgGraduateSalary == nil {
+	case "CampusLocation.MedianGraduateSalary":
+		if e.complexity.CampusLocation.MedianGraduateSalary == nil {
 			break
 		}
 
-		return e.complexity.CampusLocation.AvgGraduateSalary(childComplexity), true
+		return e.complexity.CampusLocation.MedianGraduateSalary(childComplexity), true
 
 	case "CampusLocation.JobPlacementRate":
 		if e.complexity.CampusLocation.JobPlacementRate == nil {
@@ -357,7 +357,7 @@ type Location {
 
 type CampusLocation {
 	location: Location!
-	avgGraduateSalary: Float
+	medianGraduateSalary: Float
 	jobPlacementRate: Float
 }
 
@@ -490,7 +490,7 @@ func (ec *executionContext) _CampusLocation_location(ctx context.Context, field 
 	return ec.marshalNLocation2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐLocation(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _CampusLocation_avgGraduateSalary(ctx context.Context, field graphql.CollectedField, obj *models.CampusLocation) graphql.Marshaler {
+func (ec *executionContext) _CampusLocation_medianGraduateSalary(ctx context.Context, field graphql.CollectedField, obj *models.CampusLocation) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
@@ -502,7 +502,7 @@ func (ec *executionContext) _CampusLocation_avgGraduateSalary(ctx context.Contex
 	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.AvgGraduateSalary, nil
+		return obj.MedianGraduateSalary, nil
 	})
 	if resTmp == nil {
 		return graphql.Null
@@ -1953,8 +1953,8 @@ func (ec *executionContext) _CampusLocation(ctx context.Context, sel ast.Selecti
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
-		case "avgGraduateSalary":
-			out.Values[i] = ec._CampusLocation_avgGraduateSalary(ctx, field, obj)
+		case "medianGraduateSalary":
+			out.Values[i] = ec._CampusLocation_medianGraduateSalary(ctx, field, obj)
 		case "jobPlacementRate":
 			out.Values[i] = ec._CampusLocation_jobPlacementRate(ctx, field, obj)
 		default:

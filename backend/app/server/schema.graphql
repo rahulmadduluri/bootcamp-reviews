@@ -24,7 +24,7 @@ type Location {
 
 type CampusLocation {
 	location: Location!
-	avgGraduateSalary: Float
+	medianGraduateSalary: Float
 	jobPlacementRate: Float
 }
 

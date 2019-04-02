@@ -81,11 +81,10 @@
 .schoolInfoWrapper .location > img {
 	width: 8px;
 	height: 11px;
-	display: inline-block;
 }
 .schoolInfoWrapper .location .campusLocations {
-	display: inline-block;
-	font-size: 11px;
+	line-height: 12px;
+	font-size: 12px;
 	color: #828282;
 	font-weight: 300px;
 	margin-left: 5px;
@@ -103,7 +102,7 @@
 	display: inline-block;
 }
 .schoolInfoWrapper .price .paymentType {
-	margin-left: 5px;
+	margin-left: 8px;
 	display: inline-block;
 }
 .schoolInfoWrapper .price .paymentType > img {
@@ -132,7 +131,7 @@
 	color: #828282;
 	font-weight: 400;
 	font-size: 12px;
-	margin-left: 5px;
+	margin-left: 8px;
 }
 .schoolInfoWrapper .length .lengthInWeeks {
 	display: inline-block;
@@ -155,14 +154,14 @@
 	height: 13px;
 	vertical-align: middle;
 }
-.schoolInfoWrapper .salary .avgGraduateSalaryLabel {
+.schoolInfoWrapper .salary .medianGraduateSalaryLabel {
 	display: inline-block;
 	color: #828282;
 	font-weight: 400;
 	font-size: 12px;
-	margin-left: 5px;
+	margin-left: 8px;
 }
-.schoolInfoWrapper .salary .avgGraduateSalary {
+.schoolInfoWrapper .salary .medianGraduateSalary {
 	display: inline-block;
 	font-weight: 500;
 	font-size: 12px;
@@ -188,7 +187,7 @@
 	color: #828282;
 	font-weight: 400;
 	font-size: 12px;
-	margin-left: 5px;
+	margin-left: 8px;
 }
 .schoolInfoWrapper .jobPlacement .jobPlacementRate {
 	display: inline-block;

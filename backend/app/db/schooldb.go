@@ -100,12 +100,12 @@ func (sql *sqlDB) getSchoolCampusLocations(schoolUUID string) ([]models.CampusLo
 		if err != nil {
 			return campusLocations, err
 		}
-		ags := cl.AvgGraduateSalary
+		ags := cl.MedianGraduateSalary
 		jpr := cl.JobPlacementRate
 		campusLocation := models.CampusLocation{
-			Location:          l,
-			AvgGraduateSalary: &ags,
-			JobPlacementRate:  &jpr,
+			Location:             l,
+			MedianGraduateSalary: &ags,
+			JobPlacementRate:     &jpr,
 		}
 		campusLocations = append(campusLocations, campusLocation)
 	}
