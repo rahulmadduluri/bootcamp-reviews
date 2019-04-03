@@ -12,6 +12,7 @@ type Filters struct {
 	Locations    []Location `json:"locations"`
 	PaymentTypes []string   `json:"paymentTypes"`
 	MinLengths   []int      `json:"minLengths"`
+	MaxPrices    []int      `json:"maxPrices"`
 }
 
 type Location struct {

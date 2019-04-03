@@ -126,5 +126,6 @@ func (r *queryResolver) Filters(ctx context.Context) (*models.Filters, error) {
 		return nil, err
 	}
 	filters.MinLengths = []int{10, 30}
+	filters.MaxPrices = []int{10000, 20000, 30000, 40000, 50000}
 	return &filters, err
 }

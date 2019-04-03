@@ -51,6 +51,7 @@ type ComplexityRoot struct {
 		Locations    func(childComplexity int) int
 		PaymentTypes func(childComplexity int) int
 		MinLengths   func(childComplexity int) int
+		MaxPrices    func(childComplexity int) int
 	}
 
 	Location struct {
@@ -145,6 +146,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Filters.MinLengths(childComplexity), true
+
+	case "Filters.MaxPrices":
+		if e.complexity.Filters.MaxPrices == nil {
+			break
+		}
+
+		return e.complexity.Filters.MaxPrices(childComplexity), true
 
 	case "Location.UUID":
 		if e.complexity.Location.UUID == nil {
@@ -385,6 +393,7 @@ type Filters {
 	locations: [Location!]!
 	paymentTypes: [String!]!
 	minLengths: [Int!]!
+	maxPrices: [Int!]!
 }
 
 type Query {
@@ -610,6 +619,32 @@ func (ec *executionContext) _Filters_minLengths(ctx context.Context, field graph
 	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return obj.MinLengths, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]int)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNInt2ᚕint(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Filters_maxPrices(ctx context.Context, field graphql.CollectedField, obj *models.Filters) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object: "Filters",
+		Field:  field,
+		Args:   nil,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MaxPrices, nil
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -2026,6 +2061,11 @@ func (ec *executionContext) _Filters(ctx context.Context, sel ast.SelectionSet, 
 			}
 		case "minLengths":
 			out.Values[i] = ec._Filters_minLengths(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "maxPrices":
+			out.Values[i] = ec._Filters_maxPrices(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}

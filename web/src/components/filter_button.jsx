@@ -57,8 +57,10 @@ class FilterSearchButton extends React.Component {
       this.props.onSelect({ "locationUUID": value });
     } else if (this.props.filterType === "Payment Type") {
       this.props.onSelect({ "paymentType": value });
-    } else if (this.props.filterType === "Program Length") {
+    } else if (this.props.filterType === "Minimum Length") {
       this.props.onSelect({ "minLength": value });
+    } else if (this.props.filterType === "Max Price") {
+      this.props.onSelect({ "maxPrice": value });
     }
   };
 
@@ -111,11 +113,13 @@ class FilterSearchButton extends React.Component {
             { this.props.allOptions.map(filter => 
               {
                 if (this.props.filterType === "Location") {
-                  return <MenuItem key={filter.uuid} value={filter.uuid}>{filter.city}</MenuItem>;
+                  return <MenuItem key={"Location_"+filter.uuid} value={filter.uuid}>{filter.city}</MenuItem>;
                 } else if (this.props.filterType === "Payment Type") {
-                  return <MenuItem key={filter} value={filter}>{filter}</MenuItem>;
-                } else if (this.props.filterType === "Program Length") {
-                  return <MenuItem key={filter} value={filter}>{filter}</MenuItem>;
+                  return <MenuItem key={"Payment_Type_"+filter} value={filter}>{filter}</MenuItem>;
+                } else if (this.props.filterType === "Minimum Length") {
+                  return <MenuItem key={"Minimum_Length_"+filter} value={filter}>{filter}</MenuItem>;
+                } else if (this.props.filterType === "Max Price") {
+                  return <MenuItem key={"Max_Price_"+filter} value={filter}>{filter}</MenuItem>;
                 } else {
                   return <div key={""}></div>;
                 }

@@ -15,15 +15,3 @@
   overflow-y:hidden;
   overflow-x: auto;
 }
-
-.FilterBar .Track {
-	display: inline-block;
-}
-
-.FilterBar .CampusLocation {
-	display: inline-block;
-}
-
-.FilterBar .PaymentType {
-	display: inline-block;
-}
