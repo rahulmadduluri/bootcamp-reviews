@@ -35,19 +35,61 @@ CREATE TABLE IF NOT EXISTS campus_locations (
 );
 
 INSERT INTO schools VALUES
-	(NULL, 'uuid-1', 'Lambda School', 35, 1, 30000, 'ISA', 'lambda', 1000),
-	(NULL, 'uuid-2', 'Holberton School', 30, 1, 20000, 'ISA', 'holberton', 1000),
-	(NULL, 'uuid-3', 'Flatiron School', 30, 0, 35000, 'Upfront', 'flatiron', 1000),
-	(NULL, 'uuid-4', 'Make School', 100, 0, 60000, 'ISA', 'make', 1000);
+	(NULL, 'uuid-1', 'Bloc', 35, 1, 8500, 'Upfront', 'bloc', 1000),
+	(NULL, 'uuid-2', 'Hack Reactor', 30, 1, 17980, 'Upfront', 'hack_reactor', 1000),
+	(NULL, 'uuid-3', 'Tech Elevator', 30, 0, 15000, 'Upfront', 'tech_elevator', 1000),
+	(NULL, 'uuid-4', 'Bottega', 100, 0, 10000, 'Upfront', 'bottega', 1000),
+	(NULL, 'uuid-5', 'The Software Guild', 100, 0, 13875, 'Upfront', 'the_software_guild', 1000),
+	(NULL, 'uuid-6', 'Byte Academy', 100, 0, 14950, 'Upfront', 'byte_academy', 1000),
+	(NULL, 'uuid-7', 'Codesmith', 100, 0, 17700, 'Upfront', 'codesmith', 1000),
+	(NULL, 'uuid-8', 'Eleven Fifty', 100, 0, 13500, 'Upfront', 'eleven_fifty', 1000),
+	(NULL, 'uuid-9', 'Lambda School', 100, 0, 30000, 'ISA', 'lambda_school', 1000),
+	(NULL, 'uuid-10', 'Epicodus', 100, 0, 8500, 'Upfront', 'epicodus', 1000),
+	(NULL, 'uuid-11', 'Launch Academy', 100, 0, 17500, 'Upfront', 'launch_academy', 1000),
+	(NULL, 'uuid-12', 'Turing School', 100, 0, 20000, 'Upfront', 'turing_school', 1000),
+	(NULL, 'uuid-13', 'Project Shift', 100, 0, 12900, 'Upfront', 'project_shift', 1000);
 INSERT INTO locations VALUES
 	(NULL, 'uuid-1', 'Online', 'Online', 500),
 	(NULL, 'uuid-2', 'San Francisco', 'USA', 500),
-	(NULL, 'uuid-3', 'New York', 'USA', 500),
-	(NULL, 'uuid-4', 'Los Angeles', 'USA', 500);
+	(NULL, 'uuid-3', 'Los Angeles', 'USA', 500),
+	(NULL, 'uuid-4', 'New York City', 'USA', 500),
+	(NULL, 'uuid-5', 'Cleveland', 'USA', 500),
+	(NULL, 'uuid-6', 'Columbus', 'USA', 500),
+	(NULL, 'uuid-7', 'Salt Lake City', 'USA', 500),
+	(NULL, 'uuid-8', 'Louisville', 'USA', 500),
+	(NULL, 'uuid-9', 'Minneapolis', 'USA', 500),
+	(NULL, 'uuid-10', 'Fishers', 'USA', 500),
+	(NULL, 'uuid-11', 'Portland', 'USA', 500),
+	(NULL, 'uuid-12', 'Boston', 'USA', 500),
+	(NULL, 'uuid-13', 'Seattle', 'USA', 500),
+	(NULL, 'uuid-14', 'Durham', 'USA', 500),
+	(NULL, 'uuid-15', 'Denver', 'USA', 500),
+	(NULL, 'uuid-16', 'Austin', 'USA', 500),
+	(NULL, 'uuid-17', 'Cincinnati', 'USA', 500);
 INSERT INTO campus_locations VALUES
-	(1, 1, 95090, 90.13),
-	(2, 1, 88203, 85.28),
-	(3, 2, 78000, 83.12),
-	(3, 3, 83029, 65.34),
-	(3, 4, 98389, 73.18),
-	(4, 2, 55092, 88.11);
+	(1, 1, 95090, 90.13), # Block, Online
+	(2, 3, 88203, 85.28), # Hack Reactor Los Angeles
+	(2, 4, 78000, 83.12), # Hack Reactor Yew York
+	(2, 1, 83029, 65.34), # Hack Reactor Online
+	(2, 2, 98389, 73.18), # Hack Reactor San Francisco
+	(3, 5, 55092, 88.11), # Tech Elevator Cleveland
+	(3, 6, 55092, 88.11), # Tech Elevator Columbus
+	(3, 17, 55092, 88.11), # Tech Elevator Cincinnati
+	(4, 7, 55092, 88.11), # Bottega Salt Lake City
+	(5, 8, 55092, 88.11), # The Software Guild Louisville
+	(5, 9, 55092, 88.11), # The Software Guild Minneapolis
+	(6, 4, 55092, 88.11), # Byte Academy New York City
+	(7, 3, 55092, 88.11), # Codesmith Los Angeles
+	(7, 4, 55092, 88.11), # Codesmith New York City
+	(8, 10, 55092, 88.11), # Eleven Fifty Fishers
+	(9, 1, 55092, 88.11), # Lambda School Online
+	(10, 11, 55092, 88.11), # Epicodus Portland
+	(10, 13, 55092, 88.11), # Epicodus Seattle
+	(11, 2, 55092, 88.11), # Launch Academy Boston
+	(12, 15, 55092, 88.11), # Turing School Denver
+	(13, 14, 55092, 88.11); # Project Shift Durham
+
+
+
+
+
