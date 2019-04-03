@@ -156,13 +156,23 @@ function PriceBar(priceWrapper) {
 };
 
 function LengthBar(lengthWrapper) {
-  return (
-    <div className="length">
-      <div className="lengthImage"><img src={LengthIcon} alt="Length"/></div>
-      <div className="lengthInWeeksLabel">Length</div>
-      <div className="lengthInWeeks">{lengthWrapper.length} weeks</div>
-    </div>
-  );
+  if (lengthWrapper.length) {
+    return (
+      <div className="length">
+        <div className="lengthImage"><img src={LengthIcon} alt="Length"/></div>
+        <div className="lengthInWeeksLabel">Length</div>
+        <div className="lengthInWeeks">{lengthWrapper.length} weeks</div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="length">
+        <div className="lengthImage"><img src={LengthIcon} alt="Length"/></div>
+        <div className="lengthInWeeksLabel">Length</div>
+        <div className="lengthInWeeks">?</div>
+      </div>
+    );
+  }
 };
 
 function SalaryBar(locationWrapper) {

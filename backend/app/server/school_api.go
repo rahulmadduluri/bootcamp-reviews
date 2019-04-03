@@ -125,5 +125,6 @@ func (r *queryResolver) Filters(ctx context.Context) (*models.Filters, error) {
 	if err != nil {
 		return nil, err
 	}
+	filters.MinLengths = []int{10, 30}
 	return &filters, err
 }

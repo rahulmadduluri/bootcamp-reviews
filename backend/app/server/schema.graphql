@@ -43,6 +43,7 @@ input SchoolSearchParams {
 type Filters {
 	locations: [Location!]!
 	paymentTypes: [String!]!
+	minLengths: [Int!]!
 }
 
 type Query {

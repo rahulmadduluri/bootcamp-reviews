@@ -35,19 +35,19 @@ CREATE TABLE IF NOT EXISTS campus_locations (
 );
 
 INSERT INTO schools VALUES
-	(NULL, 'uuid-1', 'Bloc', 35, 1, 8500, 'Upfront', 'bloc', 1000),
-	(NULL, 'uuid-2', 'Hack Reactor', 30, 1, 17980, 'Upfront', 'hack_reactor', 1000),
-	(NULL, 'uuid-3', 'Tech Elevator', 30, 0, 15000, 'Upfront', 'tech_elevator', 1000),
-	(NULL, 'uuid-4', 'Bottega', 100, 0, 10000, 'Upfront', 'bottega', 1000),
-	(NULL, 'uuid-5', 'The Software Guild', 100, 0, 13875, 'Upfront', 'the_software_guild', 1000),
-	(NULL, 'uuid-6', 'Byte Academy', 100, 0, 14950, 'Upfront', 'byte_academy', 1000),
-	(NULL, 'uuid-7', 'Codesmith', 100, 0, 17700, 'Upfront', 'codesmith', 1000),
-	(NULL, 'uuid-8', 'Eleven Fifty', 100, 0, 13500, 'Upfront', 'eleven_fifty', 1000),
-	(NULL, 'uuid-9', 'Lambda School', 100, 0, 30000, 'ISA', 'lambda_school', 1000),
-	(NULL, 'uuid-10', 'Epicodus', 100, 0, 8500, 'Upfront', 'epicodus', 1000),
-	(NULL, 'uuid-11', 'Launch Academy', 100, 0, 17500, 'Upfront', 'launch_academy', 1000),
-	(NULL, 'uuid-12', 'Turing School', 100, 0, 20000, 'Upfront', 'turing_school', 1000),
-	(NULL, 'uuid-13', 'Project Shift', 100, 0, 12900, 'Upfront', 'project_shift', 1000);
+	(NULL, 'uuid-1', 'Bloc', NULL, 1, 8500, 'Upfront', 'bloc', 1000),
+	(NULL, 'uuid-2', 'Hack Reactor', 14, 1, 17980, 'Upfront', 'hack_reactor', 1000),
+	(NULL, 'uuid-3', 'Tech Elevator', 14, 0, 15000, 'Upfront', 'tech_elevator', 1000),
+	(NULL, 'uuid-4', 'Bottega', 14, 0, 10000, 'Upfront', 'bottega', 1000),
+	(NULL, 'uuid-5', 'The Software Guild', 12, 0, 13875, 'Upfront', 'the_software_guild', 1000),
+	(NULL, 'uuid-6', 'Byte Academy', 14, 0, 14950, 'Upfront', 'byte_academy', 1000),
+	(NULL, 'uuid-7', 'Codesmith', 13, 0, 17700, 'Upfront', 'codesmith', 1000),
+	(NULL, 'uuid-8', 'Eleven Fifty', 12, 0, 13500, 'Upfront', 'eleven_fifty', 1000),
+	(NULL, 'uuid-9', 'Lambda School', 32, 0, 30000, 'ISA', 'lambda_school', 1000),
+	(NULL, 'uuid-10', 'Epicodus', 30, 0, 8500, 'Upfront', 'epicodus', 1000),
+	(NULL, 'uuid-11', 'Launch Academy', 13, 0, 17500, 'Upfront', 'launch_academy', 1000),
+	(NULL, 'uuid-12', 'Turing School', 29, 0, 20000, 'Upfront', 'turing_school', 1000),
+	(NULL, 'uuid-13', 'Project Shift', 13, 0, 12900, 'Upfront', 'project_shift', 1000);
 INSERT INTO locations VALUES
 	(NULL, 'uuid-1', 'Online', 'Online', 500),
 	(NULL, 'uuid-2', 'San Francisco', 'USA', 500),

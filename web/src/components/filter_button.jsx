@@ -57,6 +57,8 @@ class FilterSearchButton extends React.Component {
       this.props.onSelect({ "locationUUID": value });
     } else if (this.props.filterType === "Payment Type") {
       this.props.onSelect({ "paymentType": value });
+    } else if (this.props.filterType === "Program Length") {
+      this.props.onSelect({ "minLength": value });
     }
   };
 
@@ -111,6 +113,8 @@ class FilterSearchButton extends React.Component {
                 if (this.props.filterType === "Location") {
                   return <MenuItem key={filter.uuid} value={filter.uuid}>{filter.city}</MenuItem>;
                 } else if (this.props.filterType === "Payment Type") {
+                  return <MenuItem key={filter} value={filter}>{filter}</MenuItem>;
+                } else if (this.props.filterType === "Program Length") {
                   return <MenuItem key={filter} value={filter}>{filter}</MenuItem>;
                 } else {
                   return <div key={""}></div>;
