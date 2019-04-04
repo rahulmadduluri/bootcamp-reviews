@@ -67,28 +67,28 @@ INSERT INTO locations VALUES
 	(NULL, 'uuid-16', 'Austin', 'USA', 500),
 	(NULL, 'uuid-17', 'Cincinnati', 'USA', 500);
 INSERT INTO campus_locations VALUES
-	(1, 1, 95090, 90.13), # Block, Online
-	(2, 3, 88203, 85.28), # Hack Reactor Los Angeles
-	(2, 4, 78000, 83.12), # Hack Reactor Yew York
-	(2, 1, 83029, 65.34), # Hack Reactor Online
-	(2, 2, 98389, 73.18), # Hack Reactor San Francisco
-	(3, 5, 55092, 88.11), # Tech Elevator Cleveland
-	(3, 6, 55092, 88.11), # Tech Elevator Columbus
-	(3, 17, 55092, 88.11), # Tech Elevator Cincinnati
-	(4, 7, 55092, 88.11), # Bottega Salt Lake City
-	(5, 8, 55092, 88.11), # The Software Guild Louisville
-	(5, 9, 55092, 88.11), # The Software Guild Minneapolis
-	(6, 4, 55092, 88.11), # Byte Academy New York City
-	(7, 3, 55092, 88.11), # Codesmith Los Angeles
-	(7, 4, 55092, 88.11), # Codesmith New York City
-	(8, 10, 55092, 88.11), # Eleven Fifty Fishers
-	(9, 1, 55092, 88.11), # Lambda School Online
-	(10, 11, 55092, 88.11), # Epicodus Portland
-	(10, 13, 55092, 88.11), # Epicodus Seattle
-	(11, 2, 55092, 88.11), # Launch Academy Boston
-	(12, 15, 55092, 88.11), # Turing School Denver
-	(13, 14, 55092, 88.11); # Project Shift Durham
-
+	(1, 1, 57500, 62.30), # Block, Online
+	(2, 3, 80000, 38.10), # Hack Reactor Los Angeles
+	(2, 4, 100000, 37.60), # Hack Reactor Yew York
+	(2, 1, 80000, 50.00), # Hack Reactor Online
+	(2, 2, 110000, 35.50), # Hack Reactor San Francisco
+	(2, 16, 79250, 40.00), # Hack Reactor Austin
+	(3, 5, 57000, 85.30), # Tech Elevator Cleveland
+	(3, 6, 56000, 94.10), # Tech Elevator Columbus
+	(3, 17, 53500, 76.90), # Tech Elevator Cincinnati
+	(4, 7, 45000, 63.70), # Bottega Salt Lake City
+	(5, 8, 61250, 50.00), # The Software Guild Louisville
+	(5, 9, 59000, 79.20), # The Software Guild Minneapolis
+	(6, 4, 62000, 60.00), # Byte Academy New York City
+	(7, 3, 109080, 44.90), # Codesmith Los Angeles
+	(7, 4, 115000, 51.60), # Codesmith New York City
+	(8, 10, 53500, 73.70), # Eleven Fifty Fishers
+	(9, 1, 55000, 60.90), # Lambda School Online
+	(10, 11, 60000, 41.20), # Epicodus Portland
+	(10, 13, 49000, 29.60), # Epicodus Seattle
+	(11, 12, 70000, 77.80), # Launch Academy Boston
+	(12, 15, 75000, 73.90), # Turing School Denver
+	(13, 14, 48000, 71.40); # Project Shift Durham
 
 
 
