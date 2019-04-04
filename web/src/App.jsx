@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Landing from "./components/Landing.jsx";
-import Search from "./components/Search.jsx";
+import Landing from "./components/Landing/Landing.jsx";
+import Search from "./components/Search/Search.jsx";
 
 class App extends Component {
 

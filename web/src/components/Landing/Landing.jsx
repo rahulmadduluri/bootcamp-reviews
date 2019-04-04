@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Landing.css';
-import ContainedButton from "./contained_button.jsx";
+import ContainedButton from "../contained_button.jsx";
 import LandingLocationButton from "./landing_location_button.jsx";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";

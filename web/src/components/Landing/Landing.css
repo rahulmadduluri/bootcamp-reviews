@@ -6,7 +6,7 @@ span {
 }
 
 .Landing-Background {
-    background-image: url(../images/raft-education-background.png);
+    background-image: url(../../images/raft-education-background.png);
     height: 100%;
     width: 1250px;
     right: 0;
@@ -96,7 +96,7 @@ span {
   }
 
   .Landing-Background {
-      background-image: url(../images/raft_background_mobile.png);
+      background-image: url(../../images/raft_background_mobile.png);
       height: 100%;
       width: 100%;
       right: 0;
