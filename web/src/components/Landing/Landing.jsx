@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Landing.css';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import GoButton from "./go_button.jsx";
 import LandingLocationButton from "./landing_location_button.jsx";
 import { Query } from "react-apollo";
@@ -9,7 +9,19 @@ import gql from "graphql-tag";
 
 class Landing extends Component {
 
+  state = {
+    redirect: false,
+  };
+
+  onGo = () => {
+    this.setState({ redirect: true });
+  };
+
   render() {
+    if (this.state.redirect) {
+        return <Redirect push to="/home" />;
+    }
+
     const filtersQuery = gql`
       query GetFilters {
         filters {
@@ -46,7 +58,7 @@ class Landing extends Component {
             </Query>      
           </div>
           <div className="Button-Wrapper">
-            <GoButton to="/home" />
+            <GoButton onClick={this.onGo} />
           </div>
         </div>
         <div className="Landing-Background">

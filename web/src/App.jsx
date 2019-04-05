@@ -12,10 +12,6 @@ class App extends Component {
   	//trackUUID: 'uuid-1'
   };
 
-  onLandingTransition = () => {
-  	this.setState({ page: 'Main' });
-  };
-
   onSetSearchParams = (params) => {
   	this.setState(params);
   };

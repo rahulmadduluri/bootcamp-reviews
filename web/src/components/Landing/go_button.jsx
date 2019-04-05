@@ -1,7 +1,6 @@
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { withRouter } from 'react-router';
 
 const styles = theme => ({
   button: {
@@ -25,29 +24,14 @@ function GoButton(props) {
     }
   });
 
-  const {
-    history,
-    location,
-    match,
-    staticContext,
-    to,
-    onClick,
-    // ⬆ filtering out props that `button` doesn’t know what to do with.
-    ...rest
-  } = props;
-
   return (
     <div>
       <MuiThemeProvider theme={theme}>
         <Button 
-        {...rest}
         variant="contained" 
         color="primary" 
         style={{ width: '200px', height:'60px', textTransform: 'none' }} 
-        onClick={(event) => {
-          onClick && onClick(event)
-          history.push(to)
-        }}>
+        onClick={props.onClick}>
           Find Schools
         </Button>
       </MuiThemeProvider>
@@ -55,4 +39,4 @@ function GoButton(props) {
   );
 }
 
-export default withRouter(withStyles(styles)(GoButton));
+export default withStyles(styles)(GoButton);
