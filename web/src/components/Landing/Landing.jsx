@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Landing.css';
-import ContainedButton from "../contained_button.jsx";
+import { Link } from 'react-router-dom';
+import GoButton from "./go_button.jsx";
 import LandingLocationButton from "./landing_location_button.jsx";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
@@ -45,7 +46,7 @@ class Landing extends Component {
             </Query>      
           </div>
           <div className="Button-Wrapper">
-            <ContainedButton onClick={this.props.onGo}/>
+            <GoButton to="/home" />
           </div>
         </div>
         <div className="Landing-Background">

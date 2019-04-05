@@ -20,7 +20,6 @@ const (
 	_GetSchoolsWithMinGraduateSalary   = "getSchoolsWithMinGraduateSalary"
 	_GetSchoolsWithMinJobPlacementRate = "getSchoolsWithMinJobPlacementRate"
 	_GetSchoolsWithMinLength           = "getSchoolsWithMinLength"
-	_GetSchoolsWithOnlineStatus        = "getSchoolsWithOnlineStatus"
 )
 
 type SchoolDB interface {
@@ -34,7 +33,6 @@ type SchoolDB interface {
 	GetSchoolsWithMinGraduateSalary(minGraduateSalary float64) ([]models.School, error)
 	GetSchoolsWithMinJobPlacementRate(minJobPlacementRate float64) ([]models.School, error)
 	GetSchoolsWithMinLength(minLength int) ([]models.School, error)
-	GetSchoolsWithOnlineStatus(isOnline bool) ([]models.School, error)
 }
 
 func (sql *sqlDB) GetSchool(schoolUUID string) (models.School, error) {
@@ -159,12 +157,6 @@ func (sql *sqlDB) GetSchoolsWithMinJobPlacementRate(minJobPlacementRate float64)
 func (sql *sqlDB) GetSchoolsWithMinLength(minLength int) ([]models.School, error) {
 	schools, err := sql.getSchools(_GetSchoolsWithMinLength, map[string]interface{}{
 		"min_length": minLength,
-	})
-	return schools, err
-}
-func (sql *sqlDB) GetSchoolsWithOnlineStatus(isOnline bool) ([]models.School, error) {
-	schools, err := sql.getSchools(_GetSchoolsWithOnlineStatus, map[string]interface{}{
-		"is_online": isOnline,
 	})
 	return schools, err
 }
