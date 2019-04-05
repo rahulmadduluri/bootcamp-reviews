@@ -1,6 +1,7 @@
 DROP DATABASE IF EXISTS raft;
 CREATE DATABASE raft;
 USE raft;
+
 CREATE TABLE IF NOT EXISTS schools (
 	id 							int 			NOT NULL AUTO_INCREMENT,
 	uuid						varchar(36)		NOT NULL,
@@ -32,6 +33,18 @@ CREATE TABLE IF NOT EXISTS campus_locations (
 	job_placement_rate 		double,
 	FOREIGN KEY (school_id) REFERENCES schools (id),
 	FOREIGN KEY (location_id) REFERENCES locations (id)
+);
+
+CREATE TABLE IF NOT EXISTS users (
+	id 							int 			NOT NULL AUTO_INCREMENT,
+	uuid						varchar(36)		NOT NULL,
+	name 						varchar(200)	NOT NULL,
+	photo_uri 					varchar(200)	NOT NULL,
+	school_id					int,
+	created_timestamp_server	int				NOT NULL,
+	UNIQUE KEY (uuid),
+	PRIMARY KEY (id),
+	FOREIGN KEY (school_id) REFERENCES schools (id)
 );
 
 INSERT INTO schools VALUES
@@ -89,7 +102,8 @@ INSERT INTO campus_locations VALUES
 	(11, 12, 70000, 77.80), # Launch Academy Boston
 	(12, 15, 75000, 73.90), # Turing School Denver
 	(13, 14, 48000, 71.40); # Project Shift Durham
-
-
-
-
+INSERT INTO users VALUES
+	(NULL, 'uuid-1', 'Rob Vanderhoven', 'uuid-1_rob', 1, 500),
+	(NULL, 'uuid-2', 'Jessica Lo', 'uuid-2_jessica', 7, 500),
+	(NULL, 'uuid-3', 'Mayuri Ramasubramaniam', 'uuid-3_mayuri', 8, 500),
+	(NULL, 'uuid-4', 'Liam Neeson', 'uuid-4_liam', 4, 500);
