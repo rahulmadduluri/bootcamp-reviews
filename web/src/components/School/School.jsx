@@ -7,6 +7,7 @@ import gql from "graphql-tag";
 class School extends Component {
 
   render() {
+    console.log(this.props);
     return (
       <div>
       school
