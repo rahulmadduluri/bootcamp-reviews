@@ -47,6 +47,7 @@ class Navbar extends React.Component {
             aria-label="menu"
             aria-expanded="false"
             data-target="navbarItems"
+            href="#"
           >
             <span aria-hidden="true" />
             <span aria-hidden="true" />
@@ -61,12 +62,12 @@ class Navbar extends React.Component {
           }`}
         >
           <div className="navbar-end">
-            <a className="navbar-item">Write a Review</a>
-            <a className="navbar-item">About Us</a>
-            <a className="navbar-item">Help</a>
+            <a className="navbar-item" href="/">Write a Review</a>
+            <a className="navbar-item" href="/">About Us</a>
+            <a className="navbar-item" href="/">Help</a>
             <div className="navbar-item">
               <div className="buttons">
-                <a className="button is-primary">
+                <a className="button is-primary" href="/">
                   <strong>Log In</strong>
                 </a>
               </div>

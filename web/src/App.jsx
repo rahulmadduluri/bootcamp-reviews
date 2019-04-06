@@ -35,6 +35,14 @@ class App extends Component {
           <Route exact path="/" render={() =>  <Landing onSetSearchParams={this.onSetSearchParams} /> } />
           <Route exact path="/home" render={() => <Search onSetSearchParams={this.onSetSearchParams} currentSearchParams={currentSearchParams}/>} />
           <Route exact path="/schools/:id" render={(props) => <School currentSearchParams={currentSearchParams} uuid={props.match.params.id}/>} />
+          {/* <Route
+            exact path="/schools/:id"
+            render={(props) =>
+              <School
+                currentSearchParams={currentSearchParams}
+                uuid={props.match.params.id}
+              />}
+            /> */}
         </Switch>
       </div>
     );

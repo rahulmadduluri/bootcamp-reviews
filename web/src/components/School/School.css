@@ -1,0 +1,13 @@
+@import '../../../node_modules/bulma/css/bulma.css';
+
+.schoolPage {
+  background-color: white;
+  font-family: 'Rubrik', sans-serif;
+  margin-top: 0.75rem;
+  padding: 1rem;
+  border: 1px solid lightgray;
+  border-radius: 2px;
+}
+
+.title {
+}
