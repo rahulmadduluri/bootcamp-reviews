@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS users (
 	id 							int 			NOT NULL AUTO_INCREMENT,
 	uuid						varchar(36)		NOT NULL,
 	name 						varchar(200)	NOT NULL,
+	email						varchar(200)	NOT NULL,
 	photo_uri 					varchar(200)	NOT NULL,
 	school_id					int,
 	created_timestamp_server	int				NOT NULL,
@@ -103,7 +104,7 @@ INSERT INTO campus_locations VALUES
 	(12, 15, 75000, 73.90), # Turing School Denver
 	(13, 14, 48000, 71.40); # Project Shift Durham
 INSERT INTO users VALUES
-	(NULL, 'uuid-1', 'Rob Vanderhoven', 'uuid-1_rob', 1, 500),
-	(NULL, 'uuid-2', 'Jessica Lo', 'uuid-2_jessica', 7, 500),
-	(NULL, 'uuid-3', 'Mayuri Ramasubramaniam', 'uuid-3_mayuri', 8, 500),
-	(NULL, 'uuid-4', 'Liam Neeson', 'uuid-4_liam', 4, 500);
+	(NULL, 'uuid-1', 'Rob Vanderhoven', 'robisthebest@gmail.com', 'uuid-1_rob', 1, 500),
+	(NULL, 'uuid-2', 'Jessica Lo', 'jessicaisthebest@gmail.com', 'uuid-2_jessica', 7, 500),
+	(NULL, 'uuid-3', 'Mayuri Ramasubramaniam', 'mayuristhebest@gmail.com', 'uuid-3_mayuri', 8, 500),
+	(NULL, 'uuid-4', 'Liam Neeson', 'liamneeson@gmail.com', 'uuid-4_liam', 4, 500);

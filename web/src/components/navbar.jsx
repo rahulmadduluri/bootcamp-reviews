@@ -3,6 +3,7 @@ import './navbar.css';
 import SmartSearchBar from './searchbar.jsx';
 import raftSquare from '../images/raft_square.png';
 
+
 class Navbar extends React.Component {
 
   constructor() {
@@ -24,6 +25,10 @@ class Navbar extends React.Component {
     this.setState({
       hamburgerActive: !this.state.hamburgerActive,
     });
+  }
+
+  onSignInLink = () => {
+    this.props.login();
   }
 
   render() {
@@ -67,7 +72,9 @@ class Navbar extends React.Component {
             <a className="navbar-item" href="/">Help</a>
             <div className="navbar-item">
               <div className="buttons">
-                <a className="button is-primary" href="/">
+                <a 
+                className="button is-primary"
+                onClick={this.onSignInLink}>
                   <strong>Log In</strong>
                 </a>
               </div>
