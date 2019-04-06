@@ -4,7 +4,6 @@ import Landing from './components/Landing/Landing.jsx';
 import Search from './components/Search/Search.jsx';
 import School from './components/School/School.jsx';
 import Auth from './Auth/auth.jsx';
-import Callback from './Auth/callback.jsx';
 
 const auth = new Auth();
 
@@ -63,9 +62,10 @@ class App extends Component {
           <Route exact path="/" render={() =>  <Landing onSetSearchParams={this.onSetSearchParams} /> } />
           <Route exact path="/home" render={() => <Search onSetSearchParams={this.onSetSearchParams} currentSearchParams={currentSearchParams} login={this.login}/>} />
           <Route exact path="/schools/:id" render={(props) => <School currentSearchParams={currentSearchParams} uuid={props.match.params.id}/>} />
-          <Route path="/callback" render={(props) => {
+          <Route exact path="/callback" render={(props) => {
             this.handleAuthentication(props);
-            return <Callback {...props} /> 
+            // if new user, take to new user page, otherwise back to home
+            return (<Search onSetSearchParams={this.onSetSearchParams} currentSearchParams={currentSearchParams} login={this.login}/>); 
           }}/>
         </Switch>
       </div>
