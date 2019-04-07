@@ -3,7 +3,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Rubrik', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+  font-family: 'Rubik', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
     'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -65,7 +65,7 @@ body {
   width: 75px;
   height: 75px;
   float: left;
-  border-radius: 10px;
+  border-radius: 10%;
 }
 
 .schoolInfoWrapper {

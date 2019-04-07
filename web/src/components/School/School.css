@@ -2,12 +2,31 @@
 
 .schoolPage {
   background-color: white;
-  font-family: 'Rubrik', sans-serif;
-  margin-top: 0.75rem;
+  font-family: 'Rubik';
+  margin-top: 2rem;
   padding: 1rem;
   border: 1px solid lightgray;
   border-radius: 2px;
 }
 
 .title {
+}
+
+.media .image > img {
+	border-radius: 10%;
+  width: 125px;
+  height: 125px;
+}
+
+.media-content .name {
+  color: #000000;
+  font-weight: 500;
+  font-size: 22px;
+}
+
+.schoolInfoWrapper .stats {
+  margin-top: 15px;
+  color: #000000;
+  font-weight: 500;
+  font-size: 18px;
 }

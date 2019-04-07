@@ -27,7 +27,7 @@ class FilterBar extends React.Component {
         query={filtersQuery}
       >
         {({ loading, error, data }) => {
-          if (loading) return <p>Loading...</p>;
+          if (loading) return <p></p>;
           if (error) return <p>Error :(</p>;
           return <FilterList searchOptions={ data.filters } currentSearchParams={this.props.currentSearchParams} onSelect={this.props.onSetSearchParams}/>
         }}

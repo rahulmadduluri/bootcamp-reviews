@@ -63,8 +63,6 @@ export default class Auth {
     this.idToken = authResult.idToken;
     this.expiresAt = expiresAt;
 
-    console.log("LOSING");
-
     // navigate to the home route
     history.replace('/home');
   }

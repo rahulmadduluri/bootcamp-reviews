@@ -41,7 +41,7 @@ class School extends Component {
       <div>
         <Navbar />
         <div className="pageBackground columns is-centered">
-          <div className="schoolPage column is-four-fifths">
+          <div className="schoolPage column is-three-fifths">
             <Query query={getQuery} variables={{ schoolUUID: this.props.uuid }}>
               {({ loading, error, data }) => {
                 if (loading) return <p>Loading...</p>;
@@ -50,11 +50,11 @@ class School extends Component {
                 return (
                   <div className="">
                     <div className="media">
-                      <div className="media-left image is-128x128">
+                      <div className="media-left image">
                         <SchoolLogo photoURI={photoURI} />
                       </div>
                       <div className="media-content">
-                        <h1 className="title is-3">{name}</h1>
+                        <div className="name">{name}</div>
                         <p>
                           Lorem ipsum dolor sit amet, consectetur adipiscing
                           elit, sed do eiusmod tempor incididunt ut labore et
@@ -85,9 +85,9 @@ const Stats = ({ school }) => {
   console.log(school);
   return (
     <div className="schoolInfoWrapper">
-      <h2 className="title is-4">Stats</h2>
-      <LocationBar campusLocations={campusLocations} />
+      <div className="stats">Stats</div>
       <PriceBar basePrice={basePrice} paymentType={paymentType} />
+      <LocationBar campusLocations={campusLocations} />
       <LengthBar length={lengthInWeeks} />
       <SalaryBar campusLocations={campusLocations} />
       <JobPlacementBar campusLocations={campusLocations} />
