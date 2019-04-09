@@ -4,6 +4,7 @@ import Landing from './components/Landing/Landing.jsx';
 import Search from './components/Search/Search.jsx';
 import School from './components/School/School.jsx';
 import Auth from './Auth/auth.jsx';
+import NewUser from './components/NewUser/NewUser.jsx';
 
 const auth = new Auth();
 
@@ -62,6 +63,7 @@ class App extends Component {
           <Route exact path="/" render={() =>  <Landing onSetSearchParams={this.onSetSearchParams} /> } />
           <Route exact path="/home" render={() => <Search onSetSearchParams={this.onSetSearchParams} currentSearchParams={currentSearchParams} login={this.login}/>} />
           <Route exact path="/schools/:id" render={(props) => <School currentSearchParams={currentSearchParams} uuid={props.match.params.id}/>} />
+          <Route exact path="/students/new" render={() => <NewUser />} />
           <Route exact path="/callback" render={(props) => {
             this.handleAuthentication(props);
             // if new user, take to new user page, otherwise back to home

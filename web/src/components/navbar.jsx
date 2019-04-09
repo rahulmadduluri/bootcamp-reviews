@@ -68,8 +68,8 @@ class Navbar extends React.Component {
         >
           <div className="navbar-end">
             <a className="navbar-item" href="/">Write a Review</a>
-            <a className="navbar-item" href="/">About Us</a>
-            <a className="navbar-item" href="/">Help</a>
+            <a className="navbar-item" href="/">About</a>
+            <a className="navbar-item" href="/">Support</a>
             <div className="navbar-item">
               <div className="buttons">
                 <a 

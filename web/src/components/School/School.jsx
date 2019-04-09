@@ -86,8 +86,8 @@ const Stats = ({ school }) => {
   return (
     <div className="schoolInfoWrapper">
       <div className="stats">Stats</div>
-      <PriceBar basePrice={basePrice} paymentType={paymentType} />
       <LocationBar campusLocations={campusLocations} />
+      <PriceBar basePrice={basePrice} paymentType={paymentType} />
       <LengthBar length={lengthInWeeks} />
       <SalaryBar campusLocations={campusLocations} />
       <JobPlacementBar campusLocations={campusLocations} />

@@ -17,6 +17,15 @@ export const LocationBar = locationWrapper => {
       }
     }
   }
+  if (locationWrapper.showAllLocationsLabel && locationWrapper.showAllLocationsLabel === true) {
+    return (
+      <div className="location">
+        <img src={LocationIcon} alt="Location" />
+        <div className="campusLocationsLabel">All Locations</div>
+        <div className="campusLocations">{list}</div>
+      </div>
+    );
+  }
   return (
     <div className="location">
       <img src={LocationIcon} alt="Location" />
