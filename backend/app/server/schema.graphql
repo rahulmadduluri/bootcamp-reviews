@@ -28,6 +28,30 @@ type CampusLocation {
 	jobPlacementRate: Float
 }
 
+type Student {
+	uuid: ID!
+	firstName: String!
+	lastName: String!
+	photoURI: String!
+	school: School
+}
+
+input CreateStudentInput {
+	uuid: ID!
+	firstName: String!
+	lastName: String!
+	email: String!
+	linkedInID: ID!
+	schoolUUID: ID
+}
+input UpdateStudentInput {
+	uuid: ID!
+	firstName: String
+	lastName: String
+	email: String
+	linkedInURL: String
+	schoolUUID: ID
+}
 
 input SchoolSearchParams {
 	pageNumber: Int! # each page has 10 elements
@@ -51,4 +75,11 @@ type Query {
 	school(uuid: ID!): School
 	schools(params: SchoolSearchParams!): SchoolQueryResult!
 	filters: Filters
+
+	student(uuid: ID!): Student
+}
+
+type Mutation {
+	createStudent(studentInfo: CreateStudentInput!): Boolean!
+	updateStudent(studentInfo: UpdateStudentInput!): Boolean!
 }

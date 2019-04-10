@@ -8,6 +8,15 @@ type CampusLocation struct {
 	JobPlacementRate     *float64 `json:"jobPlacementRate"`
 }
 
+type CreateStudentInput struct {
+	UUID       string  `json:"uuid"`
+	FirstName  string  `json:"firstName"`
+	LastName   string  `json:"lastName"`
+	Email      string  `json:"email"`
+	LinkedInID string  `json:"linkedInID"`
+	SchoolUUID *string `json:"schoolUUID"`
+}
+
 type Filters struct {
 	Locations    []Location `json:"locations"`
 	PaymentTypes []string   `json:"paymentTypes"`
@@ -47,4 +56,21 @@ type SchoolSearchParams struct {
 	MinGraduateSalary   *float64 `json:"minGraduateSalary"`
 	MinJobPlacementRate *float64 `json:"minJobPlacementRate"`
 	MinLength           *int     `json:"minLength"`
+}
+
+type Student struct {
+	UUID      string  `json:"uuid"`
+	FirstName string  `json:"firstName"`
+	LastName  string  `json:"lastName"`
+	PhotoURI  string  `json:"photoURI"`
+	School    *School `json:"school"`
+}
+
+type UpdateStudentInput struct {
+	UUID        string  `json:"uuid"`
+	FirstName   *string `json:"firstName"`
+	LastName    *string `json:"lastName"`
+	Email       *string `json:"email"`
+	LinkedInURL *string `json:"linkedInURL"`
+	SchoolUUID  *string `json:"schoolUUID"`
 }

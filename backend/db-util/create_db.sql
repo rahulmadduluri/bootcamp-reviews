@@ -35,11 +35,14 @@ CREATE TABLE IF NOT EXISTS campus_locations (
 	FOREIGN KEY (location_id) REFERENCES locations (id)
 );
 
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS students (
 	id 							int 			NOT NULL AUTO_INCREMENT,
 	uuid						varchar(36)		NOT NULL,
-	name 						varchar(200)	NOT NULL,
+	first_name 					varchar(200)	NOT NULL,
+	last_name 					varchar(200)	NOT NULL,
 	email						varchar(200)	NOT NULL,
+	linked_in_id				int,
+	linked_in_url				varchar(500),
 	photo_uri 					varchar(200)	NOT NULL,
 	school_id					int,
 	created_timestamp_server	int				NOT NULL,
@@ -103,8 +106,8 @@ INSERT INTO campus_locations VALUES
 	(11, 12, 70000, 77.80), # Launch Academy Boston
 	(12, 15, 75000, 73.90), # Turing School Denver
 	(13, 14, 48000, 71.40); # Project Shift Durham
-INSERT INTO users VALUES
-	(NULL, 'uuid-1', 'Rob Vanderhoven', 'robisthebest@gmail.com', 'uuid-1_rob', 1, 500),
-	(NULL, 'uuid-2', 'Jessica Lo', 'jessicaisthebest@gmail.com', 'uuid-2_jessica', 7, 500),
-	(NULL, 'uuid-3', 'Mayuri Ramasubramaniam', 'mayuristhebest@gmail.com', 'uuid-3_mayuri', 8, 500),
-	(NULL, 'uuid-4', 'Liam Neeson', 'liamneeson@gmail.com', 'uuid-4_liam', 4, 500);
+INSERT INTO students VALUES
+	(NULL, 'uuid-1', 'Rob', 'Vanderhoven', 'robisthebest@gmail.com', 84, 'www.linkedin.com/rob', 'uuid-1_rob', 1, 500),
+	(NULL, 'uuid-2', 'Jessica', 'Lo', 'jessicaisthebest@gmail.com', 103, 'www.linkedin.com/jessica', 'uuid-2_jessica', 7, 500),
+	(NULL, 'uuid-3', 'Mayuri', 'Ramasubramaniam', 'mayuristhebest@gmail.com', 180, 'www.linkedin.com/mayuri', 'uuid-3_mayuri', 8, 500),
+	(NULL, 'uuid-4', 'Liam', 'Neeson', 'liamneeson@gmail.com', 701, 'www.linkedin.com/liam', 'uuid-4_liam', 4, 500);
