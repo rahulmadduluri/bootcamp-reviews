@@ -59,8 +59,6 @@ class Auth {
       lastName: authResult.idTokenPayload.family_name,
       linkedInPhotoURL: authResult.idTokenPayload.picture
     };
-
-    console.log(this.profile);
   }
 
   handleAuth() {
@@ -108,6 +106,7 @@ class Auth {
     });
   }
 
+  // this is Auth0 authentication, NOT actual authentication
   isAuthenticated() {
     return JSON.parse(localStorage.getItem(this.authFlag));
   }

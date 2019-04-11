@@ -33,7 +33,6 @@ class Callback extends Component {
     `;
 
     if (auth.isAuthenticated() && auth.getProfile()) {
-      console.log("calling for student info");
       const { studentUUID, email, firstName, lastName, linkedInPhotoURL } = auth.getProfile();
       return (
         <Query
@@ -45,10 +44,8 @@ class Callback extends Component {
             if (error) return <p>Error :(</p>;
 
               if (data.student) {
-                console.log(data.student);
                 return (<Redirect push to="/home" />);
               } else {
-                console.log("new");
                 return (<Redirect push to="/students/new" />);
               }
           }}

@@ -7,3 +7,14 @@ select
 from students
 where students.uuid = :student_uuid
 ;
+
+--name: createStudent
+insert into students (uuid, first_name, last_name, email, linked_in_photo_url, created_timestamp_server)
+	select
+		:student_uuid,
+		:first_name,
+		:last_name,
+		:email,
+		:linked_in_photo_url,
+		:created_timestamp_server
+;

@@ -494,8 +494,7 @@ input CreateStudentInput {
 	firstName: String!
 	lastName: String!
 	email: String!
-	linkedInID: ID!
-	schoolUUID: ID
+	linkedInPhotoURL: String!
 }
 input UpdateStudentInput {
 	uuid: ID!
@@ -2369,15 +2368,9 @@ func (ec *executionContext) unmarshalInputCreateStudentInput(ctx context.Context
 			if err != nil {
 				return it, err
 			}
-		case "linkedInID":
+		case "linkedInPhotoURL":
 			var err error
-			it.LinkedInID, err = ec.unmarshalNID2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "schoolUUID":
-			var err error
-			it.SchoolUUID, err = ec.unmarshalOID2ᚖstring(ctx, v)
+			it.LinkedInPhotoURL, err = ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}

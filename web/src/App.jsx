@@ -21,12 +21,6 @@ class App extends Component {
   	this.setState(params);
   };
 
-  // handleAuthentication = (nextState, replace) => {
-  //   if (/access_token|id_token|error/.test(nextState.location.hash)) {
-  //     auth.handleAuthentication();
-  //   }
-  // }
-
   async componentDidMount() {
     if (this.props.location.pathname === '/callback') return;
     try {

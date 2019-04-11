@@ -9,12 +9,11 @@ type CampusLocation struct {
 }
 
 type CreateStudentInput struct {
-	UUID       string  `json:"uuid"`
-	FirstName  string  `json:"firstName"`
-	LastName   string  `json:"lastName"`
-	Email      string  `json:"email"`
-	LinkedInID string  `json:"linkedInID"`
-	SchoolUUID *string `json:"schoolUUID"`
+	UUID             string `json:"uuid"`
+	FirstName        string `json:"firstName"`
+	LastName         string `json:"lastName"`
+	Email            string `json:"email"`
+	LinkedInPhotoURL string `json:"linkedInPhotoURL"`
 }
 
 type Filters struct {

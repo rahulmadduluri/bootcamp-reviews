@@ -41,8 +41,7 @@ input CreateStudentInput {
 	firstName: String!
 	lastName: String!
 	email: String!
-	linkedInID: ID!
-	schoolUUID: ID
+	linkedInPhotoURL: String!
 }
 input UpdateStudentInput {
 	uuid: ID!

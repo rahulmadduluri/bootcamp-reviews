@@ -16,7 +16,11 @@ func (r *queryResolver) Student(ctx context.Context, uuid string) (*models.Stude
 }
 
 func (r *mutationResolver) CreateStudent(ctx context.Context, studentInfo models.CreateStudentInput) (bool, error) {
-	panic("not implemented")
+	err := db.Handler().SQL().CreateStudent(studentInfo.UUID, studentInfo.FirstName, studentInfo.LastName, studentInfo.Email, studentInfo.LinkedInPhotoURL)
+	if err != nil {
+		return false, err
+	}
+	return true, nil
 }
 func (r *mutationResolver) UpdateStudent(ctx context.Context, studentInfo models.UpdateStudentInput) (bool, error) {
 	panic("not implemented")
