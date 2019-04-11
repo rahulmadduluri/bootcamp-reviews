@@ -41,9 +41,9 @@ CREATE TABLE IF NOT EXISTS students (
 	first_name 					varchar(200)	NOT NULL,
 	last_name 					varchar(200)	NOT NULL,
 	email						varchar(200)	NOT NULL,
-	linked_in_id				int,
+	linked_in_photo_url			varchar(500),
 	linked_in_url				varchar(500),
-	photo_uri 					varchar(200)	NOT NULL,
+	photo_uri 					varchar(200),
 	school_id					int,
 	created_timestamp_server	int				NOT NULL,
 	UNIQUE KEY (uuid),
@@ -107,7 +107,7 @@ INSERT INTO campus_locations VALUES
 	(12, 15, 75000, 73.90), # Turing School Denver
 	(13, 14, 48000, 71.40); # Project Shift Durham
 INSERT INTO students VALUES
-	(NULL, 'uuid-1', 'Rob', 'Vanderhoven', 'robisthebest@gmail.com', 84, 'www.linkedin.com/rob', 'uuid-1_rob', 1, 500),
-	(NULL, 'uuid-2', 'Jessica', 'Lo', 'jessicaisthebest@gmail.com', 103, 'www.linkedin.com/jessica', 'uuid-2_jessica', 7, 500),
-	(NULL, 'uuid-3', 'Mayuri', 'Ramasubramaniam', 'mayuristhebest@gmail.com', 180, 'www.linkedin.com/mayuri', 'uuid-3_mayuri', 8, 500),
-	(NULL, 'uuid-4', 'Liam', 'Neeson', 'liamneeson@gmail.com', 701, 'www.linkedin.com/liam', 'uuid-4_liam', 4, 500);
+	(NULL, 'uuid-1', 'Rob', 'Vanderhoven', 'robisthebest@gmail.com', 'www.googleimages.com/test', 'www.linkedin.com/rob', 'uuid-1_rob', 1, 500),
+	(NULL, 'uuid-2', 'Jessica', 'Lo', 'jessicaisthebest@gmail.com', 'www.googleimages.com/test', 'www.linkedin.com/jessica', 'uuid-2_jessica', 7, 500),
+	(NULL, 'uuid-3', 'Mayuri', 'Ramasubramaniam', 'mayuristhebest@gmail.com', 'www.googleimages.com/test', 'www.linkedin.com/mayuri', 'uuid-3_mayuri', 8, 500),
+	(NULL, 'uuid-4', 'Liam', 'Neeson', 'liamneeson@gmail.com', 'www.googleimages.com/test', 'www.linkedin.com/liam', 'uuid-4_liam', 4, 500);

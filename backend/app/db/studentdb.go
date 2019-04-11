@@ -1,8 +1,6 @@
 package db
 
 import (
-	"log"
-
 	models "github.com/rahulmadduluri/raft-education/backend/app/models"
 )
 
@@ -11,11 +9,11 @@ const (
 )
 
 type StudentDB interface {
-	GetStudent(studentUUID string) (models.Student, error)
+	GetStudent(studentUUID string) (*models.Student, error)
 }
 
-func (sql *sqlDB) GetStudent(studentUUID string) (models.Student, error) {
-	var student models.Student
+func (sql *sqlDB) GetStudent(studentUUID string) (*models.Student, error) {
+	var student *models.Student
 
 	// get student
 	rows, err := sql.db.NamedQuery(
@@ -25,14 +23,14 @@ func (sql *sqlDB) GetStudent(studentUUID string) (models.Student, error) {
 		},
 	)
 	if err != nil {
-		return student, err
+		return nil, err
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		err := rows.StructScan(&student)
+		err := rows.StructScan(student)
 		if err != nil {
-			log.Fatal("scan error: ", err)
+			return nil, err
 		}
 		break
 	}

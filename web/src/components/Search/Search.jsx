@@ -48,7 +48,7 @@ class Search extends Component {
 
     return (
       <div>
-        <Navbar onSearch={this.props.onSetSearchParams} login={this.props.login}/>
+        <Navbar onSearch={this.props.onSetSearchParams} />
         <FilterBar
           onSetSearchParams={this.props.onSetSearchParams}
           currentSearchParams={this.props.currentSearchParams}

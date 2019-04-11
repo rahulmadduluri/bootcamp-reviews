@@ -42,20 +42,6 @@ span {
   margin-bottom: 50px;
 }
 
-.Landing-Filter {
-  vertical-align: middle;
-}
-
-.Landing-Filter > p {
-  color: #828282;
-  font-size: 16px;
-  font-family: Rubik;
-  font-weight: 300;
-  text-align: left;
-  float: left;
-  margin-right: 30px;
-}
-
 .Button-Wrapper {
   margin-top: 60px;
   text-transform: none;

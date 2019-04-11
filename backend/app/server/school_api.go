@@ -13,7 +13,7 @@ func (r *queryResolver) School(ctx context.Context, uuid string) (*models.School
 	if err != nil {
 		return nil, err
 	}
-	return &school, err
+	return school, err
 }
 
 func (r *queryResolver) Schools(ctx context.Context, params models.SchoolSearchParams) (*models.SchoolQueryResult, error) {

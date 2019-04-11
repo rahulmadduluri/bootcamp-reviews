@@ -23,7 +23,7 @@ const (
 )
 
 type SchoolDB interface {
-	GetSchool(schoolUUID string) (models.School, error)
+	GetSchool(schoolUUID string) (*models.School, error)
 	GetAllSchools() ([]models.School, error)
 
 	GetSchoolsWithSearchText(searchText string) ([]models.School, error)
@@ -35,8 +35,8 @@ type SchoolDB interface {
 	GetSchoolsWithMinLength(minLength int) ([]models.School, error)
 }
 
-func (sql *sqlDB) GetSchool(schoolUUID string) (models.School, error) {
-	var school models.School
+func (sql *sqlDB) GetSchool(schoolUUID string) (*models.School, error) {
+	var school *models.School
 
 	// get school
 	rows, err := sql.db.NamedQuery(
@@ -46,16 +46,20 @@ func (sql *sqlDB) GetSchool(schoolUUID string) (models.School, error) {
 		},
 	)
 	if err != nil {
-		return school, err
+		return nil, err
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		err := rows.StructScan(&school)
+		err := rows.StructScan(school)
 		if err != nil {
-			log.Fatal("scan error: ", err)
+			return nil, err
 		}
 		break
+	}
+
+	if school == nil {
+		return nil, nil
 	}
 
 	// get school locations

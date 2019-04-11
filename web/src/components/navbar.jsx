@@ -2,7 +2,7 @@ import React from 'react';
 import './navbar.css';
 import SmartSearchBar from './searchbar.jsx';
 import raftSquare from '../images/raft_square.png';
-
+import auth from '../Auth/auth.jsx';
 
 class Navbar extends React.Component {
 
@@ -16,20 +16,25 @@ class Navbar extends React.Component {
     this.toggleHamburgerMenu = this.toggleHamburgerMenu.bind(this);
   }
 
-  onSearch = searchText => {
-    this.props.onSearch({ searchText: searchText });
-  };
-
-  onTapLink = () => {};
   toggleHamburgerMenu() {
     this.setState({
       hamburgerActive: !this.state.hamburgerActive,
     });
   }
 
+  onSearch = searchText => {
+    this.props.onSearch({ searchText: searchText });
+  };
+
+  onTapLink = () => {};
+
   onSignInLink = () => {
-    this.props.login();
-  }
+    auth.login();
+  };
+
+  onSignOutLink = () => {
+    auth.logout();
+  };
 
   render() {
     return (
@@ -72,11 +77,11 @@ class Navbar extends React.Component {
             <a className="navbar-item" href="/">Support</a>
             <div className="navbar-item">
               <div className="buttons">
-                <a 
-                className="button is-primary"
-                onClick={this.onSignInLink}>
-                  <strong>Log In</strong>
-                </a>
+                {
+                  ( auth.isAuthenticated() ) ? 
+                  <a className="button is-primary" onClick={this.onSignOutLink}><strong>Log Out</strong></a> :  
+                  <a className="button is-primary" onClick={this.onSignInLink}><strong>Log In</strong></a>
+                }
               </div>
             </div>
           </div>

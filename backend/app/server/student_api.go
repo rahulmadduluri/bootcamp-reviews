@@ -12,7 +12,7 @@ func (r *queryResolver) Student(ctx context.Context, uuid string) (*models.Stude
 	if err != nil {
 		return nil, err
 	}
-	return &student, err
+	return student, err
 }
 
 func (r *mutationResolver) CreateStudent(ctx context.Context, studentInfo models.CreateStudentInput) (bool, error) {

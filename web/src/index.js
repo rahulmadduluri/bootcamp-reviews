@@ -1,14 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'
-import './index.css';
 import App from './App.jsx';
-import * as serviceWorker from './serviceWorker';
 import ApolloClient from "apollo-boost"
 import { ApolloProvider } from "react-apollo";
+import auth from './Auth/auth.jsx';
+import './index.css';
+import * as serviceWorker from './serviceWorker';
 
 const client = new ApolloClient({
-	uri: "/api"
+	uri: "/api",
+	request: operation => {
+		operation.setContext(context => ({
+		  headers: {
+		    ...context.headers,
+		    authorization: auth.getIdToken(),
+		  },
+		}));
+	},
 });
 
 ReactDOM.render(
