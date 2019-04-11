@@ -7,17 +7,13 @@ import gql from "graphql-tag";
 
 class Callback extends Component {
 
-  state = {
-    shouldReRender: false
-  }
-
   async componentDidMount() {
     try {
       await auth.handleAuth();
+      this.forceUpdate();
     } catch (err) {
       console.log("Failed to handleAuth");
     }
-    this.setState({ shouldReRender: true });
   }
 
   render() {

@@ -48,7 +48,7 @@ class School extends Component {
                 if (error) return <p>Error :(</p>;
                 const { name, photoURI, uuid } = data.school;
                 return (
-                  <div className="">
+                  <div>
                     <div className="media">
                       <div className="media-left image">
                         <SchoolLogo photoURI={photoURI} />

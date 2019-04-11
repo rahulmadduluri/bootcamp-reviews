@@ -32,10 +32,12 @@ func (sql *sqlDB) GetStudent(studentUUID string) (*models.Student, error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		err := rows.StructScan(student)
+		var temp models.Student
+		err := rows.StructScan(&temp)
 		if err != nil {
 			return nil, err
 		}
+		student = &temp
 		break
 	}
 

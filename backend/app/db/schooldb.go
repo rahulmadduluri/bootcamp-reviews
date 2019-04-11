@@ -48,13 +48,16 @@ func (sql *sqlDB) GetSchool(schoolUUID string) (*models.School, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	defer rows.Close()
 
 	for rows.Next() {
-		err := rows.StructScan(school)
+		var temp models.School
+		err := rows.StructScan(&temp)
 		if err != nil {
 			return nil, err
 		}
+		school = &temp
 		break
 	}
 
