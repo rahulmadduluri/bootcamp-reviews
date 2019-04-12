@@ -58,18 +58,12 @@ func main() {
 	s3router := mux.NewRouter()
 	s3router.PathPrefix("/s3/").Handler(http.StripPrefix("/s3/", http.HandlerFunc(serveFromS3)))
 
-	if auth.IsEnvPlayground() == true {
-		r.PathPrefix("/api").Handler(negroni.New(negroni.Wrap(api)))
-	} else {
-		jwtMiddleware := auth.JWTMiddleware()
-		r.PathPrefix("/api").Handler(negroni.New(
-			negroni.HandlerFunc(jwtMiddleware.HandlerWithNext),
-			negroni.HandlerFunc(auth.AddUUIDToContext),
-			negroni.Wrap(api),
-		))
-	}
+	// jwtMiddleware := auth.JWTMiddleware()
+	r.PathPrefix("/api").Handler(negroni.New(
+		negroni.HandlerFunc(auth.AddJWTToContext),
+		negroni.Wrap(api),
+	))
 
-	r.PathPrefix("/api").Handler(negroni.New(negroni.Wrap(api)))
 	r.PathPrefix("/s3/").Handler(negroni.New(negroni.Wrap(s3router)))
 
 	// Run Server

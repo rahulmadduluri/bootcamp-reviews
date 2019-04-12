@@ -84,7 +84,7 @@ func getPemCert(token *jwt.Token) (string, error) {
 	return cert, nil
 }
 
-var uuidCtxKey = &contextKey{"uuid"}
+var studentUUIDCtxKey = &contextKey{"studentUUID"}
 
 type contextKey struct {
 	name string
@@ -100,15 +100,32 @@ func AddUUIDToContext(w http.ResponseWriter, r *http.Request, next http.HandlerF
 	// claims.UUID comes from key specified in Auth0
 	if claims != nil {
 		if uuidFromClaim, ok := (*claims)["https://raft.one/uuid"]; ok {
-			ctx := context.WithValue(r.Context(), uuidCtxKey, uuidFromClaim)
+			ctx := context.WithValue(r.Context(), studentUUIDCtxKey, uuidFromClaim)
 			r = r.WithContext(ctx)
 		}
 	}
 	next(w, r)
 }
 
-// UUIDFromContext finds the uuid for context
-func UUIDFromContext(ctx context.Context) string {
-	uuid, _ := ctx.Value(uuidCtxKey).(string)
+// StudentUUIDFromContext finds the uuid for context
+func StudentUUIDFromContext(ctx context.Context) string {
+	uuid, _ := ctx.Value(studentUUIDCtxKey).(string)
 	return uuid
+}
+
+// Add ID Token to Context to be parsed in GraphQL
+
+var jwtCtxKey = &contextKey{"jwt"}
+
+// Add JWT to context for isAuthenticated function to parse
+func AddJWTToContext(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+	ctx := context.WithValue(r.Context(), jwtCtxKey, r.Header.Get("Authorization"))
+	r = r.WithContext(ctx)
+	next(w, r)
+}
+
+// StudentUUIDFromContext finds the uuid for context
+func JWTFromContext(ctx context.Context) string {
+	jwt, _ := ctx.Value(jwtCtxKey).(string)
+	return jwt
 }

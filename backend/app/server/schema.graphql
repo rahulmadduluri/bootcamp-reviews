@@ -1,3 +1,5 @@
+directive @isAuthenticated on FIELD_DEFINITION | QUERY
+
 type School {
 	uuid: ID!
 	name: String!
@@ -71,7 +73,7 @@ type Filters {
 }
 
 type Query {
-	school(uuid: ID!): School
+	school(uuid: ID!): School @isAuthenticated
 	schools(params: SchoolSearchParams!): SchoolQueryResult!
 	filters: Filters
 
