@@ -6,7 +6,6 @@ import (
 	"errors"
 	"net/http"
 	"os"
-	"strings"
 
 	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	jwt "github.com/dgrijalva/jwt-go"
@@ -84,47 +83,42 @@ func getPemCert(token *jwt.Token) (string, error) {
 	return cert, nil
 }
 
-var studentUUIDCtxKey = &contextKey{"studentUUID"}
-
 type contextKey struct {
 	name string
 }
 
-// Make sure claim has UUID
-func AddUUIDToContext(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	authHeaderParts := strings.Split(r.Header.Get("Authorization"), " ")
-	tokenString := authHeaderParts[1]
-	token, _ := jwt.ParseWithClaims(tokenString, &jwt.MapClaims{}, nil)
-	claims, _ := token.Claims.(*jwt.MapClaims)
-
-	// claims.UUID comes from key specified in Auth0
-	if claims != nil {
-		if uuidFromClaim, ok := (*claims)["https://raft.one/uuid"]; ok {
-			ctx := context.WithValue(r.Context(), studentUUIDCtxKey, uuidFromClaim)
-			r = r.WithContext(ctx)
-		}
-	}
-	next(w, r)
-}
-
-// StudentUUIDFromContext finds the uuid for context
-func StudentUUIDFromContext(ctx context.Context) string {
-	uuid, _ := ctx.Value(studentUUIDCtxKey).(string)
-	return uuid
-}
-
 // Add ID Token to Context to be parsed in GraphQL
 
+var uuidCtxKey = &contextKey{"uuid"}
 var jwtCtxKey = &contextKey{"jwt"}
 
 // Add JWT to context for isAuthenticated function to parse
 func AddJWTToContext(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	ctx := context.WithValue(r.Context(), jwtCtxKey, r.Header.Get("Authorization"))
+	// jwt
+	tokenString := r.Header.Get("Authorization")
+	ctx := context.WithValue(r.Context(), jwtCtxKey, tokenString)
 	r = r.WithContext(ctx)
+
+	// claims -- uuid
+	token, _ := jwt.ParseWithClaims(tokenString, &jwt.MapClaims{}, nil)
+	claims, _ := token.Claims.(*jwt.MapClaims)
+	if claims != nil {
+		if uuidFromClaim, ok := (*claims)["https://raft.one/uuid"]; ok {
+			ctx = context.WithValue(r.Context(), uuidCtxKey, uuidFromClaim)
+			r = r.WithContext(ctx)
+		}
+	}
+
 	next(w, r)
 }
 
-// StudentUUIDFromContext finds the uuid for context
+// UUIDFromContext finds the uuid for context
+func UUIDFromContext(ctx context.Context) string {
+	uuid, _ := ctx.Value(uuidCtxKey).(string)
+	return uuid
+}
+
+// JWTFromContext finds the uuid for context
 func JWTFromContext(ctx context.Context) string {
 	jwt, _ := ctx.Value(jwtCtxKey).(string)
 	return jwt

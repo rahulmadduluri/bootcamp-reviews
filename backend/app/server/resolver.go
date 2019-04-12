@@ -2,9 +2,7 @@ package server
 
 import (
 	"context"
-	"log"
-
-	auth "github.com/rahulmadduluri/raft-education/backend/app/auth"
+	"fmt"
 
 	"github.com/99designs/gqlgen/graphql"
 )
@@ -26,10 +24,12 @@ func New() Config {
 	resolver := Resolver{}
 
 	isAuthenticated := func(ctx context.Context, obj interface{}, next graphql.Resolver) (res interface{}, err error) {
-		log.Println("LOL3")
-		jwt := auth.JWTFromContext(ctx)
-		log.Println(jwt)
-		// if authorization isn't available
+
+		// validate token, if token fails
+		if false {
+			return nil, fmt.Errorf("Access denied")
+		}
+
 		return next(ctx)
 	}
 	directive := DirectiveRoot{

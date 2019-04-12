@@ -82,7 +82,6 @@ class School extends Component {
 
 const Stats = ({ school }) => {
   const { campusLocations, paymentType, basePrice, lengthInWeeks } = school;
-  console.log(school);
   return (
     <div className="schoolInfoWrapper">
       <div className="stats">Stats</div>

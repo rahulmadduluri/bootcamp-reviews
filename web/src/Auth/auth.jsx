@@ -92,7 +92,6 @@ class Auth {
   }
 
   logout() {
-    // Remove tokens and expiry time
     this.accessToken = null;
     this.expiresAt = 0;
 
