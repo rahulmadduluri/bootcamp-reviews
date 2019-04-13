@@ -3,7 +3,8 @@ select
 	students.uuid as uuid,
 	students.first_name as firstname,
 	students.last_name as lastname,
-	students.photo_uri as photouri
+	students.photo_uri as photouri,
+	students.linked_in_photo_url as linkedinphotourl
 from students
 where students.uuid = :student_uuid
 ;

@@ -58,11 +58,12 @@ type SchoolSearchParams struct {
 }
 
 type Student struct {
-	UUID      string  `json:"uuid"`
-	FirstName string  `json:"firstName"`
-	LastName  string  `json:"lastName"`
-	PhotoURI  string  `json:"photoURI"`
-	School    *School `json:"school"`
+	UUID             string  `json:"uuid"`
+	FirstName        string  `json:"firstName"`
+	LastName         string  `json:"lastName"`
+	PhotoURI         *string `json:"photoURI"`
+	LinkedInPhotoURL *string `json:"linkedInPhotoURL"`
+	School           *School `json:"school"`
 }
 
 type UpdateStudentInput struct {

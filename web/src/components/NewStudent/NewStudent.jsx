@@ -21,7 +21,7 @@ class NewStudent extends Component {
     return (
       <div className="pageBackground columns is-centered">
     	<div className="defaultContainer column is-three-fifths">
-	          <div className="newStudentInfo">
+	          <div className="studentInfo">
 	              <div className="image">
 	                <img src={linkedInPhotoURL} alt="ProfilePhoto" />
 	              </div>

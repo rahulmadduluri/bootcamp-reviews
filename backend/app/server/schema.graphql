@@ -34,7 +34,8 @@ type Student {
 	uuid: ID!
 	firstName: String!
 	lastName: String!
-	photoURI: String!
+	photoURI: String
+	linkedInPhotoURL: String
 	school: School
 }
 

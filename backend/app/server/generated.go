@@ -92,11 +92,12 @@ type ComplexityRoot struct {
 	}
 
 	Student struct {
-		FirstName func(childComplexity int) int
-		LastName  func(childComplexity int) int
-		PhotoURI  func(childComplexity int) int
-		School    func(childComplexity int) int
-		UUID      func(childComplexity int) int
+		FirstName        func(childComplexity int) int
+		LastName         func(childComplexity int) int
+		LinkedInPhotoURL func(childComplexity int) int
+		PhotoURI         func(childComplexity int) int
+		School           func(childComplexity int) int
+		UUID             func(childComplexity int) int
 	}
 }
 
@@ -354,6 +355,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Student.LastName(childComplexity), true
 
+	case "Student.LinkedInPhotoURL":
+		if e.complexity.Student.LinkedInPhotoURL == nil {
+			break
+		}
+
+		return e.complexity.Student.LinkedInPhotoURL(childComplexity), true
+
 	case "Student.PhotoURI":
 		if e.complexity.Student.PhotoURI == nil {
 			break
@@ -500,7 +508,8 @@ type Student {
 	uuid: ID!
 	firstName: String!
 	lastName: String!
-	photoURI: String!
+	photoURI: String
+	linkedInPhotoURL: String
 	school: School
 }
 
@@ -1553,15 +1562,36 @@ func (ec *executionContext) _Student_photoURI(ctx context.Context, field graphql
 		return obj.PhotoURI, nil
 	})
 	if resTmp == nil {
-		if !ec.HasError(rctx) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(*string)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Student_linkedInPhotoURL(ctx context.Context, field graphql.CollectedField, obj *models.Student) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "Student",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.LinkedInPhotoURL, nil
+	})
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Student_school(ctx context.Context, field graphql.CollectedField, obj *models.Student) graphql.Marshaler {
@@ -2906,9 +2936,8 @@ func (ec *executionContext) _Student(ctx context.Context, sel ast.SelectionSet, 
 			}
 		case "photoURI":
 			out.Values[i] = ec._Student_photoURI(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalid = true
-			}
+		case "linkedInPhotoURL":
+			out.Values[i] = ec._Student_linkedInPhotoURL(ctx, field, obj)
 		case "school":
 			out.Values[i] = ec._Student_school(ctx, field, obj)
 		default:
