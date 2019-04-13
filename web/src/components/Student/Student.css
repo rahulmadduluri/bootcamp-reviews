@@ -1,5 +1,7 @@
 .studentInfo {
 	text-align: center;
+	width: 300px;
+	margin: auto;
 }
 
 .studentInfo .image > img {
@@ -9,6 +11,43 @@
   height: 125px;
 }
 
+.studentInfo .name {
+	margin-top: 30px;
+	text-align: left;
+}
+
+.studentInfo .nameLabel {
+	display: inline-block;
+	font-weight: 300;
+	font-size: 18px;
+}
+
+.studentInfo .nameText {
+	margin-left: 10px;
+	display: inline-block;
+	font-weight: 500;
+	font-size: 18px;
+}
+
+.studentInfo .email {
+	text-align: left;
+	margin-top: 20px;
+}
+
+.studentInfo .emailLabel {
+	display: inline-block;
+	font-weight: 300;
+	font-size: 18px;
+}
+
+.studentInfo .emailText {
+	margin-left: 10px;
+	display: inline-block;
+	font-weight: 500;
+	font-size: 18px;
+}
+
 .studentInfo .buttons .button {
 	margin: auto;
+	margin-top: 40px;
 }

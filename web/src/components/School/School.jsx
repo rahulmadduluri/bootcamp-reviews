@@ -46,7 +46,7 @@ class School extends Component {
               {({ loading, error, data }) => {
                 if (loading) return <p>Loading...</p>;
                 if (error) return <p>Error :(</p>;
-                const { name, photoURI, uuid } = data.school;
+                const { name, photoURI } = data.school;
                 return (
                   <div>
                     <div className="media">

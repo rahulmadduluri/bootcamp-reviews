@@ -29,7 +29,7 @@ class Callback extends Component {
     `;
 
     if (auth.isAuthenticated()) {
-      const { studentUUID, email, firstName, lastName, linkedInPhotoURL } = auth.getProfile();
+      const { studentUUID } = auth.getProfile();
       return (
         <Query
           query={getStudentQuery}
