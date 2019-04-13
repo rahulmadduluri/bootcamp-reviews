@@ -9,8 +9,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.buttons .is-primary {
+  background-color: #3F51B5;
+}
+
 .pageBackground {
   background-color: #fafafa;
+  height: 100vh;
+}
+
+.defaultContainer {
+  background-color: white;
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid lightgray;
+  border-radius: 2px;
 }
 
 .searchResults {

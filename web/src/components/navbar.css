@@ -14,10 +14,6 @@ nav .searchBar {
   margin-left: 15px;
 }
 
-nav .navbar-end .navbar-item .is-primary {
-  background-color: #3F51B5;
-}
-
 @media (max-width: 600px) {
   nav .searchBar {
     display: inline-block;

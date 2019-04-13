@@ -4,17 +4,12 @@ import { Link } from 'react-router-dom';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import auth from '../../Auth/auth.jsx';
-import '../Student/Student.css';
+import './Student.css';
 
-class NewStudent extends Component {
+class Student extends Component {
 
 
   render() {
-    const newStudentMutation = gql`
-		mutation CreateStudent($studentInfo:CreateStudentInput!) {
-			createStudent(studentInfo: $studentInfo)
-		}
-    `;
 
     const { studentUUID, email, firstName, lastName, linkedInPhotoURL } = auth.getProfile();
 
@@ -27,9 +22,6 @@ class NewStudent extends Component {
 	              </div>
 	              <div className="name">{firstName} {lastName}</div>
 	              <div className="email">{email}</div>
-	              <div className="buttons">
-	                  <a className="button is-primary"><strong>Sign Up</strong></a>
-	              </div>
 	          </div>
     	</div>
       </div>
@@ -37,4 +29,4 @@ class NewStudent extends Component {
   }
 }
 
-export default withRouter(NewStudent);
+export default withRouter(Student);

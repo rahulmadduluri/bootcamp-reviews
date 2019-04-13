@@ -91,6 +91,7 @@ type contextKey struct {
 // Add ID Token to Context to be parsed in GraphQL
 
 var jwtCtxKey = &contextKey{"jwt"}
+var uuidCtxKey = &contextKey{"uuid"}
 
 // Add JWT to context for isAuthenticated function to parse
 func AddJWTToContext(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
@@ -102,10 +103,18 @@ func AddJWTToContext(w http.ResponseWriter, r *http.Request, next http.HandlerFu
 	next(w, r)
 }
 
-// JWTFromContext finds the uuid for context
 func JWTFromContext(ctx context.Context) string {
 	jwt, _ := ctx.Value(jwtCtxKey).(string)
 	return jwt
+}
+
+func UUIDFromContext(ctx context.Context) string {
+	uuid, _ := ctx.Value(uuidCtxKey).(string)
+	return uuid
+}
+
+func ContextWithUUID(ctx context.Context, uuid string) context.Context {
+	return context.WithValue(ctx, uuidCtxKey, uuid)
 }
 
 // Check validity of JWT token

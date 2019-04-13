@@ -1,0 +1,14 @@
+.newStudentInfo {
+	text-align: center;
+}
+
+.newStudentInfo .image > img {
+  margin: auto;
+  border-radius: 10%;
+  width: 125px;
+  height: 125px;
+}
+
+.newStudentInfo .buttons .button {
+	margin: auto;
+}

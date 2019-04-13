@@ -464,7 +464,7 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var parsedSchema = gqlparser.MustLoadSchema(
-	&ast.Source{Name: "schema.graphql", Input: `directive @isAuthenticated on FIELD_DEFINITION
+	&ast.Source{Name: "schema.graphql", Input: `directive @isAuthenticated on FIELD_DEFINITION | QUERY
 
 type School {
 	uuid: ID!
@@ -539,16 +539,16 @@ type Filters {
 }
 
 type Query {
-	school(uuid: ID!): School @isAuthenticated
+	school(uuid: ID!): School
 	schools(params: SchoolSearchParams!): SchoolQueryResult!
 	filters: Filters
 
-	student(uuid: ID!): Student
+	student(uuid: ID!): Student @isAuthenticated
 }
 
 type Mutation {
-	createStudent(studentInfo: CreateStudentInput!): Boolean!
-	updateStudent(studentInfo: UpdateStudentInput!): Boolean!
+	createStudent(studentInfo: CreateStudentInput!): Boolean! @isAuthenticated
+	updateStudent(studentInfo: UpdateStudentInput!): Boolean! @isAuthenticated
 }
 `},
 )

@@ -41,7 +41,7 @@ class School extends Component {
       <div>
         <Navbar />
         <div className="pageBackground columns is-centered">
-          <div className="schoolPage column is-three-fifths">
+          <div className="defaultContainer column is-three-fifths">
             <Query query={getQuery} variables={{ schoolUUID: this.props.uuid }}>
               {({ loading, error, data }) => {
                 if (loading) return <p>Loading...</p>;

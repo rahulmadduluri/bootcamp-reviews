@@ -9,10 +9,6 @@ import (
 	"github.com/99designs/gqlgen/graphql"
 )
 
-type contextKey struct {
-	name string
-}
-
 // Resolvers
 type Resolver struct{}
 type queryResolver struct{ *Resolver }
@@ -43,7 +39,7 @@ func New() Config {
 
 		//get uuid from token
 		uuid := auth.GetUUIDFromValidatedToken(token)
-		ctxWithUUID := context.WithValue(ctx, &contextKey{"uuid"}, uuid)
+		ctxWithUUID := auth.ContextWithUUID(ctx, uuid)
 
 		return next(ctxWithUUID)
 	}

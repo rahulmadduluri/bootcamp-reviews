@@ -58,12 +58,11 @@ func main() {
 	s3router := mux.NewRouter()
 	s3router.PathPrefix("/s3/").Handler(http.StripPrefix("/s3/", http.HandlerFunc(serveFromS3)))
 
-	// jwtMiddleware := auth.JWTMiddleware()
+	// routes
 	r.PathPrefix("/api").Handler(negroni.New(
 		negroni.HandlerFunc(auth.AddJWTToContext),
 		negroni.Wrap(api),
 	))
-
 	r.PathPrefix("/s3/").Handler(negroni.New(negroni.Wrap(s3router)))
 
 	// Run Server

@@ -1,14 +1,5 @@
 @import '../../../node_modules/bulma/css/bulma.css';
 
-.schoolPage {
-  background-color: white;
-  font-family: 'Rubik';
-  margin-top: 2rem;
-  padding: 1rem;
-  border: 1px solid lightgray;
-  border-radius: 2px;
-}
-
 .media .image > img {
 	border-radius: 10%;
   width: 125px;
