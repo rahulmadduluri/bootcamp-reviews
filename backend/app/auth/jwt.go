@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"os"
 
@@ -89,7 +90,6 @@ type contextKey struct {
 
 // Add ID Token to Context to be parsed in GraphQL
 
-var uuidCtxKey = &contextKey{"uuid"}
 var jwtCtxKey = &contextKey{"jwt"}
 
 // Add JWT to context for isAuthenticated function to parse
@@ -99,27 +99,56 @@ func AddJWTToContext(w http.ResponseWriter, r *http.Request, next http.HandlerFu
 	ctx := context.WithValue(r.Context(), jwtCtxKey, tokenString)
 	r = r.WithContext(ctx)
 
-	// claims -- uuid
-	token, _ := jwt.ParseWithClaims(tokenString, &jwt.MapClaims{}, nil)
-	claims, _ := token.Claims.(*jwt.MapClaims)
-	if claims != nil {
-		if uuidFromClaim, ok := (*claims)["https://raft.one/uuid"]; ok {
-			ctx = context.WithValue(r.Context(), uuidCtxKey, uuidFromClaim)
-			r = r.WithContext(ctx)
-		}
-	}
-
 	next(w, r)
-}
-
-// UUIDFromContext finds the uuid for context
-func UUIDFromContext(ctx context.Context) string {
-	uuid, _ := ctx.Value(uuidCtxKey).(string)
-	return uuid
 }
 
 // JWTFromContext finds the uuid for context
 func JWTFromContext(ctx context.Context) string {
 	jwt, _ := ctx.Value(jwtCtxKey).(string)
 	return jwt
+}
+
+// Check validity of JWT token
+func ValidateToken(m *jwtmiddleware.JWTMiddleware, token string) (bool, error) {
+	// If the token is empty...
+	if token == "" {
+		// If we get here, the required token is missing
+		errorMsg := "Required authorization token not found"
+		return false, errors.New(errorMsg)
+	}
+
+	// Now parse the token
+	parsedToken, err := jwt.Parse(token, m.Options.ValidationKeyGetter)
+
+	// Check if there was an error in parsing...
+	if err != nil {
+		return false, fmt.Errorf("Error parsing token: %v", err)
+	}
+
+	if m.Options.SigningMethod != nil && m.Options.SigningMethod.Alg() != parsedToken.Header["alg"] {
+		message := fmt.Sprintf("Expected %s signing method but token specified %s",
+			m.Options.SigningMethod.Alg(),
+			parsedToken.Header["alg"])
+		return false, fmt.Errorf("Error validating token algorithm: %s", message)
+	}
+
+	// Check if the parsed token is valid...
+	if !parsedToken.Valid {
+		return false, errors.New("Token is invalid")
+	}
+
+	return true, nil
+}
+
+// Extract uuid from validated token
+func GetUUIDFromValidatedToken(tokenString string) string {
+	// claims -- uuid
+	token, _ := jwt.ParseWithClaims(tokenString, &jwt.MapClaims{}, nil)
+	claims, _ := token.Claims.(*jwt.MapClaims)
+	if claims != nil {
+		if uuidFromClaim, ok := (*claims)["https://raft.one/uuid"]; ok {
+			return uuidFromClaim.(string)
+		}
+	}
+	return ""
 }

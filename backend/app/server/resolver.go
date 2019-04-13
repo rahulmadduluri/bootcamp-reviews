@@ -4,8 +4,14 @@ import (
 	"context"
 	"fmt"
 
+	auth "github.com/rahulmadduluri/raft-education/backend/app/auth"
+
 	"github.com/99designs/gqlgen/graphql"
 )
+
+type contextKey struct {
+	name string
+}
 
 // Resolvers
 type Resolver struct{}
@@ -22,15 +28,24 @@ func (r *Resolver) Mutation() MutationResolver {
 
 func New() Config {
 	resolver := Resolver{}
-
+	jwtMiddleware := auth.JWTMiddleware()
 	isAuthenticated := func(ctx context.Context, obj interface{}, next graphql.Resolver) (res interface{}, err error) {
+		token := auth.JWTFromContext(ctx)
 
-		// validate token, if token fails
-		if false {
-			return nil, fmt.Errorf("Access denied")
+		didValidate, err := auth.ValidateToken(jwtMiddleware, token)
+		errorStr := "Access denied"
+		if didValidate == false {
+			if err != nil {
+				errorStr = errorStr + ": " + err.Error()
+			}
+			return nil, fmt.Errorf(errorStr)
 		}
 
-		return next(ctx)
+		//get uuid from token
+		uuid := auth.GetUUIDFromValidatedToken(token)
+		ctxWithUUID := context.WithValue(ctx, &contextKey{"uuid"}, uuid)
+
+		return next(ctxWithUUID)
 	}
 	directive := DirectiveRoot{
 		IsAuthenticated: isAuthenticated,
