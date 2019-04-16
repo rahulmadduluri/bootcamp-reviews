@@ -12,7 +12,7 @@ function SmartSearchBar(props) {
 
   const { classes } = props;
 
-  let searchText = "Search"
+  let searchText = "Search (Press Enter)";
   if (props.searchText) {
     searchText = props.searchText;
   }

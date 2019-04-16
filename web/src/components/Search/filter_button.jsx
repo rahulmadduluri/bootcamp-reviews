@@ -14,17 +14,16 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    marginLeft: 5,
+    marginLeft: 10,
   },
   formControl: {
-    width: 140,
+    width: 145,
     borderRadius: 5,
-    padding: 5,
+    paddingTop: 5,
   },
   inputLabel: {
     textAlign: 'center',
-    width: 120
-
+    width: 120,
   },
   select: {
     textAlign: 'center',
@@ -40,7 +39,6 @@ const styles = theme => ({
 
 class FilterSearchButton extends React.Component {
   state = {
-    selectedOption: this.props.currentOption,
     labelWidth: 0
   };
 
@@ -88,8 +86,6 @@ class FilterSearchButton extends React.Component {
         variables: { params: params }
       });
     }
-
-    this.setState({ "selectedOption": value });
   };
 
   render() {
@@ -103,7 +99,7 @@ class FilterSearchButton extends React.Component {
       },
     });
 
-    let currentOption = this.state.selectedOption;
+    let currentOption = this.props.currentOption;
     if (!currentOption) {
       currentOption = '';
     }

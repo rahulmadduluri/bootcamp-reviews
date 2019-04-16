@@ -43,13 +43,13 @@ const FilterList = ({ searchOptions, currentSearchParams }) => (
         <FilterButton currentOption={currentSearchParams.locationUUID} filterType="Location" allOptions={searchOptions.locations} />
       </div>
       <div className="PaymentType">
-        <FilterButton filterType="Payment Type" allOptions={searchOptions.paymentTypes} />
+        <FilterButton filterType="Payment Type" currentOption={currentSearchParams.paymentType} allOptions={searchOptions.paymentTypes} />
       </div>
       <div className="MinLength">
-        <FilterButton filterType="Minimum Length" allOptions={searchOptions.minLengths} />
+        <FilterButton filterType="Minimum Length" currentOption={currentSearchParams.minLength} allOptions={searchOptions.minLengths} />
       </div>
       <div className="MaxPrice">
-        <FilterButton filterType="Max Price" allOptions={searchOptions.maxPrices} />
+        <FilterButton filterType="Max Price" currentOption={currentSearchParams.maxPrice} allOptions={searchOptions.maxPrices} />
       </div>
     </div>
   </div>
