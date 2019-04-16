@@ -3,6 +3,8 @@ import './navbar.css';
 import SmartSearchBar from './searchbar.jsx';
 import raftSquare from '../images/raft_square.png';
 import auth from '../Auth/auth.jsx';
+import gql from 'graphql-tag';
+import { withApollo } from 'react-apollo';
 
 class Navbar extends React.Component {
 
@@ -22,8 +24,18 @@ class Navbar extends React.Component {
     });
   }
 
-  onSearch = searchText => {
-    this.props.onSearch({ searchText: searchText });
+  onSearch = async (searchText) => {
+    const updateSchoolSearchParamsMutation = gql`
+      mutation UpdateSchoolSearchParams($params:SchoolSearchParams!) {
+        updateSchoolSearchParams(params: $params) @client
+      }
+    `;
+
+    const params = { searchText: searchText };
+    const { data } = await this.props.client.mutate({
+      mutation: updateSchoolSearchParamsMutation,
+      variables: { params: params }
+    });
   };
 
   onTapLink = () => {};
@@ -91,4 +103,4 @@ class Navbar extends React.Component {
   }
 }
 
-export default Navbar;
+export default withApollo(Navbar);

@@ -6,6 +6,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import { compose } from 'recompose';
+import { withApollo } from 'react-apollo';
+import gql from 'graphql-tag';
 
 const styles = theme => ({
   root: {
@@ -47,21 +50,46 @@ class FilterSearchButton extends React.Component {
     });
   }
 
-  handleChange = event => {
+  handleChange = async (event) => {
     let value = null;
     if (event.target.value !== '') {
       value = event.target.value;
     }
-    this.setState({ "selectedOption": value });
-    if (this.props.filterType === "Location") {
-      this.props.onSelect({ "locationUUID": value });
-    } else if (this.props.filterType === "Payment Type") {
-      this.props.onSelect({ "paymentType": value });
-    } else if (this.props.filterType === "Minimum Length") {
-      this.props.onSelect({ "minLength": value });
-    } else if (this.props.filterType === "Max Price") {
-      this.props.onSelect({ "maxPrice": value });
+
+    let field = null;
+    switch (this.props.filterType) {
+      case "Location":
+        field = "locationUUID";
+        break;
+      case "Payment Type":
+        field = "paymentType";
+        break;
+      case "Minimum Length":
+        field = "minLength";
+        break;
+      case "Max Price":
+        field = "maxPrice";
+        break;
+      default:
+        break;
     }
+
+    if (field) {
+      const updateSchoolSearchParamsMutation = gql`
+        mutation UpdateSchoolSearchParams($params:SchoolSearchParams!) {
+          updateSchoolSearchParams(params: $params) @client
+        }
+      `;
+
+      let params = {};
+      params[field] = value;
+      const { data } = await this.props.client.mutate({
+        mutation: updateSchoolSearchParamsMutation,
+        variables: { params: params }
+      });
+    }
+
+    this.setState({ "selectedOption": value });
   };
 
   render() {
@@ -134,4 +162,4 @@ class FilterSearchButton extends React.Component {
   }
 }
 
-export default withStyles(styles)(FilterSearchButton);
+export default compose(withStyles(styles), withApollo)(FilterSearchButton);

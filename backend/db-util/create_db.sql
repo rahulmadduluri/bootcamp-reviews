@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS locations (
 CREATE TABLE IF NOT EXISTS campus_locations (
 	school_id  				int 			NOT NULL,
 	location_id				int 			NOT NULL,
-	median_graduate_salary     double,
+	median_graduate_salary  double,
 	job_placement_rate 		double,
 	FOREIGN KEY (school_id) REFERENCES schools (id),
 	FOREIGN KEY (location_id) REFERENCES locations (id)
@@ -49,6 +49,33 @@ CREATE TABLE IF NOT EXISTS students (
 	UNIQUE KEY (uuid),
 	PRIMARY KEY (id),
 	FOREIGN KEY (school_id) REFERENCES schools (id)
+);
+
+CREATE TABLE IF NOT EXISTS reviews (
+	id 							int 			NOT NULL AUTO_INCREMENT,
+	uuid						varchar(36)		NOT NULL,
+	all_text					varchar(3000)   NOT NULL,
+	teaching					int				NOT NULL,
+	coursework					int				NOT NULL,
+	atmosphere					int				NOT NULL,
+	job_placement 				int			    NOT NULL,
+	overall_score				double			NOT NULL,
+	helpful_count				int 			NOT NULL,
+	salary_before				int,
+	salary_after 				int,
+	student_id					int 			NOT NULL,
+	school_id 					int 			NOT NULL,
+	school_location_id			int 			NOT NULL,
+	job_location_id 			int,
+	school_graduation_date		timestamp,
+	job_start_date				timestamp,
+	created_timestamp_server    int 			NOT NULL,
+	UNIQUE KEY (uuid),
+	PRIMARY KEY (id),
+	FOREIGN KEY (student_id) REFERENCES students (id),
+	FOREIGN KEY (school_id) REFERENCES schools (id),
+	FOREIGN KEY (school_location_id) REFERENCES locations (id),
+	FOREIGN KEY (job_location_id) REFERENCES locations (id)
 );
 
 INSERT INTO schools VALUES
@@ -111,3 +138,8 @@ INSERT INTO students VALUES
 	(NULL, 'uuid-2', 'Jessica', 'Lo', 'jessicaisthebest@gmail.com', 'www.googleimages.com/test', 'www.linkedin.com/jessica', 'uuid-2_jessica', 7, 500),
 	(NULL, 'uuid-3', 'Mayuri', 'Ramasubramaniam', 'mayuristhebest@gmail.com', 'www.googleimages.com/test', 'www.linkedin.com/mayuri', 'uuid-3_mayuri', 8, 500),
 	(NULL, 'uuid-4', 'Liam', 'Neeson', 'liamneeson@gmail.com', 'www.googleimages.com/test', 'www.linkedin.com/liam', 'uuid-4_liam', 4, 500);
+INSERT INTO reviews VALUES
+	(NULL, 'uuid-1', 
+	'I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
+	7,9,6,10,8.0,
+	20,30000,90000,1,9,1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000);

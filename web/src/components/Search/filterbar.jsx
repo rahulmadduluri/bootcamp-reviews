@@ -29,27 +29,27 @@ class FilterBar extends React.Component {
         {({ loading, error, data }) => {
           if (loading) return <p></p>;
           if (error) return <p>Error :(</p>;
-          return <FilterList searchOptions={ data.filters } currentSearchParams={this.props.currentSearchParams} onSelect={this.props.onSetSearchParams}/>
+          return <FilterList searchOptions={ data.filters } currentSearchParams={this.props.currentSearchParams} />
         }}
       </Query>
     );
   }
 }
 
-const FilterList = ({ searchOptions, currentSearchParams, onSelect }) => (
+const FilterList = ({ searchOptions, currentSearchParams }) => (
   <div className="FilterWrapper">
     <div className="FilterBar">
       <div className="CampusLocation">
-        <FilterButton currentOption={currentSearchParams.locationUUID} filterType="Location" allOptions={searchOptions.locations} onSelect={onSelect}/>
+        <FilterButton currentOption={currentSearchParams.locationUUID} filterType="Location" allOptions={searchOptions.locations} />
       </div>
       <div className="PaymentType">
-        <FilterButton filterType="Payment Type" allOptions={searchOptions.paymentTypes} onSelect={onSelect}/>
+        <FilterButton filterType="Payment Type" allOptions={searchOptions.paymentTypes} />
       </div>
       <div className="MinLength">
-        <FilterButton filterType="Minimum Length" allOptions={searchOptions.minLengths} onSelect={onSelect}/>
+        <FilterButton filterType="Minimum Length" allOptions={searchOptions.minLengths} />
       </div>
       <div className="MaxPrice">
-        <FilterButton filterType="Max Price" allOptions={searchOptions.maxPrices} onSelect={onSelect}/>
+        <FilterButton filterType="Max Price" allOptions={searchOptions.maxPrices} />
       </div>
     </div>
   </div>

@@ -12,16 +12,6 @@ import GuardedRoute from './GuardedRoute.jsx';
 
 class App extends Component {
 
-  state = {
-    pageNumber: 0,
-  	// Search Params
-  	//locationUUID: 'uuid-1',
-  };
-
-  onSetSearchParams = (params) => {
-  	this.setState(params);
-  };
-
   async componentDidMount() {
     if (this.props.location.pathname === '/callback') return;
     try {
@@ -35,24 +25,12 @@ class App extends Component {
 
   render() {
 
-    const currentSearchParams = {
-      pageNumber: this.state.pageNumber,
-      searchText: this.state.searchText,
-      locationUUID: this.state.locationUUID,
-      paymentType: this.state.paymentType,
-      maxPrice: this.state.maxPrice,
-      minGraduateSalary: this.state.minGraduateSalary,
-      minJobPlacementRate: this.state.minJobPlacementRate,
-      minLength: this.state.minLength,
-      isOnline: this.state.isOnline
-    };
-
     return (
       <div className="App">
         <Switch>
-          <Route exact path="/" render={() =>  <Landing onSetSearchParams={this.onSetSearchParams} /> } />
-          <Route exact path="/home" render={() => <Search onSetSearchParams={this.onSetSearchParams} currentSearchParams={currentSearchParams} />} />
-          <Route exact path="/schools/:uuid" render={(props) => <School currentSearchParams={currentSearchParams} uuid={props.match.params.uuid}/>} />
+          <Route exact path="/" render={() =>  <Landing /> } />
+          <Route exact path="/home" render={() => <Search />} />
+          <Route exact path="/schools/:uuid" render={(props) => <School uuid={props.match.params.uuid}/>} />
           <GuardedRoute exact path="/students/new" component={NewStudent} />
           <GuardedRoute exact path="/students/:uuid" component={Student} />
           <Route exact path="/callback" component={Callback}/>

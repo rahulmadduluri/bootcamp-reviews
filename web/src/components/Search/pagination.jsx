@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
+import { withApollo } from 'react-apollo';
 import "./pagination.css"
 
 class Pagination extends React.Component {
@@ -17,8 +19,18 @@ class Pagination extends React.Component {
     };
   }
 
-  onPageChoice = (pageNum) => {
-    this.props.onSetSearchParams({ pageNumber: pageNum });
+  onPageChoice = async (pageNum) => {
+    const updateSchoolSearchParamsMutation = gql`
+      mutation UpdateSchoolSearchParams($params:SchoolSearchParams!) {
+        updateSchoolSearchParams(params: $params) @client
+      }
+    `;
+
+    const params = { pageNumber: pageNum };
+    const { data } = await this.props.client.mutate({
+      mutation: updateSchoolSearchParamsMutation,
+      variables: { params: params }
+    });
   };
 
   render() {
@@ -55,4 +67,4 @@ Pagination.propTypes = {
   pageLimit: PropTypes.number,
 };
 
-export default Pagination;
+export default withApollo(Pagination);

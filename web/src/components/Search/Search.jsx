@@ -17,6 +17,22 @@ import './Search.css';
 
 class Search extends Component {
   render() {
+
+  const GET_SCHOOL_PARAMS = gql`
+              query GetSchoolSearchParams {
+                schoolSearchParams @client {
+                  pageNumber
+                  searchText
+                  locationUUID
+                  paymentType
+                  maxPrice
+                  minGraduateSalary
+                  minJobPlacementRate
+                  minLength
+                }
+              }
+            `;
+
     const schoolsQuery = gql`
       query GetSchools($searchParams: SchoolSearchParams!) {
         schools(params: $searchParams) {
@@ -44,42 +60,53 @@ class Search extends Component {
       }
     `;
 
-    console.log(this.props.currentSearchParams);
-
     return (
       <div>
-        <Navbar onSearch={this.props.onSetSearchParams} />
-        <FilterBar
-          onSetSearchParams={this.props.onSetSearchParams}
-          currentSearchParams={this.props.currentSearchParams}
-        />
-        <div className="pageBackground">
-          <Query
-            query={schoolsQuery}
-            variables={{ searchParams: this.props.currentSearchParams }}
-          >
-            {({ loading, error, data }) => {
-              if (loading) return <p></p>;
-              if (error) return <p>Error :(</p>;
+        <Navbar />
 
-              return (
-                <div className="searchResults">
-                  <div className="searchHeader">
-                    <div className="searchTitle">
-                      Software Engineering Schools
-                    </div>
-                  </div>
-                  <List schools={data.schools.schoolResults} />
-                  <Pagination
-                    currentPage={this.props.currentSearchParams.pageNumber}
-                    totalItems={data.schools.totalNumResults}
-                    onSetSearchParams={this.props.onSetSearchParams}
-                  />
+        <Query query={GET_SCHOOL_PARAMS}>
+          {({ data: { schoolSearchParams } }) => {
+
+            // need to remove type for remote calls because "Input" object doesn't have type
+            let schoolSearchParamsNoTypeName = JSON.parse(JSON.stringify(schoolSearchParams));
+            delete schoolSearchParamsNoTypeName.__typename;
+
+            return (
+              <div>
+                <FilterBar
+                  currentSearchParams={schoolSearchParamsNoTypeName}
+                />
+                <div className="pageBackground">
+                  <Query
+                    query={schoolsQuery}
+                    variables={{ searchParams: schoolSearchParamsNoTypeName }}
+                  >
+                    {({ loading, error, data }) => {
+                      if (loading) return <p></p>;
+                      if (error) return <p>Error :(</p>;
+
+                      return (
+                        <div className="searchResults">
+                          <div className="searchHeader">
+                            <div className="searchTitle">
+                              Software Engineering Schools
+                            </div>
+                          </div>
+                          <List schools={data.schools.schoolResults} />
+                          <Pagination
+                            currentPage={schoolSearchParamsNoTypeName.pageNumber}
+                            totalItems={data.schools.totalNumResults}
+                          />
+                        </div>
+                      );
+                    }}
+                  </Query>
                 </div>
-              );
-            }}
-          </Query>
-        </div>
+              </div>
+            );
+          }}
+        </Query>
+
       </div>
     );
   }
