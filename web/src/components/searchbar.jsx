@@ -12,8 +12,14 @@ function SmartSearchBar(props) {
 
   const { classes } = props;
 
+  let searchText = "Search"
+  if (props.searchText) {
+    searchText = props.searchText;
+  }
+
   return(
     <SearchBar
+      placeholder={searchText}
       onChange={() => console.log('onChange')}
       onRequestSearch={props.onSearch}
       classes={classes}

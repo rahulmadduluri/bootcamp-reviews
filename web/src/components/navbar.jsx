@@ -32,7 +32,7 @@ class Navbar extends React.Component {
     `;
 
     const params = { searchText: searchText };
-    const { data } = await this.props.client.mutate({
+    await this.props.client.mutate({
       mutation: updateSchoolSearchParamsMutation,
       variables: { params: params }
     });
@@ -57,7 +57,7 @@ class Navbar extends React.Component {
           </a>
 
           <div className="navbar-start searchBar">
-            <SmartSearchBar onSearch={this.onSearch}/>
+            <SmartSearchBar searchText={this.props.searchText} onSearch={this.onSearch}/>
           </div>
 
           <a

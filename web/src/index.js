@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx';
-import ApolloClient from "apollo-boost"
 import { ApolloProvider } from "react-apollo";
 import auth from './Auth/auth.jsx';
 import gql from 'graphql-tag';
+import ApolloClient, { InMemoryCache } from "apollo-boost"
+import { persistCache } from 'apollo-cache-persist';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
@@ -24,7 +25,10 @@ const GET_SCHOOL_PARAMS = gql`
           }
         `;
 
+const cache = new InMemoryCache();
+
 const client = new ApolloClient({
+	cache: cache,
 	uri: "/api",
 	request: operation => {
 		operation.setContext(context => ({
@@ -54,27 +58,42 @@ const client = new ApolloClient({
 
 		        const { schoolSearchParams } = cache.readQuery({ query: GET_SCHOOL_PARAMS });
 
-		        let newParams = JSON.parse(JSON.stringify(schoolSearchParams));
+		        // copy params into updated params object 
+		        let updatedParams = JSON.parse(JSON.stringify(schoolSearchParams));
 		        for (var propertyName in params) {
-		        	newParams[propertyName] = params[propertyName];
+		        	updatedParams[propertyName] = params[propertyName];
 		        }
+
+		        // if params don't have a page #, reset to 0 (new search)
+		        if (!params.pageNumber) {
+		        	updatedParams.pageNumber = 0;
+		        }
+
 				cache.writeData({ data: { 
-					schoolSearchParams: newParams
+					schoolSearchParams: updatedParams
 				}});
-				return newParams;
+				return updatedParams;
 			}
 	      }
 	    }
 	}
 });
 
-ReactDOM.render(
-  <ApolloProvider client={client}>
-  	<BrowserRouter>
-    	<App />
-    </BrowserRouter>
-  </ApolloProvider>,
-  document.getElementById('root')
-);
+const setupAndRender = async () => {
+	await persistCache({
+		cache,
+		storage: localStorage
+	});
+	ReactDOM.render(
+	  <ApolloProvider client={client}>
+	  	<BrowserRouter>
+	    	<App />
+	    </BrowserRouter>
+	  </ApolloProvider>,
+	  document.getElementById('root')
+	);
+}
+
+setupAndRender();
 
 serviceWorker.register();

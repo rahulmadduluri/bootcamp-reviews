@@ -5,19 +5,6 @@ import { withApollo } from 'react-apollo';
 import "./pagination.css"
 
 class Pagination extends React.Component {
-  constructor(props) {
-    super(props);
-    const {
-      totalItems = null,
-      currentPage = null,
-      pageLimit = 10,
-    } = props;
-
-    this.state = {
-      currentPage: currentPage,
-      totalPages: Math.ceil(totalItems / pageLimit),
-    };
-  }
 
   onPageChoice = async (pageNum) => {
     const updateSchoolSearchParamsMutation = gql`
@@ -27,24 +14,29 @@ class Pagination extends React.Component {
     `;
 
     const params = { pageNumber: pageNum };
-    const { data } = await this.props.client.mutate({
+    await this.props.client.mutate({
       mutation: updateSchoolSearchParamsMutation,
       variables: { params: params }
     });
   };
 
+  totalPages = () => {
+    return Math.ceil(this.props.totalItems / this.props.pageLimit);
+  };
+
   render() {
+
     return (
       <div className="paginationWrapper">
         <nav className="pagination" role="navigation" aria-label="pagination">
           <ul className="pagination-list">
-            {[...Array(this.state.totalPages).keys()].map(num => {
+            {[...Array(this.totalPages()).keys()].map(num => {
               return (
                 <li key={num}>
                   <a
                     onClick={() => this.onPageChoice(num)}
                     className={`pagination-link ${
-                      num === this.props.currentPage ? 'is-current' : ''
+                      num === this.props.pageNumber ? 'is-current' : ''
                     }`}
                     aria-label={`Page ${num}`}
                     aria-current="page"
@@ -62,9 +54,8 @@ class Pagination extends React.Component {
 }
 
 Pagination.propTypes = {
-  totalItems: PropTypes.number.isRequired,
-  currentPage: PropTypes.number.isRequired,
   pageLimit: PropTypes.number,
+  totalItems: PropTypes.number
 };
 
 export default withApollo(Pagination);

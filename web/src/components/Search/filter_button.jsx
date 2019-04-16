@@ -83,7 +83,7 @@ class FilterSearchButton extends React.Component {
 
       let params = {};
       params[field] = value;
-      const { data } = await this.props.client.mutate({
+      await this.props.client.mutate({
         mutation: updateSchoolSearchParamsMutation,
         variables: { params: params }
       });

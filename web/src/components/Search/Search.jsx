@@ -15,99 +15,96 @@ import {
 } from '../Common/SchoolStats';
 import './Search.css';
 
-class Search extends Component {
-  render() {
-
-  const GET_SCHOOL_PARAMS = gql`
-              query GetSchoolSearchParams {
-                schoolSearchParams @client {
-                  pageNumber
-                  searchText
-                  locationUUID
-                  paymentType
-                  maxPrice
-                  minGraduateSalary
-                  minJobPlacementRate
-                  minLength
-                }
+const GET_SCHOOL_PARAMS = gql`
+            query GetSchoolSearchParams {
+              schoolSearchParams @client {
+                pageNumber
+                searchText
+                locationUUID
+                paymentType
+                maxPrice
+                minGraduateSalary
+                minJobPlacementRate
+                minLength
               }
-            `;
-
-    const schoolsQuery = gql`
-      query GetSchools($searchParams: SchoolSearchParams!) {
-        schools(params: $searchParams) {
-          totalNumResults
-          pageNumber
-          schoolResults {
-            uuid
-            name
-            lengthInWeeks
-            isOnline
-            photoURI
-            basePrice
-            paymentType
-            campusLocations {
-              location {
-                uuid
-                city
-                country
-              }
-              medianGraduateSalary
-              jobPlacementRate
             }
+          `;
+
+const schoolsQuery = gql`
+  query GetSchools($searchParams: SchoolSearchParams!) {
+    schools(params: $searchParams) {
+      totalNumResults
+      pageNumber
+      schoolResults {
+        uuid
+        name
+        lengthInWeeks
+        isOnline
+        photoURI
+        basePrice
+        paymentType
+        campusLocations {
+          location {
+            uuid
+            city
+            country
           }
+          medianGraduateSalary
+          jobPlacementRate
         }
       }
-    `;
+    }
+  }
+`;
 
+
+class Search extends Component {
+  render() {
     return (
-      <div>
-        <Navbar />
+      <Query query={GET_SCHOOL_PARAMS}>
+        {({ data: { schoolSearchParams } }) => {
 
-        <Query query={GET_SCHOOL_PARAMS}>
-          {({ data: { schoolSearchParams } }) => {
+          // need to remove type for remote calls because "Input" object doesn't have type
+          let schoolSearchParamsNoTypeName = JSON.parse(JSON.stringify(schoolSearchParams));
+          delete schoolSearchParamsNoTypeName.__typename;
 
-            // need to remove type for remote calls because "Input" object doesn't have type
-            let schoolSearchParamsNoTypeName = JSON.parse(JSON.stringify(schoolSearchParams));
-            delete schoolSearchParamsNoTypeName.__typename;
+          return (
+            <div>
+              <Navbar searchText={schoolSearchParamsNoTypeName.searchText}/>
+              <FilterBar
+                currentSearchParams={schoolSearchParamsNoTypeName}
+              />
+              <div className="pageBackground">
+                <Query
+                  query={schoolsQuery}
+                  variables={{ searchParams: schoolSearchParamsNoTypeName }}
+                >
+                  {({ loading, error, data }) => {
+                    if (loading) return <p></p>;
+                    if (error) return <p>Error :(</p>;
 
-            return (
-              <div>
-                <FilterBar
-                  currentSearchParams={schoolSearchParamsNoTypeName}
-                />
-                <div className="pageBackground">
-                  <Query
-                    query={schoolsQuery}
-                    variables={{ searchParams: schoolSearchParamsNoTypeName }}
-                  >
-                    {({ loading, error, data }) => {
-                      if (loading) return <p></p>;
-                      if (error) return <p>Error :(</p>;
-
-                      return (
-                        <div className="searchResults">
-                          <div className="searchHeader">
-                            <div className="searchTitle">
-                              Software Engineering Schools
-                            </div>
+                    return (
+                      <div className="searchResults">
+                        <div className="searchHeader">
+                          <div className="searchTitle">
+                            Software Engineering Schools
                           </div>
-                          <List schools={data.schools.schoolResults} />
-                          <Pagination
-                            currentPage={schoolSearchParamsNoTypeName.pageNumber}
-                            totalItems={data.schools.totalNumResults}
-                          />
                         </div>
-                      );
-                    }}
-                  </Query>
-                </div>
+                        <List schools={data.schools.schoolResults} />
+                        <Pagination
+                          pageNumber={schoolSearchParamsNoTypeName.pageNumber}
+                          totalItems={data.schools.totalNumResults}
+                          pageLimit={10}
+                        />
+                      </div>
+                    );
+                  }}
+                </Query>
               </div>
-            );
-          }}
-        </Query>
-
-      </div>
+            </div>
+          );
+        }}
+      </Query>
     );
   }
 }
