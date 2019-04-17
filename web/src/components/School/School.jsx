@@ -11,6 +11,7 @@ import {
   LocationBar,
   LengthBar,
 } from '../Common/SchoolStats';
+import ReviewListQuery from './ReviewListQuery.jsx';
 
 class School extends Component {
   render() {
@@ -73,6 +74,9 @@ class School extends Component {
                 );
               }}
             </Query>
+
+            <ReviewListQuery schoolUUID={this.props.uuid}/>
+
           </div>
         </div>
       </div>
@@ -93,40 +97,5 @@ const Stats = ({ school }) => {
     </div>
   );
 };
-
-/*
-Reviews
-https://www.apollographql.com/docs/react/advanced/caching
-const FeedWithData = ({ match }) => (
-  <Query
-    query={FEED_QUERY}
-    variables={{
-      type: match.params.type.toUpperCase() || "TOP",
-      offset: 0,
-      limit: 10
-    }}
-    fetchPolicy="cache-and-network"
-  >
-    {({ data, fetchMore }) => (
-      <Feed
-        entries={data.feed || []}
-        onLoadMore={() =>
-          fetchMore({
-            variables: {
-              offset: data.feed.length
-            },
-            updateQuery: (prev, { fetchMoreResult }) => {
-              if (!fetchMoreResult) return prev;
-              return Object.assign({}, prev, {
-                feed: [...prev.feed, ...fetchMoreResult.feed]
-              });
-            }
-          })
-        }
-      />
-    )}
-  </Query>
-);
-*/
 
 export default School;

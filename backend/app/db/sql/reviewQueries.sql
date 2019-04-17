@@ -22,4 +22,5 @@ from reviews
 join schools
 	on reviews.school_id = schools.id
 where schools.uuid = :school_uuid
+order by reviews.created_timestamp_server
 ;
