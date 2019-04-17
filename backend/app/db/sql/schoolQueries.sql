@@ -12,6 +12,20 @@ where schools.uuid = :school_uuid
 order by schools.uuid
 ;
 
+-- name: getSchoolWithID
+select
+	schools.uuid as uuid,
+	schools.name as name,
+	schools.length_in_weeks as lengthinweeks,
+	schools.is_online as isonline,
+	schools.base_price as baseprice,
+	schools.payment_type as paymenttype,
+	schools.photo_uri as photouri
+from schools
+where schools.id = :school_id
+order by schools.uuid
+;
+
 -- name: getSchoolCampusLocationsDB
 select
 	campus_locations.school_id as schoolid,

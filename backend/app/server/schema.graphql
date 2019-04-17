@@ -73,12 +73,34 @@ type Filters {
 	maxPrices: [Int!]!
 }
 
+type Review {
+	uuid: ID!
+	allText: String!
+	teachingScore: Int!
+	courseworkScore: Int!
+	atmosphereScore: Int!
+	careerPreparationScore: Int!
+	overallScore: Float!
+	helpfulCount: Int!
+	hasJob: Boolean!
+	salaryBefore: Int
+	salaryAfter: Int
+	school: School!
+	schoolLocation: Location!
+	schoolGraduationTimestamp: Int
+	jobLocation: Location
+	jobStartTimestamp: Int
+	createdTimestamp: Int!
+}
+
 type Query {
 	school(uuid: ID!): School
 	schools(params: SchoolSearchParams!): SchoolQueryResult!
 	filters: Filters
 
 	student(uuid: ID!): Student @isAuthenticated
+
+	reviews(schoolUUID: ID!, offset: Int!): [Review!]!
 }
 
 type Mutation {

@@ -1,12 +1,36 @@
 package models
 
-import ()
+import (
+	"time"
+)
 
 // NOTE: These are models representing rows in MySQL database
 
 type CampusLocationDBModel struct {
 	SchoolID             int
 	LocationID           int
-	MedianGraduateSalary float64
-	JobPlacementRate     float64
+	MedianGraduateSalary *float64
+	JobPlacementRate     *float64
+}
+
+type ReviewDBModel struct {
+	ID                     int
+	UUID                   string
+	AllText                string
+	TeachingScore          int
+	CourseworkScore        int
+	AtmosphereScore        int
+	CareerPreparationScore int
+	OverallScore           float64
+	HelpfulCount           int
+	HasJob                 bool
+	SalaryBefore           *int
+	SalaryAfter            *int
+	StudentID              int
+	SchoolID               int
+	SchoolLocationID       int
+	JobLocationID          *int
+	SchoolGraduationDate   *time.Time
+	JobStartDate           *time.Time
+	CreatedTimestampServer int
 }

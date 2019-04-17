@@ -56,6 +56,8 @@ func newDbHandler() *dbHandler {
 		log.Panic("Couldn't find MYSQL DB name")
 	}
 	dbPath := username + ":" + pwd + "@tcp(" + mySQLHostName + ":" + mySQLPort + ")/" + mySQLDBName
+	// add parse time arg
+	dbPath = dbPath + "?parseTime=true"
 	db, err := sqlx.Open("mysql", dbPath)
 	if err != nil {
 		log.Fatal(err)

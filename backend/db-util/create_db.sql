@@ -55,12 +55,13 @@ CREATE TABLE IF NOT EXISTS reviews (
 	id 							int 			NOT NULL AUTO_INCREMENT,
 	uuid						varchar(36)		NOT NULL,
 	all_text					varchar(3000)   NOT NULL,
-	teaching					int				NOT NULL,
-	coursework					int				NOT NULL,
-	atmosphere					int				NOT NULL,
-	job_placement 				int			    NOT NULL,
+	teaching_score				int				NOT NULL,
+	coursework_score			int				NOT NULL,
+	atmosphere_score			int				NOT NULL,
+	career_preparation_score 	int			    NOT NULL,
 	overall_score				double			NOT NULL,
 	helpful_count				int 			NOT NULL,
+	has_job						boolean			NOT NULL,
 	salary_before				int,
 	salary_after 				int,
 	student_id					int 			NOT NULL,
@@ -141,5 +142,6 @@ INSERT INTO students VALUES
 INSERT INTO reviews VALUES
 	(NULL, 'uuid-1', 
 	'I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
-	7,9,6,10,8.0,
-	20,30000,90000,1,9,1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000);
+	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
+	20,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000); # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17

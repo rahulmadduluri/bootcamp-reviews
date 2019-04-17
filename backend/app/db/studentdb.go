@@ -7,8 +7,9 @@ import (
 )
 
 const (
-	_GetStudent    = "getStudent"
-	_CreateStudent = "createStudent"
+	_GetStudent       = "getStudent"
+	_GetStudentWithID = "getStudentWithID"
+	_CreateStudent    = "createStudent"
 )
 
 type StudentDB interface {

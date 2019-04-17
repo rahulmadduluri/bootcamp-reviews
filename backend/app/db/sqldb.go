@@ -11,6 +11,7 @@ const (
 	_filtersQueriesPath  = "db/sql/filtersQueries.sql"
 	_locationQueriesPath = "db/sql/locationQueries.sql"
 	_studentQueriesPath  = "db/sql/studentQueries.sql"
+	_reviewQueriesPath   = "db/sql/reviewQueries.sql"
 )
 
 type SQLDB interface {
@@ -18,6 +19,7 @@ type SQLDB interface {
 	FiltersDB
 	LocationDB
 	StudentDB
+	ReviewDB
 }
 
 type sqlQueries struct {
@@ -25,6 +27,7 @@ type sqlQueries struct {
 	filtersQueries  goyesql.Queries
 	locationQueries goyesql.Queries
 	studentQueries  goyesql.Queries
+	reviewQueries   goyesql.Queries
 }
 
 type sqlDB struct {
@@ -37,10 +40,12 @@ func generateQueries() sqlQueries {
 	filtersQueries := goyesql.MustParseFile(_filtersQueriesPath)
 	locationQueries := goyesql.MustParseFile(_locationQueriesPath)
 	studentQueries := goyesql.MustParseFile(_studentQueriesPath)
+	reviewQueries := goyesql.MustParseFile(_reviewQueriesPath)
 	return sqlQueries{
 		schoolQueries:   schoolQueries,
 		filtersQueries:  filtersQueries,
 		locationQueries: locationQueries,
 		studentQueries:  studentQueries,
+		reviewQueries:   reviewQueries,
 	}
 }

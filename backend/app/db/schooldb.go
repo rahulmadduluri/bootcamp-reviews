@@ -10,6 +10,7 @@ import (
 
 const (
 	_GetSchool                  = "getSchool"
+	_GetSchoolWithID            = "getSchoolWithID"
 	_GetSchoolCampusLocationsDB = "getSchoolCampusLocationsDB"
 	_GetAllSchools              = "getAllSchools"
 
@@ -75,6 +76,46 @@ func (sql *sqlDB) GetSchool(schoolUUID string) (*models.School, error) {
 	return school, err
 }
 
+func (sql *sqlDB) getSchoolWithID(schoolID int) (*models.School, error) {
+	var school *models.School
+
+	// get school
+	rows, err := sql.db.NamedQuery(
+		sql.queries.schoolQueries[_GetSchoolWithID],
+		map[string]interface{}{
+			"school_id": schoolID,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var temp models.School
+		err := rows.StructScan(&temp)
+		if err != nil {
+			return nil, err
+		}
+		school = &temp
+		break
+	}
+
+	if school == nil {
+		return nil, nil
+	}
+
+	// get school locations
+	locations, err := sql.getSchoolCampusLocations(school.UUID)
+	if err != nil {
+		return school, err
+	}
+	school.CampusLocations = locations
+
+	return school, err
+}
+
 func (sql *sqlDB) getSchoolCampusLocations(schoolUUID string) ([]models.CampusLocation, error) {
 	campusLocations := []models.CampusLocation{}
 	campusLocationsDB := []models.CampusLocationDBModel{}
@@ -102,15 +143,15 @@ func (sql *sqlDB) getSchoolCampusLocations(schoolUUID string) ([]models.CampusLo
 
 	for _, cl := range campusLocationsDB {
 		l, err := sql.getLocationForID(cl.LocationID)
-		if err != nil {
+		if err != nil || l == nil {
 			return campusLocations, err
 		}
 		ags := cl.MedianGraduateSalary
 		jpr := cl.JobPlacementRate
 		campusLocation := models.CampusLocation{
-			Location:             l,
-			MedianGraduateSalary: &ags,
-			JobPlacementRate:     &jpr,
+			Location:             *l,
+			MedianGraduateSalary: ags,
+			JobPlacementRate:     jpr,
 		}
 		campusLocations = append(campusLocations, campusLocation)
 	}

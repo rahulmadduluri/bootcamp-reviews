@@ -1,8 +1,6 @@
 package db
 
 import (
-	"log"
-
 	models "github.com/rahulmadduluri/raft-education/backend/app/models"
 )
 
@@ -13,7 +11,7 @@ const (
 type LocationDB interface {
 }
 
-func (sql *sqlDB) getLocationForID(locationID int) (models.Location, error) {
+func (sql *sqlDB) getLocationForID(locationID int) (*models.Location, error) {
 	var location models.Location
 
 	// get school
@@ -24,17 +22,17 @@ func (sql *sqlDB) getLocationForID(locationID int) (models.Location, error) {
 		},
 	)
 	if err != nil {
-		return location, err
+		return &location, err
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		err := rows.StructScan(&location)
 		if err != nil {
-			log.Fatal("scan error: ", err)
+			return nil, err
 		}
 		break
 	}
 
-	return location, err
+	return &location, err
 }
