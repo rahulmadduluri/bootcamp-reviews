@@ -1,8 +1,6 @@
 package db
 
 import (
-	"log"
-
 	models "github.com/rahulmadduluri/raft-education/backend/app/models"
 )
 
@@ -37,8 +35,6 @@ func (sql *sqlDB) GetReviews(schoolUUID string) ([]models.Review, error) {
 		}
 		reviewsDB = append(reviewsDB, r)
 	}
-
-	log.Println(len(reviewsDB))
 
 	for _, rdb := range reviewsDB {
 		// get student, school, school location, job location create review object

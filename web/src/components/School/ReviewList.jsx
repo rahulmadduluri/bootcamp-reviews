@@ -1,26 +1,42 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const handleScroll = ({ currentTarget }, onLoadMore) => {
-  if (
-    currentTarget.scrollTop + currentTarget.clientHeight >=
-    currentTarget.scrollHeight
-  ) {
-    onLoadMore();
+class ReviewList extends Component {
+
+  componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll);
   }
-};
 
-const ReviewList = ({ reviews, onLoadMore }) => (
-  <div>
-    <h2>Reviews</h2>
-    <ul className=""
-        onScroll={e => handleScroll(e, onLoadMore)}>
-      {reviews.map(({ uuid, allText }) => (
-        <li key={uuid} className="">
-          {allText}
-        </li>
-      ))}
-    </ul>
-  </div>
-);
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+
+  handleScroll = () => {
+    let D = document;
+    let docHeight = Math.max(
+        D.body.scrollHeight, D.documentElement.scrollHeight,
+        D.body.offsetHeight, D.documentElement.offsetHeight,
+        D.body.clientHeight, D.documentElement.clientHeight
+    );
+
+    if ((window.innerHeight + window.pageYOffset) >= docHeight) {
+      this.props.onLoadMore();
+    }
+  };
+
+  render() {
+    return (
+      <div>
+        <h2>Reviews</h2>
+        <ul className="">
+          {this.props.reviews.map(({ uuid, allText }) => (
+            <li key={uuid} className="">
+              {allText}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+}
 
 export default ReviewList;

@@ -27,27 +27,32 @@ const GET_REVIEWS = gql`
 
 const ReviewListQuery = ({ schoolUUID }) => (
   <Query query={GET_REVIEWS} variables={{ schoolUUID: schoolUUID, offset: 0 }}>
-    {({ data, fetchMore }) =>
-      data && (
-        <ReviewList
-          reviews={data.reviews || []}
-          onLoadMore={() =>
-            fetchMore({
-              variables: {
-                schoolUUID: schoolUUID,
-                offset: data.reviews.length
-              },
-              updateQuery: (prev, { fetchMoreResult }) => {
-                if (!fetchMoreResult) return prev;
-                return Object.assign({}, prev, {
-                  reviews: [...prev.reviews, ...fetchMoreResult.reviews]
-                });
-              }
-            })
-          }
-        />
-      )
+    {({ data, fetchMore }) => {
+      if (data) {
+        return (
+          <ReviewList
+            reviews={data.reviews || []}
+            onLoadMore={() =>
+              fetchMore({
+                variables: {
+                  schoolUUID: schoolUUID,
+                  offset: data.reviews ? data.reviews.length : 0
+                },
+                updateQuery: (prev, { fetchMoreResult }) => {
+                  if (!fetchMoreResult) return prev;
+                  return Object.assign({}, prev, {
+                    reviews: [...prev.reviews, ...fetchMoreResult.reviews]
+                  });
+                }
+              })
+            }
+          />
+        );
+      } else {
+        return (<div></div>);
+      }
     }
+  }
   </Query>
 );
 
