@@ -49,13 +49,13 @@ class NewStudent extends Component {
                     </div>
 
                     <div className="studentFields">
-                      <FieldRow isUpdating={true} labelText="First Name" fieldText={firstName} inputType={"text"}/>
-                      <FieldRow isUpdating={true} labelText="Last Name" fieldText={lastName} inputType={"text"} />
-                      <FieldRow isUpdating={false} labelText="Email" fieldText={email} inputType={"email"} />
+                      <FieldRow isUpdating={true} labelText="First Name" fieldText={firstName} inputType="text"/>
+                      <FieldRow isUpdating={true} labelText="Last Name" fieldText={lastName} inputType="text" />
+                      <FieldRow isUpdating={false} labelText="Email" fieldText={email} inputType="email" />
                     </div>
                     <div className="profileButtons">
                       <div className="buttons">
-                        <a className="button is-primary" onClick={this.onSignUpClick}><strong>Sign Up</strong></a>
+                        <a className="button is-primary" key="signUp" onClick={this.onSignUpClick}><strong>Sign Up</strong></a>
                       </div>
                     </div>
                 </div>
@@ -75,18 +75,16 @@ const FieldRow = ({ isUpdating, labelText, fieldText, inputType }) => (
       </div>
     </div>
     <div className="field-body">
-      <div className="field">
-        <p className="control">
-        {
-          isUpdating ?
-          (
-            <input className="input" type={inputType} value={fieldText} />
-          ) :
-          (
-            <input className="input is-static" type={inputType} value={fieldText} readOnly />
-          )
-        }
-        </p>
+      <div className="control">
+      {
+        isUpdating ?
+        (
+          <input className="input" type={inputType} value={fieldText} />
+        ) :
+        (
+          <input className="input is-static" type={inputType} value={fieldText} readOnly />
+        )
+      }
       </div>
     </div>
   </div>

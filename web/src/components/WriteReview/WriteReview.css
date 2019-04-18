@@ -1,0 +1,24 @@
+.writeReviewInfoWrapper {
+	padding-top: 40px;
+}
+
+.writeReviewInfoWrapper .reviewTitle {
+  color: #000000;
+  font-weight: 500;
+  font-size: 22px;
+}
+
+.writeReviewInfoWrapper .reviewText {
+	margin-top: 30px;
+}
+
+.writeReviewScoreWrapper {
+	padding-top: 40px;
+}
+
+.reviewSchoolLabel {
+  color: #000000;
+  font-weight: 500;
+  font-size: 16px;
+}
+

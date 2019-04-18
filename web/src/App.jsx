@@ -33,7 +33,7 @@ class App extends Component {
           <Route exact path="/schools/:uuid" render={(props) => <School uuid={props.match.params.uuid}/>} />
           <GuardedRoute exact path="/students/new" component={NewStudent} />
           <GuardedRoute exact path="/students/:uuid" component={Student} />
-          <GuardedRoute exact path="/writeReview" component={WriteReview} />
+          <GuardedRoute exact path="/reviews/new" component={WriteReview} />
           <Route exact path="/callback" component={Callback}/>
         </Switch>
       </div>
