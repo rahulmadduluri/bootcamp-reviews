@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Navbar from '../navbar.jsx';
-import auth from '../../Auth/auth.jsx';
 import './WriteReview.css';
 
 class WriteReview extends Component {
@@ -13,10 +12,13 @@ class WriteReview extends Component {
 			<div className="pageBackground">
 				<div className="writeReviewInfoWrapper">
 					<div className="defaultContainer column is-three-fifths">
-						<div className="reviewTitle">Write a Review</div>
-						<div className="reviewText">
-							Hi {auth.getProfile().firstName}!<br/><br/>Thank you for taking the time to write a review. The honesty and care you pour into this review will help students just like you make a decision that will impact the rest of their lives.<br/><br/>Yours,<br/>The Raft Community
+						<div className="reviewInfoTitle">Write a Review</div>
+						<div className="reviewInfoText">
+							Thank you for taking the time to write a review! The <strong>honesty</strong> and <strong>care</strong> you pour into this review will help students just like you make a decision that will shape the rest of their lives.
+							<br/><br/>Yours,<br/>The Raft Community
+							<br/><br/>
 						</div>
+						<div className="reviewInfoPrivacyStatement">NOTE: We take your privacy seriously. This review will be completely <strong>ANONYMOUS</strong> to both the school and prospective students.</div>
 					</div>
 				</div>
 				<div className="writeReviewScoreWrapper">
@@ -26,7 +28,6 @@ class WriteReview extends Component {
 				</div>
 			</div>
 		</div>
-
     );
   }
 }
@@ -42,7 +43,7 @@ const SchoolRow = () => (
 	    <div className="field-body">
 	      <div className="control">
 	      {
-	        <input className="input" type="text" placeholder="Enter School Name"/>
+	        <input className="input is-rounded" type="text" placeholder="Enter School Name"/>
 	      }
 	      </div>
 	    </div>
@@ -51,7 +52,7 @@ const SchoolRow = () => (
 
 	<div className="field is-horizontal">
 	  <div className="field-label">
-	    <label className="label">Did You Graduate?</label>
+	    <label className="didGraduateLabel">Did You Graduate?</label>
 	  </div>
 	  <div className="field-body">
 	    <div className="field is-narrow">
