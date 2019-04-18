@@ -1,6 +1,8 @@
+.studentInfoWrapper {
+	padding-top: 40px;
+}
+
 .studentInfo {
-	text-align: center;
-	width: 300px;
 	margin: auto;
 }
 
@@ -11,43 +13,15 @@
   height: 125px;
 }
 
-.studentInfo .name {
-	margin-top: 30px;
-	text-align: left;
-}
-
-.studentInfo .nameLabel {
-	display: inline-block;
-	font-weight: 300;
-	font-size: 18px;
-}
-
-.studentInfo .nameText {
-	margin-left: 10px;
-	display: inline-block;
-	font-weight: 500;
-	font-size: 18px;
-}
-
-.studentInfo .email {
-	text-align: left;
+.studentInfo .studentFields {
 	margin-top: 20px;
 }
 
-.studentInfo .emailLabel {
-	display: inline-block;
-	font-weight: 300;
-	font-size: 18px;
-}
-
-.studentInfo .emailText {
-	margin-left: 10px;
-	display: inline-block;
-	font-weight: 500;
-	font-size: 18px;
-}
-
-.studentInfo .buttons .button {
-	margin: auto;
+.studentInfo .profileButtons {
 	margin-top: 40px;
+}
+
+.profileButtons .buttons .button {
+	margin: auto;
+	margin-top: 10px;
 }

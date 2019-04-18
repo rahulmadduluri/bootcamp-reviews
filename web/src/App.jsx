@@ -7,6 +7,7 @@ import School from './components/School/School.jsx';
 import auth from './Auth/auth.jsx';
 import NewStudent from './components/NewStudent/NewStudent.jsx';
 import Student from './components/Student/Student.jsx';
+import WriteReview from './components/WriteReview/WriteReview.jsx';
 import Callback from './components/callback.jsx';
 import GuardedRoute from './GuardedRoute.jsx';
 
@@ -32,6 +33,7 @@ class App extends Component {
           <Route exact path="/schools/:uuid" render={(props) => <School uuid={props.match.params.uuid}/>} />
           <GuardedRoute exact path="/students/new" component={NewStudent} />
           <GuardedRoute exact path="/students/:uuid" component={Student} />
+          <GuardedRoute exact path="/writeReview" component={WriteReview} />
           <Route exact path="/callback" component={Callback}/>
         </Switch>
       </div>

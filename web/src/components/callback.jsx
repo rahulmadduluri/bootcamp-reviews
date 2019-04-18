@@ -24,6 +24,7 @@ class Callback extends Component {
           firstName
           lastName
           photoURI
+          linkedInPhotoURL
         }
       }
     `;

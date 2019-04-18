@@ -39,28 +39,57 @@ class NewStudent extends Component {
     const { email, firstName, lastName, linkedInPhotoURL } = auth.getProfile();
 
     return (
-      <div className="pageBackground columns is-centered">
-    	<div className="defaultContainer column is-three-fifths">
-          <div className="studentInfo">
-              <div className="image">
-                <img src={linkedInPhotoURL} alt="ProfilePhoto" />
-              </div>
-              <div className="name">
-              	<div className="nameLabel">Name</div>
-              	<div className="nameText">{firstName} {lastName}</div>
-              </div>
-              <div className="email">
-              	<div className="emailLabel">Email</div>
-              	<div className="emailText">{email}</div>
-              </div>
-              <div className="buttons">
-                  <button className="button is-primary" onClick={this.onSignUpClick}><strong>Sign Up</strong></button>
-              </div>
+        <div className="pageBackground">
+          <div className="studentInfoWrapper">
+            <div className="columns is-centered">
+              <div className="defaultContainer column is-three-fifths">
+                <div className="studentInfo column is-four-fifths">
+                    <div className="image">
+                      <img src={linkedInPhotoURL} alt="ProfilePhoto" />
+                    </div>
+
+                    <div className="studentFields">
+                      <FieldRow isUpdating={true} labelText="First Name" fieldText={firstName} inputType={"text"}/>
+                      <FieldRow isUpdating={true} labelText="Last Name" fieldText={lastName} inputType={"text"} />
+                      <FieldRow isUpdating={false} labelText="Email" fieldText={email} inputType={"email"} />
+                    </div>
+                    <div className="profileButtons">
+                      <div className="buttons">
+                        <a className="button is-primary" onClick={this.onSignUpClick}><strong>Sign Up</strong></a>
+                      </div>
+                    </div>
+                </div>
+          	</div>
           </div>
-    	</div>
+        </div>
       </div>
     );
   }
 }
+
+const FieldRow = ({ isUpdating, labelText, fieldText, inputType }) => (
+  <div className="field is-horizontal">
+    <div className="field-body">
+      <div className="field-label is-normal">
+        <label className="label">{labelText}</label>
+      </div>
+    </div>
+    <div className="field-body">
+      <div className="field">
+        <p className="control">
+        {
+          isUpdating ?
+          (
+            <input className="input" type={inputType} value={fieldText} />
+          ) :
+          (
+            <input className="input is-static" type={inputType} value={fieldText} readOnly />
+          )
+        }
+        </p>
+      </div>
+    </div>
+  </div>
+);
 
 export default compose(withRouter, withApollo)(NewStudent);

@@ -48,11 +48,11 @@ class Navbar extends React.Component {
     auth.login();
   };
 
-  onSignOutLink = () => {
-    auth.logout();
-  };
-
   render() {
+
+    const isAuthenticated = auth.isAuthenticated()
+    const profile = auth.getProfile();
+
     return (
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
@@ -88,14 +88,14 @@ class Navbar extends React.Component {
           }`}
         >
           <div className="navbar-end">
-            <a className="navbar-item" href="/">Write a Review</a>
+            <a className="navbar-item" href="/writeReview">Write a Review</a>
             <a className="navbar-item" href="/">About</a>
             <a className="navbar-item" href="/">Support</a>
             <div className="navbar-item">
               <div className="buttons">
                 {
-                  ( auth.isAuthenticated() ) ? 
-                  <a className="button is-primary" onClick={this.onSignOutLink}><strong>Log Out</strong></a> :  
+                  ( isAuthenticated ) ? 
+                  <a className="navProfileImage" href={'/students/' + profile.studentUUID}><img src={profile.linkedInPhotoURL} alt="ProfilePhoto" /></a> :  
                   <a className="button is-primary" onClick={this.onSignInLink}><strong>Log In</strong></a>
                 }
               </div>
