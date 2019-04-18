@@ -12,8 +12,25 @@
   font-size: 22px;
 }
 
-.schoolInfoWrapper .stats {
-  margin-top: 15px;
+.schoolInfoWrapper {
+  padding-top: 40px;
+}
+
+.schoolStatsWrapper {
+  margin-top: 40px;
+}
+
+.schoolStatsWrapper .statsLabel {
+  color: #000000;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.schoolReviewsWrapper {
+  margin-top: 40px;
+}
+
+.schoolReviewsWrapper .schoolReviewsLabel {
   color: #000000;
   font-weight: 500;
   font-size: 18px;

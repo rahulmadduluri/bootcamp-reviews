@@ -41,42 +41,51 @@ class School extends Component {
     return (
       <div>
         <Navbar />
-        <div className="pageBackground columns is-centered">
-          <div className="defaultContainer column is-three-fifths">
-            <Query query={getQuery} variables={{ schoolUUID: this.props.uuid }}>
-              {({ loading, error, data }) => {
-                if (loading) return <p>Loading...</p>;
-                if (error) return <p>Error :(</p>;
-                const { name, photoURI } = data.school;
-                return (
-                  <div>
-                    <div className="media">
-                      <div className="media-left image">
-                        <SchoolLogo photoURI={photoURI} />
-                      </div>
-                      <div className="media-content">
-                        <div className="name">{name}</div>
-                        <p>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo consequat. Duis aute irure dolor in
-                          reprehenderit in voluptate velit esse cillum dolore eu
-                          fugiat nulla pariatur. Excepteur sint occaecat
-                          cupidatat non proident, sunt in culpa qui officia
-                          deserunt mollit anim id est laborum.
-                        </p>
+        <div className="pageBackground">
+          <Query query={getQuery} variables={{ schoolUUID: this.props.uuid }}>
+            {({ loading, error, data }) => {
+              if (loading) return <p>Loading...</p>;
+              if (error) return <p>Error :(</p>;
+              const { name, photoURI } = data.school;
+              return (
+                <div>
+                  <div className="schoolInfoWrapper">
+                    <div className="defaultContainer column is-three-fifths">
+                      <div className="media">
+                        <div className="media-left image">
+                          <SchoolLogo photoURI={photoURI} />
+                        </div>
+                        <div className="media-content">
+                          <div className="name">{name}</div>
+                          <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua. Ut enim ad minim veniam, quis
+                            nostrud exercitation ullamco laboris nisi ut aliquip
+                            ex ea commodo consequat. Duis aute irure dolor in
+                            reprehenderit in voluptate velit esse cillum dolore eu
+                            fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat non proident, sunt in culpa qui officia
+                            deserunt mollit anim id est laborum.
+                          </p>
+                        </div>
                       </div>
                     </div>
-                    <Stats school={data.school} />
                   </div>
-                );
-              }}
-            </Query>
+                  <div className="schoolStatsWrapper">
+                    <div className="defaultContainer column is-three-fifths">
+                      <Stats school={data.school} />
+                    </div>
+                  </div>
+                </div>
+              );
+            }}
+          </Query>
 
-            <ReviewListQuery schoolUUID={this.props.uuid}/>
-
+          <div className="schoolReviewsWrapper">
+            <div className="defaultContainer column is-three-fifths">
+              <ReviewListQuery schoolUUID={this.props.uuid}/>
+            </div>
           </div>
         </div>
       </div>
@@ -87,8 +96,8 @@ class School extends Component {
 const Stats = ({ school }) => {
   const { campusLocations, paymentType, basePrice, lengthInWeeks } = school;
   return (
-    <div className="schoolInfoWrapper">
-      <div className="stats">Stats</div>
+    <div>
+      <div className="statsLabel">Stats</div>
       <LocationBar campusLocations={campusLocations} />
       <PriceBar basePrice={basePrice} paymentType={paymentType} />
       <LengthBar length={lengthInWeeks} />

@@ -26,7 +26,7 @@ class ReviewList extends Component {
   render() {
     return (
       <div>
-        <h2>Reviews</h2>
+        <div className="schoolReviewsLabel">Reviews</div>
         <ul className="">
           {this.props.reviews.map(({ uuid, allText }) => (
             <li key={uuid} className="">

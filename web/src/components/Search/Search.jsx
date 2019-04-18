@@ -126,7 +126,7 @@ const List = ({ schools }) => (
           <Link to={`/schools/${uuid}`} key={uuid}>
             <div className="card">
               <SchoolLogo photoURI={photoURI} />
-              <div className="schoolInfoWrapper" style={{ marginLeft: '30px' }}>
+              <div className="schoolStatsWrapper" style={{ marginTop: 0, marginLeft: '30px' }}>
                 <div className="name">{name}</div>
                 <LocationBar campusLocations={campusLocations} />
                 <PriceBar basePrice={basePrice} paymentType={paymentType} />

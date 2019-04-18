@@ -5,6 +5,8 @@ import raftSquare from '../images/raft_square.png';
 import auth from '../Auth/auth.jsx';
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo';
+import {withRouter} from 'react-router-dom';
+import { compose } from 'recompose';
 
 class Navbar extends React.Component {
 
@@ -36,6 +38,8 @@ class Navbar extends React.Component {
       mutation: updateSchoolSearchParamsMutation,
       variables: { params: params }
     });
+
+    this.props.history.push('/home');
   };
 
   onTapLink = () => {};
@@ -103,4 +107,4 @@ class Navbar extends React.Component {
   }
 }
 
-export default withApollo(Navbar);
+export default compose(withApollo, withRouter)(Navbar);

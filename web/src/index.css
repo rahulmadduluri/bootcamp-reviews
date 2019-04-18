@@ -15,15 +15,15 @@ body {
 
 .pageBackground {
   background-color: #fafafa;
-  height: 100vh;
+  height: 100%;
 }
 
 .defaultContainer {
   background-color: white;
-  margin-top: 2rem;
   padding: 1rem;
   border: 1px solid lightgray;
   border-radius: 2px;
+  margin: auto;
 }
 
 .searchResults {
@@ -81,28 +81,28 @@ body {
   border-radius: 10%;
 }
 
-.schoolInfoWrapper {
+.schoolStatsWrapper {
   text-align: left;
   position: relative;
 }
 
 /* Name */
-.schoolInfoWrapper .name {
+.schoolStatsWrapper .name {
   color: #000000;
   font-weight: 500;
   font-size: 22px;
 }
 
 /* Location */
-.schoolInfoWrapper .location {
+.schoolStatsWrapper .location {
   margin-top: 3px;
   display: flex;
 }
-.schoolInfoWrapper .location > img {
+.schoolStatsWrapper .location > img {
   width: 8px;
   height: 11px;
 }
-.schoolInfoWrapper .location .campusLocations {
+.schoolStatsWrapper .location .campusLocations {
   line-height: 12px;
   font-size: 12px;
   color: #828282;
@@ -111,21 +111,21 @@ body {
 }
 
 /* Price */
-.schoolInfoWrapper .price {
+.schoolStatsWrapper .price {
   margin-top: 12px;
   margin-bottom: 12px;
 }
-.schoolInfoWrapper .price .basePrice {
+.schoolStatsWrapper .price .basePrice {
   color: #000000;
   font-weight: 500;
   font-size: 15px;
   display: inline-block;
 }
-.schoolInfoWrapper .price .paymentType {
+.schoolStatsWrapper .price .paymentType {
   margin-left: 8px;
   display: inline-block;
 }
-.schoolInfoWrapper .price .paymentType > img {
+.schoolStatsWrapper .price .paymentType > img {
   height: 18px;
   width: auto;
   vertical-align: middle;
@@ -133,27 +133,27 @@ body {
 }
 
 /* Length */
-.schoolInfoWrapper .length {
+.schoolStatsWrapper .length {
   margin-top: 5px;
   margin-top: 7px;
   vertical-align: middle;
 }
-.schoolInfoWrapper .length .lengthImage {
+.schoolStatsWrapper .length .lengthImage {
   display: inline-block;
 }
-.schoolInfoWrapper .length .lengthImage > img {
+.schoolStatsWrapper .length .lengthImage > img {
   width: 13px;
   height: 13px;
   vertical-align: middle;
 }
-.schoolInfoWrapper .length .lengthInWeeksLabel {
+.schoolStatsWrapper .length .lengthInWeeksLabel {
   display: inline-block;
   color: #828282;
   font-weight: 400;
   font-size: 12px;
   margin-left: 8px;
 }
-.schoolInfoWrapper .length .lengthInWeeks {
+.schoolStatsWrapper .length .lengthInWeeks {
   display: inline-block;
   color: #000000;
   font-weight: 500;
@@ -162,26 +162,26 @@ body {
 }
 
 /* Salary */
-.schoolInfoWrapper .salary {
+.schoolStatsWrapper .salary {
   margin-top: 5px;
   vertical-align: middle;
 }
-.schoolInfoWrapper .salary .salaryImage {
+.schoolStatsWrapper .salary .salaryImage {
   display: inline-block;
 }
-.schoolInfoWrapper .salary .salaryImage > img {
+.schoolStatsWrapper .salary .salaryImage > img {
   width: 13px;
   height: 13px;
   vertical-align: middle;
 }
-.schoolInfoWrapper .salary .medianGraduateSalaryLabel {
+.schoolStatsWrapper .salary .medianGraduateSalaryLabel {
   display: inline-block;
   color: #828282;
   font-weight: 400;
   font-size: 12px;
   margin-left: 8px;
 }
-.schoolInfoWrapper .salary .medianGraduateSalary {
+.schoolStatsWrapper .salary .medianGraduateSalary {
   display: inline-block;
   font-weight: 500;
   font-size: 12px;
@@ -190,26 +190,26 @@ body {
 }
 
 /* Job Placement */
-.schoolInfoWrapper .jobPlacement {
+.schoolStatsWrapper .jobPlacement {
   margin-top: 5px;
   vertical-align: middle;
 }
-.schoolInfoWrapper .jobPlacement .jobPlacementImage {
+.schoolStatsWrapper .jobPlacement .jobPlacementImage {
   display: inline-block;
 }
-.schoolInfoWrapper .jobPlacement .jobPlacementImage > img {
+.schoolStatsWrapper .jobPlacement .jobPlacementImage > img {
   width: 13px;
   height: 13px;
   vertical-align: middle;
 }
-.schoolInfoWrapper .jobPlacement .jobPlacementRateLabel {
+.schoolStatsWrapper .jobPlacement .jobPlacementRateLabel {
   display: inline-block;
   color: #828282;
   font-weight: 400;
   font-size: 12px;
   margin-left: 8px;
 }
-.schoolInfoWrapper .jobPlacement .jobPlacementRate {
+.schoolStatsWrapper .jobPlacement .jobPlacementRate {
   display: inline-block;
   font-weight: 500;
   font-size: 12px;
