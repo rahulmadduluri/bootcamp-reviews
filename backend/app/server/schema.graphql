@@ -18,10 +18,20 @@ type SchoolQueryResult {
 	schoolResults: [School!]!
 }
 
+type City {
+	uuid: ID!
+	name: String!
+}
+
+type Country {
+	uuid: ID!
+	name: String!
+}
+
 type Location {
 	uuid: ID!
-	city: String
-	country: String!
+	city: City!
+	country: Country!
 }
 
 type CampusLocation {

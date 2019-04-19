@@ -49,6 +49,16 @@ type ComplexityRoot struct {
 		MedianGraduateSalary func(childComplexity int) int
 	}
 
+	City struct {
+		Name func(childComplexity int) int
+		UUID func(childComplexity int) int
+	}
+
+	Country struct {
+		Name func(childComplexity int) int
+		UUID func(childComplexity int) int
+	}
+
 	Filters struct {
 		Locations    func(childComplexity int) int
 		MaxPrices    func(childComplexity int) int
@@ -169,6 +179,34 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.CampusLocation.MedianGraduateSalary(childComplexity), true
+
+	case "City.Name":
+		if e.complexity.City.Name == nil {
+			break
+		}
+
+		return e.complexity.City.Name(childComplexity), true
+
+	case "City.UUID":
+		if e.complexity.City.UUID == nil {
+			break
+		}
+
+		return e.complexity.City.UUID(childComplexity), true
+
+	case "Country.Name":
+		if e.complexity.Country.Name == nil {
+			break
+		}
+
+		return e.complexity.Country.Name(childComplexity), true
+
+	case "Country.UUID":
+		if e.complexity.Country.UUID == nil {
+			break
+		}
+
+		return e.complexity.Country.UUID(childComplexity), true
 
 	case "Filters.Locations":
 		if e.complexity.Filters.Locations == nil {
@@ -645,10 +683,20 @@ type SchoolQueryResult {
 	schoolResults: [School!]!
 }
 
+type City {
+	uuid: ID!
+	name: String!
+}
+
+type Country {
+	uuid: ID!
+	name: String!
+}
+
 type Location {
 	uuid: ID!
-	city: String
-	country: String!
+	city: City!
+	country: Country!
 }
 
 type CampusLocation {
@@ -954,6 +1002,114 @@ func (ec *executionContext) _CampusLocation_jobPlacementRate(ctx context.Context
 	return ec.marshalOFloat2ᚖfloat64(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _City_uuid(ctx context.Context, field graphql.CollectedField, obj *models.City) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "City",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UUID, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNID2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _City_name(ctx context.Context, field graphql.CollectedField, obj *models.City) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "City",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Country_uuid(ctx context.Context, field graphql.CollectedField, obj *models.Country) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "Country",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UUID, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNID2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Country_name(ctx context.Context, field graphql.CollectedField, obj *models.Country) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "Country",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Filters_locations(ctx context.Context, field graphql.CollectedField, obj *models.Filters) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
@@ -1105,12 +1261,15 @@ func (ec *executionContext) _Location_city(ctx context.Context, field graphql.Co
 		return obj.City, nil
 	})
 	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(models.City)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNCity2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐCity(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Location_country(ctx context.Context, field graphql.CollectedField, obj *models.Location) graphql.Marshaler {
@@ -1134,10 +1293,10 @@ func (ec *executionContext) _Location_country(ctx context.Context, field graphql
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(models.Country)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalNCountry2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐCountry(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_createStudent(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
@@ -3313,6 +3472,70 @@ func (ec *executionContext) _CampusLocation(ctx context.Context, sel ast.Selecti
 	return out
 }
 
+var cityImplementors = []string{"City"}
+
+func (ec *executionContext) _City(ctx context.Context, sel ast.SelectionSet, obj *models.City) graphql.Marshaler {
+	fields := graphql.CollectFields(ctx, sel, cityImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	invalid := false
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("City")
+		case "uuid":
+			out.Values[i] = ec._City_uuid(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "name":
+			out.Values[i] = ec._City_name(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalid {
+		return graphql.Null
+	}
+	return out
+}
+
+var countryImplementors = []string{"Country"}
+
+func (ec *executionContext) _Country(ctx context.Context, sel ast.SelectionSet, obj *models.Country) graphql.Marshaler {
+	fields := graphql.CollectFields(ctx, sel, countryImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	invalid := false
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Country")
+		case "uuid":
+			out.Values[i] = ec._Country_uuid(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "name":
+			out.Values[i] = ec._Country_name(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalid {
+		return graphql.Null
+	}
+	return out
+}
+
 var filtersImplementors = []string{"Filters"}
 
 func (ec *executionContext) _Filters(ctx context.Context, sel ast.SelectionSet, obj *models.Filters) graphql.Marshaler {
@@ -3373,6 +3596,9 @@ func (ec *executionContext) _Location(ctx context.Context, sel ast.SelectionSet,
 			}
 		case "city":
 			out.Values[i] = ec._Location_city(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
 		case "country":
 			out.Values[i] = ec._Location_country(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -3987,6 +4213,14 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 
 func (ec *executionContext) marshalNCampusLocation2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐCampusLocation(ctx context.Context, sel ast.SelectionSet, v models.CampusLocation) graphql.Marshaler {
 	return ec._CampusLocation(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNCity2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐCity(ctx context.Context, sel ast.SelectionSet, v models.City) graphql.Marshaler {
+	return ec._City(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNCountry2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐCountry(ctx context.Context, sel ast.SelectionSet, v models.Country) graphql.Marshaler {
+	return ec._Country(ctx, sel, &v)
 }
 
 func (ec *executionContext) unmarshalNCreateStudentInput2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐCreateStudentInput(ctx context.Context, v interface{}) (models.CreateStudentInput, error) {

@@ -8,6 +8,16 @@ type CampusLocation struct {
 	JobPlacementRate     *float64 `json:"jobPlacementRate"`
 }
 
+type City struct {
+	UUID string `json:"uuid"`
+	Name string `json:"name"`
+}
+
+type Country struct {
+	UUID string `json:"uuid"`
+	Name string `json:"name"`
+}
+
 type CreateStudentInput struct {
 	UUID             string `json:"uuid"`
 	FirstName        string `json:"firstName"`
@@ -25,8 +35,8 @@ type Filters struct {
 
 type Location struct {
 	UUID    string  `json:"uuid"`
-	City    *string `json:"city"`
-	Country string  `json:"country"`
+	City    City    `json:"city"`
+	Country Country `json:"country"`
 }
 
 type Review struct {

@@ -6,6 +6,13 @@ import (
 
 // NOTE: These are models representing rows in MySQL database
 
+type LocationDBModel struct {
+	ID        int
+	UUID      string
+	CityID    int
+	CountryID int
+}
+
 type CampusLocationDBModel struct {
 	SchoolID             int
 	LocationID           int

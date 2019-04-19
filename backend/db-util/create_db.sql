@@ -16,14 +16,32 @@ CREATE TABLE IF NOT EXISTS schools (
 	PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS countries (
+	id 							int 			NOT NULL AUTO_INCREMENT,
+	uuid						varchar(36)		NOT NULL,
+	name 						varchar(200)	NOT NULL,
+	UNIQUE KEY (uuid),
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS cities (
+	id 							int 			NOT NULL AUTO_INCREMENT,
+	uuid						varchar(36)		NOT NULL,
+	name 						varchar(200)	NOT NULL,
+	UNIQUE KEY (uuid),
+	PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS locations (
 	id 							int 			NOT NULL AUTO_INCREMENT,
 	uuid						varchar(36)		NOT NULL,
-	city						varchar(200)	NOT NULL,
-	country						varchar(200) 	NOT NULL,
+	city_id						int				NOT NULL,
+	country_id					int 			NOT NULL,
 	created_timestamp_server	int				NOT NULL,
 	UNIQUE KEY (uuid),
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
+	FOREIGN KEY (country_id) REFERENCES countries (id),
+	FOREIGN KEY (city_id) REFERENCES cities (id)
 );
 
 CREATE TABLE IF NOT EXISTS campus_locations (
@@ -93,24 +111,45 @@ INSERT INTO schools VALUES
 	(NULL, 'uuid-11', 'Launch Academy', 13, 0, 17500, 'Upfront', 'launch_academy', 1000),
 	(NULL, 'uuid-12', 'Turing School', 29, 0, 20000, 'Upfront', 'turing_school', 1000),
 	(NULL, 'uuid-13', 'Project Shift', 13, 0, 12900, 'Upfront', 'project_shift', 1000);
+INSERT INTO countries VALUES
+	(NULL, 'uuid-1', 'Online'),
+	(NULL, 'uuid-2', 'USA');
+INSERT INTO cities VALUES
+	(NULL, 'uuid-1', 'Online'),
+	(NULL, 'uuid-2', 'San Francisco'),
+	(NULL, 'uuid-3', 'Los Angeles'),
+	(NULL, 'uuid-4', 'New York City'),
+	(NULL, 'uuid-5', 'Cleveland'),
+	(NULL, 'uuid-6', 'Columbus'),
+	(NULL, 'uuid-7', 'Salt Lake City'),
+	(NULL, 'uuid-8', 'Louisville'),
+	(NULL, 'uuid-9', 'Minneapolis'),
+	(NULL, 'uuid-10', 'Fishers'),
+	(NULL, 'uuid-11', 'Portland'),
+	(NULL, 'uuid-12', 'Boston'),
+	(NULL, 'uuid-13', 'Seattle'),
+	(NULL, 'uuid-14', 'Durham'),
+	(NULL, 'uuid-15', 'Denver'),
+	(NULL, 'uuid-16', 'Austin'),
+	(NULL, 'uuid-17', 'Cincinnati');
 INSERT INTO locations VALUES
-	(NULL, 'uuid-1', 'Online', 'Online', 500),
-	(NULL, 'uuid-2', 'San Francisco', 'USA', 500),
-	(NULL, 'uuid-3', 'Los Angeles', 'USA', 500),
-	(NULL, 'uuid-4', 'New York City', 'USA', 500),
-	(NULL, 'uuid-5', 'Cleveland', 'USA', 500),
-	(NULL, 'uuid-6', 'Columbus', 'USA', 500),
-	(NULL, 'uuid-7', 'Salt Lake City', 'USA', 500),
-	(NULL, 'uuid-8', 'Louisville', 'USA', 500),
-	(NULL, 'uuid-9', 'Minneapolis', 'USA', 500),
-	(NULL, 'uuid-10', 'Fishers', 'USA', 500),
-	(NULL, 'uuid-11', 'Portland', 'USA', 500),
-	(NULL, 'uuid-12', 'Boston', 'USA', 500),
-	(NULL, 'uuid-13', 'Seattle', 'USA', 500),
-	(NULL, 'uuid-14', 'Durham', 'USA', 500),
-	(NULL, 'uuid-15', 'Denver', 'USA', 500),
-	(NULL, 'uuid-16', 'Austin', 'USA', 500),
-	(NULL, 'uuid-17', 'Cincinnati', 'USA', 500);
+	(NULL, 'uuid-1', 1, 1, 500),
+	(NULL, 'uuid-2', 2, 2, 500),
+	(NULL, 'uuid-3', 3, 2, 500),
+	(NULL, 'uuid-4', 4, 2, 500),
+	(NULL, 'uuid-5', 5, 2, 500),
+	(NULL, 'uuid-6', 6, 2, 500),
+	(NULL, 'uuid-7', 7, 2, 500),
+	(NULL, 'uuid-8', 8, 2, 500),
+	(NULL, 'uuid-9', 9, 2, 500),
+	(NULL, 'uuid-10', 10, 2, 500),
+	(NULL, 'uuid-11', 11, 2, 500),
+	(NULL, 'uuid-12', 12, 2, 500),
+	(NULL, 'uuid-13', 13, 2, 500),
+	(NULL, 'uuid-14', 14, 2, 500),
+	(NULL, 'uuid-15', 15, 2, 500),
+	(NULL, 'uuid-16', 16, 2, 500),
+	(NULL, 'uuid-17', 17, 2, 500);
 INSERT INTO campus_locations VALUES
 	(1, 1, 57500, 62.30), # Block, Online
 	(2, 3, 80000, 38.10), # Hack Reactor Los Angeles

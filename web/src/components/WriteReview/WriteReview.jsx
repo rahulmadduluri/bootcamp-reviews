@@ -5,7 +5,6 @@ import './WriteReview.css';
 class WriteReview extends Component {
 
   render() {
-
     return (
 		<div>
 			<Navbar />
@@ -26,6 +25,11 @@ class WriteReview extends Component {
 						<SchoolRow />
 					</div>
 				</div>
+				<div className="submitReviewWrapper">
+					<div className="defaultContainer column is-three-fifths">
+						<SubmitRow />
+					</div>
+				</div>
 			</div>
 		</div>
     );
@@ -34,19 +38,22 @@ class WriteReview extends Component {
 
 const SchoolRow = () => (
   <div>
-	  <div className="field is-horizontal">
+	  <div className="field is-horizontal has-addons">
+        <div className="field-label">
+          <label className="reviewSchoolLabel">Which School Did You Attend?</label>
+        </div>
 	    <div className="field-body">
-	      <div className="field-label is-normal">
-	        <label className="reviewSchoolLabel">Which School Did You Attend?</label>
-	      </div>
-	    </div>
-	    <div className="field-body">
-	      <div className="control">
-	      {
-	        <input className="input is-rounded" type="text" placeholder="Enter School Name"/>
-	      }
-	      </div>
-	    </div>
+		      <div className="control">
+		      {
+		        <input className="input is-rounded" type="text" placeholder="Enter School Name"/>
+		      }
+		      </div>
+			  <div className="control">
+			    <a className="button is-info">
+			      Search
+			    </a>
+			  </div>
+		  </div>
 	  </div>
     <div/>
 
@@ -55,23 +62,22 @@ const SchoolRow = () => (
 	    <label className="didGraduateLabel">Did You Graduate?</label>
 	  </div>
 	  <div className="field-body">
-	    <div className="field is-narrow">
-
-		<div className="field">
-		  <input className="is-checkradio" id="exampleRadioInline1" type="radio" name="exampleRadioDefault" />
-		  <label for="exampleRadioInline1">Yes</label>
-		  <input className="is-checkradio" id="exampleRadioInline2" type="radio" name="exampleRadioDefault" />
-		  <label for="exampleRadioInline2">No</label>
-		</div>
-
-
+			<div className="field">
+			  <input className="is-checkradio" id="exampleRadioInline1" type="radio" name="exampleRadioDefault" />
+			  <label htmlFor="exampleRadioInline1">Yes</label>
+			  <input className="is-checkradio" id="exampleRadioInline2" type="radio" name="exampleRadioDefault" />
+			  <label htmlFor="exampleRadioInline2">No</label>
+			</div>
 	    </div>
-	  </div>
 	</div>
+  </div>
+);
 
+const SubmitRow = () => (
+  <div>
 	<div className="field">
 	  <input className="is-checkradio" id="exampleCheckbox" type="checkbox" name="exampleCheckbox" />
-	  <label for="exampleCheckbox">I agree to the <a href="#">terms and conditions</a></label>
+	  <label htmlFor="exampleCheckbox">I agree to the <a href="#">terms and conditions</a></label>
 	</div>
 
   </div>

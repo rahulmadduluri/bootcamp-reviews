@@ -46,8 +46,14 @@ const schoolsQuery = gql`
         campusLocations {
           location {
             uuid
-            city
-            country
+            city {
+              uuid
+              name
+            }
+            country {
+              uuid
+              name
+            }
           }
           medianGraduateSalary
           jobPlacementRate

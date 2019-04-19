@@ -11,7 +11,7 @@ export const LocationBar = locationWrapper => {
   let list = '';
   if (locationWrapper.campusLocations) {
     for (let i = 0; i < locationWrapper.campusLocations.length; i++) {
-      list += locationWrapper.campusLocations[i].location.city;
+      list += locationWrapper.campusLocations[i].location.city.name;
       if (i !== locationWrapper.campusLocations.length - 1) {
         list += ', ';
       }
