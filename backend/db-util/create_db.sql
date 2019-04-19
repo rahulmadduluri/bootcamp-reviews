@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS reviews (
 	career_preparation_score 	int			    NOT NULL,
 	overall_score				double			NOT NULL,
 	helpful_count				int 			NOT NULL,
+	did_graduate 				boolean			NOT NULL,
 	has_job						boolean			NOT NULL,
 	salary_before				int,
 	salary_after 				int,
@@ -182,103 +183,103 @@ INSERT INTO reviews VALUES
 	(NULL, 'uuid-1', 
 	'1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	20,1,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-2', 
 	'2I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	20,1,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-3', 
 	'3I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	20,1,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-4', 
 	'4.1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	20,1,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-5', 
 	'4.2I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	20,1,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-6', 
 	'4.3I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	20,1,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-7', 
 	'4.4I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	20,1,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-8', 
 	'4.5I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	20,1,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-9', 
 	'5I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	20,1,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-10', 
 	'6I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	20,1,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-11', 
 	'7I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	20,1,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-12', 
 	'8I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	20,1,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-13', 
 	'9I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	20,1,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-14', 
 	'10I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	20,1,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-15', 
 	'11I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	20,1,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-16', 
 	'12I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	20,1,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-17', 
 	'13I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	20,1,1,30000,90000,1,9, # helpful count = 20, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	)
 	;

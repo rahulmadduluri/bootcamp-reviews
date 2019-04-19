@@ -1,15 +1,16 @@
 .writeReviewInfoWrapper {
-	padding-top: 40px;
+	padding-top: 20px;
 }
 
 .writeReviewInfoWrapper .reviewInfoTitle {
   color: #000000;
   font-weight: 500;
   font-size: 22px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .writeReviewInfoWrapper .reviewInfoText {
-	margin-top: 30px;
 }
 
 .writeReviewInfoWrapper .reviewInfoPrivacyStatement {
@@ -20,13 +21,7 @@
 	padding-top: 40px;
 }
 
-.reviewSchoolLabel {
-  color: #000000;
-  font-weight: 500;
-  font-size: 16px;
-}
-
-.didGraduateLabel {
+.reviewFieldLabel {
   color: #000000;
   font-weight: 500;
   font-size: 16px;

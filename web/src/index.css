@@ -11,10 +11,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.buttons .is-primary {
-  background-color: #3F51B5;
-}
-
 .pageBackground {
   background-color: #fafafa;
   min-height: 100vh;

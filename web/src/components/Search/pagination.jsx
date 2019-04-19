@@ -35,6 +35,7 @@ class Pagination extends React.Component {
                 <li key={num}>
                   <a
                     onClick={() => this.onPageChoice(num)}
+                    href="# "
                     className={`pagination-link ${
                       num === this.props.pageNumber ? 'is-current' : ''
                     }`}

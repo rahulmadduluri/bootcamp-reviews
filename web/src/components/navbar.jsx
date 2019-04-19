@@ -73,7 +73,7 @@ class Navbar extends React.Component {
             aria-label="menu"
             aria-expanded="false"
             data-target="navbarItems"
-            href="#"
+            href="# "
           >
             <span aria-hidden="true" />
             <span aria-hidden="true" />
