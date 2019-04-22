@@ -39,6 +39,22 @@ type Location struct {
 	Country Country `json:"country"`
 }
 
+type NewReviewParams struct {
+	AllText                   string `json:"allText"`
+	TeachingScore             int    `json:"teachingScore"`
+	CourseworkScore           int    `json:"courseworkScore"`
+	AtmosphereScore           int    `json:"atmosphereScore"`
+	CareerPreparationScore    int    `json:"careerPreparationScore"`
+	HasJob                    bool   `json:"hasJob"`
+	SalaryBefore              *int   `json:"salaryBefore"`
+	SalaryAfter               *int   `json:"salaryAfter"`
+	SchoolUUID                string `json:"schoolUUID"`
+	SchoolLocationUUID        string `json:"schoolLocationUUID"`
+	JobLocationUUID           string `json:"jobLocationUUID"`
+	SchoolGraduationTimestamp *int   `json:"schoolGraduationTimestamp"`
+	JobStartTimestamp         *int   `json:"jobStartTimestamp"`
+}
+
 type Review struct {
 	UUID                      string    `json:"uuid"`
 	AllText                   string    `json:"allText"`
@@ -47,7 +63,8 @@ type Review struct {
 	AtmosphereScore           int       `json:"atmosphereScore"`
 	CareerPreparationScore    int       `json:"careerPreparationScore"`
 	OverallScore              float64   `json:"overallScore"`
-	HelpfulCount              int       `json:"helpfulCount"`
+	HelpfulUpvotes            int       `json:"helpfulUpvotes"`
+	HelpfulDownvotes          int       `json:"helpfulDownvotes"`
 	HasJob                    bool      `json:"hasJob"`
 	SalaryBefore              *int      `json:"salaryBefore"`
 	SalaryAfter               *int      `json:"salaryAfter"`

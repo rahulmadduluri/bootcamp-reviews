@@ -20,6 +20,7 @@ class WriteReview extends Component {
   	this.setState({ schoolUUID: event.target.value });
   };
   handleDidGraduate = (event) => {
+  	console.log(event.target);
   	if (event.target.id === "didGraduateYes") {
   		this.setState({ didGraduate: true });
   	} else {
@@ -128,7 +129,7 @@ class WriteReview extends Component {
   	return (
 	  <div>
 		  <div className="field">
-	        <label className="label"><div className="reviewFieldLabel">Which School Did You Attend?</div></label>
+	        <label className="label"><div className="reviewFieldLabel">Which school did you attend?</div></label>
 	        <div className="field-body">
 	        	<div className="field has-addons">
 					<div className="control">
@@ -170,16 +171,27 @@ class WriteReview extends Component {
 	    }
 
 		<div className="field">
-		  <label className="label"><div className="reviewFieldLabel">Did You Graduate?</div></label>
+		  <label className="label"><div className="reviewFieldLabel">Did you graduate?</div></label>
 		  <div className="field-body">
 				<div className="field">
 				  <input className="is-checkradio" id="didGraduateYes" type="radio" name="exampleRadioDefault" onChange={this.handleDidGraduate} />
-				  <label htmlFor="exampleRadioInline1">Yes</label>
+				  <label htmlFor="didGraduateYes">Yes</label>
 				  <input className="is-checkradio" id="didGraduateNo" type="radio" name="exampleRadioDefault" onChange={this.handleDidGraduate} />
-				  <label htmlFor="exampleRadioInline2">No</label>
+				  <label htmlFor="didGraduateNo">No</label>
 				</div>
 		    </div>
 		</div>
+
+		{
+			this.state.didGraduate ? 
+			<div className="field">
+			  <label className="label"><div className="reviewFieldLabel">When did you graduate?</div></label>
+			  <div className="field-body">
+					<div className="field">
+					</div>
+			    </div>
+			</div> : <div/>
+		}
 
 	  </div>  	
   	);

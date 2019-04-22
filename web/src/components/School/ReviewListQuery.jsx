@@ -14,7 +14,8 @@ const GET_REVIEWS = gql`
       atmosphereScore
       careerPreparationScore
       overallScore
-      helpfulCount
+      helpfulUpvotes
+      helpfulDownvotes
       hasJob
       salaryBefore
       salaryAfter

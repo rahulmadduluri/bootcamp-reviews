@@ -74,6 +74,7 @@ type ComplexityRoot struct {
 
 	Mutation struct {
 		CreateStudent func(childComplexity int, studentInfo models.CreateStudentInput) int
+		SubmitReview  func(childComplexity int, reviewParams *models.NewReviewParams) int
 		UpdateStudent func(childComplexity int, studentInfo models.UpdateStudentInput) int
 	}
 
@@ -92,7 +93,8 @@ type ComplexityRoot struct {
 		CourseworkScore           func(childComplexity int) int
 		CreatedTimestamp          func(childComplexity int) int
 		HasJob                    func(childComplexity int) int
-		HelpfulCount              func(childComplexity int) int
+		HelpfulDownvotes          func(childComplexity int) int
+		HelpfulUpvotes            func(childComplexity int) int
 		JobLocation               func(childComplexity int) int
 		JobStartTimestamp         func(childComplexity int) int
 		OverallScore              func(childComplexity int) int
@@ -135,6 +137,7 @@ type ComplexityRoot struct {
 type MutationResolver interface {
 	CreateStudent(ctx context.Context, studentInfo models.CreateStudentInput) (bool, error)
 	UpdateStudent(ctx context.Context, studentInfo models.UpdateStudentInput) (bool, error)
+	SubmitReview(ctx context.Context, reviewParams *models.NewReviewParams) (bool, error)
 }
 type QueryResolver interface {
 	School(ctx context.Context, uuid string) (*models.School, error)
@@ -269,6 +272,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.CreateStudent(childComplexity, args["studentInfo"].(models.CreateStudentInput)), true
 
+	case "Mutation.SubmitReview":
+		if e.complexity.Mutation.SubmitReview == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_submitReview_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.SubmitReview(childComplexity, args["reviewParams"].(*models.NewReviewParams)), true
+
 	case "Mutation.UpdateStudent":
 		if e.complexity.Mutation.UpdateStudent == nil {
 			break
@@ -378,12 +393,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Review.HasJob(childComplexity), true
 
-	case "Review.HelpfulCount":
-		if e.complexity.Review.HelpfulCount == nil {
+	case "Review.HelpfulDownvotes":
+		if e.complexity.Review.HelpfulDownvotes == nil {
 			break
 		}
 
-		return e.complexity.Review.HelpfulCount(childComplexity), true
+		return e.complexity.Review.HelpfulDownvotes(childComplexity), true
+
+	case "Review.HelpfulUpvotes":
+		if e.complexity.Review.HelpfulUpvotes == nil {
+			break
+		}
+
+		return e.complexity.Review.HelpfulUpvotes(childComplexity), true
 
 	case "Review.JobLocation":
 		if e.complexity.Review.JobLocation == nil {
@@ -756,7 +778,8 @@ type Review {
 	atmosphereScore: Int!
 	careerPreparationScore: Int!
 	overallScore: Float!
-	helpfulCount: Int!
+	helpfulUpvotes: Int!
+	helpfulDownvotes: Int!
 	hasJob: Boolean!
 	salaryBefore: Int
 	salaryAfter: Int
@@ -766,6 +789,22 @@ type Review {
 	jobLocation: Location
 	jobStartTimestamp: Int
 	createdTimestamp: Int!
+}
+
+input NewReviewParams {
+	allText: String!
+	teachingScore: Int!
+	courseworkScore: Int!
+	atmosphereScore: Int!
+	careerPreparationScore: Int!
+	hasJob: Boolean!
+	salaryBefore: Int
+	salaryAfter: Int
+	schoolUUID: ID!
+	schoolLocationUUID: ID!
+	jobLocationUUID: ID!
+	schoolGraduationTimestamp: Int
+	jobStartTimestamp: Int
 }
 
 type Query {
@@ -781,6 +820,8 @@ type Query {
 type Mutation {
 	createStudent(studentInfo: CreateStudentInput!): Boolean! @isAuthenticated
 	updateStudent(studentInfo: UpdateStudentInput!): Boolean! @isAuthenticated
+
+	submitReview(reviewParams: NewReviewParams): Boolean! @isAuthenticated
 }
 `},
 )
@@ -800,6 +841,20 @@ func (ec *executionContext) field_Mutation_createStudent_args(ctx context.Contex
 		}
 	}
 	args["studentInfo"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_submitReview_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *models.NewReviewParams
+	if tmp, ok := rawArgs["reviewParams"]; ok {
+		arg0, err = ec.unmarshalONewReviewParams2ᚖgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐNewReviewParams(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["reviewParams"] = arg0
 	return args, nil
 }
 
@@ -1367,6 +1422,40 @@ func (ec *executionContext) _Mutation_updateStudent(ctx context.Context, field g
 	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Mutation_submitReview(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "Mutation",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_submitReview_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	rctx.Args = args
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, nil, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().SubmitReview(rctx, args["reviewParams"].(*models.NewReviewParams))
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Query_school(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
@@ -1765,7 +1854,7 @@ func (ec *executionContext) _Review_overallScore(ctx context.Context, field grap
 	return ec.marshalNFloat2float64(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Review_helpfulCount(ctx context.Context, field graphql.CollectedField, obj *models.Review) graphql.Marshaler {
+func (ec *executionContext) _Review_helpfulUpvotes(ctx context.Context, field graphql.CollectedField, obj *models.Review) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
@@ -1778,7 +1867,34 @@ func (ec *executionContext) _Review_helpfulCount(ctx context.Context, field grap
 	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.HelpfulCount, nil
+		return obj.HelpfulUpvotes, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Review_helpfulDownvotes(ctx context.Context, field graphql.CollectedField, obj *models.Review) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "Review",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.HelpfulDownvotes, nil
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -3325,6 +3441,96 @@ func (ec *executionContext) unmarshalInputCreateStudentInput(ctx context.Context
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputNewReviewParams(ctx context.Context, v interface{}) (models.NewReviewParams, error) {
+	var it models.NewReviewParams
+	var asMap = v.(map[string]interface{})
+
+	for k, v := range asMap {
+		switch k {
+		case "allText":
+			var err error
+			it.AllText, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "teachingScore":
+			var err error
+			it.TeachingScore, err = ec.unmarshalNInt2int(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "courseworkScore":
+			var err error
+			it.CourseworkScore, err = ec.unmarshalNInt2int(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "atmosphereScore":
+			var err error
+			it.AtmosphereScore, err = ec.unmarshalNInt2int(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "careerPreparationScore":
+			var err error
+			it.CareerPreparationScore, err = ec.unmarshalNInt2int(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "hasJob":
+			var err error
+			it.HasJob, err = ec.unmarshalNBoolean2bool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "salaryBefore":
+			var err error
+			it.SalaryBefore, err = ec.unmarshalOInt2ᚖint(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "salaryAfter":
+			var err error
+			it.SalaryAfter, err = ec.unmarshalOInt2ᚖint(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "schoolUUID":
+			var err error
+			it.SchoolUUID, err = ec.unmarshalNID2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "schoolLocationUUID":
+			var err error
+			it.SchoolLocationUUID, err = ec.unmarshalNID2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "jobLocationUUID":
+			var err error
+			it.JobLocationUUID, err = ec.unmarshalNID2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "schoolGraduationTimestamp":
+			var err error
+			it.SchoolGraduationTimestamp, err = ec.unmarshalOInt2ᚖint(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "jobStartTimestamp":
+			var err error
+			it.JobStartTimestamp, err = ec.unmarshalOInt2ᚖint(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputSchoolSearchParams(ctx context.Context, v interface{}) (models.SchoolSearchParams, error) {
 	var it models.SchoolSearchParams
 	var asMap = v.(map[string]interface{})
@@ -3640,6 +3846,11 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
+		case "submitReview":
+			out.Values[i] = ec._Mutation_submitReview(ctx, field)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -3788,8 +3999,13 @@ func (ec *executionContext) _Review(ctx context.Context, sel ast.SelectionSet, o
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
-		case "helpfulCount":
-			out.Values[i] = ec._Review_helpfulCount(ctx, field, obj)
+		case "helpfulUpvotes":
+			out.Values[i] = ec._Review_helpfulUpvotes(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "helpfulDownvotes":
+			out.Values[i] = ec._Review_helpfulDownvotes(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
@@ -4828,6 +5044,18 @@ func (ec *executionContext) marshalOLocation2ᚖgithubᚗcomᚋrahulmadduluriᚋ
 		return graphql.Null
 	}
 	return ec._Location(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalONewReviewParams2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐNewReviewParams(ctx context.Context, v interface{}) (models.NewReviewParams, error) {
+	return ec.unmarshalInputNewReviewParams(ctx, v)
+}
+
+func (ec *executionContext) unmarshalONewReviewParams2ᚖgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐNewReviewParams(ctx context.Context, v interface{}) (*models.NewReviewParams, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalONewReviewParams2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐNewReviewParams(ctx, v)
+	return &res, err
 }
 
 func (ec *executionContext) marshalOSchool2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐSchool(ctx context.Context, sel ast.SelectionSet, v models.School) graphql.Marshaler {

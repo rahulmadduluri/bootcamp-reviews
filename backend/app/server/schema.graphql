@@ -91,7 +91,8 @@ type Review {
 	atmosphereScore: Int!
 	careerPreparationScore: Int!
 	overallScore: Float!
-	helpfulCount: Int!
+	helpfulUpvotes: Int!
+	helpfulDownvotes: Int!
 	hasJob: Boolean!
 	salaryBefore: Int
 	salaryAfter: Int
@@ -101,6 +102,22 @@ type Review {
 	jobLocation: Location
 	jobStartTimestamp: Int
 	createdTimestamp: Int!
+}
+
+input NewReviewParams {
+	allText: String!
+	teachingScore: Int!
+	courseworkScore: Int!
+	atmosphereScore: Int!
+	careerPreparationScore: Int!
+	hasJob: Boolean!
+	salaryBefore: Int
+	salaryAfter: Int
+	schoolUUID: ID!
+	schoolLocationUUID: ID!
+	jobLocationUUID: ID!
+	schoolGraduationTimestamp: Int
+	jobStartTimestamp: Int
 }
 
 type Query {
@@ -116,4 +133,6 @@ type Query {
 type Mutation {
 	createStudent(studentInfo: CreateStudentInput!): Boolean! @isAuthenticated
 	updateStudent(studentInfo: UpdateStudentInput!): Boolean! @isAuthenticated
+
+	submitReview(reviewParams: NewReviewParams): Boolean! @isAuthenticated
 }
