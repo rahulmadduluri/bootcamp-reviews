@@ -4,6 +4,10 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import './WriteReview.css';
 import SchoolLogo from '../Common/SchoolLogo';
+import Modal from '../Common/Modal.jsx';
+import { numToString } from '../../helpers/helpers.js';
+
+// TODO: Clean this up. This component is a complete MESS
 
 class WriteReview extends Component {
 
@@ -20,12 +24,10 @@ class WriteReview extends Component {
   	this.setState({ schoolSearchText: event.target.value });
   };
   handleSelectSchoolButtonPress = () => {
-  	const isActive = this.state.schoolDropdownActive;
-  	this.setState({ schoolDropdownActive: !isActive });
+  	this.setState({ schoolDropdownActive: !this.state.schoolDropdownActive });
   };
   handleSelectSchool = (school) => {
-  	const isActive = this.state.schoolDropdownActive;
-  	this.setState({ schoolDropdownActive: !isActive, schoolUUID: school.uuid, selectedSchool: school });
+  	this.setState({ schoolDropdownActive: !this.state.schoolDropdownActive, schoolUUID: school.uuid, selectedSchool: school });
   };
 
   handleDidGraduate = (event) => {
@@ -79,6 +81,9 @@ class WriteReview extends Component {
   		this.setState({ careerPreparationScore: event.target.value });
   	}
   };
+  handleReviewTextUpdated = (event) => {
+  	this.setState({ allText: event.target.value });
+  };
 
   // job handlers
   handleSelectJobStartMonth = (event) => {
@@ -103,6 +108,55 @@ class WriteReview extends Component {
   	}
   };
 
+  // submit info handlers
+  handleDidSelectTerms = (event) => {
+  	if (event.target.id === "termsCheckbox") {
+  		this.setState({ didAcceptTerms: !this.state.didAcceptTerms });
+  	}
+  };
+  handleSubmit = () => {
+  	if (this.state.allText === null || this.state.allText === '' || this.state.teachingScore === null || 
+  		this.state.courseworkScore === null || this.state.atmosphereScore === null || this.state.careerPreparationScore === null || 
+  		this.state.didGraduate === null || this.state.studentUUID === null || this.state.schoolLocationUUID === null || 
+  		this.state.hasJob === null || !this.state.didAcceptTerms) {
+  		this.toggleModal();
+  	}
+  };
+  toggleModal = () => {
+  	this.setState({ missingFieldsModalIsOpen: !this.state.missingFieldsModalIsOpen })
+  };
+  generateMissingFieldsText = () => {
+  	let missingString = "The following fields are missing: ";
+  	if (this.state.allText === null || this.state.allText === '') {
+  		missingString += "\n\u2022 description of experience (in words)";
+  	}
+  	if (this.state.teachingScore === null) {
+  		missingString += "\n\u2022 teaching rating";
+  	}
+  	if (this.state.courseworkScore === null) {
+  		missingString += "\n\u2022 coursework rating";
+  	}
+  	if (this.state.atmosphereScore === null) {
+  		missingString += "\n\u2022 atmosphereScore rating";
+  	}
+  	if (this.state.careerPreparationScore === null) {
+  		missingString += "\n\u2022 career preparation rating";
+  	}
+  	if (this.state.didGraduate === null) {
+  		missingString += "\n\u2022 did you graduate?";
+  	}
+  	if (this.state.schoolUUID === null) {
+  		missingString += "\n\u2022 what school did you attend?";
+  	}
+  	if (this.state.hasJob === null) {
+  		missingString += "\n\u2022 did you get a job post-graduation?";
+  	}
+  	if (!this.state.didAcceptTerms) {
+  		missingString += "\n\u2022 accept the terms & conditions";
+  	}
+  	return missingString;
+  };
+
   state = {
   	// state of page
   	shouldFetchSchools: true,
@@ -110,6 +164,8 @@ class WriteReview extends Component {
   	schoolResults: [],
   	schoolDropdownActive: false,
   	selectedSchool: null,
+  	didAcceptTerms: false,
+  	missingFieldsModalIsOpen: false,
 
   	// review params
   	allText: null,
@@ -118,15 +174,15 @@ class WriteReview extends Component {
   	atmosphereScore: null,
   	careerPreparationScore: null,
   	didGraduate: null,
-	hasJob: null,
-	salaryBefore: null,
-	salaryAfter: null,
 	studentUUID: null,
 	schoolUUID: null,
 	schoolLocationUUID: null,
-	jobLocationUUID: null,
 	schoolGraduationMonth: null,
 	schoolGraduationYear: null,
+	hasJob: null,
+	salaryBefore: null,
+	salaryAfter: null,
+	jobLocationUUID: null,
 	jobStartMonth: null,
 	jobStartYear: null
   };
@@ -136,6 +192,13 @@ class WriteReview extends Component {
 		<div>
 			<Navbar />
 			<div className="pageBackground">
+				<Modal 
+				  show={this.state.missingFieldsModalIsOpen}
+				  onClose={this.toggleModal}
+				  titleText="Missing Fields: Try Again"
+				  contentText={this.generateMissingFieldsText()}
+				  primaryButtonTitle="Okay">
+				</Modal>
 				<div className="writeReviewInfoWrapper">
 					<div className="reviewInfoTitle">Write a Review</div>
 					<div className="defaultContainer column is-three-fifths">
@@ -159,7 +222,19 @@ class WriteReview extends Component {
 						<div className="writeReviewScoreWrapper">
 							<div className="defaultContainer column is-three-fifths">
 								{
-									this.schoolReview()
+									this.schoolReviewScore()
+								}
+							</div>
+						</div>
+					) : <div/>
+				}
+
+				{
+					(this.state.didGraduate != null) ? (
+						<div className="writeReviewTextWrapper">
+							<div className="defaultContainer column is-three-fifths">
+								{
+									this.schoolReviewText()
 								}
 							</div>
 						</div>
@@ -309,7 +384,7 @@ class WriteReview extends Component {
 						  <div className="field-body">
 							  <div className="control">
 							  	<SchoolDropdown 
-							  		schools={this.state.schoolResults} 
+							  		schools={schoolResults} 
 							  		handleSelectSchoolButtonPress={this.handleSelectSchoolButtonPress} 
 							  		handleSelectSchool={this.handleSelectSchool} 
 							  		dropdownActive={schoolDropdownActive} />
@@ -356,10 +431,11 @@ class WriteReview extends Component {
   	);
   };
 
-  schoolReview = () => {
+  schoolReviewScore = () => {
   	return (
   		<div>
 			<label className="label"><div className="reviewFieldLabel">Rate the school on a scale of 1 to 10 for the following:</div></label>
+			<br/>
 			<div className="field">
 			  <label className="label"><div className="reviewFieldLabel">Teaching</div></label>
 			  <div className="field-body">
@@ -396,16 +472,27 @@ class WriteReview extends Component {
   	);
   };
 
+  schoolReviewText = () => {
+  	return (
+  		<div>
+			<div className="field">
+			  <label className="label"><div className="reviewFieldLabel">Describe your experience</div></label>
+			  <textarea className="textarea" placeholder="Describe your experience in 500 words or less" rows="10" onChange={this.handleReviewTextUpdated}></textarea>
+			</div>
+		</div>
+  	);
+  };
+
   jobInfo = () => {
   	return (
   		<div>
 			<div className="field">
-			  <label className="label"><div className="reviewFieldLabel">Did you get a job (in the same field as your schooling)?</div></label>
+			  <label className="label"><div className="reviewFieldLabel">Did you get a job (in the same field as your schooling) after graduation?</div></label>
 			  <div className="field-body">
 					<div className="field">
-					  <input className="is-checkradio" id="hasJobYes" type="radio" name="exampleRadioDefault" onChange={this.handleHasJob} />
+					  <input className="is-checkradio" id="hasJobYes" type="radio" name="exampleRadioDefault2" onChange={this.handleHasJob} />
 					  <label htmlFor="hasJobYes">Yes</label>
-					  <input className="is-checkradio" id="hasJobNo" type="radio" name="exampleRadioDefault" onChange={this.handleHasJob} />
+					  <input className="is-checkradio" id="hasJobNo" type="radio" name="exampleRadioDefault2" onChange={this.handleHasJob} />
 					  <label htmlFor="hasJobNo">No</label>
 					</div>
 			    </div>
@@ -453,9 +540,12 @@ class WriteReview extends Component {
  	return (
 	  <div>
 		<div className="field">
-		  <input className="is-checkradio" id="exampleCheckbox" type="checkbox" name="exampleCheckbox" />
-		  <label htmlFor="exampleCheckbox">I agree to the <a href="#">terms and conditions</a></label>
+		  <input className="is-checkradio" id="termsCheckbox" type="checkbox" name="termsCheckbox" onChange={this.handleDidSelectTerms} />
+		  <label htmlFor="termsCheckbox">I agree to the <a href="#">terms and conditions</a></label>
 		</div>
+	    <div className="buttons">
+	      <a className="button is-primary" key="submit" onClick={this.handleSubmit}><strong>Submit</strong></a>
+	    </div>
 	  </div>
  	);
   };
@@ -566,9 +656,9 @@ const SalaryDropdown = ({ defaultTitle, handleSelectSalary }) => (
 		<select onChange={handleSelectSalary}>
 		  <option value={'none'}>{defaultTitle}</option>
 		  {
-		      	["20000","30000","40000","50000","60000","70000","80000","90000","100000","110000","120000","130000","140000","150000"].map(
+		      	[20000,30000,40000,50000,60000,70000,80000,90000,100000,110000,120000,130000,140000,150000].map(
 		        (year) => (
-		          <option key={"year:"+year} value={year}>{year}</option>
+		          <option key={"year:"+year.toString()} value={year}>${numToString(year)}</option>
 		        )
 		      )
 		  }

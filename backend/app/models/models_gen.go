@@ -40,19 +40,21 @@ type Location struct {
 }
 
 type NewReviewParams struct {
-	AllText                   string `json:"allText"`
-	TeachingScore             int    `json:"teachingScore"`
-	CourseworkScore           int    `json:"courseworkScore"`
-	AtmosphereScore           int    `json:"atmosphereScore"`
-	CareerPreparationScore    int    `json:"careerPreparationScore"`
-	HasJob                    bool   `json:"hasJob"`
-	SalaryBefore              *int   `json:"salaryBefore"`
-	SalaryAfter               *int   `json:"salaryAfter"`
-	SchoolUUID                string `json:"schoolUUID"`
-	SchoolLocationUUID        string `json:"schoolLocationUUID"`
-	JobLocationUUID           string `json:"jobLocationUUID"`
-	SchoolGraduationTimestamp *int   `json:"schoolGraduationTimestamp"`
-	JobStartTimestamp         *int   `json:"jobStartTimestamp"`
+	AllText                string  `json:"allText"`
+	TeachingScore          int     `json:"teachingScore"`
+	CourseworkScore        int     `json:"courseworkScore"`
+	AtmosphereScore        int     `json:"atmosphereScore"`
+	CareerPreparationScore int     `json:"careerPreparationScore"`
+	SchoolUUID             string  `json:"schoolUUID"`
+	SchoolLocationUUID     string  `json:"schoolLocationUUID"`
+	SchoolGraduationMonth  *int    `json:"schoolGraduationMonth"`
+	SchoolGraduationYear   *int    `json:"schoolGraduationYear"`
+	HasJob                 bool    `json:"hasJob"`
+	SalaryBefore           *int    `json:"salaryBefore"`
+	SalaryAfter            *int    `json:"salaryAfter"`
+	JobLocationUUID        *string `json:"jobLocationUUID"`
+	JobStartMonth          *int    `json:"jobStartMonth"`
+	JobStartYear           *int    `json:"jobStartYear"`
 }
 
 type Review struct {

@@ -105,19 +105,24 @@ type Review {
 }
 
 input NewReviewParams {
+	# school
 	allText: String!
 	teachingScore: Int!
 	courseworkScore: Int!
 	atmosphereScore: Int!
 	careerPreparationScore: Int!
+	schoolUUID: ID!
+	schoolLocationUUID: ID!
+	schoolGraduationMonth: Int
+	schoolGraduationYear: Int
+	
+	# job
 	hasJob: Boolean!
 	salaryBefore: Int
 	salaryAfter: Int
-	schoolUUID: ID!
-	schoolLocationUUID: ID!
-	jobLocationUUID: ID!
-	schoolGraduationTimestamp: Int
-	jobStartTimestamp: Int
+	jobLocationUUID: ID
+	jobStartMonth: Int
+	jobStartYear: Int
 }
 
 type Query {

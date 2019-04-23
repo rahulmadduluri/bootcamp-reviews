@@ -792,19 +792,24 @@ type Review {
 }
 
 input NewReviewParams {
+	# school
 	allText: String!
 	teachingScore: Int!
 	courseworkScore: Int!
 	atmosphereScore: Int!
 	careerPreparationScore: Int!
+	schoolUUID: ID!
+	schoolLocationUUID: ID!
+	schoolGraduationMonth: Int
+	schoolGraduationYear: Int
+	
+	# job
 	hasJob: Boolean!
 	salaryBefore: Int
 	salaryAfter: Int
-	schoolUUID: ID!
-	schoolLocationUUID: ID!
-	jobLocationUUID: ID!
-	schoolGraduationTimestamp: Int
-	jobStartTimestamp: Int
+	jobLocationUUID: ID
+	jobStartMonth: Int
+	jobStartYear: Int
 }
 
 type Query {
@@ -3477,6 +3482,30 @@ func (ec *executionContext) unmarshalInputNewReviewParams(ctx context.Context, v
 			if err != nil {
 				return it, err
 			}
+		case "schoolUUID":
+			var err error
+			it.SchoolUUID, err = ec.unmarshalNID2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "schoolLocationUUID":
+			var err error
+			it.SchoolLocationUUID, err = ec.unmarshalNID2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "schoolGraduationMonth":
+			var err error
+			it.SchoolGraduationMonth, err = ec.unmarshalOInt2ᚖint(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "schoolGraduationYear":
+			var err error
+			it.SchoolGraduationYear, err = ec.unmarshalOInt2ᚖint(ctx, v)
+			if err != nil {
+				return it, err
+			}
 		case "hasJob":
 			var err error
 			it.HasJob, err = ec.unmarshalNBoolean2bool(ctx, v)
@@ -3495,33 +3524,21 @@ func (ec *executionContext) unmarshalInputNewReviewParams(ctx context.Context, v
 			if err != nil {
 				return it, err
 			}
-		case "schoolUUID":
-			var err error
-			it.SchoolUUID, err = ec.unmarshalNID2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "schoolLocationUUID":
-			var err error
-			it.SchoolLocationUUID, err = ec.unmarshalNID2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
 		case "jobLocationUUID":
 			var err error
-			it.JobLocationUUID, err = ec.unmarshalNID2string(ctx, v)
+			it.JobLocationUUID, err = ec.unmarshalOID2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
-		case "schoolGraduationTimestamp":
+		case "jobStartMonth":
 			var err error
-			it.SchoolGraduationTimestamp, err = ec.unmarshalOInt2ᚖint(ctx, v)
+			it.JobStartMonth, err = ec.unmarshalOInt2ᚖint(ctx, v)
 			if err != nil {
 				return it, err
 			}
-		case "jobStartTimestamp":
+		case "jobStartYear":
 			var err error
-			it.JobStartTimestamp, err = ec.unmarshalOInt2ᚖint(ctx, v)
+			it.JobStartYear, err = ec.unmarshalOInt2ᚖint(ctx, v)
 			if err != nil {
 				return it, err
 			}
