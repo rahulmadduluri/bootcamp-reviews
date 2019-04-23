@@ -17,6 +17,10 @@
 	font-size: 12px;
 }
 
+.writeReviewAttendanceWrapper {
+  padding-top: 40px;
+}
+
 .writeReviewScoreWrapper {
 	padding-top: 40px;
 }
@@ -30,3 +34,18 @@
 .submitReviewWrapper {
 	padding-top: 40px;
 }
+
+.media .image > img {
+  border-radius: 10%;
+  width: 30px;
+  height: 30px;
+}
+
+.media-content .name {
+  padding-top: 4px;
+  color: #000000;
+  font-weight: 400;
+  font-size: 16px;
+  width: 200px;
+}
+
