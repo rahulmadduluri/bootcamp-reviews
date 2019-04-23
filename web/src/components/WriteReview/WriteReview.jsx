@@ -95,6 +95,13 @@ class WriteReview extends Component {
   		this.setState({ jobStartYear: event.target.value });
   	}
   };
+  handleHasJob = (event) => {
+  	if (event.target.id === "hasJobYes") {
+  		this.setState({ hasJob: true });
+  	} else {
+  		this.setState({ hasJob: false });
+  	}
+  };
 
   state = {
   	// state of page
@@ -158,6 +165,20 @@ class WriteReview extends Component {
 						</div>
 					) : <div/>
 				}
+
+				{
+					(this.state.didGraduate != null) ? (
+						<div className="writeReviewJobWrapper">
+							<div className="defaultContainer column is-three-fifths">
+								{
+									this.jobInfo()
+								}
+							</div>
+						</div>
+					) : <div/>
+				}
+
+
 				{
 					(this.state.didGraduate != null) ? (
 						<div className="submitReviewWrapper">
@@ -324,10 +345,8 @@ class WriteReview extends Component {
 			  <label className="label"><div className="reviewFieldLabel">When did you graduate?</div></label>
 			  <div className="field-body">
 				  <div className="control">
-				  	<MonthDropdown schools={schoolResults} handleSelectMonth={this.handleSelectSchoolGradMonth} />
-				  	<YearDropdown schools={schoolResults} handleSelectYear={this.handleSelectSchoolGradYear} />
-				  </div>
-				  <div className="control">
+				  	<MonthDropdown handleSelectMonth={this.handleSelectSchoolGradMonth} />
+				  	<YearDropdown handleSelectYear={this.handleSelectSchoolGradYear} />
 				  </div>
 			    </div>
 			</div> : <div/>
@@ -373,6 +392,59 @@ class WriteReview extends Component {
 				  </div>
 			    </div>
 			</div>
+		</div>
+  	);
+  };
+
+  jobInfo = () => {
+  	return (
+  		<div>
+			<div className="field">
+			  <label className="label"><div className="reviewFieldLabel">Did you get a job (in the same field as your schooling)?</div></label>
+			  <div className="field-body">
+					<div className="field">
+					  <input className="is-checkradio" id="hasJobYes" type="radio" name="exampleRadioDefault" onChange={this.handleHasJob} />
+					  <label htmlFor="hasJobYes">Yes</label>
+					  <input className="is-checkradio" id="hasJobNo" type="radio" name="exampleRadioDefault" onChange={this.handleHasJob} />
+					  <label htmlFor="hasJobNo">No</label>
+					</div>
+			    </div>
+			</div>
+			{
+				this.state.hasJob ? (
+					<div className="field">
+					  <label className="label"><div className="reviewFieldLabel">When did you get a job?</div></label>
+					  <div className="field-body">
+						  <div className="control">
+						  	<MonthDropdown handleSelectMonth={this.handleSelectJobStartMonth} />
+						  	<YearDropdown handleSelectYear={this.handleSelectJobStartYear} />
+						  </div>
+					    </div>
+					</div>
+				) : <div/>
+			}
+			{
+				this.state.hasJob ? (
+					<div>
+						<div className="field">
+						  <label className="label"><div className="reviewFieldLabel">What was your salary before attending the school? [OPTIONAL]</div></label>
+						  <div className="field-body">
+							  <div className="control">
+							  	<SalaryDropdown defaultTitle="Salary Before" handleSelectSalary={this.handleSelectSalaryBefore} />
+							  </div>
+						    </div>
+						</div>
+						<div className="field">
+						  <label className="label"><div className="reviewFieldLabel">What was your salary after attending the school? [OPTIONAL]</div></label>
+						  <div className="field-body">
+							  <div className="control">
+							  	<SalaryDropdown defaultTitle="Salary After" handleSelectSalary={this.handleSelectSalaryAfter} />
+							  </div>
+						    </div>
+						</div>
+					</div>
+				) : <div/>
+			}
 		</div>
   	);
   };
@@ -480,6 +552,23 @@ const RatingDropdown = ({ handleSelectRating }) => (
 		      	"10 (perfect -- would definitely recommend to anyone)"].map(
 		        (rating, index) => (
 		          <option key={"rating:"+index} value={index+1}>{rating}</option>
+		        )
+		      )
+		  }
+		</select>
+    }
+  </div>
+);
+
+const SalaryDropdown = ({ defaultTitle, handleSelectSalary }) => (
+  <div className="select">
+      {
+		<select onChange={handleSelectSalary}>
+		  <option value={'none'}>{defaultTitle}</option>
+		  {
+		      	["20000","30000","40000","50000","60000","70000","80000","90000","100000","110000","120000","130000","140000","150000"].map(
+		        (year) => (
+		          <option key={"year:"+year} value={year}>{year}</option>
 		        )
 		      )
 		  }
