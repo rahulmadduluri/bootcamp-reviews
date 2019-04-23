@@ -51,8 +51,33 @@ class WriteReview extends Component {
   };
 
   // school ratings
-  handleTeachingRating = (score) => {
-  	this.setState({ teachingScore: score });
+  handleTeachingRating = (event) => {
+  	if (event.target.value === 'none') {
+  		this.setState({ teachingScore: null });
+  	} else {
+  		this.setState({ teachingScore: event.target.value });
+  	}
+  };
+  handleCourseworkRating = (event) => {
+  	if (event.target.value === 'none') {
+  		this.setState({ courseworkScore: null });
+  	} else {
+  		this.setState({ courseworkScore: event.target.value });
+  	}
+  };
+  handleAtmosphereRating = (event) => {
+  	if (event.target.value === 'none') {
+  		this.setState({ atmosphereScore: null });
+  	} else {
+  		this.setState({ atmosphereScore: event.target.value });
+  	}
+  };
+  handleCareerPrepRating = (event) => {
+  	if (event.target.value === 'none') {
+  		this.setState({ careerPreparationScore: null });
+  	} else {
+  		this.setState({ careerPreparationScore: event.target.value });
+  	}
   };
 
   // job handlers
@@ -314,13 +339,40 @@ class WriteReview extends Component {
 
   schoolReview = () => {
   	return (
-		<div className="field">
-		  <label className="label"><div className="reviewFieldLabel">How effective was the teaching?</div></label>
-		  <div className="field-body">
-			  <div className="control">
-				<input className="slider is-fullwidth" step="1" min="0" max="10" value={this.state.teachingScore ? this.state.teachingScore : 5} type="range" onChange={this.handleTeachingRating} />
-			  </div>
-		    </div>
+  		<div>
+			<label className="label"><div className="reviewFieldLabel">Rate the school on a scale of 1 to 10 for the following:</div></label>
+			<div className="field">
+			  <label className="label"><div className="reviewFieldLabel">Teaching</div></label>
+			  <div className="field-body">
+				  <div className="control">
+				  	<RatingDropdown handleSelectRating={this.handleTeachingRating} />
+				  </div>
+			    </div>
+			</div>
+			<div className="field">
+			  <label className="label"><div className="reviewFieldLabel">Coursework</div></label>
+			  <div className="field-body">
+				  <div className="control">
+				  	<RatingDropdown handleSelectRating={this.handleCourseworkRating} />
+				  </div>
+			    </div>
+			</div>
+			<div className="field">
+			  <label className="label"><div className="reviewFieldLabel">Career Preparation (finding jobs, interview prep, etc.)</div></label>
+			  <div className="field-body">
+				  <div className="control">
+				  	<RatingDropdown handleSelectRating={this.handleCareerPrepRating} />
+				  </div>
+			    </div>
+			</div>
+			<div className="field">
+			  <label className="label"><div className="reviewFieldLabel">Atmosphere (peers, school staff, etc.)</div></label>
+			  <div className="field-body">
+				  <div className="control">
+				  	<RatingDropdown handleSelectRating={this.handleAtmosphereRating} />
+				  </div>
+			    </div>
+			</div>
 		</div>
   	);
   };
@@ -335,6 +387,7 @@ class WriteReview extends Component {
 	  </div>
  	);
   };
+
 }
 
 const SchoolDropdown = ({ schools, handleSelectSchoolButtonPress, handleSelectSchool, dropdownActive }) => (
@@ -409,5 +462,30 @@ const YearDropdown = ({ handleSelectYear }) => (
   </div>
 );
 
+const RatingDropdown = ({ handleSelectRating }) => (
+  <div className="select">
+      {
+		<select onChange={handleSelectRating}>
+		  <option value={'none'}>Select Rating</option>
+		  {
+		      	["1 (scam -- unethical and/or abusive)", 
+		      	"2 (terrible -- worse than self-studying)", 
+		      	"3 (bad -- no better than self-studying)", 
+		      	"4 (subpar -- would not recommend to a friend)", 
+		      	"5 (mediocre -- would not recommend to a friend)",
+		      	"6 (acceptable -- might recommend to a friend)",
+		      	"7 (good -- might recommend to a friend)",
+		      	"8 (great -- would probably recommend to a friend)",
+		      	"9 (amazing -- would definitely recommend to a friend)",
+		      	"10 (perfect -- would definitely recommend to anyone)"].map(
+		        (rating, index) => (
+		          <option key={"rating:"+index} value={index+1}>{rating}</option>
+		        )
+		      )
+		  }
+		</select>
+    }
+  </div>
+);
 
 export default WriteReview;
