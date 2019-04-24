@@ -125,6 +125,9 @@ class WriteReview extends Component {
   		this.setState({ jobLocationUUID: event.target.value });
   	}
   };
+  handleUpdateJobLocationOther = (event) => {
+  	this.setState({ jobLocationOtherName: event.target.value });
+  };
 
   // submit info handlers
   handleDidSelectTerms = (event) => {
@@ -149,9 +152,9 @@ class WriteReview extends Component {
 	    // create review params object
 	    const { studentUUID } = auth.getProfile();
 	    const { allText, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
-	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, jobLocationUUID, jobStartMonth, jobStartYear } = this.state;
+	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, jobLocationUUID, jobLocationOtherName, jobStartMonth, jobStartYear } = this.state;
 	    let reviewParams = { allText, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
-	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, jobLocationUUID, jobStartMonth, jobStartYear, studentUUID };
+	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, jobLocationUUID, jobLocationOtherName, jobStartMonth, jobStartYear, studentUUID };
 
 	    const { data } = await this.props.client.mutate({
 	    	mutation: submitReviewMutation,
@@ -212,6 +215,8 @@ class WriteReview extends Component {
   	missingFieldsModalIsOpen: false,
 
   	// review params
+
+  	// school
   	allText: null,
   	teachingScore: null,
   	courseworkScore: null,
@@ -222,10 +227,13 @@ class WriteReview extends Component {
 	schoolLocationUUID: null,
 	schoolGraduationMonth: null,
 	schoolGraduationYear: null,
+
+	// job
 	hasJob: null,
 	salaryBefore: null,
 	salaryAfter: null,
 	jobLocationUUID: null,
+	jobLocationOtherName: null,
 	jobStartMonth: null,
 	jobStartYear: null
   };
@@ -477,7 +485,7 @@ class WriteReview extends Component {
 			// When did you graduate?
 			didGraduate ? 
 			<div className="field">
-			  <label className="label"><div className="reviewFieldLabel">When did you graduate?</div></label>
+			  <label className="label"><div className="reviewFieldLabel">When did you graduate? [OPTIONAL]</div></label>
 			  <div className="field-body">
 				  <div className="control">
 				  	<MonthDropdown handleSelectMonth={this.handleSelectSchoolGradMonth} />
@@ -579,7 +587,7 @@ class WriteReview extends Component {
 	          // where is the job?
 	        	this.state.hasJob ?
 				<div className="field">
-			  	  <label className="label"><div className="reviewFieldLabel">Where is your job?</div></label>
+			  	  <label className="label"><div className="reviewFieldLabel">In which city is your job located? [OPTIONAL]</div></label>
 				  <div className="field-body">
 					  <div className="control">
 					      <Query
@@ -589,10 +597,15 @@ class WriteReview extends Component {
 					          if (loading) return <p></p>;
 					          if (error) return <p>Error :(</p>;
 
-							  return (<LocationDropdown 
-							  		locations={data.filters.locations} 
-							  		handleSelectLocation={this.handleSelectJobLocation} 
-							  	/>);
+							  return (
+							  	<div>
+								  	<LocationDropdown 
+								  		locations={data.filters.locations} 
+								  		handleSelectLocation={this.handleSelectJobLocation} 
+								  	/>
+								  	<JobNameOtherField handleUpdateJobLocationOther={this.handleUpdateJobLocationOther} />
+								 </div>
+							  	);
 					        }}
 					      </Query>
 					  </div>
@@ -603,7 +616,7 @@ class WriteReview extends Component {
 				// when did you get the job?
 				this.state.hasJob ? (
 					<div className="field">
-					  <label className="label"><div className="reviewFieldLabel">When did you start your job?</div></label>
+					  <label className="label"><div className="reviewFieldLabel">When did you start your job? [OPTIONAL]</div></label>
 					  <div className="field-body">
 						  <div className="control">
 						  	<MonthDropdown handleSelectMonth={this.handleSelectJobStartMonth} />
@@ -783,6 +796,13 @@ const SalaryDropdown = ({ defaultTitle, handleSelectSalary }) => (
 		  }
 		</select>
     }
+  </div>
+);
+
+const JobNameOtherField = ({ handleUpdateJobLocationOther }) => (
+  <div className="field">
+    <label className="label"><div className="reviewFieldLabel">IF your work location wasn't listed in the options above, manually enter it here: [OPTIONAL]</div></label>
+	<input className="input" type="text" placeholder="City Name" onChange={handleUpdateJobLocationOther} />
   </div>
 );
 

@@ -55,6 +55,7 @@ type NewReviewParams struct {
 	SalaryBefore           *int    `json:"salaryBefore"`
 	SalaryAfter            *int    `json:"salaryAfter"`
 	JobLocationUUID        *string `json:"jobLocationUUID"`
+	JobLocationOtherName   *string `json:"jobLocationOtherName"`
 	JobStartMonth          *int    `json:"jobStartMonth"`
 	JobStartYear           *int    `json:"jobStartYear"`
 }

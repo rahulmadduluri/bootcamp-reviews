@@ -810,6 +810,7 @@ input NewReviewParams {
 	salaryBefore: Int
 	salaryAfter: Int
 	jobLocationUUID: ID
+	jobLocationOtherName: String # if location isn't in given options
 	jobStartMonth: Int
 	jobStartYear: Int
 }
@@ -3541,6 +3542,12 @@ func (ec *executionContext) unmarshalInputNewReviewParams(ctx context.Context, v
 		case "jobLocationUUID":
 			var err error
 			it.JobLocationUUID, err = ec.unmarshalOID2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "jobLocationOtherName":
+			var err error
+			it.JobLocationOtherName, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
