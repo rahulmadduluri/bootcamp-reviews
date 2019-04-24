@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"log"
 	"math"
 
 	db "github.com/rahulmadduluri/raft-education/backend/app/db"
@@ -20,7 +21,8 @@ func (r *queryResolver) Reviews(ctx context.Context, schoolUUID string, offset i
 	return reviews[lowerBound:upperBound], err
 }
 
-func (r *mutationResolver) SubmitReview(ctx context.Context, reviewParams *models.NewReviewParams) (bool, error) {
+func (r *mutationResolver) SubmitReview(ctx context.Context, reviewParams models.NewReviewParams) (bool, error) {
+	log.Println(reviewParams)
 	panic("not implemented")
 	// take review parameters, create email and send to reviews@raft.one
 }

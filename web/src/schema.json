@@ -1256,9 +1256,13 @@
                 "name": "reviewParams",
                 "description": "",
                 "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "NewReviewParams",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "NewReviewParams",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               }
@@ -1444,6 +1448,20 @@
         "fields": null,
         "inputFields": [
           {
+            "name": "studentUUID",
+            "description": "",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
             "name": "allText",
             "description": "",
             "type": {
@@ -1536,6 +1554,20 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "ID",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "didGraduate",
+            "description": "",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
                 "ofType": null
               }
             },

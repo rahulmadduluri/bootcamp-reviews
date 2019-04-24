@@ -7,8 +7,8 @@ import (
 )
 
 const (
-	_GetCampusLocations = "getCampusLocations"
-	_GetPaymentTypes    = "getPaymentTypes"
+	_GetLocationsDB  = "getLocationsDB"
+	_GetPaymentTypes = "getPaymentTypes"
 )
 
 type FiltersDB interface {
@@ -20,8 +20,10 @@ func (sql *sqlDB) GetFilters() (models.Filters, error) {
 
 	// Get Locations
 	locations := []models.Location{}
+	locationsDB := []models.LocationDBModel{}
+
 	rows, err := sql.db.NamedQuery(
-		sql.queries.filtersQueries[_GetCampusLocations],
+		sql.queries.filtersQueries[_GetLocationsDB],
 		map[string]interface{}{},
 	)
 	if err != nil {
@@ -30,13 +32,20 @@ func (sql *sqlDB) GetFilters() (models.Filters, error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		var l models.Location
+		var l models.LocationDBModel
 		err := rows.StructScan(&l)
 		if err != nil {
 			log.Fatal("scan error: ", err)
 			return filters, err
 		}
-		locations = append(locations, l)
+		locationsDB = append(locationsDB, l)
+	}
+	for _, locDB := range locationsDB {
+		l, err := sql.getLocationForID(locDB.ID)
+		if err != nil {
+			return filters, err
+		}
+		locations = append(locations, *l)
 	}
 	filters.Locations = locations
 

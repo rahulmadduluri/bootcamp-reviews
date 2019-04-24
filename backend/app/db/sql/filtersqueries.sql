@@ -1,8 +1,9 @@
--- name: getCampusLocations
+-- name: getLocationsDB
 select
+	locations.id as id,
 	locations.uuid as uuid,
-	locations.city as city,
-	locations.country as country
+	locations.city_id as cityid,
+	locations.country_id as countryid
 from locations
 ;
 

@@ -12,8 +12,14 @@ class FilterBar extends React.Component {
         filters {
           locations {
             uuid
-            city
-            country
+            city {
+              uuid
+              name
+            }
+            country {
+              uuid
+              name
+            }
           }
           paymentTypes
           minLengths

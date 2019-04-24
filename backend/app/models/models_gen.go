@@ -40,6 +40,7 @@ type Location struct {
 }
 
 type NewReviewParams struct {
+	StudentUUID            string  `json:"studentUUID"`
 	AllText                string  `json:"allText"`
 	TeachingScore          int     `json:"teachingScore"`
 	CourseworkScore        int     `json:"courseworkScore"`
@@ -47,6 +48,7 @@ type NewReviewParams struct {
 	CareerPreparationScore int     `json:"careerPreparationScore"`
 	SchoolUUID             string  `json:"schoolUUID"`
 	SchoolLocationUUID     string  `json:"schoolLocationUUID"`
+	DidGraduate            bool    `json:"didGraduate"`
 	SchoolGraduationMonth  *int    `json:"schoolGraduationMonth"`
 	SchoolGraduationYear   *int    `json:"schoolGraduationYear"`
 	HasJob                 bool    `json:"hasJob"`

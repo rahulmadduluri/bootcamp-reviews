@@ -74,7 +74,7 @@ type ComplexityRoot struct {
 
 	Mutation struct {
 		CreateStudent func(childComplexity int, studentInfo models.CreateStudentInput) int
-		SubmitReview  func(childComplexity int, reviewParams *models.NewReviewParams) int
+		SubmitReview  func(childComplexity int, reviewParams models.NewReviewParams) int
 		UpdateStudent func(childComplexity int, studentInfo models.UpdateStudentInput) int
 	}
 
@@ -137,7 +137,7 @@ type ComplexityRoot struct {
 type MutationResolver interface {
 	CreateStudent(ctx context.Context, studentInfo models.CreateStudentInput) (bool, error)
 	UpdateStudent(ctx context.Context, studentInfo models.UpdateStudentInput) (bool, error)
-	SubmitReview(ctx context.Context, reviewParams *models.NewReviewParams) (bool, error)
+	SubmitReview(ctx context.Context, reviewParams models.NewReviewParams) (bool, error)
 }
 type QueryResolver interface {
 	School(ctx context.Context, uuid string) (*models.School, error)
@@ -282,7 +282,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.SubmitReview(childComplexity, args["reviewParams"].(*models.NewReviewParams)), true
+		return e.complexity.Mutation.SubmitReview(childComplexity, args["reviewParams"].(models.NewReviewParams)), true
 
 	case "Mutation.UpdateStudent":
 		if e.complexity.Mutation.UpdateStudent == nil {
@@ -793,6 +793,7 @@ type Review {
 
 input NewReviewParams {
 	# school
+	studentUUID: ID!
 	allText: String!
 	teachingScore: Int!
 	courseworkScore: Int!
@@ -800,6 +801,7 @@ input NewReviewParams {
 	careerPreparationScore: Int!
 	schoolUUID: ID!
 	schoolLocationUUID: ID!
+	didGraduate: Boolean!
 	schoolGraduationMonth: Int
 	schoolGraduationYear: Int
 	
@@ -826,7 +828,7 @@ type Mutation {
 	createStudent(studentInfo: CreateStudentInput!): Boolean! @isAuthenticated
 	updateStudent(studentInfo: UpdateStudentInput!): Boolean! @isAuthenticated
 
-	submitReview(reviewParams: NewReviewParams): Boolean! @isAuthenticated
+	submitReview(reviewParams: NewReviewParams!): Boolean! @isAuthenticated
 }
 `},
 )
@@ -852,9 +854,9 @@ func (ec *executionContext) field_Mutation_createStudent_args(ctx context.Contex
 func (ec *executionContext) field_Mutation_submitReview_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 *models.NewReviewParams
+	var arg0 models.NewReviewParams
 	if tmp, ok := rawArgs["reviewParams"]; ok {
-		arg0, err = ec.unmarshalONewReviewParams2ᚖgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐNewReviewParams(ctx, tmp)
+		arg0, err = ec.unmarshalNNewReviewParams2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐNewReviewParams(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -1447,7 +1449,7 @@ func (ec *executionContext) _Mutation_submitReview(ctx context.Context, field gr
 	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, nil, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().SubmitReview(rctx, args["reviewParams"].(*models.NewReviewParams))
+		return ec.resolvers.Mutation().SubmitReview(rctx, args["reviewParams"].(models.NewReviewParams))
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -3452,6 +3454,12 @@ func (ec *executionContext) unmarshalInputNewReviewParams(ctx context.Context, v
 
 	for k, v := range asMap {
 		switch k {
+		case "studentUUID":
+			var err error
+			it.StudentUUID, err = ec.unmarshalNID2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
 		case "allText":
 			var err error
 			it.AllText, err = ec.unmarshalNString2string(ctx, v)
@@ -3491,6 +3499,12 @@ func (ec *executionContext) unmarshalInputNewReviewParams(ctx context.Context, v
 		case "schoolLocationUUID":
 			var err error
 			it.SchoolLocationUUID, err = ec.unmarshalNID2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "didGraduate":
+			var err error
+			it.DidGraduate, err = ec.unmarshalNBoolean2bool(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -4554,6 +4568,10 @@ func (ec *executionContext) marshalNLocation2ᚕgithubᚗcomᚋrahulmadduluriᚋ
 	return ret
 }
 
+func (ec *executionContext) unmarshalNNewReviewParams2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐNewReviewParams(ctx context.Context, v interface{}) (models.NewReviewParams, error) {
+	return ec.unmarshalInputNewReviewParams(ctx, v)
+}
+
 func (ec *executionContext) marshalNReview2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐReview(ctx context.Context, sel ast.SelectionSet, v models.Review) graphql.Marshaler {
 	return ec._Review(ctx, sel, &v)
 }
@@ -5061,18 +5079,6 @@ func (ec *executionContext) marshalOLocation2ᚖgithubᚗcomᚋrahulmadduluriᚋ
 		return graphql.Null
 	}
 	return ec._Location(ctx, sel, v)
-}
-
-func (ec *executionContext) unmarshalONewReviewParams2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐNewReviewParams(ctx context.Context, v interface{}) (models.NewReviewParams, error) {
-	return ec.unmarshalInputNewReviewParams(ctx, v)
-}
-
-func (ec *executionContext) unmarshalONewReviewParams2ᚖgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐNewReviewParams(ctx context.Context, v interface{}) (*models.NewReviewParams, error) {
-	if v == nil {
-		return nil, nil
-	}
-	res, err := ec.unmarshalONewReviewParams2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐNewReviewParams(ctx, v)
-	return &res, err
 }
 
 func (ec *executionContext) marshalOSchool2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐSchool(ctx context.Context, sel ast.SelectionSet, v models.School) graphql.Marshaler {

@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { withApollo } from 'react-apollo';
 import Navbar from '../navbar.jsx';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import './WriteReview.css';
+import auth from '../../Auth/auth.jsx';
 import SchoolLogo from '../Common/SchoolLogo';
 import Modal from '../Common/Modal.jsx';
 import { numToString } from '../../helpers/helpers.js';
+import { compose } from 'recompose';
+import './WriteReview.css';
 
 // TODO: Clean this up. This component is a complete MESS
 
@@ -28,6 +32,13 @@ class WriteReview extends Component {
   };
   handleSelectSchool = (school) => {
   	this.setState({ schoolDropdownActive: !this.state.schoolDropdownActive, schoolUUID: school.uuid, selectedSchool: school });
+  };
+  handleSelectSchoolLocation = (event) => {
+  	if (event.target.value === 'none') {
+  		this.setState({ schoolLocationUUID: null });
+  	} else {
+  		this.setState({ schoolLocationUUID: event.target.value });
+  	}
   };
 
   handleDidGraduate = (event) => {
@@ -107,6 +118,13 @@ class WriteReview extends Component {
   		this.setState({ hasJob: false });
   	}
   };
+  handleSelectJobLocation = (event) => {
+  	if (event.target.value === 'none') {
+  		this.setState({ jobLocationUUID: null });
+  	} else {
+  		this.setState({ jobLocationUUID: event.target.value });
+  	}
+  };
 
   // submit info handlers
   handleDidSelectTerms = (event) => {
@@ -114,12 +132,35 @@ class WriteReview extends Component {
   		this.setState({ didAcceptTerms: !this.state.didAcceptTerms });
   	}
   };
-  handleSubmit = () => {
+  handleSubmit = async () => {
+  	// if missing field show modal, else, submit review
   	if (this.state.allText === null || this.state.allText === '' || this.state.teachingScore === null || 
   		this.state.courseworkScore === null || this.state.atmosphereScore === null || this.state.careerPreparationScore === null || 
-  		this.state.didGraduate === null || this.state.studentUUID === null || this.state.schoolLocationUUID === null || 
+  		this.state.didGraduate === null || this.state.schoolLocationUUID === null || 
   		this.state.hasJob === null || !this.state.didAcceptTerms) {
   		this.toggleModal();
+  	} else {
+	    const submitReviewMutation = gql`
+			mutation SubmitReview($reviewParams:NewReviewParams!) {
+				submitReview(reviewParams: $reviewParams)
+			}
+	    `;
+
+	    // create review params object
+	    const { studentUUID } = auth.getProfile();
+	    const { allText, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
+	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, jobLocationUUID, jobStartMonth, jobStartYear } = this.state;
+	    let reviewParams = { allText, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
+	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, jobLocationUUID, jobStartMonth, jobStartYear, studentUUID };
+
+	    const { data } = await this.props.client.mutate({
+	    	mutation: submitReviewMutation,
+	        variables: { reviewParams: reviewParams }
+	    });
+
+	    if (data.submitReview === true) {
+	    	this.props.history.push('/home');
+	    }
   	}
   };
   toggleModal = () => {
@@ -148,6 +189,9 @@ class WriteReview extends Component {
   	if (this.state.schoolUUID === null) {
   		missingString += "\n\u2022 what school did you attend?";
   	}
+  	if (this.state.schoolLocationUUID === null) {
+  		missingString += "\n\u2022 school location";
+  	}
   	if (this.state.hasJob === null) {
   		missingString += "\n\u2022 did you get a job post-graduation?";
   	}
@@ -174,7 +218,6 @@ class WriteReview extends Component {
   	atmosphereScore: null,
   	careerPreparationScore: null,
   	didGraduate: null,
-	studentUUID: null,
 	schoolUUID: null,
 	schoolLocationUUID: null,
 	schoolGraduationMonth: null,
@@ -319,16 +362,33 @@ class WriteReview extends Component {
 	        <label className="label"><div className="reviewFieldLabel">Which school did you attend?</div></label>
 
 	        {
+	          // Show the school if the user has already selected it
 	          selectedSchool ?
               <div className="media">
                 <div className="media-left image">
                   <SchoolLogo photoURI={selectedSchool.photoURI} />
                 </div>
                 <div className="media-content">
-                  <div className="name">{selectedSchool.name}</div>
+                	<div className="name">{selectedSchool.name}</div>
                 </div>
                 <br/><br/>
               </div> : <div/>
+	        }
+
+	        {
+	          // Show the school location if the user has already selected a school
+	        	selectedSchool ?
+				<div className="field">
+			  	  <label className="label"><div className="reviewFieldLabel">Which {selectedSchool.name} location did you attend?</div></label>
+				  <div className="field-body">
+					  <div className="control">
+					  	<LocationDropdown 
+					  		locations={ selectedSchool.campusLocations.map(({location}) => location) } 
+					  		handleSelectLocation={this.handleSelectSchoolLocation} 
+					  	/>
+					  </div>
+				  </div>
+				</div> : <div/>
 	        }
 
 
@@ -434,7 +494,7 @@ class WriteReview extends Component {
   schoolReviewScore = () => {
   	return (
   		<div>
-			<label className="label"><div className="reviewFieldLabel">Rate the school on a scale of 1 to 10 for the following:</div></label>
+			<label className="label"><div className="reviewFieldLabel">Rate {this.state.selectedSchool.name} on a scale of 1 to 10 for the following:</div></label>
 			<br/>
 			<div className="field">
 			  <label className="label"><div className="reviewFieldLabel">Teaching</div></label>
@@ -477,14 +537,32 @@ class WriteReview extends Component {
   		<div>
 			<div className="field">
 			  <label className="label"><div className="reviewFieldLabel">Describe your experience</div></label>
-			  <textarea className="textarea" placeholder="Describe your experience in 500 words or less" rows="10" onChange={this.handleReviewTextUpdated}></textarea>
+			  <textarea className="textarea" placeholder="Enter your description here (500 words or less)" rows="10" onChange={this.handleReviewTextUpdated}></textarea>
 			</div>
 		</div>
   	);
   };
 
   jobInfo = () => {
+    const filtersQuery = gql`
+      query GetFilters {
+        filters {
+          locations {
+            uuid
+            city {
+              uuid
+              name
+            }
+            country {
+              uuid
+              name
+            }
+          }
+        }
+      }
+    `;
   	return (
+  		// do you have a job?
   		<div>
 			<div className="field">
 			  <label className="label"><div className="reviewFieldLabel">Did you get a job (in the same field as your schooling) after graduation?</div></label>
@@ -497,10 +575,35 @@ class WriteReview extends Component {
 					</div>
 			    </div>
 			</div>
+	        {
+	          // where is the job?
+	        	this.state.hasJob ?
+				<div className="field">
+			  	  <label className="label"><div className="reviewFieldLabel">Where is your job?</div></label>
+				  <div className="field-body">
+					  <div className="control">
+					      <Query
+					        query={filtersQuery}
+					      >
+					        {({ loading, error, data }) => {
+					          if (loading) return <p></p>;
+					          if (error) return <p>Error :(</p>;
+
+							  return (<LocationDropdown 
+							  		locations={data.filters.locations} 
+							  		handleSelectLocation={this.handleSelectJobLocation} 
+							  	/>);
+					        }}
+					      </Query>
+					  </div>
+				  </div>
+				</div> : <div/>
+	        }
 			{
+				// when did you get the job?
 				this.state.hasJob ? (
 					<div className="field">
-					  <label className="label"><div className="reviewFieldLabel">When did you get a job?</div></label>
+					  <label className="label"><div className="reviewFieldLabel">When did you start your job?</div></label>
 					  <div className="field-body">
 						  <div className="control">
 						  	<MonthDropdown handleSelectMonth={this.handleSelectJobStartMonth} />
@@ -511,10 +614,11 @@ class WriteReview extends Component {
 				) : <div/>
 			}
 			{
+				// salary before/after job
 				this.state.hasJob ? (
 					<div>
 						<div className="field">
-						  <label className="label"><div className="reviewFieldLabel">What was your salary before attending the school? [OPTIONAL]</div></label>
+						  <label className="label"><div className="reviewFieldLabel">What was your salary before attending {this.state.selectedSchool.name}? [OPTIONAL]</div></label>
 						  <div className="field-body">
 							  <div className="control">
 							  	<SalaryDropdown defaultTitle="Salary Before" handleSelectSalary={this.handleSelectSalaryBefore} />
@@ -522,7 +626,7 @@ class WriteReview extends Component {
 						    </div>
 						</div>
 						<div className="field">
-						  <label className="label"><div className="reviewFieldLabel">What was your salary after attending the school? [OPTIONAL]</div></label>
+						  <label className="label"><div className="reviewFieldLabel">What was your salary after attending {this.state.selectedSchool.name}? [OPTIONAL]</div></label>
 						  <div className="field-body">
 							  <div className="control">
 							  	<SalaryDropdown defaultTitle="Salary After" handleSelectSalary={this.handleSelectSalaryAfter} />
@@ -588,6 +692,21 @@ const SchoolDropdown = ({ schools, handleSelectSchoolButtonPress, handleSelectSc
 	    </div>
 	  </div>
 	</div>
+);
+
+const LocationDropdown = ({ locations, handleSelectLocation }) => (
+  <div className="select">
+      {
+		<select onChange={handleSelectLocation}>
+		  <option value={'none'}>Select Location</option>
+		  {
+		      	locations.map(location => (
+		          <option key={"location:"+location.uuid} value={location.uuid}>{location.city.name}</option>
+		        ))
+		  }
+		</select>
+    }
+  </div>
 );
 
 const MonthDropdown = ({ handleSelectMonth }) => (
@@ -667,4 +786,4 @@ const SalaryDropdown = ({ defaultTitle, handleSelectSalary }) => (
   </div>
 );
 
-export default WriteReview;
+export default compose(withRouter, withApollo)(WriteReview)
