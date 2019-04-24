@@ -216,3 +216,11 @@ body {
   margin-left: 5px;
   color: #000000;
 }
+
+.media .image > img {
+  border-radius: 10%;
+}
+
+.media-content .name {
+  color: #000000;
+}

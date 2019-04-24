@@ -13,7 +13,6 @@ class Student extends Component {
   };
 
   render() {
-
     const studentQuery = gql`
       query GetStudent($studentUUID:ID!) {
         student(uuid: $studentUUID) {
@@ -89,7 +88,7 @@ const FieldRow = ({ labelText, fieldText, inputType }) => (
     <div className="field-body">
       <div className="control">
       {
-        <input className="input is-static" type={inputType} value={fieldText} readOnly />
+        <input className="input is-static studentEmail" type={inputType} value={fieldText} readOnly />
       }
       </div>
     </div>

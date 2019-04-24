@@ -99,6 +99,37 @@ CREATE TABLE IF NOT EXISTS reviews (
 	FOREIGN KEY (job_location_id) REFERENCES locations (id)
 );
 
+# exact copy of reviews table -- will be transferred after moderation
+CREATE TABLE IF NOT EXISTS reviews_pre_processed (
+	id 							int 			NOT NULL AUTO_INCREMENT,
+	uuid						varchar(36)		NOT NULL,
+	all_text					varchar(3000)   NOT NULL,
+	teaching_score				int				NOT NULL,
+	coursework_score			int				NOT NULL,
+	atmosphere_score			int				NOT NULL,
+	career_preparation_score 	int			    NOT NULL,
+	overall_score				int			NOT NULL,
+	helpful_upvotes				int 			NOT NULL,
+	helpful_downvotes			int 			NOT NULL,
+	did_graduate 				boolean			NOT NULL,
+	has_job						boolean			NOT NULL,
+	salary_before				int,
+	salary_after 				int,
+	student_id					int 			NOT NULL,
+	school_id 					int 			NOT NULL,
+	school_location_id			int 			NOT NULL,
+	job_location_id 			int,
+	school_graduation_date		datetime,
+	job_start_date				datetime,
+	created_timestamp_server    int 			NOT NULL,
+	UNIQUE KEY (uuid),
+	PRIMARY KEY (id),
+	FOREIGN KEY (student_id) REFERENCES students (id),
+	FOREIGN KEY (school_id) REFERENCES schools (id),
+	FOREIGN KEY (school_location_id) REFERENCES locations (id),
+	FOREIGN KEY (job_location_id) REFERENCES locations (id)
+);
+
 INSERT INTO schools VALUES
 	(NULL, 'uuid-1', 'Bloc', NULL, 1, 8500, 'Upfront', 'bloc', 1000),
 	(NULL, 'uuid-2', 'Hack Reactor', 14, 1, 17980, 'Upfront', 'hack_reactor', 1000),

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './School.css';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import Navbar from '../navbar';
@@ -12,6 +11,7 @@ import {
   LengthBar,
 } from '../Common/SchoolStats';
 import ReviewListQuery from './ReviewListQuery.jsx';
+import './School.css';
 
 class School extends Component {
   render() {
@@ -56,11 +56,11 @@ class School extends Component {
                   <div className="schoolInfoWrapper">
                     <div className="defaultContainer column is-three-fifths">
                       <div className="media">
-                        <div className="media-left image">
+                        <div className="media-left image is-128x128">
                           <SchoolLogo photoURI={photoURI} />
                         </div>
                         <div className="media-content">
-                          <div className="name">{name}</div>
+                          <div className="schoolName">{name}</div>
                           <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit, sed do eiusmod tempor incididunt ut labore et

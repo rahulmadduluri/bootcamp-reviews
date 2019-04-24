@@ -372,19 +372,53 @@ class WriteReview extends Component {
 
   	return (
 	  <div>
-		  <div className="field">
 	        <label className="label"><div className="reviewFieldLabel required">Which school did you attend?</div></label>
+
+		    {
+		    	selectedSchool ? <div/> : (
+			    	// Dropdown -- Which school did you go to?
+			    	shouldFetchSchools ?
+				       <Query
+				          query={schoolsQuery}
+				          variables={{ searchParams: searchParams }}
+				          onCompleted={data => this.updateSchoolResults(data.schools.schoolResults)}
+				        >
+				          {({ loading, error, data }) => {
+				            if (loading) return <p></p>;
+				            if (error) return <p>Error :(</p>;
+
+
+				          	return (
+				          		<FieldWrapper>
+								  	<SchoolDropdown 
+								  		schools={data.schools.schoolResults} 
+								  		handleSelectSchoolButtonPress={this.handleSelectSchoolButtonPress} 
+								  		handleSelectSchool={this.handleSelectSchool} 
+								  		dropdownActive={schoolDropdownActive} />
+				          		</FieldWrapper>
+				          	);
+				          }}
+				        </Query> : (
+				        	<FieldWrapper>
+							  	<SchoolDropdown 
+							  		schools={schoolResults} 
+							  		handleSelectSchoolButtonPress={this.handleSelectSchoolButtonPress} 
+							  		handleSelectSchool={this.handleSelectSchool} 
+							  		dropdownActive={schoolDropdownActive} />
+				        	</FieldWrapper>
+				        )
+			    )
+		    	
+		    }
 
 	        {
 	          // Show the school if the user has already selected it
 	          selectedSchool ?
               <div className="media">
-                <div className="media-left image">
+                <div className="media-left image is-32x32">
                   <SchoolLogo photoURI={selectedSchool.photoURI} />
                 </div>
-                <div className="media-content">
-                	<div className="name">{selectedSchool.name}</div>
-                </div>
+                <div className="writeReviewSelectedSchoolName">{selectedSchool.name}</div>
                 <br/><br/>
               </div> : <div/>
 	        }
@@ -407,7 +441,7 @@ class WriteReview extends Component {
 			        	<div className="field has-addons">
 							<div className="control">
 								{
-									<input className="input" type="text" placeholder="Enter School Name" onChange={this.handleUpdateSchoolSearch} />
+									<input className="input" type="text" placeholder="Search By Name" onChange={this.handleUpdateSchoolSearch} />
 								}
 							</div>
 							<div className="control">
@@ -418,67 +452,31 @@ class WriteReview extends Component {
 						</div>
 			        </div>
 	        }
-	    </div>
-
-	    {
-	    	selectedSchool ? <div/> : (
-		    	// Dropdown -- Which school did you go to?
-		    	shouldFetchSchools ?
-			       <Query
-			          query={schoolsQuery}
-			          variables={{ searchParams: searchParams }}
-			          onCompleted={data => this.updateSchoolResults(data.schools.schoolResults)}
-			        >
-			          {({ loading, error, data }) => {
-			            if (loading) return <p></p>;
-			            if (error) return <p>Error :(</p>;
 
 
-			          	return (
-			          		<FieldWrapper>
-							  	<SchoolDropdown 
-							  		schools={data.schools.schoolResults} 
-							  		handleSelectSchoolButtonPress={this.handleSelectSchoolButtonPress} 
-							  		handleSelectSchool={this.handleSelectSchool} 
-							  		dropdownActive={schoolDropdownActive} />
-			          		</FieldWrapper>
-			          	);
-			          }}
-			        </Query> : (
-			        	<FieldWrapper>
-						  	<SchoolDropdown 
-						  		schools={schoolResults} 
-						  		handleSelectSchoolButtonPress={this.handleSelectSchoolButtonPress} 
-						  		handleSelectSchool={this.handleSelectSchool} 
-						  		dropdownActive={schoolDropdownActive} />
-			        	</FieldWrapper>
-			        )
-		    )
-	    	
-	    }
 
-		{
-			// Did Graduate?
-			schoolUUID ?
-			<FieldWrapper label="Did you graduate?" required={true}>
-			  <input className="is-checkradio" id="didGraduateYes" type="radio" name="exampleRadioDefault" onChange={this.handleDidGraduate} />
-			  <label htmlFor="didGraduateYes">Yes</label>
-			  <input className="is-checkradio" id="didGraduateNo" type="radio" name="exampleRadioDefault" onChange={this.handleDidGraduate} />
-			  <label htmlFor="didGraduateNo">No</label>
-			</FieldWrapper>
-			: <div/>
-		}
+			{
+				// Did Graduate?
+				schoolUUID ?
+				<FieldWrapper label="Did you graduate?" required={true}>
+				  <input className="is-checkradio" id="didGraduateYes" type="radio" name="exampleRadioDefault" onChange={this.handleDidGraduate} />
+				  <label htmlFor="didGraduateYes">Yes</label>
+				  <input className="is-checkradio" id="didGraduateNo" type="radio" name="exampleRadioDefault" onChange={this.handleDidGraduate} />
+				  <label htmlFor="didGraduateNo">No</label>
+				</FieldWrapper>
+				: <div/>
+			}
 
-		{
-			// When did you graduate?
-			didGraduate ? 
-			<FieldWrapper label="When did you graduate?" required={false}>
-			  	<MonthDropdown handleSelectMonth={this.handleSelectSchoolGradMonth} />
-			  	<YearDropdown handleSelectYear={this.handleSelectSchoolGradYear} />
-			</FieldWrapper> : <div/>
-		}
+			{
+				// When did you graduate?
+				didGraduate ? 
+				<FieldWrapper label="When did you graduate?" required={false}>
+				  	<MonthDropdown handleSelectMonth={this.handleSelectSchoolGradMonth} />
+				  	<YearDropdown handleSelectYear={this.handleSelectSchoolGradYear} />
+				</FieldWrapper> : <div/>
+			}
 
-	  </div>  	
+	    </div>  	
   	);
   };
 
@@ -594,7 +592,7 @@ class WriteReview extends Component {
 	  <div>
 		<div className="field">
 		  <input className="is-checkradio" id="termsCheckbox" type="checkbox" name="termsCheckbox" onChange={this.handleDidSelectTerms} />
-		  <label htmlFor="termsCheckbox">I agree to the <a href="#">terms and conditions</a></label>
+		  <label htmlFor="termsCheckbox">I agree to the <a href="#">terms and conditions</a> and have read the <a href="#">privacy policy</a></label>
 		</div>
 	    <div className="buttons">
 	      <a className="button is-primary" key="submit" onClick={this.handleSubmit}><strong>Submit</strong></a>
@@ -627,11 +625,11 @@ const SchoolDropdown = ({ schools, handleSelectSchoolButtonPress, handleSelectSc
 
 		          <a key={uuid} className="dropdown-item" value={uuid} onClick={() => handleSelectSchool(schools[index])} >
 	                  <div className="media">
-	                    <div className="media-left image">
+	                    <div className="media-left image is-24x24">
 	                      <SchoolLogo photoURI={photoURI} />
 	                    </div>
 	                    <div className="media-content">
-	                      <div className="name">{name}</div>
+	                      <div className="writeReviewDropdownSchoolName">{name}</div>
 	                    </div>
 	                  </div>
 	               </a>

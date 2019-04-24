@@ -22,6 +22,9 @@ require (
 	github.com/mitchellh/mapstructure v1.1.2 // indirect
 	github.com/nleof/goyesql v1.0.1
 	github.com/opentracing/opentracing-go v1.1.0 // indirect
+	github.com/satori/go.uuid v1.2.0
+	github.com/sendgrid/rest v2.4.1+incompatible // indirect
+	github.com/sendgrid/sendgrid-go v3.4.1+incompatible
 	github.com/shurcooL/httpfs v0.0.0-20181222201310-74dc9339e414 // indirect
 	github.com/shurcooL/vfsgen v0.0.0-20181202132449-6a9ea43bcacd // indirect
 	github.com/stretchr/objx v0.2.0 // indirect

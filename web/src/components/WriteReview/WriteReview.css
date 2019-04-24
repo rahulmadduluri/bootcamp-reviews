@@ -49,16 +49,15 @@
 	padding-top: 40px;
 }
 
-.media .image > img {
-  border-radius: 10%;
-  width: 30px;
-  height: 30px;
+.media .writeReviewSelectedSchoolName {
+  color: #000000;
+  font-weight: 400;
+  font-size: 20px;
+  width: 200px;
 }
 
-.media-content .name {
-  padding-top: 4px;
+.media .writeReviewDropdownSchoolName {
   color: #000000;
   font-weight: 400;
   font-size: 16px;
-  width: 200px;
 }

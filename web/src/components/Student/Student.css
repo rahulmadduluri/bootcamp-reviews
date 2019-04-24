@@ -25,3 +25,7 @@
 	margin: auto;
 	margin-top: 10px;
 }
+
+.control .studentEmail {
+	width: 350px;
+}

@@ -82,7 +82,7 @@ const FieldRow = ({ isUpdating, labelText, fieldText, inputType }) => (
           <input className="input" type={inputType} value={fieldText} />
         ) :
         (
-          <input className="input is-static" type={inputType} value={fieldText} readOnly />
+          <input className="input is-static studentEmail" type={inputType} value={fieldText} readOnly />
         )
       }
       </div>

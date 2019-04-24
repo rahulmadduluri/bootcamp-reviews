@@ -1,10 +1,9 @@
-.media .image > img {
-	border-radius: 10%;
+.schoolImage > img {
   width: 125px;
   height: 125px;
 }
 
-.media-content .name {
+.media-content .schoolName {
   color: #000000;
   font-weight: 500;
   font-size: 22px;
