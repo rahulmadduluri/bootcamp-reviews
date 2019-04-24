@@ -13,11 +13,9 @@ class FilterBar extends React.Component {
           locations {
             uuid
             city {
-              uuid
               name
             }
             country {
-              uuid
               name
             }
           }

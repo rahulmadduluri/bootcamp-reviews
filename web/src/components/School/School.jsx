@@ -30,8 +30,12 @@ class School extends Component {
             jobPlacementRate
             location {
               uuid
-              city
-              country
+              city {
+                name
+              }
+              country {
+                name
+              }
             }
           }
         }

@@ -90,7 +90,7 @@ type Review {
 	courseworkScore: Int!
 	atmosphereScore: Int!
 	careerPreparationScore: Int!
-	overallScore: Float!
+	overallScore: Int!
 	helpfulUpvotes: Int!
 	helpfulDownvotes: Int!
 	hasJob: Boolean!
@@ -108,6 +108,7 @@ input NewReviewParams {
 	# school
 	studentUUID: ID!
 	allText: String!
+	overallScore: Int!
 	teachingScore: Int!
 	courseworkScore: Int!
 	atmosphereScore: Int!

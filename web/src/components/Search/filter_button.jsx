@@ -137,7 +137,7 @@ class FilterSearchButton extends React.Component {
             { this.props.allOptions.map(filter => 
               {
                 if (this.props.filterType === "Location") {
-                  return <MenuItem key={"Location_"+filter.uuid} value={filter.uuid}>{filter.city}</MenuItem>;
+                  return <MenuItem key={"Location_"+filter.uuid} value={filter.uuid}>{filter.city.name}</MenuItem>;
                 } else if (this.props.filterType === "Payment Type") {
                   return <MenuItem key={"Payment_Type_"+filter} value={filter}>{filter}</MenuItem>;
                 } else if (this.props.filterType === "Minimum Length") {

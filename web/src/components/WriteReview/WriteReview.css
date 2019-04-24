@@ -39,6 +39,12 @@
   font-size: 16px;
 }
 
+.required:after {
+    color: #e32;
+    content: ' *';
+    display:inline;
+}
+
 .submitReviewWrapper {
 	padding-top: 40px;
 }

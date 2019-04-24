@@ -64,6 +64,13 @@ class WriteReview extends Component {
   };
 
   // school ratings
+  handleOverallRating = (event) => {
+  	if (event.target.value === 'none') {
+  		this.setState({ overallScore: null });
+  	} else {
+  		this.setState({ overallScore: event.target.value });
+  	}
+  };
   handleTeachingRating = (event) => {
   	if (event.target.value === 'none') {
   		this.setState({ teachingScore: null });
@@ -137,7 +144,7 @@ class WriteReview extends Component {
   };
   handleSubmit = async () => {
   	// if missing field show modal, else, submit review
-  	if (this.state.allText === null || this.state.allText === '' || this.state.teachingScore === null || 
+  	if (this.state.allText === null || this.state.allText === '' || this.state.overallScore || this.state.teachingScore === null || 
   		this.state.courseworkScore === null || this.state.atmosphereScore === null || this.state.careerPreparationScore === null || 
   		this.state.didGraduate === null || this.state.schoolLocationUUID === null || 
   		this.state.hasJob === null || !this.state.didAcceptTerms) {
@@ -151,9 +158,9 @@ class WriteReview extends Component {
 
 	    // create review params object
 	    const { studentUUID } = auth.getProfile();
-	    const { allText, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
+	    const { allText, overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
 	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, jobLocationUUID, jobLocationOtherName, jobStartMonth, jobStartYear } = this.state;
-	    let reviewParams = { allText, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
+	    let reviewParams = { allText, overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
 	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, jobLocationUUID, jobLocationOtherName, jobStartMonth, jobStartYear, studentUUID };
 
 	    const { data } = await this.props.client.mutate({
@@ -218,6 +225,7 @@ class WriteReview extends Component {
 
   	// school
   	allText: null,
+  	overallScore: null,
   	teachingScore: null,
   	courseworkScore: null,
   	atmosphereScore: null,
@@ -341,11 +349,9 @@ class WriteReview extends Component {
 	          location {
 	            uuid
 	            city {
-	              uuid
 	              name
 	            }
 	            country {
-	              uuid
 	              name
 	            }
 	          }
@@ -367,7 +373,7 @@ class WriteReview extends Component {
   	return (
 	  <div>
 		  <div className="field">
-	        <label className="label"><div className="reviewFieldLabel">Which school did you attend?</div></label>
+	        <label className="label"><div className="reviewFieldLabel required">Which school did you attend?</div></label>
 
 	        {
 	          // Show the school if the user has already selected it
@@ -386,17 +392,12 @@ class WriteReview extends Component {
 	        {
 	          // Show the school location if the user has already selected a school
 	        	selectedSchool ?
-				<div className="field">
-			  	  <label className="label"><div className="reviewFieldLabel">Which {selectedSchool.name} location did you attend?</div></label>
-				  <div className="field-body">
-					  <div className="control">
-					  	<LocationDropdown 
-					  		locations={ selectedSchool.campusLocations.map(({location}) => location) } 
-					  		handleSelectLocation={this.handleSelectSchoolLocation} 
-					  	/>
-					  </div>
-				  </div>
-				</div> : <div/>
+	        	<FieldWrapper label={"Which " + selectedSchool.name + " location did you attend?"} required={true}>
+				  	<LocationDropdown 
+				  		locations={ selectedSchool.campusLocations.map(({location}) => location) } 
+				  		handleSelectLocation={this.handleSelectSchoolLocation} 
+				  	/>
+	        	</FieldWrapper> : <div/>
 	        }
 
 
@@ -434,31 +435,23 @@ class WriteReview extends Component {
 
 
 			          	return (
-							<div className="field">
-							  <div className="field-body">
-								  <div className="control">
-								  	<SchoolDropdown 
-								  		schools={data.schools.schoolResults} 
-								  		handleSelectSchoolButtonPress={this.handleSelectSchoolButtonPress} 
-								  		handleSelectSchool={this.handleSelectSchool} 
-								  		dropdownActive={schoolDropdownActive} />
-								  </div>
-							  </div>
-							</div>
-			          	);
-			          }}
-			        </Query> : (
-						<div className="field">
-						  <div className="field-body">
-							  <div className="control">
+			          		<FieldWrapper>
 							  	<SchoolDropdown 
-							  		schools={schoolResults} 
+							  		schools={data.schools.schoolResults} 
 							  		handleSelectSchoolButtonPress={this.handleSelectSchoolButtonPress} 
 							  		handleSelectSchool={this.handleSelectSchool} 
 							  		dropdownActive={schoolDropdownActive} />
-							  </div>
-						  </div>
-						</div>
+			          		</FieldWrapper>
+			          	);
+			          }}
+			        </Query> : (
+			        	<FieldWrapper>
+						  	<SchoolDropdown 
+						  		schools={schoolResults} 
+						  		handleSelectSchoolButtonPress={this.handleSelectSchoolButtonPress} 
+						  		handleSelectSchool={this.handleSelectSchool} 
+						  		dropdownActive={schoolDropdownActive} />
+			        	</FieldWrapper>
 			        )
 		    )
 	    	
@@ -467,32 +460,22 @@ class WriteReview extends Component {
 		{
 			// Did Graduate?
 			schoolUUID ?
-			<div className="field">
-			  <label className="label"><div className="reviewFieldLabel">Did you graduate?</div></label>
-			  <div className="field-body">
-					<div className="field">
-					  <input className="is-checkradio" id="didGraduateYes" type="radio" name="exampleRadioDefault" onChange={this.handleDidGraduate} />
-					  <label htmlFor="didGraduateYes">Yes</label>
-					  <input className="is-checkradio" id="didGraduateNo" type="radio" name="exampleRadioDefault" onChange={this.handleDidGraduate} />
-					  <label htmlFor="didGraduateNo">No</label>
-					</div>
-			    </div>
-			</div>
+			<FieldWrapper label="Did you graduate?" required={true}>
+			  <input className="is-checkradio" id="didGraduateYes" type="radio" name="exampleRadioDefault" onChange={this.handleDidGraduate} />
+			  <label htmlFor="didGraduateYes">Yes</label>
+			  <input className="is-checkradio" id="didGraduateNo" type="radio" name="exampleRadioDefault" onChange={this.handleDidGraduate} />
+			  <label htmlFor="didGraduateNo">No</label>
+			</FieldWrapper>
 			: <div/>
 		}
 
 		{
 			// When did you graduate?
 			didGraduate ? 
-			<div className="field">
-			  <label className="label"><div className="reviewFieldLabel">When did you graduate? [OPTIONAL]</div></label>
-			  <div className="field-body">
-				  <div className="control">
-				  	<MonthDropdown handleSelectMonth={this.handleSelectSchoolGradMonth} />
-				  	<YearDropdown handleSelectYear={this.handleSelectSchoolGradYear} />
-				  </div>
-			    </div>
-			</div> : <div/>
+			<FieldWrapper label="When did you graduate?" required={false}>
+			  	<MonthDropdown handleSelectMonth={this.handleSelectSchoolGradMonth} />
+			  	<YearDropdown handleSelectYear={this.handleSelectSchoolGradYear} />
+			</FieldWrapper> : <div/>
 		}
 
 	  </div>  	
@@ -504,50 +487,30 @@ class WriteReview extends Component {
   		<div>
 			<label className="label"><div className="reviewFieldLabel">Rate {this.state.selectedSchool.name} on a scale of 1 to 10 for the following:</div></label>
 			<br/>
-			<div className="field">
-			  <label className="label"><div className="reviewFieldLabel">Teaching</div></label>
-			  <div className="field-body">
-				  <div className="control">
-				  	<RatingDropdown handleSelectRating={this.handleTeachingRating} />
-				  </div>
-			    </div>
-			</div>
-			<div className="field">
-			  <label className="label"><div className="reviewFieldLabel">Coursework</div></label>
-			  <div className="field-body">
-				  <div className="control">
-				  	<RatingDropdown handleSelectRating={this.handleCourseworkRating} />
-				  </div>
-			    </div>
-			</div>
-			<div className="field">
-			  <label className="label"><div className="reviewFieldLabel">Career Preparation (finding jobs, interview prep, etc.)</div></label>
-			  <div className="field-body">
-				  <div className="control">
-				  	<RatingDropdown handleSelectRating={this.handleCareerPrepRating} />
-				  </div>
-			    </div>
-			</div>
-			<div className="field">
-			  <label className="label"><div className="reviewFieldLabel">Atmosphere (peers, school staff, etc.)</div></label>
-			  <div className="field-body">
-				  <div className="control">
-				  	<RatingDropdown handleSelectRating={this.handleAtmosphereRating} />
-				  </div>
-			    </div>
-			</div>
+			<FieldWrapper label="Overall">
+				<RatingDropdown handleSelectRating={this.handleOverallRating} />
+			</FieldWrapper>
+			<FieldWrapper label="Teaching">
+				<RatingDropdown handleSelectRating={this.handleTeachingRating} />
+			</FieldWrapper>
+			<FieldWrapper label="Coursework">
+				<RatingDropdown handleSelectRating={this.handleCourseworkRating} />
+			</FieldWrapper>
+			<FieldWrapper label="Career Preparation (finding jobs, interview prep, etc.)">
+				<RatingDropdown handleSelectRating={this.handleCareerPrepRating} />
+			</FieldWrapper>
+			<FieldWrapper label="Atmosphere (peers, school staff, etc.)">
+				<RatingDropdown handleSelectRating={this.handleAtmosphereRating} />
+			</FieldWrapper>
 		</div>
   	);
   };
 
   schoolReviewText = () => {
   	return (
-  		<div>
-			<div className="field">
-			  <label className="label"><div className="reviewFieldLabel">Describe your experience</div></label>
+  		<FieldWrapper label="Describe your experience" required={true}>
 			  <textarea className="textarea" placeholder="Enter your description here (500 words or less)" rows="10" onChange={this.handleReviewTextUpdated}></textarea>
-			</div>
-		</div>
+  		</FieldWrapper>
   	);
   };
 
@@ -558,11 +521,9 @@ class WriteReview extends Component {
           locations {
             uuid
             city {
-              uuid
               name
             }
             country {
-              uuid
               name
             }
           }
@@ -572,80 +533,55 @@ class WriteReview extends Component {
   	return (
   		// do you have a job?
   		<div>
-			<div className="field">
-			  <label className="label"><div className="reviewFieldLabel">Did you get a job (in the same field as your schooling) after graduation?</div></label>
-			  <div className="field-body">
-					<div className="field">
-					  <input className="is-checkradio" id="hasJobYes" type="radio" name="exampleRadioDefault2" onChange={this.handleHasJob} />
-					  <label htmlFor="hasJobYes">Yes</label>
-					  <input className="is-checkradio" id="hasJobNo" type="radio" name="exampleRadioDefault2" onChange={this.handleHasJob} />
-					  <label htmlFor="hasJobNo">No</label>
-					</div>
-			    </div>
-			</div>
+  			<FieldWrapper label="Did you get a job (in the same field as your schooling) after graduation?" required={true}>
+			  <input className="is-checkradio" id="hasJobYes" type="radio" name="exampleRadioDefault2" onChange={this.handleHasJob} />
+			  <label htmlFor="hasJobYes">Yes</label>
+			  <input className="is-checkradio" id="hasJobNo" type="radio" name="exampleRadioDefault2" onChange={this.handleHasJob} />
+			  <label htmlFor="hasJobNo">No</label>
+  			</FieldWrapper>
 	        {
 	          // where is the job?
 	        	this.state.hasJob ?
-				<div className="field">
-			  	  <label className="label"><div className="reviewFieldLabel">In which city is your job located? [OPTIONAL]</div></label>
-				  <div className="field-body">
-					  <div className="control">
-					      <Query
-					        query={filtersQuery}
-					      >
-					        {({ loading, error, data }) => {
-					          if (loading) return <p></p>;
-					          if (error) return <p>Error :(</p>;
+	        	<FieldWrapper label="In which city is your job located?" required={false}>
+			      <Query
+			        query={filtersQuery}
+			      >
+			        {({ loading, error, data }) => {
+			          if (loading) return <p></p>;
+			          if (error) return <p>Error :(</p>;
 
-							  return (
-							  	<div>
-								  	<LocationDropdown 
-								  		locations={data.filters.locations} 
-								  		handleSelectLocation={this.handleSelectJobLocation} 
-								  	/>
-								  	<JobNameOtherField handleUpdateJobLocationOther={this.handleUpdateJobLocationOther} />
-								 </div>
-							  	);
-					        }}
-					      </Query>
-					  </div>
-				  </div>
-				</div> : <div/>
+					  return (
+					  	<div>
+						  	<LocationDropdown 
+						  		locations={data.filters.locations} 
+						  		handleSelectLocation={this.handleSelectJobLocation} 
+						  	/>
+						  	<JobNameOtherField handleUpdateJobLocationOther={this.handleUpdateJobLocationOther} />
+						 </div>
+					  	);
+			        }}
+			      </Query>
+	        	</FieldWrapper> : <div/>
 	        }
 			{
 				// when did you get the job?
 				this.state.hasJob ? (
-					<div className="field">
-					  <label className="label"><div className="reviewFieldLabel">When did you start your job? [OPTIONAL]</div></label>
-					  <div className="field-body">
-						  <div className="control">
-						  	<MonthDropdown handleSelectMonth={this.handleSelectJobStartMonth} />
-						  	<YearDropdown handleSelectYear={this.handleSelectJobStartYear} />
-						  </div>
-					    </div>
-					</div>
+					<FieldWrapper label="When did you start your job?" required={false}>
+					  	<MonthDropdown handleSelectMonth={this.handleSelectJobStartMonth} />
+					  	<YearDropdown handleSelectYear={this.handleSelectJobStartYear} />
+					</FieldWrapper>
 				) : <div/>
 			}
 			{
 				// salary before/after job
 				this.state.hasJob ? (
 					<div>
-						<div className="field">
-						  <label className="label"><div className="reviewFieldLabel">What was your salary before attending {this.state.selectedSchool.name}? [OPTIONAL]</div></label>
-						  <div className="field-body">
-							  <div className="control">
-							  	<SalaryDropdown defaultTitle="Salary Before" handleSelectSalary={this.handleSelectSalaryBefore} />
-							  </div>
-						    </div>
-						</div>
-						<div className="field">
-						  <label className="label"><div className="reviewFieldLabel">What was your salary after attending {this.state.selectedSchool.name}? [OPTIONAL]</div></label>
-						  <div className="field-body">
-							  <div className="control">
-							  	<SalaryDropdown defaultTitle="Salary After" handleSelectSalary={this.handleSelectSalaryAfter} />
-							  </div>
-						    </div>
-						</div>
+						<FieldWrapper label={"What was your salary before attending " + this.state.selectedSchool.name + "?"} required={false}>
+							<SalaryDropdown defaultTitle="Salary Before" handleSelectSalary={this.handleSelectSalaryBefore} />
+						</FieldWrapper>
+						<FieldWrapper label={"What was your salary after getting the job?"} required={false}>
+							<SalaryDropdown defaultTitle="Salary After" handleSelectSalary={this.handleSelectSalaryAfter} />
+						</FieldWrapper>
 					</div>
 				) : <div/>
 			}
@@ -756,6 +692,22 @@ const YearDropdown = ({ handleSelectYear }) => (
   </div>
 );
 
+const FieldWrapper = ({label, required, children}) => (
+	<div className="field">
+		{
+			label ? (
+				required ? <label className="label"><div className="reviewFieldLabel required">{label}</div></label> :
+					<label className="label"><div className="reviewFieldLabel">{label}</div></label>
+			) : <div/>
+		}
+		<div className="field-body">
+			<div className="control">
+				{children}
+			</div>
+		</div>
+	</div>
+);
+
 const RatingDropdown = ({ handleSelectRating }) => (
   <div className="select">
       {
@@ -801,7 +753,7 @@ const SalaryDropdown = ({ defaultTitle, handleSelectSalary }) => (
 
 const JobNameOtherField = ({ handleUpdateJobLocationOther }) => (
   <div className="field">
-    <label className="label"><div className="reviewFieldLabel">IF your work location wasn't listed in the options above, manually enter it here: [OPTIONAL]</div></label>
+    <label className="label"><div className="reviewFieldLabel">IF your work location wasn't listed in the options above, manually enter it here:</div></label>
 	<input className="input" type="text" placeholder="City Name" onChange={handleUpdateJobLocationOther} />
   </div>
 );

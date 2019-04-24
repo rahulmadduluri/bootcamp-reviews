@@ -47,11 +47,9 @@ const schoolsQuery = gql`
           location {
             uuid
             city {
-              uuid
               name
             }
             country {
-              uuid
               name
             }
           }

@@ -777,7 +777,7 @@ type Review {
 	courseworkScore: Int!
 	atmosphereScore: Int!
 	careerPreparationScore: Int!
-	overallScore: Float!
+	overallScore: Int!
 	helpfulUpvotes: Int!
 	helpfulDownvotes: Int!
 	hasJob: Boolean!
@@ -795,6 +795,7 @@ input NewReviewParams {
 	# school
 	studentUUID: ID!
 	allText: String!
+	overallScore: Int!
 	teachingScore: Int!
 	courseworkScore: Int!
 	atmosphereScore: Int!
@@ -1856,10 +1857,10 @@ func (ec *executionContext) _Review_overallScore(ctx context.Context, field grap
 		}
 		return graphql.Null
 	}
-	res := resTmp.(float64)
+	res := resTmp.(int)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNFloat2float64(ctx, field.Selections, res)
+	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Review_helpfulUpvotes(ctx context.Context, field graphql.CollectedField, obj *models.Review) graphql.Marshaler {
@@ -3467,6 +3468,12 @@ func (ec *executionContext) unmarshalInputNewReviewParams(ctx context.Context, v
 			if err != nil {
 				return it, err
 			}
+		case "overallScore":
+			var err error
+			it.OverallScore, err = ec.unmarshalNInt2int(ctx, v)
+			if err != nil {
+				return it, err
+			}
 		case "teachingScore":
 			var err error
 			it.TeachingScore, err = ec.unmarshalNInt2int(ctx, v)
@@ -4479,14 +4486,6 @@ func (ec *executionContext) marshalNCountry2githubᚗcomᚋrahulmadduluriᚋraft
 
 func (ec *executionContext) unmarshalNCreateStudentInput2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐCreateStudentInput(ctx context.Context, v interface{}) (models.CreateStudentInput, error) {
 	return ec.unmarshalInputCreateStudentInput(ctx, v)
-}
-
-func (ec *executionContext) unmarshalNFloat2float64(ctx context.Context, v interface{}) (float64, error) {
-	return graphql.UnmarshalFloat(v)
-}
-
-func (ec *executionContext) marshalNFloat2float64(ctx context.Context, sel ast.SelectionSet, v float64) graphql.Marshaler {
-	return graphql.MarshalFloat(v)
 }
 
 func (ec *executionContext) unmarshalNID2string(ctx context.Context, v interface{}) (string, error) {

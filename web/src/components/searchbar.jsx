@@ -20,7 +20,7 @@ function SmartSearchBar(props) {
   return(
     <SearchBar
       placeholder={searchText}
-      onChange={() => console.log('onChange')}
+      // onChange={}
       onRequestSearch={props.onSearch}
       classes={classes}
       style={{
