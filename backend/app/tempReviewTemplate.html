@@ -1,5 +1,69 @@
 <div>
 	<div>
-		<strong>{{.Title}}</strong>
+		ReviewUUID: <strong>{{.ReviewUUID}}</strong>
+	</div>
+	<br/>
+	<div>
+		{{with .ReviewParams}}
+		<ul>
+			<li>
+				StudentUUID: <strong>{{.StudentUUID}}</strong>
+			</li>
+			<li>
+				SchoolUUID: <strong>{{.SchoolUUID}}</strong>
+			</li>
+			<li>
+				SchoolLocationUUID: <strong>{{.SchoolLocationUUID}}</strong>
+			</li>
+			<li>
+				DidGraduate: <strong>{{.DidGraduate}}</strong>
+			</li>
+			<li>
+				AllText: <strong>{{.AllText}}</strong>
+			</li>
+			<li>
+				OverallScore: <strong>{{.OverallScore}}</strong>
+			</li>
+			<li>
+				TeachingScore: <strong>{{.TeachingScore}}</strong>
+			</li>
+			<li>
+				CourseworkScore: <strong>{{.CourseworkScore}}</strong>
+			</li>
+			<li>
+				AtmosphereScore: <strong>{{.AtmosphereScore}}</strong>
+			</li>
+			<li>
+				CareerPreparationScore: <strong>{{.CareerPreparationScore}}</strong>
+			</li>
+			<li>
+				SchoolGraduationMonth: <strong>{{.SchoolGraduationMonth}}</strong>
+			</li>
+			<li>
+				SchoolGraduationYear: <strong>{{.SchoolGraduationYear}}</strong>
+			</li>
+			<li>
+				HasJob: <strong>{{.HasJob}}</strong>
+			</li>
+			<li>
+				JobLocationUUID: <strong>{{.JobLocationUUID}}</strong>
+			</li>
+			<li>
+				JobLocationOtherName: <strong>{{.JobLocationOtherName}}</strong>
+			</li>
+			<li>
+				SalaryBefore: <strong>{{.SalaryBefore}}</strong>
+			</li>
+			<li>
+				SalaryAfter: <strong>{{.SalaryAfter}}</strong>
+			</li>
+			<li>
+				JobStartMonth: <strong>{{.JobStartMonth}}</strong>
+			</li>
+			<li>
+				JobStartYear: <strong>{{.JobStartYear}}</strong>
+			</li>
+		</ul>
+		{{end}}
 	</div>
 </div>

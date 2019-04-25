@@ -28,8 +28,6 @@ func (r *queryResolver) Reviews(ctx context.Context, schoolUUID string, offset i
 }
 
 func (r *mutationResolver) SubmitReview(ctx context.Context, reviewParams models.NewReviewParams) (bool, error) {
-	log.Println(reviewParams)
-
 	uuid := uuidGen.NewV4().String()
 	var gradDate *time.Time
 	if reviewParams.SchoolGraduationMonth != nil && reviewParams.SchoolGraduationYear != nil {
@@ -72,7 +70,7 @@ func (r *mutationResolver) SubmitReview(ctx context.Context, reviewParams models
 	to := mail.NewEmail("Review Receiver", "reviews@raft.one")
 	htmlContent := reviewHTMLTemplate(uuid, reviewParams)
 	message := mail.NewSingleEmail(from, subject, to, "Review", htmlContent)
-	response, err := db.Handler().SendGrid().Send(message)
+	_, err = db.Handler().SendGrid().Send(message)
 	if err != nil {
 		log.Println(err)
 	}
@@ -81,17 +79,15 @@ func (r *mutationResolver) SubmitReview(ctx context.Context, reviewParams models
 }
 
 type ReviewEmailData struct {
-	Title      string
-	ReviewUUID string
-	Params     models.NewReviewParams
+	ReviewUUID   string
+	ReviewParams models.NewReviewParams
 }
 
 func reviewHTMLTemplate(reviewUUID string, reviewParams models.NewReviewParams) string {
 	tmpl := template.Must(template.ParseFiles("tempReviewTemplate.html"))
 	v := ReviewEmailData{
-		Title:      "Hello World",
-		ReviewUUID: reviewUUID,
-		Params:     reviewParams,
+		ReviewUUID:   reviewUUID,
+		ReviewParams: reviewParams,
 	}
 
 	var buf bytes.Buffer

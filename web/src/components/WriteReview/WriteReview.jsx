@@ -144,7 +144,7 @@ class WriteReview extends Component {
   };
   handleSubmit = async () => {
   	// if missing field show modal, else, submit review
-  	if (this.state.allText === null || this.state.allText === '' || this.state.overallScore || this.state.teachingScore === null || 
+  	if (this.state.allText === null || this.state.allText === '' || this.state.overallScore === null || this.state.teachingScore === null || 
   		this.state.courseworkScore === null || this.state.atmosphereScore === null || this.state.careerPreparationScore === null || 
   		this.state.didGraduate === null || this.state.schoolLocationUUID === null || 
   		this.state.hasJob === null || !this.state.didAcceptTerms) {
@@ -180,6 +180,9 @@ class WriteReview extends Component {
   	let missingString = "The following fields are missing: ";
   	if (this.state.allText === null || this.state.allText === '') {
   		missingString += "\n\u2022 description of experience (in words)";
+  	}
+  	if (this.state.overallScore === null) {
+  		missingString += "\n\u2022 overall rating";
   	}
   	if (this.state.teachingScore === null) {
   		missingString += "\n\u2022 teaching rating";

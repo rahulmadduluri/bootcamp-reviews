@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS reviews (
 	coursework_score			int				NOT NULL,
 	atmosphere_score			int				NOT NULL,
 	career_preparation_score 	int			    NOT NULL,
-	overall_score				int			NOT NULL,
+	overall_score				int				NOT NULL,
 	helpful_upvotes				int 			NOT NULL,
 	helpful_downvotes			int 			NOT NULL,
 	did_graduate 				boolean			NOT NULL,
