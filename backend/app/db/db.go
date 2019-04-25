@@ -6,6 +6,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
+	sendgrid "github.com/sendgrid/sendgrid-go"
 )
 
 var _dbh *dbHandler
@@ -16,15 +17,23 @@ const (
 	_MySQLPwd    = "RDS_PASSWORD"
 	_MySQLHost   = "RDS_HOSTNAME"
 	_MYSQLDBName = "RDS_DB_NAME"
+
+	_SendGridKey = "SENDGRID_API_KEY"
 )
 
 type DbHandler interface {
 	SQL() SQLDB
+	SendGrid() *sendgrid.Client
 	Close()
 }
 
 type dbHandler struct {
-	sqldb *sqlDB
+	sqldb          *sqlDB
+	sendgridClient *sendgrid.Client
+}
+
+func (dbh *dbHandler) SendGrid() *sendgrid.Client {
+	return dbh.sendgridClient
 }
 
 func (dbh *dbHandler) SQL() SQLDB {
@@ -68,11 +77,15 @@ func newDbHandler() *dbHandler {
 	}
 	sqlQueries := generateQueries()
 
+	// Sendgrid
+	sgc := sendgrid.NewSendClient(os.Getenv(_SendGridKey))
+
 	dbh := &dbHandler{
 		sqldb: &sqlDB{
 			db:      db,
 			queries: sqlQueries,
 		},
+		sendgridClient: sgc,
 	}
 	return dbh
 }

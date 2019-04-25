@@ -1,63 +1,94 @@
 # Get School
-query GetSchool {
-	school(uuid: "uuid-1") {
+query GetSchool($schoolUUID: ID!) {
+	school(uuid: $schoolUUID) {
 		uuid
 		name
-		avgGraduateSalary
-		acceptanceRate
-		jobPlacementRate
 		lengthInWeeks
 		isOnline
 		photoURI
-	    basePrice
-	    paymentType
-		tracks {
-			uuid
-			name
-		}
-	    locations {
-	      city
-	      country
-	    }
+    basePrice
+    paymentType
 	}
 }
 
 # Get Schools
-query GetSchools {
-	schools(params:{minJobPlacementRate:68.33, maxPrice:35000, isOnline:false}) {
-		uuid
-		name
-		avgGraduateSalary
-		acceptanceRate
-		jobPlacementRate
-		lengthInWeeks
-		isOnline
-		photoURI
-	    basePrice
-	    paymentType
-		tracks {
-			uuid
-			name
-		}
-	    locations {
-	      city
-	      country
-	    }
-	}
-}
+  query GetSchools($searchParams: SchoolSearchParams!) {
+    schools(params: $searchParams) {
+      totalNumResults
+      pageNumber
+      schoolResults {
+        uuid
+        name
+        lengthInWeeks
+        isOnline
+        photoURI
+        basePrice
+        paymentType
+        campusLocations {
+          location {
+            uuid
+            city {
+              uuid
+              name
+            }
+            country {
+              uuid
+              name
+            }
+          }
+          medianGraduateSalary
+          jobPlacementRate
+        }
+      }
+    }
+  }
 
 # Get Schools
 query GetFilters {
 	filters {
-		tracks {
-			uuid
-			name
-		}
 		locations {
 			uuid
-			city
-			country
+      country {
+        uuid
+        name
+      }
 		}
-		paymentTypes
 	}
+}
+
+query GetStudent($studentUUID:ID!) {
+	student(uuid: $studentUUID) {
+		uuid
+		firstName
+    lastName
+    photoURI
+    linkedInPhotoURL
+	}
+}
+
+mutation CreateStudent($studentInfo:CreateStudentInput!) {
+	createStudent(studentInfo: $studentInfo)
+}
+
+query GetReviews($schoolUUID:ID!, $offset:Int!) {
+	reviews(schoolUUID:$schoolUUID, offset:$offset) {
+    uuid
+    allText
+    teachingScore
+    courseworkScore
+    atmosphereScore
+    careerPreparationScore
+    overallScore
+    helpfulUpvotes
+    hasJob
+    salaryBefore
+    salaryAfter
+    schoolGraduationTimestamp
+    jobStartTimestamp
+    createdTimestamp
+	}
+}
+
+mutation SubmitReview($reviewParams: NewReviewParams! ) {
+  submitReview(reviewParams:$reviewParams)
 }

@@ -182,10 +182,5 @@ func (sql *sqlDB) CreateTempReview(
 			"created_timestamp_server": createdTimestamp,
 		},
 	)
-	if err != nil {
-		return err
-	}
-	// update student with school ID
-
-	return nil
+	return err
 }

@@ -1,7 +1,9 @@
 package server
 
 import (
+	"bytes"
 	"context"
+	"html/template"
 	"log"
 	"math"
 	"time"
@@ -10,12 +12,7 @@ import (
 	models "github.com/rahulmadduluri/raft-education/backend/app/models"
 
 	uuidGen "github.com/satori/go.uuid"
-	// "github.com/sendgrid/sendgrid-go"
-	// "github.com/sendgrid/sendgrid-go/helpers/mail"
-)
-
-const (
-	_SendGridKey = "SENDGRID_API_KEY"
+	"github.com/sendgrid/sendgrid-go/helpers/mail"
 )
 
 func (r *queryResolver) Reviews(ctx context.Context, schoolUUID string, offset int) ([]models.Review, error) {
@@ -33,7 +30,7 @@ func (r *queryResolver) Reviews(ctx context.Context, schoolUUID string, offset i
 func (r *mutationResolver) SubmitReview(ctx context.Context, reviewParams models.NewReviewParams) (bool, error) {
 	log.Println(reviewParams)
 
-	uuid := uuidGen.NewV4()
+	uuid := uuidGen.NewV4().String()
 	var gradDate *time.Time
 	if reviewParams.SchoolGraduationMonth != nil && reviewParams.SchoolGraduationYear != nil {
 		t := time.Date(*reviewParams.SchoolGraduationYear, time.Month(*reviewParams.SchoolGraduationMonth), 15, 0, 0, 0, 0, time.UTC)
@@ -46,7 +43,7 @@ func (r *mutationResolver) SubmitReview(ctx context.Context, reviewParams models
 	}
 
 	err := db.Handler().SQL().CreateTempReview(
-		uuid.String(),
+		uuid,
 		reviewParams.StudentUUID,
 		reviewParams.SchoolUUID,
 		reviewParams.SchoolLocationUUID,
@@ -67,23 +64,40 @@ func (r *mutationResolver) SubmitReview(ctx context.Context, reviewParams models
 	if err != nil {
 		return false, err
 	}
-	return true, nil
-
-	// from := mail.NewEmail("Reviews Sender", "reviews@raft.one")
-	// subject := "Sending with SendGrid is Fun"
-	// to := mail.NewEmail("Reviews Receiver", "reviews@raft.one")
-	// plainTextContent := "and easy to do anywhere, even with Go"
-	// htmlContent := "<strong>and easy to do anywhere, even with Go</strong>"
-	// message := mail.NewSingleEmail(from, subject, to, plainTextContent, htmlContent)
-	// client := sendgrid.NewSendClient(os.Getenv(_SendGridKey))
-	// response, err := client.Send(message)
-	// if err != nil {
-	// 	log.Println(err)
-	// } else {
-	// 	log.Println(response.StatusCode)
-	// 	log.Println(response.Body)
-	// 	log.Println(response.Headers)
-	// }
 
 	// take review parameters, create email and send to reviews@raft.one
+
+	from := mail.NewEmail("Review Bot", "review-bot@raft.one")
+	subject := "School Review UUID: " + uuid
+	to := mail.NewEmail("Review Receiver", "reviews@raft.one")
+	htmlContent := reviewHTMLTemplate(uuid, reviewParams)
+	message := mail.NewSingleEmail(from, subject, to, "Review", htmlContent)
+	response, err := db.Handler().SendGrid().Send(message)
+	if err != nil {
+		log.Println(err)
+	}
+
+	return true, nil
+}
+
+type ReviewEmailData struct {
+	Title      string
+	ReviewUUID string
+	Params     models.NewReviewParams
+}
+
+func reviewHTMLTemplate(reviewUUID string, reviewParams models.NewReviewParams) string {
+	tmpl := template.Must(template.ParseFiles("tempReviewTemplate.html"))
+	v := ReviewEmailData{
+		Title:      "Hello World",
+		ReviewUUID: reviewUUID,
+		Params:     reviewParams,
+	}
+
+	var buf bytes.Buffer
+	if err := tmpl.Execute(&buf, v); err != nil {
+		return "Error: Could not parse html template"
+	}
+
+	return buf.String()
 }
