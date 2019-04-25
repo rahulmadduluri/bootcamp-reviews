@@ -14,7 +14,7 @@ const (
 type ReviewDB interface {
 	GetReviews(schoolUUID string) ([]models.Review, error)
 	CreateTempReview(
-		uuid string,
+		reviewUUID string,
 		studentUUID string,
 		schoolUUID string,
 		schoolLocationUUID string,
@@ -114,7 +114,7 @@ func (sql *sqlDB) GetReviews(schoolUUID string) ([]models.Review, error) {
 }
 
 func (sql *sqlDB) CreateTempReview(
-	uuid string,
+	reviewUUID string,
 	studentUUID string,
 	schoolUUID string,
 	schoolLocationUUID string,
@@ -132,14 +132,38 @@ func (sql *sqlDB) CreateTempReview(
 	salaryAfter *int,
 	jobStartDate *time.Time,
 ) error {
+	// student
+	student, err := sql.getStudentDBWithUUID(studentUUID)
+	if err != nil {
+		return err
+	}
+	// school
+	school, err := sql.getSchoolDBWithUUID(schoolUUID)
+	if err != nil {
+		return err
+	}
+	// locations
+	schoolLocation, err := sql.getLocationDBForUUID(schoolLocationUUID)
+	if err != nil {
+		return err
+	}
+	var jobLocationID *int
+	if jobLocationUUID != nil {
+		jobLocation, err := sql.getLocationDBForUUID(*jobLocationUUID)
+		if err != nil {
+			return err
+		}
+		jobLocationID = &jobLocation.ID
+	}
+
 	createdTimestamp := int(time.Now().Unix())
-	_, err := sql.db.NamedQuery(
+	_, err = sql.db.NamedQuery(
 		sql.queries.reviewQueries[_CreateTempReview],
 		map[string]interface{}{
-			"uuid":                     uuid,
-			"student_uuid":             studentUUID,
-			"school_uuid":              schoolUUID,
-			"school_location_uuid":     schoolLocationUUID,
+			"review_uuid":              reviewUUID,
+			"student_id":               student.ID,
+			"school_id":                school.ID,
+			"school_location_id":       schoolLocation.ID,
 			"all_text":                 allText,
 			"teaching_score":           teachingScore,
 			"coursework_score":         courseworkScore,
@@ -149,15 +173,19 @@ func (sql *sqlDB) CreateTempReview(
 			"school_graduation_date":   schoolGraduationDate,
 			"did_graduate":             didGraduate,
 			"has_job":                  hasJob,
-			"job_location_uuid":        jobLocationUUID,
+			"job_location_id":          jobLocationID,
 			"salary_before":            salaryBefore,
 			"salary_after":             salaryAfter,
 			"job_start_date":           jobStartDate,
+			"helpful_upvotes":          0,
+			"helpful_downvotes":        0,
 			"created_timestamp_server": createdTimestamp,
 		},
 	)
 	if err != nil {
 		return err
 	}
+	// update student with school ID
+
 	return nil
 }

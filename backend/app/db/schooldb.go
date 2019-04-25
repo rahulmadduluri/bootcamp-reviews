@@ -9,8 +9,10 @@ import (
 )
 
 const (
-	_GetSchool                  = "getSchool"
-	_GetSchoolWithID            = "getSchoolWithID"
+	_GetSchool           = "getSchool"
+	_GetSchoolWithID     = "getSchoolWithID"
+	_GetSchoolDBWithUUID = "getSchoolDBWithUUID"
+
 	_GetSchoolCampusLocationsDB = "getSchoolCampusLocationsDB"
 	_GetAllSchools              = "getAllSchools"
 
@@ -244,4 +246,33 @@ func (sql *sqlDB) getSchools(queryName goyesql.Tag, params map[string]interface{
 	}
 
 	return schools, err
+}
+
+func (sql *sqlDB) getSchoolDBWithUUID(schoolUUID string) (*models.SchoolDBModel, error) {
+	var school *models.SchoolDBModel
+
+	// get school
+	rows, err := sql.db.NamedQuery(
+		sql.queries.schoolQueries[_GetSchoolDBWithUUID],
+		map[string]interface{}{
+			"school_uuid": schoolUUID,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var temp models.SchoolDBModel
+		err := rows.StructScan(&temp)
+		if err != nil {
+			return nil, err
+		}
+		school = &temp
+		break
+	}
+
+	return school, err
 }

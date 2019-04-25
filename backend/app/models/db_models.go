@@ -20,6 +20,31 @@ type CampusLocationDBModel struct {
 	JobPlacementRate     *float64
 }
 
+type StudentDBModel struct {
+	ID                     int
+	UUID                   string
+	FirstName              string
+	LastName               string
+	Email                  string
+	LinkedInPhotoURL       *string
+	LinkedInURL            *string
+	PhotoURI               *string
+	SchoolID               *int
+	CreatedTimestampServer int
+}
+
+type SchoolDBModel struct {
+	ID                     int
+	UUID                   string
+	Name                   string
+	LengthInWeeks          *int
+	IsOnline               bool
+	BasePrice              int
+	PaymentType            string
+	PhotoURI               string
+	CreatedTimestampServer int
+}
+
 type ReviewDBModel struct {
 	ID                     int
 	UUID                   string

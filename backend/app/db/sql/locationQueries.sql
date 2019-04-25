@@ -8,6 +8,16 @@ from locations
 where locations.id = :location_id
 ;
 
+-- name: getLocationDBForUUID
+select
+	locations.id as id,
+	locations.uuid as uuid,
+	locations.city_id as cityid,
+	locations.country_id as countryid
+from locations
+where locations.uuid = :location_uuid
+;
+
 -- name: getCityForID
 select
 	cities.uuid as uuid,

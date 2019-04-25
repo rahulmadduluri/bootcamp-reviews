@@ -5,9 +5,10 @@ import (
 )
 
 const (
-	_GetLocationDBForID = "getLocationDBForID"
-	_GetCityForID       = "getCityForID"
-	_GetCountryForID    = "getCountryForID"
+	_GetLocationDBForID   = "getLocationDBForID"
+	_GetLocationDBForUUID = "getLocationDBForUUID"
+	_GetCityForID         = "getCityForID"
+	_GetCountryForID      = "getCountryForID"
 )
 
 type LocationDB interface {
@@ -52,6 +53,31 @@ func (sql *sqlDB) getLocationForID(locationID int) (*models.Location, error) {
 	}
 
 	return &location, err
+}
+
+func (sql *sqlDB) getLocationDBForUUID(locationUUID string) (*models.LocationDBModel, error) {
+	var locationDB models.LocationDBModel
+
+	rows, err := sql.db.NamedQuery(
+		sql.queries.locationQueries[_GetLocationDBForUUID],
+		map[string]interface{}{
+			"location_uuid": locationUUID,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err := rows.StructScan(&locationDB)
+		if err != nil {
+			return nil, err
+		}
+		break
+	}
+
+	return &locationDB, err
 }
 
 func (sql *sqlDB) getCityForID(cityID int) (models.City, error) {

@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	_GetStudent       = "getStudent"
-	_GetStudentWithID = "getStudentWithID"
-	_CreateStudent    = "createStudent"
+	_GetStudent           = "getStudent"
+	_GetStudentDBWithUUID = "getStudentDBWithUUID"
+	_CreateStudent        = "createStudent"
 )
 
 type StudentDB interface {
@@ -62,4 +62,31 @@ func (sql *sqlDB) CreateStudent(studentUUID string, firstName string, lastName s
 		return err
 	}
 	return nil
+}
+
+func (sql *sqlDB) getStudentDBWithUUID(studentUUID string) (*models.StudentDBModel, error) {
+	var student *models.StudentDBModel
+
+	rows, err := sql.db.NamedQuery(
+		sql.queries.studentQueries[_GetStudentDBWithUUID],
+		map[string]interface{}{
+			"student_uuid": studentUUID,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var temp models.StudentDBModel
+		err := rows.StructScan(&temp)
+		if err != nil {
+			return nil, err
+		}
+		student = &temp
+		break
+	}
+
+	return student, err
 }

@@ -25,3 +25,49 @@ join schools
 where schools.uuid = :school_uuid
 order by reviews.created_timestamp_server
 ;
+
+-- name: createTempReview
+insert into reviews_pre_processed (
+	uuid,
+	school_id,
+	all_text,
+	teaching_score,
+	coursework_score,
+	atmosphere_score,
+	career_preparation_score,
+	overall_score,
+	helpful_upvotes,
+	helpful_downvotes,
+	has_job,
+	did_graduate,
+	salary_before,
+	salary_after,
+	student_id,
+	school_location_id,
+	job_location_id,
+	school_graduation_date,
+	job_start_date,
+	created_timestamp_server
+)
+	select
+		:review_uuid,
+		:school_id,
+		:all_text,
+		:teaching_score,
+		:coursework_score,
+		:atmosphere_score,
+		:career_preparation_score,
+		:overall_score,
+		:helpful_upvotes,
+		:helpful_downvotes,
+		:has_job,
+		:did_graduate,
+		:salary_before,
+		:salary_after,
+		:student_id,
+		:school_location_id,
+		:job_location_id,
+		:school_graduation_date,
+		:job_start_date,
+		:created_timestamp_server
+;
