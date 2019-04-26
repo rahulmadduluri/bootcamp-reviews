@@ -510,7 +510,7 @@ class WriteReview extends Component {
   schoolReviewText = () => {
   	return (
   		<FieldWrapper label="Describe your experience" required={true}>
-			  <textarea className="textarea" placeholder="Enter your description here (500 words or less)" rows="10" onChange={this.handleReviewTextUpdated}></textarea>
+			  <textarea className="textarea" placeholder={"I felt " + this.state.selectedSchool.name + " was . . . mediocre? a waste? life-changing?"} rows="10" onChange={this.handleReviewTextUpdated}></textarea>
   		</FieldWrapper>
   	);
   };
