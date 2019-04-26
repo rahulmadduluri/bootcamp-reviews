@@ -99,6 +99,9 @@ class WriteReview extends Component {
   		this.setState({ careerPreparationScore: event.target.value });
   	}
   };
+  handleReviewTitleUpdated = (event) => {
+  	this.setState({ title: event.target.value });
+  };
   handleReviewTextUpdated = (event) => {
   	this.setState({ allText: event.target.value });
   };
@@ -144,7 +147,7 @@ class WriteReview extends Component {
   };
   handleSubmit = async () => {
   	// if missing field show modal, else, submit review
-  	if (this.state.allText === null || this.state.allText === '' || this.state.overallScore === null || this.state.teachingScore === null || 
+  	if (this.state.title === null || this.state.allText === null || this.state.allText === '' || this.state.overallScore === null || this.state.teachingScore === null || 
   		this.state.courseworkScore === null || this.state.atmosphereScore === null || this.state.careerPreparationScore === null || 
   		this.state.didGraduate === null || this.state.schoolLocationUUID === null || 
   		this.state.hasJob === null || !this.state.didAcceptTerms) {
@@ -158,9 +161,9 @@ class WriteReview extends Component {
 
 	    // create review params object
 	    const { studentUUID } = auth.getProfile();
-	    const { allText, overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
+	    const { title, allText, overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
 	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, jobLocationUUID, jobLocationOtherName, jobStartMonth, jobStartYear } = this.state;
-	    let reviewParams = { allText, overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
+	    let reviewParams = { title, allText, overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
 	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, jobLocationUUID, jobLocationOtherName, jobStartMonth, jobStartYear, studentUUID };
 
 	    const { data } = await this.props.client.mutate({
@@ -178,6 +181,9 @@ class WriteReview extends Component {
   };
   generateMissingFieldsText = () => {
   	let missingString = "The following fields are missing: ";
+  	if (this.state.title === null || this.state.title === '') {
+  		missingString += "\n\u2022 review title";
+  	}
   	if (this.state.allText === null || this.state.allText === '') {
   		missingString += "\n\u2022 description of experience (in words)";
   	}
@@ -227,6 +233,7 @@ class WriteReview extends Component {
   	// review params
 
   	// school
+  	title: null,
   	allText: null,
   	overallScore: null,
   	teachingScore: null,
@@ -509,9 +516,14 @@ class WriteReview extends Component {
 
   schoolReviewText = () => {
   	return (
-  		<FieldWrapper label="Describe your experience" required={true}>
-			  <textarea className="textarea" placeholder={"I felt " + this.state.selectedSchool.name + " was . . . mediocre? a waste? life-changing?"} rows="10" onChange={this.handleReviewTextUpdated}></textarea>
-  		</FieldWrapper>
+  		<div>
+	  		<FieldWrapper label="Review Title" required={true} controlStyle={{width: "350px"}} >
+				<input className="input" type="text" placeholder="Review Title" onChange={this.handleReviewTitleUpdated} />
+	  		</FieldWrapper>
+	  		<FieldWrapper label="Describe your experience" required={true} controlStyle={{width: "100%"}} >
+				  <textarea className="textarea" placeholder={"I felt " + this.state.selectedSchool.name + " was . . . mediocre? a waste? life-changing?"} rows="10" onChange={this.handleReviewTextUpdated}></textarea>
+	  		</FieldWrapper>
+	  	</div>
   	);
   };
 
@@ -693,7 +705,7 @@ const YearDropdown = ({ handleSelectYear }) => (
   </div>
 );
 
-const FieldWrapper = ({label, required, children}) => (
+const FieldWrapper = ({label, required, children, controlStyle}) => (
 	<div className="field">
 		{
 			label ? (
@@ -702,7 +714,7 @@ const FieldWrapper = ({label, required, children}) => (
 			) : <div/>
 		}
 		<div className="field-body">
-			<div className="control">
+			<div className="control" style={controlStyle}>
 				{children}
 			</div>
 		</div>

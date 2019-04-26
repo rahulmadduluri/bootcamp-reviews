@@ -104,6 +104,7 @@ type ComplexityRoot struct {
 		SchoolGraduationTimestamp func(childComplexity int) int
 		SchoolLocation            func(childComplexity int) int
 		TeachingScore             func(childComplexity int) int
+		Title                     func(childComplexity int) int
 		UUID                      func(childComplexity int) int
 	}
 
@@ -470,6 +471,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Review.TeachingScore(childComplexity), true
 
+	case "Review.Title":
+		if e.complexity.Review.Title == nil {
+			break
+		}
+
+		return e.complexity.Review.Title(childComplexity), true
+
 	case "Review.UUID":
 		if e.complexity.Review.UUID == nil {
 			break
@@ -772,6 +780,7 @@ type Filters {
 
 type Review {
 	uuid: ID!
+	title: String!
 	allText: String!
 	teachingScore: Int!
 	courseworkScore: Int!
@@ -794,6 +803,7 @@ type Review {
 input NewReviewParams {
 	# school
 	studentUUID: ID!
+	title: String!
 	allText: String!
 	overallScore: Int!
 	teachingScore: Int!
@@ -1699,6 +1709,33 @@ func (ec *executionContext) _Review_uuid(ctx context.Context, field graphql.Coll
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
 	return ec.marshalNID2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Review_title(ctx context.Context, field graphql.CollectedField, obj *models.Review) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "Review",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Title, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Review_allText(ctx context.Context, field graphql.CollectedField, obj *models.Review) graphql.Marshaler {
@@ -3462,6 +3499,12 @@ func (ec *executionContext) unmarshalInputNewReviewParams(ctx context.Context, v
 			if err != nil {
 				return it, err
 			}
+		case "title":
+			var err error
+			it.Title, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
 		case "allText":
 			var err error
 			it.AllText, err = ec.unmarshalNString2string(ctx, v)
@@ -4011,6 +4054,11 @@ func (ec *executionContext) _Review(ctx context.Context, sel ast.SelectionSet, o
 			out.Values[i] = graphql.MarshalString("Review")
 		case "uuid":
 			out.Values[i] = ec._Review_uuid(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "title":
+			out.Values[i] = ec._Review_title(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}

@@ -45,6 +45,7 @@ func (r *mutationResolver) SubmitReview(ctx context.Context, reviewParams models
 		reviewParams.StudentUUID,
 		reviewParams.SchoolUUID,
 		reviewParams.SchoolLocationUUID,
+		reviewParams.Title,
 		reviewParams.AllText,
 		reviewParams.TeachingScore,
 		reviewParams.CourseworkScore,

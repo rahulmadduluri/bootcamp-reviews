@@ -1,6 +1,7 @@
 -- name: getReviewsDB
 select
 	reviews.uuid as uuid,
+	reviews.title as title,
 	reviews.all_text as alltext,
 	reviews.teaching_score as teachingscore,
 	reviews.coursework_score as courseworkscore,
@@ -30,6 +31,7 @@ order by reviews.created_timestamp_server
 insert into reviews_pre_processed (
 	uuid,
 	school_id,
+	title,
 	all_text,
 	teaching_score,
 	coursework_score,
@@ -52,6 +54,7 @@ insert into reviews_pre_processed (
 	select
 		:review_uuid,
 		:school_id,
+		:title,
 		:all_text,
 		:teaching_score,
 		:coursework_score,

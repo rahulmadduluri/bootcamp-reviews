@@ -48,6 +48,7 @@ type SchoolDBModel struct {
 type ReviewDBModel struct {
 	ID                     int
 	UUID                   string
+	Title                  string
 	AllText                string
 	TeachingScore          int
 	CourseworkScore        int

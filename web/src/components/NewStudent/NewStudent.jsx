@@ -49,9 +49,9 @@ class NewStudent extends Component {
                     </div>
 
                     <div className="studentFields">
-                      <FieldRow isUpdating={true} labelText="First Name" fieldText={firstName} inputType="text"/>
-                      <FieldRow isUpdating={true} labelText="Last Name" fieldText={lastName} inputType="text" />
-                      <FieldRow isUpdating={false} labelText="Email" fieldText={email} inputType="email" />
+                      <FieldRow labelText="First Name" fieldText={firstName} inputType="text"/>
+                      <FieldRow labelText="Last Name" fieldText={lastName} inputType="text" />
+                      <FieldRow labelText="Email" fieldText={email} inputType="email" />
                     </div>
                     <div className="profileButtons">
                       <div className="buttons">
@@ -67,7 +67,7 @@ class NewStudent extends Component {
   }
 }
 
-const FieldRow = ({ isUpdating, labelText, fieldText, inputType }) => (
+const FieldRow = ({ labelText, fieldText, inputType }) => (
   <div className="field is-horizontal">
     <div className="field-body">
       <div className="field-label is-normal">
@@ -77,13 +77,7 @@ const FieldRow = ({ isUpdating, labelText, fieldText, inputType }) => (
     <div className="field-body">
       <div className="control">
       {
-        isUpdating ?
-        (
-          <input className="input" type={inputType} value={fieldText} />
-        ) :
-        (
           <input className="input is-static studentEmail" type={inputType} value={fieldText} readOnly />
-        )
       }
       </div>
     </div>

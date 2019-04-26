@@ -18,6 +18,7 @@ type ReviewDB interface {
 		studentUUID string,
 		schoolUUID string,
 		schoolLocationUUID string,
+		title string,
 		allText string,
 		teachingScore int,
 		courseworkScore int,
@@ -89,6 +90,7 @@ func (sql *sqlDB) GetReviews(schoolUUID string) ([]models.Review, error) {
 
 		review := models.Review{
 			UUID:                      rdb.UUID,
+			Title:                     rdb.Title,
 			AllText:                   rdb.AllText,
 			TeachingScore:             rdb.TeachingScore,
 			CourseworkScore:           rdb.CourseworkScore,
@@ -118,6 +120,7 @@ func (sql *sqlDB) CreateTempReview(
 	studentUUID string,
 	schoolUUID string,
 	schoolLocationUUID string,
+	title string,
 	allText string,
 	teachingScore int,
 	courseworkScore int,
@@ -164,6 +167,7 @@ func (sql *sqlDB) CreateTempReview(
 			"student_id":               student.ID,
 			"school_id":                school.ID,
 			"school_location_id":       schoolLocation.ID,
+			"title":                    title,
 			"all_text":                 allText,
 			"teaching_score":           teachingScore,
 			"coursework_score":         courseworkScore,
@@ -182,5 +186,6 @@ func (sql *sqlDB) CreateTempReview(
 			"created_timestamp_server": createdTimestamp,
 		},
 	)
+
 	return err
 }

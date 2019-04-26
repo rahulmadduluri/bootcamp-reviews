@@ -29,12 +29,14 @@ class Callback extends Component {
       }
     `;
 
+
     if (auth.isAuthenticated()) {
       const { studentUUID } = auth.getProfile();
       return (
         <Query
           query={getStudentQuery}
           variables={{ studentUUID: studentUUID }}
+          fetchPolicy="network-only"
         >
           {({ loading, error, data }) => {
             if (loading) return <p></p>;

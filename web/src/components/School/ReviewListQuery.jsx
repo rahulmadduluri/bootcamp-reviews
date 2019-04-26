@@ -8,6 +8,7 @@ const GET_REVIEWS = gql`
   query GetReviews($schoolUUID:ID!, $offset:Int!) {
     reviews(schoolUUID:$schoolUUID, offset:$offset) {
       uuid
+      title
       allText
       teachingScore
       courseworkScore
@@ -27,7 +28,11 @@ const GET_REVIEWS = gql`
 `;
 
 const ReviewListQuery = ({ schoolUUID }) => (
-  <Query query={GET_REVIEWS} variables={{ schoolUUID: schoolUUID, offset: 0 }}>
+  <Query
+    query={GET_REVIEWS}
+    variables={{ schoolUUID: schoolUUID, offset: 0 }}
+    fetchPolicy="cache-and-network"
+  >
     {({ data, fetchMore }) => {
       if (data) {
         return (

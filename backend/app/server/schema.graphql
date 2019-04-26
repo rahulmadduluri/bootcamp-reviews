@@ -85,6 +85,7 @@ type Filters {
 
 type Review {
 	uuid: ID!
+	title: String!
 	allText: String!
 	teachingScore: Int!
 	courseworkScore: Int!
@@ -107,6 +108,7 @@ type Review {
 input NewReviewParams {
 	# school
 	studentUUID: ID!
+	title: String!
 	allText: String!
 	overallScore: Int!
 	teachingScore: Int!
