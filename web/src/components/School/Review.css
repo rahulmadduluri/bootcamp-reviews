@@ -1,0 +1,67 @@
+.reviewWrapper {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border-bottom: 0.1px solid #D3D3D3;
+}
+
+
+/* Reviewer */
+.reviewerWrapper {
+	margin-bottom: 15px;
+}
+.reviewerWrapper .topBar {
+	font-size: 14px;
+}
+.reviewerWrapper .bottomStats {
+	margin-top: 5px;
+	font-size: 14px;
+	line-height: 15px;
+}
+.reviewerWrapper .topBar .reviewerBar {
+	line-height: 15px;
+	vertical-align: middle;
+	margin-right: 15px;
+	display: inline-block;
+}
+.reviewerWrapper .topBar .reviewerBarTitle {
+  color: #000000;
+  font-weight: 500;
+}
+.reviewerWrapper .topBar .reviewerBar > img {
+	height: 25px;
+	width: 25px;
+}
+.reviewerWrapper .bottomStats .reviewerStatHeader {
+	vertical-align: middle;
+	margin-right: 15px;
+	display: inline-block;
+	color: #000000;
+	font-weight: 500;
+}
+.reviewerWrapper .bottomStats .reviewerStatHeader > img {
+	height: 20px;
+	width: 20px;
+}
+.reviewerWrapper .bottomStats .reviewerStat {
+	display: inline-block;
+	margin-top: 5px;
+	margin-right: 10px;
+	color: #000000;
+}
+.reviewerWrapper .bottomStats .reviewerStatLabel {
+	font-weight: 400;
+	color: #828282;
+}
+
+/* Review  Text */
+
+.reviewTextTitle {
+  color: #000000;
+  font-weight: 500;
+  font-size: 16px;
+}
+.reviewTextDescription {
+	color: #333333;
+	font-weight: 400;
+	font-size: 14px;
+}

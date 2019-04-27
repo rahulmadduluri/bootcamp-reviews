@@ -6,7 +6,7 @@
 .media-content .schoolName {
   color: #000000;
   font-weight: 500;
-  font-size: 22px;
+  font-size: 24px;
 }
 
 .schoolInfoWrapper {
@@ -20,7 +20,7 @@
 .schoolStatsWrapper .statsLabel {
   color: #000000;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .schoolReviewsWrapper {
@@ -30,5 +30,6 @@
 .schoolReviewsWrapper .schoolReviewsLabel {
   color: #000000;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 20px;
+  margin-bottom: 10px;
 }

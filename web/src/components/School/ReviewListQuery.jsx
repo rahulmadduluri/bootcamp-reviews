@@ -8,6 +8,12 @@ const GET_REVIEWS = gql`
   query GetReviews($schoolUUID:ID!, $offset:Int!) {
     reviews(schoolUUID:$schoolUUID, offset:$offset) {
       uuid
+      schoolLocation {
+        uuid
+        city {
+          name
+        }
+      }
       title
       allText
       teachingScore
@@ -18,6 +24,12 @@ const GET_REVIEWS = gql`
       helpfulUpvotes
       helpfulDownvotes
       hasJob
+      jobLocation {
+        uuid
+        city {
+          name
+        }
+      }
       salaryBefore
       salaryAfter
       schoolGraduationTimestamp

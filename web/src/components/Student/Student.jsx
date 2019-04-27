@@ -47,7 +47,7 @@ class Student extends Component {
                     }
 
                     const { email } = auth.getProfile();
-                    const { uuid, firstName, lastName, linkedInPhotoURL } = data.student;
+                    const { firstName, lastName, linkedInPhotoURL } = data.student;
 
                     return (
                       <div className="studentInfo column is-four-fifths">

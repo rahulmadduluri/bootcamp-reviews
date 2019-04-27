@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Review from './Review.jsx';
 
 class ReviewList extends Component {
 
@@ -28,9 +29,9 @@ class ReviewList extends Component {
       <div>
         <div className="schoolReviewsLabel">Reviews</div>
         <ul className="">
-          {this.props.reviews.map(({ uuid, title, allText }) => (
-            <li key={uuid} className="">
-              {allText}
+          {this.props.reviews.map((review) => (
+            <li key={"review:"+review.uuid}>
+              <Review review={review} />
             </li>
           ))}
         </ul>
