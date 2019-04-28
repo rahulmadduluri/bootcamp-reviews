@@ -87,7 +87,6 @@ type ComplexityRoot struct {
 	}
 
 	Review struct {
-		AllText                   func(childComplexity int) int
 		AtmosphereScore           func(childComplexity int) int
 		CareerPreparationScore    func(childComplexity int) int
 		CourseworkScore           func(childComplexity int) int
@@ -104,6 +103,8 @@ type ComplexityRoot struct {
 		School                    func(childComplexity int) int
 		SchoolGraduationTimestamp func(childComplexity int) int
 		SchoolLocation            func(childComplexity int) int
+		StudentAdvice             func(childComplexity int) int
+		StudentExperience         func(childComplexity int) int
 		TeachingScore             func(childComplexity int) int
 		Title                     func(childComplexity int) int
 		UUID                      func(childComplexity int) int
@@ -353,13 +354,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.Student(childComplexity, args["uuid"].(string)), true
 
-	case "Review.AllText":
-		if e.complexity.Review.AllText == nil {
-			break
-		}
-
-		return e.complexity.Review.AllText(childComplexity), true
-
 	case "Review.AtmosphereScore":
 		if e.complexity.Review.AtmosphereScore == nil {
 			break
@@ -471,6 +465,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Review.SchoolLocation(childComplexity), true
+
+	case "Review.StudentAdvice":
+		if e.complexity.Review.StudentAdvice == nil {
+			break
+		}
+
+		return e.complexity.Review.StudentAdvice(childComplexity), true
+
+	case "Review.StudentExperience":
+		if e.complexity.Review.StudentExperience == nil {
+			break
+		}
+
+		return e.complexity.Review.StudentExperience(childComplexity), true
 
 	case "Review.TeachingScore":
 		if e.complexity.Review.TeachingScore == nil {
@@ -789,7 +797,8 @@ type Filters {
 type Review {
 	uuid: ID!
 	title: String!
-	allText: String!
+	studentExperience: String!
+	studentAdvice: String
 	teachingScore: Int!
 	courseworkScore: Int!
 	atmosphereScore: Int!
@@ -813,7 +822,8 @@ input NewReviewParams {
 	# school
 	studentUUID: ID!
 	title: String!
-	allText: String!
+	studentExperience: String!
+	studentAdvice: String
 	overallScore: Int!
 	teachingScore: Int!
 	courseworkScore: Int!
@@ -1747,7 +1757,7 @@ func (ec *executionContext) _Review_title(ctx context.Context, field graphql.Col
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Review_allText(ctx context.Context, field graphql.CollectedField, obj *models.Review) graphql.Marshaler {
+func (ec *executionContext) _Review_studentExperience(ctx context.Context, field graphql.CollectedField, obj *models.Review) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
@@ -1760,7 +1770,7 @@ func (ec *executionContext) _Review_allText(ctx context.Context, field graphql.C
 	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.AllText, nil
+		return obj.StudentExperience, nil
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -1772,6 +1782,30 @@ func (ec *executionContext) _Review_allText(ctx context.Context, field graphql.C
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
 	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Review_studentAdvice(ctx context.Context, field graphql.CollectedField, obj *models.Review) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "Review",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.StudentAdvice, nil
+	})
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Review_teachingScore(ctx context.Context, field graphql.CollectedField, obj *models.Review) graphql.Marshaler {
@@ -3541,9 +3575,15 @@ func (ec *executionContext) unmarshalInputNewReviewParams(ctx context.Context, v
 			if err != nil {
 				return it, err
 			}
-		case "allText":
+		case "studentExperience":
 			var err error
-			it.AllText, err = ec.unmarshalNString2string(ctx, v)
+			it.StudentExperience, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "studentAdvice":
+			var err error
+			it.StudentAdvice, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -4098,11 +4138,13 @@ func (ec *executionContext) _Review(ctx context.Context, sel ast.SelectionSet, o
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
-		case "allText":
-			out.Values[i] = ec._Review_allText(ctx, field, obj)
+		case "studentExperience":
+			out.Values[i] = ec._Review_studentExperience(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
+		case "studentAdvice":
+			out.Values[i] = ec._Review_studentAdvice(ctx, field, obj)
 		case "teachingScore":
 			out.Values[i] = ec._Review_teachingScore(ctx, field, obj)
 			if out.Values[i] == graphql.Null {

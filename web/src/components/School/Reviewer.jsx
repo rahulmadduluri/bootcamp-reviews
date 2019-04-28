@@ -26,8 +26,7 @@ class Reviewer extends Component {
       salaryBefore,
       salaryAfter,
       jobLocationName,
-      jobStartDate ,
-      createdDate
+      jobStartDate
     } = this.props;
 
     return (
@@ -35,7 +34,6 @@ class Reviewer extends Component {
         <div className="topBar">
           <div className="reviewerBar"><img src={this.state.gender ? StudentMaleIcon : StudentFemaleIcon} alt="Student_Icon" /></div>
           <div className="reviewerBarTitle reviewerBar">Verified Student</div>
-          <div className="reviewText reviewerBar">{createdDate}</div>
           <button className="is-small button is-secondary reviewerBar" onClick={this.didClickExpand}><strong>About Student</strong></button>
         </div>
         {

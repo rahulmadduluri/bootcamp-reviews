@@ -3,7 +3,17 @@
 	padding-bottom: 15px;
 	border-bottom: 0.1px solid #D3D3D3;
 }
-
+.reviewWrapper .reviewTitle {
+  color: #000000;
+  font-weight: 500;
+  font-size: 16px;
+}
+.reviewWrapper .reviewDate {
+  color: #333333;
+  font-weight: 400;
+  font-size: 12px;
+  margin-bottom: 15px;
+}
 
 /* Reviewer */
 .reviewerWrapper {
@@ -70,7 +80,7 @@
 /* Review Score */
 
 .reviewScoreWrapper {
-	margin-bottom: 20px;
+	margin-bottom: 25px;
 }
 .reviewScoreWrapper .reviewOverallScore {
 	width: 50px;
@@ -113,7 +123,7 @@
 .reviewTextTitle {
   color: #000000;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 14px;
 }
 .reviewTextDescription {
 	color: #333333;

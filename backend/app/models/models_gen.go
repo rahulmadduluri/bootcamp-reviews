@@ -42,7 +42,8 @@ type Location struct {
 type NewReviewParams struct {
 	StudentUUID            string  `json:"studentUUID"`
 	Title                  string  `json:"title"`
-	AllText                string  `json:"allText"`
+	StudentExperience      string  `json:"studentExperience"`
+	StudentAdvice          *string `json:"studentAdvice"`
 	OverallScore           int     `json:"overallScore"`
 	TeachingScore          int     `json:"teachingScore"`
 	CourseworkScore        int     `json:"courseworkScore"`
@@ -65,7 +66,8 @@ type NewReviewParams struct {
 type Review struct {
 	UUID                      string    `json:"uuid"`
 	Title                     string    `json:"title"`
-	AllText                   string    `json:"allText"`
+	StudentExperience         string    `json:"studentExperience"`
+	StudentAdvice             *string   `json:"studentAdvice"`
 	TeachingScore             int       `json:"teachingScore"`
 	CourseworkScore           int       `json:"courseworkScore"`
 	AtmosphereScore           int       `json:"atmosphereScore"`

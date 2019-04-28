@@ -8,7 +8,8 @@ class Review extends Component {
   render() {
     const { 
       title,
-      allText,
+      studentExperience,
+      studentAdvice,
       teachingScore,
       courseworkScore,
       atmosphereScore,
@@ -35,6 +36,8 @@ class Review extends Component {
 
     return (
       <div className="reviewWrapper">
+        <div className="reviewTitle">"{title}"</div>
+        <div className="reviewDate">{createdDate}</div>
         <Reviewer 
         schoolLocationName={schoolLocationName}
         didGraduate={didGraduate}
@@ -43,15 +46,14 @@ class Review extends Component {
         salaryBefore={salaryBefore} 
         salaryAfter={salaryAfter} 
         jobLocationName={jobLocationName} 
-        jobStartDate={jobStartDate}
-        createdDate={createdDate} />
+        jobStartDate={jobStartDate} />
         <ReviewScore 
         overallScore={overallScore} 
         teachingScore={teachingScore} 
         courseworkScore={courseworkScore} 
         atmosphereScore={atmosphereScore}
         careerPreparationScore={careerPreparationScore}/>
-        <ReviewText title={title} allText={allText} />
+        <ReviewText studentExperience={studentExperience} studentAdvice={studentAdvice} />
       </div>
     );
   }
@@ -82,10 +84,23 @@ const SecondaryScoreRating = ({ score, title }) => (
   </div>
 );
 
-const ReviewText = ({ title, allText }) => (
+const ReviewText = ({ studentExperience, studentAdvice }) => (
   <div>
-    <div className="reviewTextTitle">{title}</div>
-    <div className="reviewTextDescription">{allText}</div>
+    <div>
+      <div className="reviewTextTitle">My Experience</div>
+      <div className="reviewTextDescription">{studentExperience}</div>
+    </div>
+    {
+      studentAdvice ? (
+        <div>
+          <br/>
+          <div>
+            <div className="reviewTextTitle">My Advice for Prospective Students</div>
+            <div className="reviewTextDescription">{studentAdvice}</div>
+          </div>
+        </div>
+      ) : <div/>
+    }
   </div>
 );
 

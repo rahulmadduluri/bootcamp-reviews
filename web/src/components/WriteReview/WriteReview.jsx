@@ -102,8 +102,11 @@ class WriteReview extends Component {
   handleReviewTitleUpdated = (event) => {
   	this.setState({ title: event.target.value });
   };
-  handleReviewTextUpdated = (event) => {
-  	this.setState({ allText: event.target.value });
+  handleStudentExperienceUpdated = (event) => {
+  	this.setState({ studentExperience: event.target.value });
+  };
+  handleStudentAdviceUpdated = (event) => {
+  	this.setState({ studentAdvice: event.target.value });
   };
 
   // job handlers
@@ -147,7 +150,7 @@ class WriteReview extends Component {
   };
   handleSubmit = async () => {
   	// if missing field show modal, else, submit review
-  	if (this.state.title === null || this.state.allText === null || this.state.allText === '' || this.state.overallScore === null || this.state.teachingScore === null || 
+  	if (this.state.title === null || this.state.studentExperience === null || this.state.studentExperience === '' || this.state.overallScore === null || this.state.teachingScore === null || 
   		this.state.courseworkScore === null || this.state.atmosphereScore === null || this.state.careerPreparationScore === null || 
   		this.state.didGraduate === null || this.state.schoolLocationUUID === null || 
   		this.state.hasJob === null || !this.state.didAcceptTerms) {
@@ -161,9 +164,9 @@ class WriteReview extends Component {
 
 	    // create review params object
 	    const { studentUUID } = auth.getProfile();
-	    const { title, allText, overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
+	    const { title, studentExperience, studentAdvice, overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
 	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, jobLocationUUID, jobLocationOtherName, jobStartMonth, jobStartYear } = this.state;
-	    let reviewParams = { title, allText, overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
+	    let reviewParams = { title, studentExperience, studentAdvice, overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
 	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, jobLocationUUID, jobLocationOtherName, jobStartMonth, jobStartYear, studentUUID };
 
 	    const { data } = await this.props.client.mutate({
@@ -184,7 +187,7 @@ class WriteReview extends Component {
   	if (this.state.title === null || this.state.title === '') {
   		missingString += "\n\u2022 review title";
   	}
-  	if (this.state.allText === null || this.state.allText === '') {
+  	if (this.state.studentExperience === null || this.state.studentExperience === '') {
   		missingString += "\n\u2022 description of experience (in words)";
   	}
   	if (this.state.overallScore === null) {
@@ -234,7 +237,8 @@ class WriteReview extends Component {
 
   	// school
   	title: null,
-  	allText: null,
+  	studentExperience: null,
+  	studentAdvice: null,
   	overallScore: null,
   	teachingScore: null,
   	courseworkScore: null,
@@ -276,7 +280,9 @@ class WriteReview extends Component {
 							<br/><br/>Yours,<br/>The Raft Community
 							<br/><br/>
 						</div>
-						<div className="reviewInfoPrivacyStatement">NOTE: We take your privacy seriously. This review will be completely <strong>ANONYMOUS</strong> to both the school and prospective students.</div>
+						<div className="reviewInfoPrivacyStatement">We take your privacy seriously. This review will be completely <strong>ANONYMOUS</strong> to both the school and prospective students.</div>
+						<br/>
+						<div className="reviewInfoPrivacyStatement">required fields have <a className="required"/></div>
 					</div>
 				</div>
 				<div className="writeReviewAttendanceWrapper">
@@ -495,19 +501,19 @@ class WriteReview extends Component {
   		<div>
 			<label className="label"><div className="reviewFieldLabel">Rate {this.state.selectedSchool.name} on a scale of 1 to 10 for the following:</div></label>
 			<br/>
-			<FieldWrapper label="Overall">
+			<FieldWrapper label="Overall" required={true}>
 				<RatingDropdown handleSelectRating={this.handleOverallRating} />
 			</FieldWrapper>
-			<FieldWrapper label="Teaching">
+			<FieldWrapper label="Teaching" required={true}>
 				<RatingDropdown handleSelectRating={this.handleTeachingRating} />
 			</FieldWrapper>
-			<FieldWrapper label="Coursework">
+			<FieldWrapper label="Coursework" required={true}>
 				<RatingDropdown handleSelectRating={this.handleCourseworkRating} />
 			</FieldWrapper>
-			<FieldWrapper label="Career Preparation (finding jobs, interview prep, etc.)">
+			<FieldWrapper label="Career Preparation (finding jobs, interview prep, etc.)" required={true}>
 				<RatingDropdown handleSelectRating={this.handleCareerPrepRating} />
 			</FieldWrapper>
-			<FieldWrapper label="Atmosphere (peers, school staff, etc.)">
+			<FieldWrapper label="Atmosphere (peers, school staff, etc.)" required={true}>
 				<RatingDropdown handleSelectRating={this.handleAtmosphereRating} />
 			</FieldWrapper>
 		</div>
@@ -520,8 +526,11 @@ class WriteReview extends Component {
 	  		<FieldWrapper label="Review Title" required={true} controlStyle={{width: "350px"}} >
 				<input className="input" type="text" placeholder="Review Title" onChange={this.handleReviewTitleUpdated} />
 	  		</FieldWrapper>
-	  		<FieldWrapper label="Describe your experience" required={true} controlStyle={{width: "100%"}} >
-				  <textarea className="textarea" placeholder={"I felt " + this.state.selectedSchool.name + " was . . . mediocre? a waste? life-changing?"} rows="10" onChange={this.handleReviewTextUpdated}></textarea>
+	  		<FieldWrapper label={"How was your experience at " + this.state.selectedSchool.name + "?"} required={true} controlStyle={{width: "100%"}} >
+				  <textarea className="textarea" placeholder={"My experience at " + this.state.selectedSchool.name + " was . . . mediocre? a waste? life-changing?"} rows="10" onChange={this.handleStudentExperienceUpdated}></textarea>
+	  		</FieldWrapper>
+	  		<FieldWrapper label={"What advice do you have for students considering " + this.state.selectedSchool.name + "?"} required={false} controlStyle={{width: "100%"}} >
+				  <textarea className="textarea" placeholder={"A prospective student might just take your advice to heart! No pressure :)"} rows="10" onChange={this.handleStudentAdviceUpdated}></textarea>
 	  		</FieldWrapper>
 	  	</div>
   	);
@@ -607,7 +616,7 @@ class WriteReview extends Component {
 	  <div>
 		<div className="field">
 		  <input className="is-checkradio" id="termsCheckbox" type="checkbox" name="termsCheckbox" onChange={this.handleDidSelectTerms} />
-		  <label htmlFor="termsCheckbox">I agree to the <a href="#">terms and conditions</a> and have read the <a href="#">privacy policy</a></label>
+		  <label htmlFor="termsCheckbox">I agree to the <a href="#">terms and conditions</a><br/>and have read the <a href="#">privacy policy</a></label>
 		</div>
 	    <div className="buttons">
 	      <a className="button is-primary" key="submit" onClick={this.handleSubmit}><strong>Submit</strong></a>

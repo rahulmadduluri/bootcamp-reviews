@@ -15,7 +15,8 @@ const GET_REVIEWS = gql`
         }
       }
       title
-      allText
+      studentExperience
+      studentAdvice
       teachingScore
       courseworkScore
       atmosphereScore

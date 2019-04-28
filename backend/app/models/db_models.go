@@ -49,7 +49,8 @@ type ReviewDBModel struct {
 	ID                     int
 	UUID                   string
 	Title                  string
-	AllText                string
+	StudentExperience      string
+	StudentAdvice          *string
 	TeachingScore          int
 	CourseworkScore        int
 	AtmosphereScore        int
