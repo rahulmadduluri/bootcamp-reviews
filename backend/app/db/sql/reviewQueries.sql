@@ -10,6 +10,7 @@ select
 	reviews.overall_score as overallscore,
 	reviews.helpful_upvotes as helpfulupvotes,
 	reviews.helpful_downvotes as helpfuldownvotes,
+	reviews.did_graduate as didgraduate,
 	reviews.has_job as hasjob,
 	reviews.salary_before as salarybefore,
 	reviews.salary_after as salaryafter,

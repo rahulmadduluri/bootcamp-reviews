@@ -94,6 +94,7 @@ type Review {
 	overallScore: Int!
 	helpfulUpvotes: Int!
 	helpfulDownvotes: Int!
+	didGraduate: Boolean!
 	hasJob: Boolean!
 	salaryBefore: Int
 	salaryAfter: Int

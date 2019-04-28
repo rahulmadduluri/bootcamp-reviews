@@ -727,16 +727,16 @@ const RatingDropdown = ({ handleSelectRating }) => (
 		<select onChange={handleSelectRating}>
 		  <option value={'none'}>Select Rating</option>
 		  {
-		      	["1 (scam -- unethical and/or abusive)", 
-		      	"2 (terrible -- worse than self-studying)", 
-		      	"3 (bad -- no better than self-studying)", 
-		      	"4 (subpar -- would not recommend to a friend)", 
-		      	"5 (mediocre -- would not recommend to a friend)",
-		      	"6 (acceptable -- might recommend to a friend)",
-		      	"7 (good -- might recommend to a friend)",
-		      	"8 (great -- would probably recommend to a friend)",
-		      	"9 (amazing -- would definitely recommend to a friend)",
-		      	"10 (perfect -- would definitely recommend to anyone)"].map(
+		      	["1 (scam)", 
+		      	"2 (terrible)", 
+		      	"3 (bad)", 
+		      	"4 (subpar)", 
+		      	"5 (mediocre)",
+		      	"6 (acceptable)",
+		      	"7 (good)",
+		      	"8 (great)",
+		      	"9 (amazing)",
+		      	"10 (perfect)"].map(
 		        (rating, index) => (
 		          <option key={"rating:"+index} value={index+1}>{rating}</option>
 		        )
@@ -754,8 +754,8 @@ const SalaryDropdown = ({ defaultTitle, handleSelectSalary }) => (
 		  <option value={'none'}>{defaultTitle}</option>
 		  {
 		      	[20000,30000,40000,50000,60000,70000,80000,90000,100000,110000,120000,130000,140000,150000].map(
-		        (year) => (
-		          <option key={"year:"+year.toString()} value={year}>${numToString(year)}</option>
+		        (salary) => (
+		          <option key={"salary:"+salary.toString()} value={salary}>${numToString(salary)}</option>
 		        )
 		      )
 		  }

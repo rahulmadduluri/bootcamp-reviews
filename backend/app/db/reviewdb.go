@@ -99,6 +99,7 @@ func (sql *sqlDB) GetReviews(schoolUUID string) ([]models.Review, error) {
 			OverallScore:              rdb.OverallScore,
 			HelpfulUpvotes:            rdb.HelpfulUpvotes,
 			HelpfulDownvotes:          rdb.HelpfulDownvotes,
+			DidGraduate:               rdb.DidGraduate,
 			HasJob:                    rdb.HasJob,
 			SalaryBefore:              rdb.SalaryBefore,
 			SalaryAfter:               rdb.SalaryAfter,

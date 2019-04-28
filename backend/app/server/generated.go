@@ -92,6 +92,7 @@ type ComplexityRoot struct {
 		CareerPreparationScore    func(childComplexity int) int
 		CourseworkScore           func(childComplexity int) int
 		CreatedTimestamp          func(childComplexity int) int
+		DidGraduate               func(childComplexity int) int
 		HasJob                    func(childComplexity int) int
 		HelpfulDownvotes          func(childComplexity int) int
 		HelpfulUpvotes            func(childComplexity int) int
@@ -386,6 +387,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Review.CreatedTimestamp(childComplexity), true
+
+	case "Review.DidGraduate":
+		if e.complexity.Review.DidGraduate == nil {
+			break
+		}
+
+		return e.complexity.Review.DidGraduate(childComplexity), true
 
 	case "Review.HasJob":
 		if e.complexity.Review.HasJob == nil {
@@ -789,6 +797,7 @@ type Review {
 	overallScore: Int!
 	helpfulUpvotes: Int!
 	helpfulDownvotes: Int!
+	didGraduate: Boolean!
 	hasJob: Boolean!
 	salaryBefore: Int
 	salaryAfter: Int
@@ -1952,6 +1961,33 @@ func (ec *executionContext) _Review_helpfulDownvotes(ctx context.Context, field 
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
 	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Review_didGraduate(ctx context.Context, field graphql.CollectedField, obj *models.Review) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "Review",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DidGraduate, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Review_hasJob(ctx context.Context, field graphql.CollectedField, obj *models.Review) graphql.Marshaler {
@@ -4099,6 +4135,11 @@ func (ec *executionContext) _Review(ctx context.Context, sel ast.SelectionSet, o
 			}
 		case "helpfulDownvotes":
 			out.Values[i] = ec._Review_helpfulDownvotes(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "didGraduate":
+			out.Values[i] = ec._Review_didGraduate(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}

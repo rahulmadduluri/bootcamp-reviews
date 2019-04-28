@@ -16,6 +16,7 @@ class Review extends Component {
       overallScore ,
       helpfulUpvotes,
       helpfulDownvotes,
+      didGraduate,
       hasJob,
       salaryBefore,
       salaryAfter,
@@ -35,14 +36,21 @@ class Review extends Component {
     return (
       <div className="reviewWrapper">
         <Reviewer 
-        schoolLocationName={schoolLocationName} 
+        schoolLocationName={schoolLocationName}
+        didGraduate={didGraduate}
+        schoolGradDate={schoolGradDate}
         hasJob={hasJob} 
         salaryBefore={salaryBefore} 
         salaryAfter={salaryAfter} 
         jobLocationName={jobLocationName} 
         jobStartDate={jobStartDate}
         createdDate={createdDate} />
-        <ReviewScore />
+        <ReviewScore 
+        overallScore={overallScore} 
+        teachingScore={teachingScore} 
+        courseworkScore={courseworkScore} 
+        atmosphereScore={atmosphereScore}
+        careerPreparationScore={careerPreparationScore}/>
         <ReviewText title={title} allText={allText} />
       </div>
     );
@@ -50,7 +58,28 @@ class Review extends Component {
 }
 
 const ReviewScore = ({ overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore }) => (
-  <div/>
+  <div className="reviewScoreWrapper">
+    <div className="columns is-mobile">
+      <div className="column is-narrow">
+        <div className="reviewOverallScore">
+          <div className="scoreText">{overallScore}</div>
+        </div>
+      </div>
+      <SecondaryScoreRating score={careerPreparationScore} title={"Career Prep"} />
+      <SecondaryScoreRating score={teachingScore} title={"Teaching"} />
+      <SecondaryScoreRating score={courseworkScore} title={"Coursework"} />
+      <SecondaryScoreRating score={atmosphereScore} title={"Atmosphere"} />
+    </div>
+  </div>
+);
+
+const SecondaryScoreRating = ({ score, title }) => (
+  <div className="column is-narrow">
+    <div className="secondaryScoreWrapper">
+      <div className="secondaryScore">{score}</div>
+      <div className="secondaryScoreLabel">{title}</div>
+    </div>
+  </div>
 );
 
 const ReviewText = ({ title, allText }) => (

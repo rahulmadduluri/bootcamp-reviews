@@ -23,6 +23,7 @@ const GET_REVIEWS = gql`
       overallScore
       helpfulUpvotes
       helpfulDownvotes
+      didGraduate
       hasJob
       jobLocation {
         uuid

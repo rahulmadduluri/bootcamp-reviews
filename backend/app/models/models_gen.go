@@ -73,6 +73,7 @@ type Review struct {
 	OverallScore              int       `json:"overallScore"`
 	HelpfulUpvotes            int       `json:"helpfulUpvotes"`
 	HelpfulDownvotes          int       `json:"helpfulDownvotes"`
+	DidGraduate               bool      `json:"didGraduate"`
 	HasJob                    bool      `json:"hasJob"`
 	SalaryBefore              *int      `json:"salaryBefore"`
 	SalaryAfter               *int      `json:"salaryAfter"`
