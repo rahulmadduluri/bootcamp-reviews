@@ -73,9 +73,10 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		CreateStudent func(childComplexity int, studentInfo models.CreateStudentInput) int
-		SubmitReview  func(childComplexity int, reviewParams models.NewReviewParams) int
-		UpdateStudent func(childComplexity int, studentInfo models.UpdateStudentInput) int
+		CreateStudent     func(childComplexity int, studentInfo models.CreateStudentInput) int
+		SubmitHelpfulVote func(childComplexity int, helpful bool) int
+		SubmitReview      func(childComplexity int, reviewParams models.NewReviewParams) int
+		UpdateStudent     func(childComplexity int, studentInfo models.UpdateStudentInput) int
 	}
 
 	Query struct {
@@ -141,6 +142,7 @@ type MutationResolver interface {
 	CreateStudent(ctx context.Context, studentInfo models.CreateStudentInput) (bool, error)
 	UpdateStudent(ctx context.Context, studentInfo models.UpdateStudentInput) (bool, error)
 	SubmitReview(ctx context.Context, reviewParams models.NewReviewParams) (bool, error)
+	SubmitHelpfulVote(ctx context.Context, helpful bool) (bool, error)
 }
 type QueryResolver interface {
 	School(ctx context.Context, uuid string) (*models.School, error)
@@ -274,6 +276,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.CreateStudent(childComplexity, args["studentInfo"].(models.CreateStudentInput)), true
+
+	case "Mutation.SubmitHelpfulVote":
+		if e.complexity.Mutation.SubmitHelpfulVote == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_submitHelpfulVote_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.SubmitHelpfulVote(childComplexity, args["helpful"].(bool)), true
 
 	case "Mutation.SubmitReview":
 		if e.complexity.Mutation.SubmitReview == nil {
@@ -860,6 +874,7 @@ type Mutation {
 	updateStudent(studentInfo: UpdateStudentInput!): Boolean! @isAuthenticated
 
 	submitReview(reviewParams: NewReviewParams!): Boolean! @isAuthenticated
+	submitHelpfulVote(helpful: Boolean!): Boolean! @isAuthenticated
 }
 `},
 )
@@ -879,6 +894,20 @@ func (ec *executionContext) field_Mutation_createStudent_args(ctx context.Contex
 		}
 	}
 	args["studentInfo"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_submitHelpfulVote_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 bool
+	if tmp, ok := rawArgs["helpful"]; ok {
+		arg0, err = ec.unmarshalNBoolean2bool(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["helpful"] = arg0
 	return args, nil
 }
 
@@ -1481,6 +1510,40 @@ func (ec *executionContext) _Mutation_submitReview(ctx context.Context, field gr
 	resTmp := ec.FieldMiddleware(ctx, nil, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return ec.resolvers.Mutation().SubmitReview(rctx, args["reviewParams"].(models.NewReviewParams))
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Mutation_submitHelpfulVote(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "Mutation",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_submitHelpfulVote_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	rctx.Args = args
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, nil, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().SubmitHelpfulVote(rctx, args["helpful"].(bool))
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {
@@ -4012,6 +4075,11 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			}
 		case "submitReview":
 			out.Values[i] = ec._Mutation_submitReview(ctx, field)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "submitHelpfulVote":
+			out.Values[i] = ec._Mutation_submitHelpfulVote(ctx, field)
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}

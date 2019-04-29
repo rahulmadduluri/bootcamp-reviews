@@ -25,6 +25,7 @@
 .reviewerWrapper .bottomStats {
 	margin-top: 15px;
 	line-height: 15px;
+	padding: 10px;
 }
 .reviewerWrapper .topBar .reviewerBar {
 	line-height: 15px;
@@ -41,7 +42,7 @@
 	width: 25px;
 }
 .reviewerWrapper .bottomStats .reviewerStatHeader {
-	font-size: 16px;
+	font-size: 14px;
 	vertical-align: middle;
 	margin-right: 15px;
 	display: inline-block;
@@ -49,7 +50,6 @@
 	font-weight: 500;
 }
 .reviewerWrapper .bottomStats .reviewerStatHeader > img {
-	font-size: 14px;
 	height: 20px;
 	width: 20px;
 }
@@ -63,19 +63,9 @@
 .reviewerWrapper .bottomStats .reviewerStatLabel {
 	font-size: 14px;
 	color: #828282;
+	width:90px;
 }
-.reviewerWrapper .bottomStats .reviewerSalary {
-	font-weight: 500;
-	font-size: 14px;
-	display: inline-block;
-	color: #000000;
-}
-.reviewerWrapper .bottomStats .reviewerSalaryLabel {
-	margin-right: 10px;
-	display: inline-block;
-	font-size: 14px;
-	color: #828282;
-}
+
 
 /* Review Score */
 
@@ -129,4 +119,26 @@
 	color: #333333;
 	font-weight: 400;
 	font-size: 14px;
+}
+
+/* Review Helpful */
+
+.reviewHelpfulwrapper {
+	margin-top: 20px;
+}
+.reviewHelpfulwrapper .reviewHelpfulCount {
+	color: #000000;
+	display: inline-block;
+	margin-right: 10px;
+	font-size: 12px;
+}
+.reviewHelpfulwrapper .reviewHelpfulLabel {
+	color: #828282;
+	display: inline-block;
+	font-size: 12px;
+}
+.reviewHelpfulwrapper .reviewHelpfulButton {
+	margin-top: 10px;
+	margin-right: 20px;
+	display: inline-block;
 }

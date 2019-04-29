@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import StudentMaleIcon from '../../images/student_male_icon.png';
 import StudentFemaleIcon from '../../images/student_female_icon.png';
-import SchoolIcon from '../../images/school_icon.png';
-import JobIcon from '../../images/job_placement_icon.png';
-import FinancesIcon from '../../images/finances_icon.png';
 import { numToString } from '../../helpers/helpers.js';
 
 class Reviewer extends Component {
@@ -39,31 +36,28 @@ class Reviewer extends Component {
         {
           this.state.isExpanded ? (
             <div className="bottomStats">
-              <div className="columns is-mobile">
+              <div className="columns">
                 <div className="column is-narrow">
-                  <div className="reviewerStatHeader"><img src={SchoolIcon} alt="School_Icon" /></div>
                   <div className="reviewerStatHeader">School</div>
                   <ReviewerStat label="Graduated?" stat={didGraduate ? "Yes" : "No"} />
                   <ReviewerStat label="Location" stat={schoolLocationName} />
                   <ReviewerStat label="Grad Date" stat={schoolGradDate} />
                 </div>
                 <div className="column is-narrow">
-                  <div className="reviewerStatHeader"><img src={JobIcon} alt="Job_Icon" /></div>
                   <div className="reviewerStatHeader">Job</div>
                   <ReviewerStat label="Has Job?" stat={didGraduate ? "Yes" : "No"} />
                   <ReviewerStat label="Location" stat={jobLocationName} />
                   <ReviewerStat label="Start Date" stat={jobStartDate} />
                 </div>
-              </div>
-              <div className="reviewSalary">
-                <div>
-                  <div className="reviewerSalaryLabel">Salary Before</div>
-                  <div className="reviewerSalary">{"$" + numToString(salaryBefore)}</div>
-                </div>
-                <div>
-                  <div className="reviewerSalaryLabel">Salary After</div>
-                  <div className="reviewerSalary">{"$" + numToString(salaryAfter)}</div>
-                </div>
+                {
+                  salaryAfter ? (
+                    <div className="column is-narrow">
+                      <div className="reviewerStatHeader">Salary</div>
+                      <ReviewerStat label="Salary Before" stat={"$" + numToString(salaryBefore)} />
+                      <ReviewerStat label="Salary After" stat={"$" + numToString(salaryAfter)} />
+                    </div>
+                  ) : <div/>
+                }
               </div>
             </div>
           ) : <div/>
@@ -74,7 +68,7 @@ class Reviewer extends Component {
 }
 
 const ReviewerStat = ({ label, stat }) => (
-  <div>
+  <div className="">
     <div className="reviewerStat reviewerStatLabel">{label}</div>
     <div className="reviewerStat">{stat}</div>
   </div>

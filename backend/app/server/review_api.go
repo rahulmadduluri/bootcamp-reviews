@@ -80,6 +80,10 @@ func (r *mutationResolver) SubmitReview(ctx context.Context, reviewParams models
 	return true, nil
 }
 
+func (r *mutationResolver) SubmitHelpfulVote(ctx context.Context, helpful bool) (bool, error) {
+	panic("not implemented")
+}
+
 type ReviewEmailData struct {
 	ReviewUUID   string
 	ReviewParams models.NewReviewParams

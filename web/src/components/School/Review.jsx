@@ -1,9 +1,50 @@
 import React, { Component } from 'react';
+import { withApollo } from 'react-apollo';
+import gql from 'graphql-tag';
 import moment from 'moment';
 import Reviewer from './Reviewer.jsx';
 import './Review.css';
 
 class Review extends Component {
+
+  state = {
+    helpfulUpvotes: this.props.review.helpfulUpvotes,
+    helpfulDownvotes: this.props.review.helpfulDownvotes
+  };
+
+  onClickHelpful = async () => {
+    const helpfulMutation = gql`
+    mutation SubmitHelpfulVote($helpful: Boolean!) {
+      submitHelpfulVote(helpful: $helpful)
+    }
+    `;
+
+    const { data } = await this.props.client.mutate({
+      mutation: helpfulMutation,
+      variables: { helpful: true }
+    });
+
+    if (data.submitHelpfulVote === true) {
+      this.setState({ helpfulUpvotes: this.state.helpfulUpvotes + 1 });
+    }
+  };
+
+  onClickUnhelpful = async () => {
+    const helpfulMutation = gql`
+    mutation SubmitHelpfulVote($helpful: Boolean!) {
+      submitHelpfulVote(helpful: $helpful)
+    }
+    `;
+
+    const { data } = await this.props.client.mutate({
+      mutation: helpfulMutation,
+      variables: { helpful: false }
+    });
+
+    if (data.submitHelpfulVote === true) {
+      this.setState({ helpfulDownvotes: this.state.helpfulDownvotes + 1 });
+    }
+  };
 
   render() {
     const { 
@@ -15,8 +56,6 @@ class Review extends Component {
       atmosphereScore,
       careerPreparationScore,
       overallScore ,
-      helpfulUpvotes,
-      helpfulDownvotes,
       didGraduate,
       hasJob,
       salaryBefore,
@@ -39,21 +78,28 @@ class Review extends Component {
         <div className="reviewTitle">"{title}"</div>
         <div className="reviewDate">{createdDate}</div>
         <Reviewer 
-        schoolLocationName={schoolLocationName}
-        didGraduate={didGraduate}
-        schoolGradDate={schoolGradDate}
-        hasJob={hasJob} 
-        salaryBefore={salaryBefore} 
-        salaryAfter={salaryAfter} 
-        jobLocationName={jobLocationName} 
-        jobStartDate={jobStartDate} />
+          schoolLocationName={schoolLocationName}
+          didGraduate={didGraduate}
+          schoolGradDate={schoolGradDate}
+          hasJob={hasJob} 
+          salaryBefore={salaryBefore} 
+          salaryAfter={salaryAfter} 
+          jobLocationName={jobLocationName} 
+          jobStartDate={jobStartDate} />
         <ReviewScore 
-        overallScore={overallScore} 
-        teachingScore={teachingScore} 
-        courseworkScore={courseworkScore} 
-        atmosphereScore={atmosphereScore}
-        careerPreparationScore={careerPreparationScore}/>
-        <ReviewText studentExperience={studentExperience} studentAdvice={studentAdvice} />
+          overallScore={overallScore} 
+          teachingScore={teachingScore} 
+          courseworkScore={courseworkScore} 
+          atmosphereScore={atmosphereScore}
+          careerPreparationScore={careerPreparationScore}/>
+        <ReviewText
+          studentExperience={studentExperience}
+          studentAdvice={studentAdvice} />
+        <ReviewHelpful
+          helpfulUpvotes={this.state.helpfulUpvotes}
+          helpfulDownvotes={this.state.helpfulDownvotes} 
+          onClickHelpful={this.onClickHelpful}
+          onClickUnhelpful={this.onClickUnhelpful}/>
       </div>
     );
   }
@@ -104,4 +150,14 @@ const ReviewText = ({ studentExperience, studentAdvice }) => (
   </div>
 );
 
-export default Review;
+const ReviewHelpful = ({ helpfulUpvotes, helpfulDownvotes, onClickHelpful, onClickUnhelpful }) => (
+  <div className="reviewHelpfulwrapper">
+    <div className="reviewHelpfulCount">{helpfulUpvotes} out of {helpfulUpvotes+helpfulDownvotes}</div>
+    <div className="reviewHelpfulLabel">people found this review helpful</div>
+    <br/>
+    <button className="reviewHelpfulButton button is-small is-secondary" onClick={onClickHelpful}><strong>Helpful</strong></button>
+    <button className="reviewHelpfulButton button is-small is-secondary" onClick={onClickUnhelpful}><strong>Unhelpful</strong></button>
+  </div>
+);
+
+export default withApollo(Review);
