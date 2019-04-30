@@ -8,6 +8,7 @@ import (
 	"math"
 	"time"
 
+	auth "github.com/rahulmadduluri/raft-education/backend/app/auth"
 	db "github.com/rahulmadduluri/raft-education/backend/app/db"
 	models "github.com/rahulmadduluri/raft-education/backend/app/models"
 
@@ -80,8 +81,13 @@ func (r *mutationResolver) SubmitReview(ctx context.Context, reviewParams models
 	return true, nil
 }
 
-func (r *mutationResolver) SubmitHelpfulVote(ctx context.Context, helpful bool) (bool, error) {
-	panic("not implemented")
+func (r *mutationResolver) SubmitHelpfulVote(ctx context.Context, reviewUUID string, helpful bool) (bool, error) {
+	studentUUID := auth.UUIDFromContext(ctx)
+	err := db.Handler().SQL().SubmitHelpfulVote(studentUUID, reviewUUID, helpful)
+	if err != nil {
+		return false, err
+	}
+	return true, nil
 }
 
 type ReviewEmailData struct {

@@ -9,10 +9,17 @@ import (
 const (
 	_GetReviewsDB     = "getReviewsDB"
 	_CreateTempReview = "createTempReview"
+
+	_SubmitHelpfulVote   = "submitHelpfulVote"
+	_GetHelpfulUpvotes   = "getHelpfulUpvotes"
+	_GetHelpfulDownvotes = "getHelpfulDownvotes"
+
+	_GetReviewDBWithUUID = "getReviewDBWithUUID"
 )
 
 type ReviewDB interface {
 	GetReviews(schoolUUID string) ([]models.Review, error)
+	SubmitHelpfulVote(studentUUID string, reviewUUID string, helpful bool) error
 	CreateTempReview(
 		reviewUUID string,
 		studentUUID string,
@@ -61,7 +68,7 @@ func (sql *sqlDB) GetReviews(schoolUUID string) ([]models.Review, error) {
 	}
 
 	for _, rdb := range reviewsDB {
-		// get student, school, school location, job location create review object
+		// get student, school, school location, job location
 		school, err := sql.getSchoolWithID(rdb.SchoolID)
 		if err != nil {
 			return reviews, err
@@ -78,6 +85,7 @@ func (sql *sqlDB) GetReviews(schoolUUID string) ([]models.Review, error) {
 			}
 		}
 
+		// get school grad + job star ttimestamp
 		var graduationTimestamp *int
 		if rdb.SchoolGraduationDate != nil {
 			t := int((*rdb.SchoolGraduationDate).Unix())
@@ -89,6 +97,10 @@ func (sql *sqlDB) GetReviews(schoolUUID string) ([]models.Review, error) {
 			jobStartTimestamp = &t
 		}
 
+		// get helpful upvotes
+		helpfulUpvotes, _ := sql.getReviewHelpfulUpvotes(rdb.UUID)
+		helpfulDownvotes, _ := sql.getReviewHelpfulDownvotes(rdb.UUID)
+
 		review := models.Review{
 			UUID:                      rdb.UUID,
 			Title:                     rdb.Title,
@@ -99,8 +111,8 @@ func (sql *sqlDB) GetReviews(schoolUUID string) ([]models.Review, error) {
 			AtmosphereScore:           rdb.AtmosphereScore,
 			CareerPreparationScore:    rdb.CareerPreparationScore,
 			OverallScore:              rdb.OverallScore,
-			HelpfulUpvotes:            rdb.HelpfulUpvotes,
-			HelpfulDownvotes:          rdb.HelpfulDownvotes,
+			HelpfulUpvotes:            helpfulUpvotes,
+			HelpfulDownvotes:          helpfulDownvotes,
 			DidGraduate:               rdb.DidGraduate,
 			HasJob:                    rdb.HasJob,
 			SalaryBefore:              rdb.SalaryBefore,
@@ -193,4 +205,85 @@ func (sql *sqlDB) CreateTempReview(
 	)
 
 	return err
+}
+
+func (sql *sqlDB) SubmitHelpfulVote(
+	studentUUID string,
+	reviewUUID string,
+	helpful bool,
+) error {
+	// student
+	student, err := sql.getStudentDBWithUUID(studentUUID)
+	if err != nil {
+		return err
+	}
+	// school
+	review, err := sql.getReviewDBWithUUID(reviewUUID)
+	if err != nil {
+		return err
+	}
+
+	_, err = sql.db.NamedQuery(
+		sql.queries.reviewQueries[_SubmitHelpfulVote],
+		map[string]interface{}{
+			"review_id":  review.ID,
+			"student_id": student.ID,
+			"is_helpful": helpful,
+		},
+	)
+
+	return err
+}
+
+func (sql *sqlDB) getReviewDBWithUUID(reviewUUID string) (*models.ReviewDBModel, error) {
+	var review *models.ReviewDBModel
+
+	rows, err := sql.db.NamedQuery(
+		sql.queries.reviewQueries[_GetReviewDBWithUUID],
+		map[string]interface{}{
+			"review_uuid": reviewUUID,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var temp models.ReviewDBModel
+		err := rows.StructScan(&temp)
+		if err != nil {
+			return nil, err
+		}
+		review = &temp
+		break
+	}
+
+	return review, err
+}
+
+func (sql *sqlDB) getReviewHelpfulUpvotes(reviewUUID string) (int, error) {
+	helpfulUpvotes := 0
+
+	row := sql.db.QueryRowx(
+		sql.queries.reviewQueries[_GetHelpfulUpvotes], reviewUUID)
+	err := row.Scan(&helpfulUpvotes)
+	if err != nil {
+		return 0, err
+	}
+
+	return helpfulUpvotes, err
+}
+
+func (sql *sqlDB) getReviewHelpfulDownvotes(reviewUUID string) (int, error) {
+	helpfulDownvotes := 0
+
+	row := sql.db.QueryRowx(
+		sql.queries.reviewQueries[_GetHelpfulDownvotes], reviewUUID)
+	err := row.Scan(&helpfulDownvotes)
+	if err != nil {
+		return 0, err
+	}
+
+	return helpfulDownvotes, err
 }

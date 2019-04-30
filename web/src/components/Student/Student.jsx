@@ -35,6 +35,7 @@ class Student extends Component {
                 <Query
                   query={studentQuery}
                   variables={{ studentUUID: this.props.match.params.uuid }}
+                  fetchPolicy="cache-and-network"
                 >
                   {({ loading, error, data }) => {
                     if (loading) return <p></p>;

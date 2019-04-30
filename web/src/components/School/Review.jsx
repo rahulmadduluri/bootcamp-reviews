@@ -3,47 +3,68 @@ import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 import moment from 'moment';
 import Reviewer from './Reviewer.jsx';
+import auth from '../../Auth/auth.jsx';
+import Modal from '../Common/Modal.jsx';
 import './Review.css';
 
 class Review extends Component {
 
   state = {
+    reviewUUID: this.props.review.uuid,
     helpfulUpvotes: this.props.review.helpfulUpvotes,
-    helpfulDownvotes: this.props.review.helpfulDownvotes
+    helpfulDownvotes: this.props.review.helpfulDownvotes,
+
+    votedHelpful: false,
+    votedUnhelpful: false,
+    isSubmitHelpfulModalOpen: false
   };
 
   onClickHelpful = async () => {
+    if (!auth.isAuthenticated()) {
+      auth.login();
+      return;
+    }
+
     const helpfulMutation = gql`
-    mutation SubmitHelpfulVote($helpful: Boolean!) {
-      submitHelpfulVote(helpful: $helpful)
+    mutation SubmitHelpfulVote($reviewUUID: ID!, $helpful: Boolean!) {
+      submitHelpfulVote(reviewUUID: $reviewUUID, helpful: $helpful)
     }
     `;
 
-    const { data } = await this.props.client.mutate({
+    const res = await this.props.client.mutate({
       mutation: helpfulMutation,
-      variables: { helpful: true }
-    });
+      variables: { reviewUUID: this.state.reviewUUID, helpful: true }
+    }).catch(() => this.toggleModal());
 
-    if (data.submitHelpfulVote === true) {
-      this.setState({ helpfulUpvotes: this.state.helpfulUpvotes + 1 });
+    if (res && res.data.submitHelpfulVote === true) {
+      this.setState({ helpfulUpvotes: this.state.helpfulUpvotes + 1, votedHelpful: true });
     }
   };
 
   onClickUnhelpful = async () => {
+    if (!auth.isAuthenticated()) {
+      auth.login();
+      return;
+    }
+
     const helpfulMutation = gql`
-    mutation SubmitHelpfulVote($helpful: Boolean!) {
-      submitHelpfulVote(helpful: $helpful)
+    mutation SubmitHelpfulVote($reviewUUID: ID!, $helpful: Boolean!) {
+      submitHelpfulVote(reviewUUID: $reviewUUID, helpful: $helpful)
     }
     `;
 
-    const { data } = await this.props.client.mutate({
+    const res = await this.props.client.mutate({
       mutation: helpfulMutation,
-      variables: { helpful: false }
-    });
+      variables: { reviewUUID: this.state.reviewUUID, helpful: false }
+    }).catch(() => this.toggleModal());
 
-    if (data.submitHelpfulVote === true) {
-      this.setState({ helpfulDownvotes: this.state.helpfulDownvotes + 1 });
+    if (res && res.data.submitHelpfulVote === true) {
+      this.setState({ helpfulDownvotes: this.state.helpfulDownvotes + 1, votedUnhelpful: true });
     }
+  };
+
+  toggleModal = () => {
+    this.setState({ isSubmitHelpfulModalOpen: !this.state.isSubmitHelpfulModalOpen })
   };
 
   render() {
@@ -75,6 +96,13 @@ class Review extends Component {
 
     return (
       <div className="reviewWrapper">
+        <Modal 
+          show={this.state.isSubmitHelpfulModalOpen}
+          onClose={this.toggleModal}
+          titleText="Failed to Submit Vote"
+          contentText="vote already submitted"
+          primaryButtonTitle="Okay">
+        </Modal>
         <div className="reviewTitle">"{title}"</div>
         <div className="reviewDate">{createdDate}</div>
         <Reviewer 
@@ -96,6 +124,8 @@ class Review extends Component {
           studentExperience={studentExperience}
           studentAdvice={studentAdvice} />
         <ReviewHelpful
+          votedHelpful={this.state.votedHelpful}
+          votedUnhelpful={this.state.votedUnhelpful}
           helpfulUpvotes={this.state.helpfulUpvotes}
           helpfulDownvotes={this.state.helpfulDownvotes} 
           onClickHelpful={this.onClickHelpful}
@@ -150,13 +180,25 @@ const ReviewText = ({ studentExperience, studentAdvice }) => (
   </div>
 );
 
-const ReviewHelpful = ({ helpfulUpvotes, helpfulDownvotes, onClickHelpful, onClickUnhelpful }) => (
+const ReviewHelpful = ({ votedHelpful, votedUnhelpful, helpfulUpvotes, helpfulDownvotes, onClickHelpful, onClickUnhelpful }) => (
   <div className="reviewHelpfulwrapper">
     <div className="reviewHelpfulCount">{helpfulUpvotes} out of {helpfulUpvotes+helpfulDownvotes}</div>
     <div className="reviewHelpfulLabel">people found this review helpful</div>
     <br/>
-    <button className="reviewHelpfulButton button is-small is-secondary" onClick={onClickHelpful}><strong>Helpful</strong></button>
-    <button className="reviewHelpfulButton button is-small is-secondary" onClick={onClickUnhelpful}><strong>Unhelpful</strong></button>
+    {
+      votedHelpful ? (
+        <button className="reviewHelpfulButton button is-small is-primary" onClick={onClickHelpful}><strong>Helpful</strong></button>
+      ) : (
+        <button className="reviewHelpfulButton button is-small is-secondary" onClick={onClickHelpful}><strong>Helpful</strong></button>
+      )
+    }
+    {
+      votedUnhelpful ? (
+        <button className="reviewHelpfulButton button is-small is-primary" onClick={onClickUnhelpful}><strong>Unhelpful</strong></button>
+      ) : (
+        <button className="reviewHelpfulButton button is-small is-secondary" onClick={onClickUnhelpful}><strong>Unhelpful</strong></button>
+      )
+    }
   </div>
 );
 

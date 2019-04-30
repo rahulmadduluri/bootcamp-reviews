@@ -74,7 +74,7 @@ type ComplexityRoot struct {
 
 	Mutation struct {
 		CreateStudent     func(childComplexity int, studentInfo models.CreateStudentInput) int
-		SubmitHelpfulVote func(childComplexity int, helpful bool) int
+		SubmitHelpfulVote func(childComplexity int, reviewUUID string, helpful bool) int
 		SubmitReview      func(childComplexity int, reviewParams models.NewReviewParams) int
 		UpdateStudent     func(childComplexity int, studentInfo models.UpdateStudentInput) int
 	}
@@ -142,7 +142,7 @@ type MutationResolver interface {
 	CreateStudent(ctx context.Context, studentInfo models.CreateStudentInput) (bool, error)
 	UpdateStudent(ctx context.Context, studentInfo models.UpdateStudentInput) (bool, error)
 	SubmitReview(ctx context.Context, reviewParams models.NewReviewParams) (bool, error)
-	SubmitHelpfulVote(ctx context.Context, helpful bool) (bool, error)
+	SubmitHelpfulVote(ctx context.Context, reviewUUID string, helpful bool) (bool, error)
 }
 type QueryResolver interface {
 	School(ctx context.Context, uuid string) (*models.School, error)
@@ -287,7 +287,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.SubmitHelpfulVote(childComplexity, args["helpful"].(bool)), true
+		return e.complexity.Mutation.SubmitHelpfulVote(childComplexity, args["reviewUUID"].(string), args["helpful"].(bool)), true
 
 	case "Mutation.SubmitReview":
 		if e.complexity.Mutation.SubmitReview == nil {
@@ -874,7 +874,7 @@ type Mutation {
 	updateStudent(studentInfo: UpdateStudentInput!): Boolean! @isAuthenticated
 
 	submitReview(reviewParams: NewReviewParams!): Boolean! @isAuthenticated
-	submitHelpfulVote(helpful: Boolean!): Boolean! @isAuthenticated
+	submitHelpfulVote(reviewUUID: ID!, helpful: Boolean!): Boolean! @isAuthenticated
 }
 `},
 )
@@ -900,14 +900,22 @@ func (ec *executionContext) field_Mutation_createStudent_args(ctx context.Contex
 func (ec *executionContext) field_Mutation_submitHelpfulVote_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 bool
-	if tmp, ok := rawArgs["helpful"]; ok {
-		arg0, err = ec.unmarshalNBoolean2bool(ctx, tmp)
+	var arg0 string
+	if tmp, ok := rawArgs["reviewUUID"]; ok {
+		arg0, err = ec.unmarshalNID2string(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["helpful"] = arg0
+	args["reviewUUID"] = arg0
+	var arg1 bool
+	if tmp, ok := rawArgs["helpful"]; ok {
+		arg1, err = ec.unmarshalNBoolean2bool(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["helpful"] = arg1
 	return args, nil
 }
 
@@ -1543,7 +1551,7 @@ func (ec *executionContext) _Mutation_submitHelpfulVote(ctx context.Context, fie
 	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, nil, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().SubmitHelpfulVote(rctx, args["helpful"].(bool))
+		return ec.resolvers.Mutation().SubmitHelpfulVote(rctx, args["reviewUUID"].(string), args["helpful"].(bool))
 	})
 	if resTmp == nil {
 		if !ec.HasError(rctx) {

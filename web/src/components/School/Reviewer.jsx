@@ -45,7 +45,7 @@ class Reviewer extends Component {
                 </div>
                 <div className="column is-narrow">
                   <div className="reviewerStatHeader">Job</div>
-                  <ReviewerStat label="Has Job?" stat={didGraduate ? "Yes" : "No"} />
+                  <ReviewerStat label="Has Job?" stat={hasJob ? "Yes" : "No"} />
                   <ReviewerStat label="Location" stat={jobLocationName} />
                   <ReviewerStat label="Start Date" stat={jobStartDate} />
                 </div>

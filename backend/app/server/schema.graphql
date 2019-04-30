@@ -149,5 +149,5 @@ type Mutation {
 	updateStudent(studentInfo: UpdateStudentInput!): Boolean! @isAuthenticated
 
 	submitReview(reviewParams: NewReviewParams!): Boolean! @isAuthenticated
-	submitHelpfulVote(helpful: Boolean!): Boolean! @isAuthenticated
+	submitHelpfulVote(reviewUUID: ID!, helpful: Boolean!): Boolean! @isAuthenticated
 }

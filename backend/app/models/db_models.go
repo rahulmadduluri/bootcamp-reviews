@@ -56,8 +56,6 @@ type ReviewDBModel struct {
 	AtmosphereScore        int
 	CareerPreparationScore int
 	OverallScore           int
-	HelpfulUpvotes         int
-	HelpfulDownvotes       int
 	DidGraduate            bool
 	HasJob                 bool
 	SalaryBefore           *int

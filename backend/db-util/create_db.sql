@@ -80,8 +80,6 @@ CREATE TABLE IF NOT EXISTS reviews (
 	atmosphere_score			int				NOT NULL,
 	career_preparation_score 	int			    NOT NULL,
 	overall_score				int				NOT NULL,
-	helpful_upvotes				int 			NOT NULL,
-	helpful_downvotes			int 			NOT NULL,
 	did_graduate 				boolean			NOT NULL,
 	has_job						boolean			NOT NULL,
 	salary_before				int,
@@ -113,8 +111,6 @@ CREATE TABLE IF NOT EXISTS reviews_pre_processed (
 	atmosphere_score			int				NOT NULL,
 	career_preparation_score 	int			    NOT NULL,
 	overall_score				int				NOT NULL,
-	helpful_upvotes				int 			NOT NULL,
-	helpful_downvotes			int 			NOT NULL,
 	did_graduate 				boolean			NOT NULL,
 	has_job						boolean			NOT NULL,
 	salary_before				int,
@@ -132,6 +128,15 @@ CREATE TABLE IF NOT EXISTS reviews_pre_processed (
 	FOREIGN KEY (school_id) REFERENCES schools (id),
 	FOREIGN KEY (school_location_id) REFERENCES locations (id),
 	FOREIGN KEY (job_location_id) REFERENCES locations (id)
+);
+
+CREATE TABLE IF NOT EXISTS reviews_helpful (
+	review_id  				int 			NOT NULL,
+	student_id				int 			NOT NULL,
+	is_helpful				boolean			NOT NULL,
+	UNIQUE KEY (review_id, student_id),
+	FOREIGN KEY (review_id) REFERENCES reviews (id),
+	FOREIGN KEY (student_id) REFERENCES students (id)
 );
 
 INSERT INTO schools VALUES
@@ -220,119 +225,119 @@ INSERT INTO reviews VALUES
 	'An amazing experience from beginning to finish', '1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	'My biggest advice for prospective students is to do your homework in advance. Lambda goes from 0 to 60 really quickly and if you do not have any CS experience beforehand, it will frankly be hard to keep up',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,25, 1,1,30000,90000,1,9, # helpful count = 20/25, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	1,1,30000,90000,1,9, # has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-2',
 	'An amazing experience from beginning to finish', '1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	'My biggest advice for prospective students is to do your homework in advance. Lambda goes from 0 to 60 really quickly and if you do not have any CS experience beforehand, it will frankly be hard to keep up',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,25,1,1,30000,90000,1,9, # helpful count = 20/25, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	1,1,30000,90000,1,9, # has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-3',
 	'An amazing experience from beginning to finish', '1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	'My biggest advice for prospective students is to do your homework in advance. Lambda goes from 0 to 60 really quickly and if you do not have any CS experience beforehand, it will frankly be hard to keep up',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,25,1,1,30000,90000,1,9, # helpful count = 20/25, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	1,1,30000,90000,1,9, # has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-4',
 	'An amazing experience from beginning to finish', '1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	'My biggest advice for prospective students is to do your homework in advance. Lambda goes from 0 to 60 really quickly and if you do not have any CS experience beforehand, it will frankly be hard to keep up',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,25,1,1,30000,90000,1,9, # helpful count = 20/25, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	1,1,30000,90000,1,9, # has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-5',
 	'An amazing experience from beginning to finish', '1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	'My biggest advice for prospective students is to do your homework in advance. Lambda goes from 0 to 60 really quickly and if you do not have any CS experience beforehand, it will frankly be hard to keep up',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,25,1,1,30000,90000,1,9, # helpful count = 20/25, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	1,1,30000,90000,1,9, # has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-6',
 	'An amazing experience from beginning to finish', '1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	'My biggest advice for prospective students is to do your homework in advance. Lambda goes from 0 to 60 really quickly and if you do not have any CS experience beforehand, it will frankly be hard to keep up',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,25,1,1,30000,90000,1,9, # helpful count = 20/25, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	1,1,30000,90000,1,9, # has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-7',
 	'An amazing experience from beginning to finish', '1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	'My biggest advice for prospective students is to do your homework in advance. Lambda goes from 0 to 60 really quickly and if you do not have any CS experience beforehand, it will frankly be hard to keep up',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,25,1,1,30000,90000,1,9, # helpful count = 20/25, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	1,1,30000,90000,1,9, # has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-8',
 	'An amazing experience from beginning to finish', '1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	'My biggest advice for prospective students is to do your homework in advance. Lambda goes from 0 to 60 really quickly and if you do not have any CS experience beforehand, it will frankly be hard to keep up',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,25,1,1,30000,90000,1,9, # helpful count = 20/25, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	1,1,30000,90000,1,9, # has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-9',
 	'An amazing experience from beginning to finish', '1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	'My biggest advice for prospective students is to do your homework in advance. Lambda goes from 0 to 60 really quickly and if you do not have any CS experience beforehand, it will frankly be hard to keep up',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,25,1,1,30000,90000,1,9, # helpful count = 20/25, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	1,1,30000,90000,1,9, # has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-10',
 	'An amazing experience from beginning to finish', '1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	'My biggest advice for prospective students is to do your homework in advance. Lambda goes from 0 to 60 really quickly and if you do not have any CS experience beforehand, it will frankly be hard to keep up',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,25,1,1,30000,90000,1,9, # helpful count = 20/25, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	1,1,30000,90000,1,9, # has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-11',
 	'An amazing experience from beginning to finish', '1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	'My biggest advice for prospective students is to do your homework in advance. Lambda goes from 0 to 60 really quickly and if you do not have any CS experience beforehand, it will frankly be hard to keep up',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,25,1,1,30000,90000,1,9, # helpful count = 20/25, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	1,1,30000,90000,1,9, # has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-12',
 	'An amazing experience from beginning to finish', '1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	'My biggest advice for prospective students is to do your homework in advance. Lambda goes from 0 to 60 really quickly and if you do not have any CS experience beforehand, it will frankly be hard to keep up',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,25,1,1,30000,90000,1,9, # helpful count = 20/25, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	1,1,30000,90000,1,9, # has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-13',
 	'An amazing experience from beginning to finish', '1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	'My biggest advice for prospective students is to do your homework in advance. Lambda goes from 0 to 60 really quickly and if you do not have any CS experience beforehand, it will frankly be hard to keep up',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,25,1,1,30000,90000,1,9, # helpful count = 20/25, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	1,1,30000,90000,1,9, # has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-14',
 	'An amazing experience from beginning to finish', '1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	'My biggest advice for prospective students is to do your homework in advance. Lambda goes from 0 to 60 really quickly and if you do not have any CS experience beforehand, it will frankly be hard to keep up',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,25,1,1,30000,90000,1,9, # helpful count = 20/25, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	1,1,30000,90000,1,9, # has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-15',
 	'An amazing experience from beginning to finish', '1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	'My biggest advice for prospective students is to do your homework in advance. Lambda goes from 0 to 60 really quickly and if you do not have any CS experience beforehand, it will frankly be hard to keep up',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,25,1,1,30000,90000,1,9, # helpful count = 20/25, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	1,1,30000,90000,1,9, # has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-16',
 	'An amazing experience from beginning to finish', '1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	'My biggest advice for prospective students is to do your homework in advance. Lambda goes from 0 to 60 really quickly and if you do not have any CS experience beforehand, it will frankly be hard to keep up',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,25,1,1,30000,90000,1,9, # helpful count = 20/25, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	1,1,30000,90000,1,9, # has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	),
 	(NULL, 'uuid-17',
 	'An amazing experience from beginning to finish', '1I cannot say enough about Lambda School. I graduated in 07 with a degree in marketing and have been struggling lately to make ends meet. I got a job straight out of college that paid ~$30,000, but I do not see a promising path to make a high wage. Since the risk for Lambda is so low, I took the plunge, and I am incredibly glad I did. Calling Lambda life-altering would legitimately be an understatement.',
 	'My biggest advice for prospective students is to do your homework in advance. Lambda goes from 0 to 60 really quickly and if you do not have any CS experience beforehand, it will frankly be hard to keep up',
 	7,9,6,10,8.0, # scores = 7,9,6,10, overall 8.0
-	20,25,1,1,30000,90000,1,9, # helpful count = 20/25, has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
+	1,1,30000,90000,1,9, # has_job=true, salary before = 30000, salary after = 90000, student=1, school=9
 	1,8,'2017-05-09 00:00:01','2017-09-20 00:00:01',1000 # school location=1, job lcoation = 8, grad-date = 5/17, job-start = 9/17
 	)
 	;
