@@ -21,7 +21,7 @@ export const LocationBar = locationWrapper => {
     return (
       <div className="location">
         <img src={LocationIcon} alt="Location" />
-        <div className="campusLocationsLabel">All Locations</div>
+        <div className="campusLocationsLabel">Locations</div>
         <div className="campusLocations">{list}</div>
       </div>
     );

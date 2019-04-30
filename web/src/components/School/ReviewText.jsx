@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Reviewer from './Reviewer.jsx';
 import TextTruncate from 'react-text-truncate';
 import './Review.css';
 

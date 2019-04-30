@@ -50,7 +50,7 @@ class School extends Component {
             {({ loading, error, data }) => {
               if (loading) return <p>Loading...</p>;
               if (error) return <p>Error :(</p>;
-              const { name, photoURI } = data.school;
+              const { name, campusLocations, lengthInWeeks, paymentType, basePrice, photoURI } = data.school;
               return (
                 <div>
                   <div className="schoolInfoWrapper">
@@ -61,17 +61,9 @@ class School extends Component {
                         </div>
                         <div className="media-content">
                           <div className="schoolName">{name}</div>
-                          <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis
-                            nostrud exercitation ullamco laboris nisi ut aliquip
-                            ex ea commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate velit esse cillum dolore eu
-                            fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia
-                            deserunt mollit anim id est laborum.
-                          </p>
+                          <PriceBar basePrice={basePrice} paymentType={paymentType} />
+                          <LocationBar showAllLocationsLabel={true} campusLocations={campusLocations} />
+                          <LengthBar length={lengthInWeeks} />
                         </div>
                       </div>
                     </div>
@@ -98,13 +90,10 @@ class School extends Component {
 }
 
 const Stats = ({ school }) => {
-  const { campusLocations, paymentType, basePrice, lengthInWeeks } = school;
+  const { campusLocations } = school;
   return (
     <div>
       <div className="statsLabel">Stats</div>
-      <LocationBar campusLocations={campusLocations} />
-      <PriceBar basePrice={basePrice} paymentType={paymentType} />
-      <LengthBar length={lengthInWeeks} />
       <SalaryBar campusLocations={campusLocations} />
       <JobPlacementBar campusLocations={campusLocations} />
     </div>

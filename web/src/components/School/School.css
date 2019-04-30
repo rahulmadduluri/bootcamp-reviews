@@ -7,26 +7,98 @@
   color: #000000;
   font-weight: 500;
   font-size: 24px;
+  margin-bottom: 15px;
 }
 
+/* School Info */
 .schoolInfoWrapper {
   padding-top: 40px;
 }
+.schoolInfoWrapper .price {
+  line-height: 15px;
+  margin-bottom: 15px;
+}
+.schoolInfoWrapper .price .basePrice {
+  color: #000000;
+  font-weight: 500;
+  font-size: 16px;
+  display: inline-block;
+}
+.schoolInfoWrapper .price .paymentType {
+  margin-left: 8px;
+  display: inline-block;
+}
+.schoolInfoWrapper .price .paymentType > img {
+  height: 18px;
+  width: auto;
+  vertical-align: middle;
+  margin-bottom: 2px;
+}
+.schoolInfoWrapper .location {
+  display: flex;
+  line-height: 15px;
+  margin-bottom: 10px;
+}
+.schoolInfoWrapper .location > img {
+  height: 15px;
+  width: 11px;
+  display: inline-block;
+  margin-right: 10px;
+}
+.schoolInfoWrapper .campusLocationsLabel {
+  font-size: 14px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+  color: #828282;
+  min-width: 64px; /* extra to account for smaller image */
+}
+.schoolInfoWrapper .campusLocations {
+  font-size: 14px;
+  display: inline-block;
+  vertical-align: middle;
+  color: #000000;
+}
+.schoolInfoWrapper .length {
+  display: flex;
+  line-height: 15px;
+}
+.schoolInfoWrapper .lengthImage > img {
+  height: 15px;
+  width: 15px;
+  display: inline-block;
+  margin-right: 10px;
+}
+.schoolInfoWrapper .lengthInWeeksLabel {
+  font-size: 14px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+  color: #828282;
+  min-width: 60px;
+}
+.schoolInfoWrapper .lengthInWeeks {
+  font-size: 14px;
+  display: inline-block;
+  vertical-align: middle;
+  color: #000000;
+}
 
+
+/* School Stats */
 .schoolStatsWrapper {
   margin-top: 40px;
 }
-
 .schoolStatsWrapper .statsLabel {
   color: #000000;
   font-weight: 500;
   font-size: 20px;
 }
 
+/* School Reviews */
 .schoolReviewsWrapper {
   margin-top: 40px;
 }
-
 .schoolReviewsWrapper .schoolReviewsLabel {
   color: #000000;
   font-weight: 500;

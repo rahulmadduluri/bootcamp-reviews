@@ -99,7 +99,7 @@ const FieldRow = ({ labelText, fieldText, inputType }) => (
 const ProfileButtons = ({ onSignOutLink, onUpdatingStatusLink, onUpdateProfileLink, onCancelUpdateProfileLink }) => (
   <div className="profileButtons">
     <div className="buttons">
-      <a className="button is-secondary" key="logOut" onClick={onSignOutLink}><strong>Log Out</strong></a>
+      <button className="button is-secondary" key="logOut" onClick={onSignOutLink}><strong>Log Out</strong></button>
     </div>
   </div>
 );

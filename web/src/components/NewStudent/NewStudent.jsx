@@ -55,7 +55,7 @@ class NewStudent extends Component {
                     </div>
                     <div className="profileButtons">
                       <div className="buttons">
-                        <a className="button is-primary" key="signUp" onClick={this.onSignUpClick}><strong>Sign Up</strong></a>
+                        <button className="button is-primary" key="signUp" onClick={this.onSignUpClick}><strong>Sign Up</strong></button>
                       </div>
                     </div>
                 </div>

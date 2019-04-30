@@ -56,7 +56,7 @@ class Navbar extends React.Component {
     return (
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
-          <a className="navbar-item" href="/">
+          <a className="navbar-item" href="/home">
             <img src={raftSquare} alt="Logo" />
           </a>
 
@@ -94,8 +94,8 @@ class Navbar extends React.Component {
               <div className="buttons">
                 {
                   ( isAuthenticated ) ? 
-                  <a className="navProfileImage" href={'/students/' + profile.studentUUID}><img src={profile.linkedInPhotoURL} alt="ProfilePhoto" /></a> :  
-                  <a className="button is-primary" onClick={this.onSignInLink}><strong>Log In</strong></a>
+                  <button className="button is-primary navProfileImage" href={'/students/' + profile.studentUUID}><img src={profile.linkedInPhotoURL} alt="ProfilePhoto" /></button> :  
+                  <button className="button is-primary" onClick={this.onSignInLink}><strong>Log In</strong></button>
                 }
               </div>
             </div>
