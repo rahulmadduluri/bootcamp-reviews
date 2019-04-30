@@ -31,7 +31,13 @@ class Reviewer extends Component {
         <div className="topBar">
           <div className="reviewerBar"><img src={this.state.gender ? StudentMaleIcon : StudentFemaleIcon} alt="Student_Icon" /></div>
           <div className="reviewerBarTitle reviewerBar">Verified Student</div>
-          <button className="is-small button is-secondary reviewerBar" onClick={this.didClickExpand}><strong>About Student</strong></button>
+          {
+            this.state.isExpanded ? (
+              <button className="is-small button is-primary reviewerBar" onClick={this.didClickExpand}><strong>About Student</strong></button>
+            ) : (
+              <button className="is-small button is-secondary reviewerBar" onClick={this.didClickExpand}><strong>About Student</strong></button>
+            )
+          }
         </div>
         {
           this.state.isExpanded ? (

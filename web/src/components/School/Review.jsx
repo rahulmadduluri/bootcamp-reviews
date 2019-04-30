@@ -3,6 +3,7 @@ import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 import moment from 'moment';
 import Reviewer from './Reviewer.jsx';
+import ReviewText from './ReviewText.jsx';
 import auth from '../../Auth/auth.jsx';
 import Modal from '../Common/Modal.jsx';
 import './Review.css';
@@ -157,26 +158,6 @@ const SecondaryScoreRating = ({ score, title }) => (
       <div className="secondaryScore">{score}</div>
       <div className="secondaryScoreLabel">{title}</div>
     </div>
-  </div>
-);
-
-const ReviewText = ({ studentExperience, studentAdvice }) => (
-  <div>
-    <div>
-      <div className="reviewTextTitle">My Experience</div>
-      <div className="reviewTextDescription">{studentExperience}</div>
-    </div>
-    {
-      studentAdvice ? (
-        <div>
-          <br/>
-          <div>
-            <div className="reviewTextTitle">My Advice for Prospective Students</div>
-            <div className="reviewTextDescription">{studentAdvice}</div>
-          </div>
-        </div>
-      ) : <div/>
-    }
   </div>
 );
 
