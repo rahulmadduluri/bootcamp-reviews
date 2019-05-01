@@ -289,11 +289,11 @@ func (sql *sqlDB) getReviewHelpfulDownvotes(reviewUUID string) (int, error) {
 }
 
 func (sql *sqlDB) getSchoolReviewSummary(schoolUUID string) (models.SchoolReviewSummary, error) {
-	averageOverallScore := 0
-	averageTeachingScore := 0
-	averageCourseworkScore := 0
-	averageAtmosphereScore := 0
-	averageCareerPreparationScore := 0
+	averageOverallScore := 0.0
+	averageTeachingScore := 0.0
+	averageCourseworkScore := 0.0
+	averageAtmosphereScore := 0.0
+	averageCareerPreparationScore := 0.0
 
 	salaryBeforeCount := 0
 	salaryAfterCount := 0
@@ -332,19 +332,20 @@ func (sql *sqlDB) getSchoolReviewSummary(schoolUUID string) (models.SchoolReview
 			salaryAfterCount += 1
 			averageSalaryAfter += *rdb.SalaryAfter
 		}
-		averageOverallScore += rdb.OverallScore
-		averageTeachingScore += rdb.TeachingScore
-		averageCourseworkScore += rdb.CourseworkScore
-		averageAtmosphereScore += rdb.AtmosphereScore
-		averageCareerPreparationScore += rdb.CareerPreparationScore
+		averageOverallScore += float64(rdb.OverallScore)
+		averageTeachingScore += float64(rdb.TeachingScore)
+		averageCourseworkScore += float64(rdb.CourseworkScore)
+		averageAtmosphereScore += float64(rdb.AtmosphereScore)
+		averageCareerPreparationScore += float64(rdb.CareerPreparationScore)
 	}
 
 	if len(reviewsDB) > 0 {
-		averageOverallScore = averageOverallScore / len(reviewsDB)
-		averageTeachingScore = averageTeachingScore / len(reviewsDB)
-		averageCourseworkScore = averageCourseworkScore / len(reviewsDB)
-		averageAtmosphereScore = averageAtmosphereScore / len(reviewsDB)
-		averageCareerPreparationScore = averageCareerPreparationScore / len(reviewsDB)
+		reviewDBLen := float64(len(reviewsDB))
+		averageOverallScore = float64(averageOverallScore) / reviewDBLen
+		averageTeachingScore = float64(averageTeachingScore) / reviewDBLen
+		averageCourseworkScore = float64(averageCourseworkScore) / reviewDBLen
+		averageAtmosphereScore = float64(averageAtmosphereScore) / reviewDBLen
+		averageCareerPreparationScore = float64(averageCareerPreparationScore) / reviewDBLen
 	}
 
 	summary = models.SchoolReviewSummary{

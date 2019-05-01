@@ -43,11 +43,11 @@ type CampusLocation {
 
 # summary of school review info
 type SchoolReviewSummary {
-	overallScore: Int!
-	teachingScore: Int!
-	courseworkScore: Int!
-	atmosphereScore: Int!
-	careerPreparationScore: Int!
+	overallScore: Float!
+	teachingScore: Float!
+	courseworkScore: Float!
+	atmosphereScore: Float!
+	careerPreparationScore: Float!
 	averageSalaryBefore: Int
 	averageSalaryAfter: Int
 }

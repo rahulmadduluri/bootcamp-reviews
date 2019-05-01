@@ -14,6 +14,15 @@ import ReviewListQuery from './ReviewListQuery.jsx';
 import './School.css';
 
 class School extends Component {
+
+  state = {
+    overallScore: null,
+    teachingScore: null,
+    courseworkScore: null,
+    atmosphereScore: null,
+    careerPreparationScore: null
+  }
+
   render() {
     const getQuery = gql`
       query GetSchool($schoolUUID: ID!) {
@@ -58,7 +67,9 @@ class School extends Component {
             {({ loading, error, data }) => {
               if (loading) return <p>Loading...</p>;
               if (error) return <p>Error :(</p>;
+
               const { name, campusLocations, lengthInWeeks, studentTeacherRatio, paymentType, basePrice, photoURI, reviewSummary } = data.school;
+
               return (
                 <div>
                   <div className="schoolInfoWrapper">
@@ -82,16 +93,16 @@ class School extends Component {
                       <StudentOutcomes reviewSummary={reviewSummary} />
                     </div>
                   </div>
+                  <div className="schoolReviewsWrapper">
+                    <div className="defaultContainer column is-three-fifths">
+                      <ReviewAverages reviewSummary={reviewSummary} />
+                      <ReviewListQuery schoolUUID={this.props.uuid}/>
+                    </div>
+                  </div>
                 </div>
               );
             }}
           </Query>
-
-          <div className="schoolReviewsWrapper">
-            <div className="defaultContainer column is-three-fifths">
-              <ReviewListQuery schoolUUID={this.props.uuid}/>
-            </div>
-          </div>
         </div>
       </div>
     );
@@ -106,6 +117,19 @@ const StudentOutcomes = ({ reviewSummary }) => {
       <div className="studentOutcomesLabel">Student Outcomes</div>
       <SalaryBar after={true} salaryAfter={reviewSummary.averageSalaryAfter} />
       <SalaryBar after={false} salaryBefore={reviewSummary.averageSalaryBefore} />
+    </div>
+  );
+};
+
+const ReviewAverages = ({reviewSummary}) => {
+  const { overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore } = reviewSummary;
+  return (
+    <div>
+      {overallScore}
+      {teachingScore}
+      {courseworkScore}
+      {atmosphereScore}
+      {careerPreparationScore}
     </div>
   );
 };

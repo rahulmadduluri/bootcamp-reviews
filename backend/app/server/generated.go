@@ -827,11 +827,11 @@ type CampusLocation {
 
 # summary of school review info
 type SchoolReviewSummary {
-	overallScore: Int!
-	teachingScore: Int!
-	courseworkScore: Int!
-	atmosphereScore: Int!
-	careerPreparationScore: Int!
+	overallScore: Float!
+	teachingScore: Float!
+	courseworkScore: Float!
+	atmosphereScore: Float!
+	careerPreparationScore: Float!
 	averageSalaryBefore: Int
 	averageSalaryAfter: Int
 }
@@ -2692,10 +2692,10 @@ func (ec *executionContext) _SchoolReviewSummary_overallScore(ctx context.Contex
 		}
 		return graphql.Null
 	}
-	res := resTmp.(int)
+	res := resTmp.(float64)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNInt2int(ctx, field.Selections, res)
+	return ec.marshalNFloat2float64(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _SchoolReviewSummary_teachingScore(ctx context.Context, field graphql.CollectedField, obj *models.SchoolReviewSummary) graphql.Marshaler {
@@ -2719,10 +2719,10 @@ func (ec *executionContext) _SchoolReviewSummary_teachingScore(ctx context.Conte
 		}
 		return graphql.Null
 	}
-	res := resTmp.(int)
+	res := resTmp.(float64)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNInt2int(ctx, field.Selections, res)
+	return ec.marshalNFloat2float64(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _SchoolReviewSummary_courseworkScore(ctx context.Context, field graphql.CollectedField, obj *models.SchoolReviewSummary) graphql.Marshaler {
@@ -2746,10 +2746,10 @@ func (ec *executionContext) _SchoolReviewSummary_courseworkScore(ctx context.Con
 		}
 		return graphql.Null
 	}
-	res := resTmp.(int)
+	res := resTmp.(float64)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNInt2int(ctx, field.Selections, res)
+	return ec.marshalNFloat2float64(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _SchoolReviewSummary_atmosphereScore(ctx context.Context, field graphql.CollectedField, obj *models.SchoolReviewSummary) graphql.Marshaler {
@@ -2773,10 +2773,10 @@ func (ec *executionContext) _SchoolReviewSummary_atmosphereScore(ctx context.Con
 		}
 		return graphql.Null
 	}
-	res := resTmp.(int)
+	res := resTmp.(float64)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNInt2int(ctx, field.Selections, res)
+	return ec.marshalNFloat2float64(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _SchoolReviewSummary_careerPreparationScore(ctx context.Context, field graphql.CollectedField, obj *models.SchoolReviewSummary) graphql.Marshaler {
@@ -2800,10 +2800,10 @@ func (ec *executionContext) _SchoolReviewSummary_careerPreparationScore(ctx cont
 		}
 		return graphql.Null
 	}
-	res := resTmp.(int)
+	res := resTmp.(float64)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNInt2int(ctx, field.Selections, res)
+	return ec.marshalNFloat2float64(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _SchoolReviewSummary_averageSalaryBefore(ctx context.Context, field graphql.CollectedField, obj *models.SchoolReviewSummary) graphql.Marshaler {
@@ -4984,6 +4984,14 @@ func (ec *executionContext) marshalNCountry2githubᚗcomᚋrahulmadduluriᚋraft
 
 func (ec *executionContext) unmarshalNCreateStudentInput2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐCreateStudentInput(ctx context.Context, v interface{}) (models.CreateStudentInput, error) {
 	return ec.unmarshalInputCreateStudentInput(ctx, v)
+}
+
+func (ec *executionContext) unmarshalNFloat2float64(ctx context.Context, v interface{}) (float64, error) {
+	return graphql.UnmarshalFloat(v)
+}
+
+func (ec *executionContext) marshalNFloat2float64(ctx context.Context, sel ast.SelectionSet, v float64) graphql.Marshaler {
+	return graphql.MarshalFloat(v)
 }
 
 func (ec *executionContext) unmarshalNID2string(ctx context.Context, v interface{}) (string, error) {

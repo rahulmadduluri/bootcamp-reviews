@@ -105,13 +105,13 @@ type SchoolQueryResult struct {
 }
 
 type SchoolReviewSummary struct {
-	OverallScore           int  `json:"overallScore"`
-	TeachingScore          int  `json:"teachingScore"`
-	CourseworkScore        int  `json:"courseworkScore"`
-	AtmosphereScore        int  `json:"atmosphereScore"`
-	CareerPreparationScore int  `json:"careerPreparationScore"`
-	AverageSalaryBefore    *int `json:"averageSalaryBefore"`
-	AverageSalaryAfter     *int `json:"averageSalaryAfter"`
+	OverallScore           float64 `json:"overallScore"`
+	TeachingScore          float64 `json:"teachingScore"`
+	CourseworkScore        float64 `json:"courseworkScore"`
+	AtmosphereScore        float64 `json:"atmosphereScore"`
+	CareerPreparationScore float64 `json:"careerPreparationScore"`
+	AverageSalaryBefore    *int    `json:"averageSalaryBefore"`
+	AverageSalaryAfter     *int    `json:"averageSalaryAfter"`
 }
 
 type SchoolSearchParams struct {
