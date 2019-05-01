@@ -53,6 +53,10 @@ const schoolsQuery = gql`
             }
           }
         }
+        reviewSummary {
+          overallScore
+          averageSalaryAfter
+        }
       }
     }
   }
@@ -124,6 +128,7 @@ const List = ({ schools }) => (
           basePrice,
           paymentType,
           campusLocations,
+          reviewSummary
         }) => (
           <Link to={`/schools/${uuid}`} key={uuid}>
             <div className="card">
@@ -134,7 +139,7 @@ const List = ({ schools }) => (
                 <PriceBar basePrice={basePrice} paymentType={paymentType} />
                 <LengthBar length={lengthInWeeks} />
                 <StudentTeacherRatioBar studentTeacherRatio={studentTeacherRatio}/>
-                <SalaryBar campusLocations={campusLocations} />
+                <SalaryBar after={true} salaryAfter={reviewSummary.averageSalaryAfter} />
               </div>
             </div>
           </Link>

@@ -75,28 +75,38 @@ export const LengthBar = lengthWrapper => {
   }
 };
 
-export const SalaryBar = locationWrapper => {
-  let medianGraduateSalary = 0;
-
-  for (let i = 0; i < locationWrapper.campusLocations.length; i++) {
-    medianGraduateSalary +=
-      locationWrapper.campusLocations[i].medianGraduateSalary;
-  }
-  if (locationWrapper.campusLocations.length > 0) {
-    medianGraduateSalary = Math.round(
-      medianGraduateSalary / locationWrapper.campusLocations.length,
-    );
-  }
-
+export const SalaryBar = ({ after, salaryAfter, salaryBefore }) => {
   return (
     <div className="salary">
       <div className="salaryImage">
         <img src={SalaryIcon} alt="Salary" />
       </div>
-      <div className="medianGraduateSalaryLabel">Median Graduate Salary</div>
-      <div className="medianGraduateSalaryValue">
-        ${numToString(medianGraduateSalary)}
-      </div>
+      {
+        after ? (
+          <div className="averageGraduateSalaryLabel">Average Graduate Salary</div>
+        ) : (
+          <div className="averageGraduateSalaryLabel">Average Initial Salary</div>
+        )
+      }
+      {
+        after ? (
+          <div className="averageGraduateSalaryValue">
+            {
+              salaryAfter ? (
+                "$" + numToString(salaryAfter)
+              ) : "?"
+            }
+          </div>
+        ) : (
+          <div className="averageGraduateSalaryValue">
+            {
+              salaryBefore ? (
+                "$" + numToString(salaryBefore)
+              ) : "?"
+            }
+          </div>
+        )
+      }
     </div>
   );
 };

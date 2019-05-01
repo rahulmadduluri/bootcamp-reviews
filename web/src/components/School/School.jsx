@@ -37,6 +37,15 @@ class School extends Component {
               }
             }
           }
+          reviewSummary {
+            overallScore
+            teachingScore
+            courseworkScore
+            atmosphereScore
+            careerPreparationScore
+            averageSalaryBefore
+            averageSalaryAfter
+          }
         }
       }
     `;
@@ -49,7 +58,7 @@ class School extends Component {
             {({ loading, error, data }) => {
               if (loading) return <p>Loading...</p>;
               if (error) return <p>Error :(</p>;
-              const { name, campusLocations, lengthInWeeks, studentTeacherRatio, paymentType, basePrice, photoURI } = data.school;
+              const { name, campusLocations, lengthInWeeks, studentTeacherRatio, paymentType, basePrice, photoURI, reviewSummary } = data.school;
               return (
                 <div>
                   <div className="schoolInfoWrapper">
@@ -70,7 +79,7 @@ class School extends Component {
                   </div>
                   <div className="studentOutcomesWrapper">
                     <div className="defaultContainer column is-three-fifths">
-                      <StudentOutcomes school={data.school} />
+                      <StudentOutcomes reviewSummary={reviewSummary} />
                     </div>
                   </div>
                 </div>
@@ -91,13 +100,12 @@ class School extends Component {
 
 // allow user to filter outcomes by school location AND/OR job location
 // median salary before, median salary after, median took X months to get a job after graduating
-const StudentOutcomes = ({ school }) => {
-  const { campusLocations } = school;
+const StudentOutcomes = ({ reviewSummary }) => {
   return (
     <div>
       <div className="studentOutcomesLabel">Student Outcomes</div>
-      <SalaryBar campusLocations={campusLocations} />
-
+      <SalaryBar after={true} salaryAfter={reviewSummary.averageSalaryAfter} />
+      <SalaryBar after={false} salaryBefore={reviewSummary.averageSalaryBefore} />
     </div>
   );
 };
