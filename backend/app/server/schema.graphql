@@ -11,6 +11,7 @@ type School {
 	photoURI: String
 	#countries available
 	campusLocations: [CampusLocation!]
+	reviewSummary: SchoolReviewSummary
 }
 
 type SchoolQueryResult {
@@ -38,6 +39,17 @@ type Location {
 type CampusLocation {
 	location: Location!
 	# stats about school relevant to particular location
+}
+
+# summary of school review info
+type SchoolReviewSummary {
+	overallScore: Int!
+	teachingScore: Int!
+	courseworkScore: Int!
+	atmosphereScore: Int!
+	careerPreparationScore: Int!
+	averageSalaryBefore: Int
+	averageSalaryAfter: Int
 }
 
 type Student {

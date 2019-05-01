@@ -71,6 +71,13 @@ func (sql *sqlDB) GetSchool(schoolUUID string) (*models.School, error) {
 	}
 	school.CampusLocations = locations
 
+	// get school review summary
+	reviewSummary, err := sql.getSchoolReviewSummary(school.UUID)
+	if err != nil {
+		return school, err
+	}
+	school.ReviewSummary = &reviewSummary
+
 	return school, err
 }
 
@@ -215,12 +222,20 @@ func (sql *sqlDB) getSchools(queryName goyesql.Tag, params map[string]interface{
 
 	for i, _ := range schools {
 		school := schools[i]
+
 		// get school locations
 		locations, err := sql.getSchoolCampusLocations(school.UUID)
 		if err != nil {
 			return schools, err
 		}
 		school.CampusLocations = locations
+
+		// get school review summary
+		reviewSummary, err := sql.getSchoolReviewSummary(school.UUID)
+		if err != nil {
+			return schools, err
+		}
+		school.ReviewSummary = &reviewSummary
 
 		schools[i] = school
 	}

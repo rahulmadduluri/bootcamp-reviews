@@ -86,21 +86,32 @@ type Review struct {
 }
 
 type School struct {
-	UUID                string           `json:"uuid"`
-	Name                string           `json:"name"`
-	LengthInWeeks       *int             `json:"lengthInWeeks"`
-	StudentTeacherRatio *int             `json:"studentTeacherRatio"`
-	IsOnline            *bool            `json:"isOnline"`
-	BasePrice           *int             `json:"basePrice"`
-	PaymentType         *string          `json:"paymentType"`
-	PhotoURI            *string          `json:"photoURI"`
-	CampusLocations     []CampusLocation `json:"campusLocations"`
+	UUID                string               `json:"uuid"`
+	Name                string               `json:"name"`
+	LengthInWeeks       *int                 `json:"lengthInWeeks"`
+	StudentTeacherRatio *int                 `json:"studentTeacherRatio"`
+	IsOnline            *bool                `json:"isOnline"`
+	BasePrice           *int                 `json:"basePrice"`
+	PaymentType         *string              `json:"paymentType"`
+	PhotoURI            *string              `json:"photoURI"`
+	CampusLocations     []CampusLocation     `json:"campusLocations"`
+	ReviewSummary       *SchoolReviewSummary `json:"reviewSummary"`
 }
 
 type SchoolQueryResult struct {
 	TotalNumResults int      `json:"totalNumResults"`
 	PageNumber      int      `json:"pageNumber"`
 	SchoolResults   []School `json:"schoolResults"`
+}
+
+type SchoolReviewSummary struct {
+	OverallScore           int  `json:"overallScore"`
+	TeachingScore          int  `json:"teachingScore"`
+	CourseworkScore        int  `json:"courseworkScore"`
+	AtmosphereScore        int  `json:"atmosphereScore"`
+	CareerPreparationScore int  `json:"careerPreparationScore"`
+	AverageSalaryBefore    *int `json:"averageSalaryBefore"`
+	AverageSalaryAfter     *int `json:"averageSalaryAfter"`
 }
 
 type SchoolSearchParams struct {

@@ -287,3 +287,81 @@ func (sql *sqlDB) getReviewHelpfulDownvotes(reviewUUID string) (int, error) {
 
 	return helpfulDownvotes, err
 }
+
+func (sql *sqlDB) getSchoolReviewSummary(schoolUUID string) (models.SchoolReviewSummary, error) {
+	averageOverallScore := 0
+	averageTeachingScore := 0
+	averageCourseworkScore := 0
+	averageAtmosphereScore := 0
+	averageCareerPreparationScore := 0
+
+	salaryBeforeCount := 0
+	salaryAfterCount := 0
+	averageSalaryBefore := 0
+	averageSalaryAfter := 0
+
+	var summary models.SchoolReviewSummary
+	reviewsDB := []models.ReviewDBModel{}
+
+	rows, err := sql.db.NamedQuery(
+		sql.queries.reviewQueries[_GetReviewsDB],
+		map[string]interface{}{
+			"school_uuid": schoolUUID,
+		},
+	)
+	if err != nil {
+		return summary, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var r models.ReviewDBModel
+		err := rows.StructScan(&r)
+		if err != nil {
+			return summary, err
+		}
+		reviewsDB = append(reviewsDB, r)
+	}
+
+	for _, rdb := range reviewsDB {
+		if rdb.SalaryBefore != nil {
+			salaryBeforeCount += 1
+			averageSalaryBefore += *rdb.SalaryBefore
+		}
+		if rdb.SalaryAfter != nil {
+			salaryAfterCount += 1
+			averageSalaryAfter += *rdb.SalaryAfter
+		}
+		averageOverallScore += rdb.OverallScore
+		averageTeachingScore += rdb.TeachingScore
+		averageCourseworkScore += rdb.CourseworkScore
+		averageAtmosphereScore += rdb.AtmosphereScore
+		averageCareerPreparationScore += rdb.CareerPreparationScore
+	}
+
+	if len(reviewsDB) > 0 {
+		averageOverallScore = averageOverallScore / len(reviewsDB)
+		averageTeachingScore = averageTeachingScore / len(reviewsDB)
+		averageCourseworkScore = averageCourseworkScore / len(reviewsDB)
+		averageAtmosphereScore = averageAtmosphereScore / len(reviewsDB)
+		averageCareerPreparationScore = averageCareerPreparationScore / len(reviewsDB)
+	}
+
+	summary = models.SchoolReviewSummary{
+		OverallScore:           averageOverallScore,
+		TeachingScore:          averageTeachingScore,
+		CourseworkScore:        averageCourseworkScore,
+		AtmosphereScore:        averageAtmosphereScore,
+		CareerPreparationScore: averageCareerPreparationScore,
+	}
+	if salaryBeforeCount > 0 {
+		averageSalaryBefore = averageSalaryBefore / salaryBeforeCount
+		summary.AverageSalaryBefore = &averageSalaryBefore
+	}
+	if salaryAfterCount > 0 {
+		averageSalaryAfter = averageSalaryAfter / salaryAfterCount
+		summary.AverageSalaryAfter = &averageSalaryAfter
+	}
+
+	return summary, err
+}

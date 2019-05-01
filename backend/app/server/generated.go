@@ -117,6 +117,7 @@ type ComplexityRoot struct {
 		Name                func(childComplexity int) int
 		PaymentType         func(childComplexity int) int
 		PhotoURI            func(childComplexity int) int
+		ReviewSummary       func(childComplexity int) int
 		StudentTeacherRatio func(childComplexity int) int
 		UUID                func(childComplexity int) int
 	}
@@ -125,6 +126,16 @@ type ComplexityRoot struct {
 		PageNumber      func(childComplexity int) int
 		SchoolResults   func(childComplexity int) int
 		TotalNumResults func(childComplexity int) int
+	}
+
+	SchoolReviewSummary struct {
+		AtmosphereScore        func(childComplexity int) int
+		AverageSalaryAfter     func(childComplexity int) int
+		AverageSalaryBefore    func(childComplexity int) int
+		CareerPreparationScore func(childComplexity int) int
+		CourseworkScore        func(childComplexity int) int
+		OverallScore           func(childComplexity int) int
+		TeachingScore          func(childComplexity int) int
 	}
 
 	Student struct {
@@ -549,6 +560,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.School.PhotoURI(childComplexity), true
 
+	case "School.ReviewSummary":
+		if e.complexity.School.ReviewSummary == nil {
+			break
+		}
+
+		return e.complexity.School.ReviewSummary(childComplexity), true
+
 	case "School.StudentTeacherRatio":
 		if e.complexity.School.StudentTeacherRatio == nil {
 			break
@@ -583,6 +601,55 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.SchoolQueryResult.TotalNumResults(childComplexity), true
+
+	case "SchoolReviewSummary.AtmosphereScore":
+		if e.complexity.SchoolReviewSummary.AtmosphereScore == nil {
+			break
+		}
+
+		return e.complexity.SchoolReviewSummary.AtmosphereScore(childComplexity), true
+
+	case "SchoolReviewSummary.AverageSalaryAfter":
+		if e.complexity.SchoolReviewSummary.AverageSalaryAfter == nil {
+			break
+		}
+
+		return e.complexity.SchoolReviewSummary.AverageSalaryAfter(childComplexity), true
+
+	case "SchoolReviewSummary.AverageSalaryBefore":
+		if e.complexity.SchoolReviewSummary.AverageSalaryBefore == nil {
+			break
+		}
+
+		return e.complexity.SchoolReviewSummary.AverageSalaryBefore(childComplexity), true
+
+	case "SchoolReviewSummary.CareerPreparationScore":
+		if e.complexity.SchoolReviewSummary.CareerPreparationScore == nil {
+			break
+		}
+
+		return e.complexity.SchoolReviewSummary.CareerPreparationScore(childComplexity), true
+
+	case "SchoolReviewSummary.CourseworkScore":
+		if e.complexity.SchoolReviewSummary.CourseworkScore == nil {
+			break
+		}
+
+		return e.complexity.SchoolReviewSummary.CourseworkScore(childComplexity), true
+
+	case "SchoolReviewSummary.OverallScore":
+		if e.complexity.SchoolReviewSummary.OverallScore == nil {
+			break
+		}
+
+		return e.complexity.SchoolReviewSummary.OverallScore(childComplexity), true
+
+	case "SchoolReviewSummary.TeachingScore":
+		if e.complexity.SchoolReviewSummary.TeachingScore == nil {
+			break
+		}
+
+		return e.complexity.SchoolReviewSummary.TeachingScore(childComplexity), true
 
 	case "Student.FirstName":
 		if e.complexity.Student.FirstName == nil {
@@ -728,6 +795,7 @@ type School {
 	photoURI: String
 	#countries available
 	campusLocations: [CampusLocation!]
+	reviewSummary: SchoolReviewSummary
 }
 
 type SchoolQueryResult {
@@ -755,6 +823,17 @@ type Location {
 type CampusLocation {
 	location: Location!
 	# stats about school relevant to particular location
+}
+
+# summary of school review info
+type SchoolReviewSummary {
+	overallScore: Int!
+	teachingScore: Int!
+	courseworkScore: Int!
+	atmosphereScore: Int!
+	careerPreparationScore: Int!
+	averageSalaryBefore: Int
+	averageSalaryAfter: Int
 }
 
 type Student {
@@ -2487,6 +2566,30 @@ func (ec *executionContext) _School_campusLocations(ctx context.Context, field g
 	return ec.marshalOCampusLocation2ᚕgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐCampusLocation(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _School_reviewSummary(ctx context.Context, field graphql.CollectedField, obj *models.School) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "School",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ReviewSummary, nil
+	})
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.SchoolReviewSummary)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalOSchoolReviewSummary2ᚖgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐSchoolReviewSummary(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _SchoolQueryResult_totalNumResults(ctx context.Context, field graphql.CollectedField, obj *models.SchoolQueryResult) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
@@ -2566,6 +2669,189 @@ func (ec *executionContext) _SchoolQueryResult_schoolResults(ctx context.Context
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
 	return ec.marshalNSchool2ᚕgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐSchool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _SchoolReviewSummary_overallScore(ctx context.Context, field graphql.CollectedField, obj *models.SchoolReviewSummary) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "SchoolReviewSummary",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OverallScore, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _SchoolReviewSummary_teachingScore(ctx context.Context, field graphql.CollectedField, obj *models.SchoolReviewSummary) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "SchoolReviewSummary",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TeachingScore, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _SchoolReviewSummary_courseworkScore(ctx context.Context, field graphql.CollectedField, obj *models.SchoolReviewSummary) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "SchoolReviewSummary",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CourseworkScore, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _SchoolReviewSummary_atmosphereScore(ctx context.Context, field graphql.CollectedField, obj *models.SchoolReviewSummary) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "SchoolReviewSummary",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AtmosphereScore, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _SchoolReviewSummary_careerPreparationScore(ctx context.Context, field graphql.CollectedField, obj *models.SchoolReviewSummary) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "SchoolReviewSummary",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CareerPreparationScore, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _SchoolReviewSummary_averageSalaryBefore(ctx context.Context, field graphql.CollectedField, obj *models.SchoolReviewSummary) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "SchoolReviewSummary",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AverageSalaryBefore, nil
+	})
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _SchoolReviewSummary_averageSalaryAfter(ctx context.Context, field graphql.CollectedField, obj *models.SchoolReviewSummary) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "SchoolReviewSummary",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AverageSalaryAfter, nil
+	})
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Student_uuid(ctx context.Context, field graphql.CollectedField, obj *models.Student) graphql.Marshaler {
@@ -4287,6 +4573,8 @@ func (ec *executionContext) _School(ctx context.Context, sel ast.SelectionSet, o
 			out.Values[i] = ec._School_photoURI(ctx, field, obj)
 		case "campusLocations":
 			out.Values[i] = ec._School_campusLocations(ctx, field, obj)
+		case "reviewSummary":
+			out.Values[i] = ec._School_reviewSummary(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -4324,6 +4612,57 @@ func (ec *executionContext) _SchoolQueryResult(ctx context.Context, sel ast.Sele
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalid {
+		return graphql.Null
+	}
+	return out
+}
+
+var schoolReviewSummaryImplementors = []string{"SchoolReviewSummary"}
+
+func (ec *executionContext) _SchoolReviewSummary(ctx context.Context, sel ast.SelectionSet, obj *models.SchoolReviewSummary) graphql.Marshaler {
+	fields := graphql.CollectFields(ctx, sel, schoolReviewSummaryImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	invalid := false
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("SchoolReviewSummary")
+		case "overallScore":
+			out.Values[i] = ec._SchoolReviewSummary_overallScore(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "teachingScore":
+			out.Values[i] = ec._SchoolReviewSummary_teachingScore(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "courseworkScore":
+			out.Values[i] = ec._SchoolReviewSummary_courseworkScore(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "atmosphereScore":
+			out.Values[i] = ec._SchoolReviewSummary_atmosphereScore(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "careerPreparationScore":
+			out.Values[i] = ec._SchoolReviewSummary_careerPreparationScore(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
+		case "averageSalaryBefore":
+			out.Values[i] = ec._SchoolReviewSummary_averageSalaryBefore(ctx, field, obj)
+		case "averageSalaryAfter":
+			out.Values[i] = ec._SchoolReviewSummary_averageSalaryAfter(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -5232,6 +5571,17 @@ func (ec *executionContext) marshalOSchool2ᚖgithubᚗcomᚋrahulmadduluriᚋra
 		return graphql.Null
 	}
 	return ec._School(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOSchoolReviewSummary2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐSchoolReviewSummary(ctx context.Context, sel ast.SelectionSet, v models.SchoolReviewSummary) graphql.Marshaler {
+	return ec._SchoolReviewSummary(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalOSchoolReviewSummary2ᚖgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐSchoolReviewSummary(ctx context.Context, sel ast.SelectionSet, v *models.SchoolReviewSummary) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._SchoolReviewSummary(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOString2string(ctx context.Context, v interface{}) (string, error) {
