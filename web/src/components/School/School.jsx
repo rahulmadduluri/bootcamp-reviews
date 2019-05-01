@@ -3,6 +3,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import Navbar from '../navbar';
 import SchoolLogo from '../Common/SchoolLogo';
+import SalaryIcon from '../../images/finances_icon.png';
 import {
   StudentTeacherRatioBar,
   PriceBar,
@@ -11,6 +12,7 @@ import {
   LengthBar,
 } from '../Common/SchoolStats';
 import ReviewListQuery from './ReviewListQuery.jsx';
+import { numToString } from '../../helpers/helpers.js';
 import './School.css';
 
 class School extends Component {
@@ -94,7 +96,7 @@ class School extends Component {
                   </div>
                   <div className="studentOutcomesWrapper">
                     <div className="defaultContainer column is-three-fifths">
-                      <StudentOutcomes reviewSummary={reviewSummary} />
+                      <StudentOutcomes schoolName={name} reviewSummary={reviewSummary} />
                     </div>
                   </div>
                   <div className="schoolReviewsWrapper">
@@ -114,12 +116,46 @@ class School extends Component {
 
 // allow user to filter outcomes by school location AND/OR job location
 // median salary before, median salary after, median took X months to get a job after graduating
-const StudentOutcomes = ({ reviewSummary }) => {
+const StudentOutcomes = ({ schoolName, reviewSummary }) => {
   return (
     <div>
       <div className="studentOutcomesLabel">Student Outcomes</div>
-      <SalaryBar after={true} salaryAfter={reviewSummary.averageSalaryAfter} />
-      <SalaryBar after={false} salaryBefore={reviewSummary.averageSalaryBefore} />
+
+      <div className="salaryOutcome">
+        <div className="salaryOutcomeLabel">
+          <img src={SalaryIcon} alt="Salary" />
+          Salary
+        </div>
+        <div className="salaryOutcomeBefore">
+          <div className="salaryOutcomeItemLabel">
+            Average Salary Before {schoolName}
+          </div>
+          <div className="salaryOutcomeItemValue">
+            {
+              reviewSummary.averageSalaryBefore ? (
+                "$" + numToString(reviewSummary.averageSalaryBefore)
+              ) : <div/>
+            }
+          </div>
+        </div>
+        <div className="salaryOutcomeAfter">
+          <div className="salaryOutcomeItemLabel">
+            Average Salary After {schoolName}
+          </div>
+          <div className="salaryOutcomeItemValue">
+            {
+              reviewSummary.averageSalaryAfter ? (
+                "$" + numToString(reviewSummary.averageSalaryAfter)
+              ) : <div/>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div className="jobOutcome">
+
+      </div>
+
     </div>
   );
 };

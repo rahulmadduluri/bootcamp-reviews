@@ -114,7 +114,8 @@
 
 
 
-/* School Stats */
+/* Student Outcomes */
+
 .studentOutcomesWrapper {
   margin-top: 40px;
 }
@@ -124,33 +125,38 @@
   font-size: 20px;
   margin-bottom: 10px;
 }
-.studentOutcomesWrapper .salary {
-  display: flex;
-  line-height: 15px;
-  margin-bottom: 10px;
+.studentOutcomesWrapper .salaryOutcome .salaryOutcomeLabel {
+  color: #000000;
+  font-weight: 500;
+  font-size: 16px;
+  display: inline-block;
 }
-.studentOutcomesWrapper .salary .salaryImage > img {
+.studentOutcomesWrapper .salaryOutcome .salaryOutcomeLabel > img {
   height: 15px;
   width: 15px;
-  display: inline-block;
   margin-right: 10px;
 }
-.studentOutcomesWrapper .salary .medianGraduateSalaryLabel {
+.studentOutcomesWrapper .salaryOutcome .salaryOutcomeBefore {
   font-size: 14px;
-  display: inline-block;
-  vertical-align: middle;
+}
+.studentOutcomesWrapper .salaryOutcome .salaryOutcomeAfter {
+  font-size: 14px;
+}
+.studentOutcomesWrapper .salaryOutcome .salaryOutcomeItemLabel {
   margin-right: 10px;
   color: #828282;
-  min-width: 60px;
-}
-.studentOutcomesWrapper .salary .medianGraduateSalaryValue {
-  font-size: 14px;
+  min-width: 250px;
   display: inline-block;
-  vertical-align: middle;
+}
+.studentOutcomesWrapper .salaryOutcome .salaryOutcomeItemValue {
   color: #000000;
+  display: inline-block;
+  font-weight: 500;
 }
 
+
 /* School Reviews */
+
 .schoolReviewsWrapper {
   margin-top: 40px;
 }
