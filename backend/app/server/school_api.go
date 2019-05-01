@@ -80,22 +80,6 @@ func (r *queryResolver) filterSchools(schools []models.School, params models.Sch
 		filteredSchools = intersectionOfSchools(filteredSchools, f)
 	}
 
-	if params.MinGraduateSalary != nil {
-		f, err := db.Handler().SQL().GetSchoolsWithMinGraduateSalary(*params.MinGraduateSalary)
-		if err != nil {
-			return filteredSchools, err
-		}
-		filteredSchools = intersectionOfSchools(filteredSchools, f)
-	}
-
-	if params.MinJobPlacementRate != nil {
-		f, err := db.Handler().SQL().GetSchoolsWithMinJobPlacementRate(*params.MinJobPlacementRate)
-		if err != nil {
-			return filteredSchools, err
-		}
-		filteredSchools = intersectionOfSchools(filteredSchools, f)
-	}
-
 	if params.MinLength != nil {
 		f, err := db.Handler().SQL().GetSchoolsWithMinLength(*params.MinLength)
 		if err != nil {

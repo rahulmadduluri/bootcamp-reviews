@@ -181,7 +181,7 @@ body {
   font-size: 12px;
   margin-left: 8px;
 }
-.schoolStatsWrapper .salary .medianGraduateSalary {
+.schoolStatsWrapper .salary .medianGraduateSalaryValue {
   display: inline-block;
   font-weight: 500;
   font-size: 12px;
@@ -190,26 +190,26 @@ body {
 }
 
 /* Job Placement */
-.schoolStatsWrapper .jobPlacement {
+.schoolStatsWrapper .studentTeacherRatio {
   margin-top: 5px;
   vertical-align: middle;
 }
-.schoolStatsWrapper .jobPlacement .jobPlacementImage {
+.schoolStatsWrapper .studentTeacherRatio .studentTeacherRatioImage {
   display: inline-block;
 }
-.schoolStatsWrapper .jobPlacement .jobPlacementImage > img {
+.schoolStatsWrapper .studentTeacherRatio .studentTeacherRatioImage > img {
   width: 13px;
   height: 13px;
   vertical-align: middle;
 }
-.schoolStatsWrapper .jobPlacement .jobPlacementRateLabel {
+.schoolStatsWrapper .studentTeacherRatio .studentTeacherRatioLabel {
   display: inline-block;
   color: #828282;
   font-weight: 400;
   font-size: 12px;
   margin-left: 8px;
 }
-.schoolStatsWrapper .jobPlacement .jobPlacementRate {
+.schoolStatsWrapper .studentTeacherRatio .studentTeacherRatioValue {
   display: inline-block;
   font-weight: 500;
   font-size: 12px;

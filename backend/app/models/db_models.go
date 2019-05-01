@@ -14,10 +14,8 @@ type LocationDBModel struct {
 }
 
 type CampusLocationDBModel struct {
-	SchoolID             int
-	LocationID           int
-	MedianGraduateSalary *float64
-	JobPlacementRate     *float64
+	SchoolID   int
+	LocationID int
 }
 
 type StudentDBModel struct {
@@ -38,6 +36,7 @@ type SchoolDBModel struct {
 	UUID                   string
 	Name                   string
 	LengthInWeeks          *int
+	StudentTeacherRatio    *int
 	IsOnline               bool
 	BasePrice              int
 	PaymentType            string

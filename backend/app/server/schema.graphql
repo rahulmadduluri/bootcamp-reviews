@@ -4,6 +4,7 @@ type School {
 	uuid: ID!
 	name: String!
 	lengthInWeeks: Int
+	studentTeacherRatio: Int
 	isOnline: Boolean
 	basePrice: Int
 	paymentType: String # e.g. ISA, Upfront
@@ -36,8 +37,7 @@ type Location {
 
 type CampusLocation {
 	location: Location!
-	medianGraduateSalary: Float
-	jobPlacementRate: Float
+	# stats about school relevant to particular location
 }
 
 type Student {
@@ -71,8 +71,6 @@ input SchoolSearchParams {
 	locationUUID: ID
 	paymentType: String
 	maxPrice: Int
-	minGraduateSalary: Float
-	minJobPlacementRate: Float
 	minLength: Int
 }
 

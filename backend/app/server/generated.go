@@ -44,9 +44,7 @@ type DirectiveRoot struct {
 
 type ComplexityRoot struct {
 	CampusLocation struct {
-		JobPlacementRate     func(childComplexity int) int
-		Location             func(childComplexity int) int
-		MedianGraduateSalary func(childComplexity int) int
+		Location func(childComplexity int) int
 	}
 
 	City struct {
@@ -112,14 +110,15 @@ type ComplexityRoot struct {
 	}
 
 	School struct {
-		BasePrice       func(childComplexity int) int
-		CampusLocations func(childComplexity int) int
-		IsOnline        func(childComplexity int) int
-		LengthInWeeks   func(childComplexity int) int
-		Name            func(childComplexity int) int
-		PaymentType     func(childComplexity int) int
-		PhotoURI        func(childComplexity int) int
-		UUID            func(childComplexity int) int
+		BasePrice           func(childComplexity int) int
+		CampusLocations     func(childComplexity int) int
+		IsOnline            func(childComplexity int) int
+		LengthInWeeks       func(childComplexity int) int
+		Name                func(childComplexity int) int
+		PaymentType         func(childComplexity int) int
+		PhotoURI            func(childComplexity int) int
+		StudentTeacherRatio func(childComplexity int) int
+		UUID                func(childComplexity int) int
 	}
 
 	SchoolQueryResult struct {
@@ -167,26 +166,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 	_ = ec
 	switch typeName + "." + field {
 
-	case "CampusLocation.JobPlacementRate":
-		if e.complexity.CampusLocation.JobPlacementRate == nil {
-			break
-		}
-
-		return e.complexity.CampusLocation.JobPlacementRate(childComplexity), true
-
 	case "CampusLocation.Location":
 		if e.complexity.CampusLocation.Location == nil {
 			break
 		}
 
 		return e.complexity.CampusLocation.Location(childComplexity), true
-
-	case "CampusLocation.MedianGraduateSalary":
-		if e.complexity.CampusLocation.MedianGraduateSalary == nil {
-			break
-		}
-
-		return e.complexity.CampusLocation.MedianGraduateSalary(childComplexity), true
 
 	case "City.Name":
 		if e.complexity.City.Name == nil {
@@ -564,6 +549,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.School.PhotoURI(childComplexity), true
 
+	case "School.StudentTeacherRatio":
+		if e.complexity.School.StudentTeacherRatio == nil {
+			break
+		}
+
+		return e.complexity.School.StudentTeacherRatio(childComplexity), true
+
 	case "School.UUID":
 		if e.complexity.School.UUID == nil {
 			break
@@ -729,6 +721,7 @@ type School {
 	uuid: ID!
 	name: String!
 	lengthInWeeks: Int
+	studentTeacherRatio: Int
 	isOnline: Boolean
 	basePrice: Int
 	paymentType: String # e.g. ISA, Upfront
@@ -761,8 +754,7 @@ type Location {
 
 type CampusLocation {
 	location: Location!
-	medianGraduateSalary: Float
-	jobPlacementRate: Float
+	# stats about school relevant to particular location
 }
 
 type Student {
@@ -796,8 +788,6 @@ input SchoolSearchParams {
 	locationUUID: ID
 	paymentType: String
 	maxPrice: Int
-	minGraduateSalary: Float
-	minJobPlacementRate: Float
 	minLength: Int
 }
 
@@ -1082,54 +1072,6 @@ func (ec *executionContext) _CampusLocation_location(ctx context.Context, field 
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
 	return ec.marshalNLocation2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐLocation(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _CampusLocation_medianGraduateSalary(ctx context.Context, field graphql.CollectedField, obj *models.CampusLocation) graphql.Marshaler {
-	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
-	rctx := &graphql.ResolverContext{
-		Object:   "CampusLocation",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-	ctx = graphql.WithResolverContext(ctx, rctx)
-	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
-	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.MedianGraduateSalary, nil
-	})
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*float64)
-	rctx.Result = res
-	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalOFloat2ᚖfloat64(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _CampusLocation_jobPlacementRate(ctx context.Context, field graphql.CollectedField, obj *models.CampusLocation) graphql.Marshaler {
-	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
-	rctx := &graphql.ResolverContext{
-		Object:   "CampusLocation",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-	ctx = graphql.WithResolverContext(ctx, rctx)
-	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
-	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.JobPlacementRate, nil
-	})
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*float64)
-	rctx.Result = res
-	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalOFloat2ᚖfloat64(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _City_uuid(ctx context.Context, field graphql.CollectedField, obj *models.City) graphql.Marshaler {
@@ -2391,6 +2333,30 @@ func (ec *executionContext) _School_lengthInWeeks(ctx context.Context, field gra
 	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return obj.LengthInWeeks, nil
+	})
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _School_studentTeacherRatio(ctx context.Context, field graphql.CollectedField, obj *models.School) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "School",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.StudentTeacherRatio, nil
 	})
 	if resTmp == nil {
 		return graphql.Null
@@ -3802,18 +3768,6 @@ func (ec *executionContext) unmarshalInputSchoolSearchParams(ctx context.Context
 			if err != nil {
 				return it, err
 			}
-		case "minGraduateSalary":
-			var err error
-			it.MinGraduateSalary, err = ec.unmarshalOFloat2ᚖfloat64(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "minJobPlacementRate":
-			var err error
-			it.MinJobPlacementRate, err = ec.unmarshalOFloat2ᚖfloat64(ctx, v)
-			if err != nil {
-				return it, err
-			}
 		case "minLength":
 			var err error
 			it.MinLength, err = ec.unmarshalOInt2ᚖint(ctx, v)
@@ -3898,10 +3852,6 @@ func (ec *executionContext) _CampusLocation(ctx context.Context, sel ast.Selecti
 			if out.Values[i] == graphql.Null {
 				invalid = true
 			}
-		case "medianGraduateSalary":
-			out.Values[i] = ec._CampusLocation_medianGraduateSalary(ctx, field, obj)
-		case "jobPlacementRate":
-			out.Values[i] = ec._CampusLocation_jobPlacementRate(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -4325,6 +4275,8 @@ func (ec *executionContext) _School(ctx context.Context, sel ast.SelectionSet, o
 			}
 		case "lengthInWeeks":
 			out.Values[i] = ec._School_lengthInWeeks(ctx, field, obj)
+		case "studentTeacherRatio":
+			out.Values[i] = ec._School_studentTeacherRatio(ctx, field, obj)
 		case "isOnline":
 			out.Values[i] = ec._School_isOnline(ctx, field, obj)
 		case "basePrice":
@@ -5212,29 +5164,6 @@ func (ec *executionContext) marshalOFilters2ᚖgithubᚗcomᚋrahulmadduluriᚋr
 		return graphql.Null
 	}
 	return ec._Filters(ctx, sel, v)
-}
-
-func (ec *executionContext) unmarshalOFloat2float64(ctx context.Context, v interface{}) (float64, error) {
-	return graphql.UnmarshalFloat(v)
-}
-
-func (ec *executionContext) marshalOFloat2float64(ctx context.Context, sel ast.SelectionSet, v float64) graphql.Marshaler {
-	return graphql.MarshalFloat(v)
-}
-
-func (ec *executionContext) unmarshalOFloat2ᚖfloat64(ctx context.Context, v interface{}) (*float64, error) {
-	if v == nil {
-		return nil, nil
-	}
-	res, err := ec.unmarshalOFloat2float64(ctx, v)
-	return &res, err
-}
-
-func (ec *executionContext) marshalOFloat2ᚖfloat64(ctx context.Context, sel ast.SelectionSet, v *float64) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec.marshalOFloat2float64(ctx, sel, *v)
 }
 
 func (ec *executionContext) unmarshalOID2string(ctx context.Context, v interface{}) (string, error) {

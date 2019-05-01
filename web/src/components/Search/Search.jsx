@@ -7,7 +7,7 @@ import FilterBar from './filterbar.jsx';
 import Pagination from './pagination.jsx';
 import SchoolLogo from '../Common/SchoolLogo';
 import {
-  JobPlacementBar,
+  StudentTeacherRatioBar,
   PriceBar,
   SalaryBar,
   LocationBar,
@@ -23,8 +23,6 @@ const GET_SCHOOL_PARAMS = gql`
                 locationUUID
                 paymentType
                 maxPrice
-                minGraduateSalary
-                minJobPlacementRate
                 minLength
               }
             }
@@ -39,6 +37,7 @@ const schoolsQuery = gql`
         uuid
         name
         lengthInWeeks
+        studentTeacherRatio
         isOnline
         photoURI
         basePrice
@@ -53,8 +52,6 @@ const schoolsQuery = gql`
               name
             }
           }
-          medianGraduateSalary
-          jobPlacementRate
         }
       }
     }
@@ -121,6 +118,7 @@ const List = ({ schools }) => (
           uuid,
           name,
           lengthInWeeks,
+          studentTeacherRatio,
           isOnline,
           photoURI,
           basePrice,
@@ -135,8 +133,8 @@ const List = ({ schools }) => (
                 <LocationBar campusLocations={campusLocations} />
                 <PriceBar basePrice={basePrice} paymentType={paymentType} />
                 <LengthBar length={lengthInWeeks} />
+                <StudentTeacherRatioBar studentTeacherRatio={studentTeacherRatio}/>
                 <SalaryBar campusLocations={campusLocations} />
-                <JobPlacementBar campusLocations={campusLocations} />
               </div>
             </div>
           </Link>

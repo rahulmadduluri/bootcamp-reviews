@@ -16,13 +16,11 @@ const (
 	_GetSchoolCampusLocationsDB = "getSchoolCampusLocationsDB"
 	_GetAllSchools              = "getAllSchools"
 
-	_GetSchoolsWithSearchText          = "getSchoolsWithSearchText"
-	_GetSchoolsWithLocation            = "getSchoolsWithLocation"
-	_GetSchoolsWithPaymentType         = "getSchoolsWithPaymentType"
-	_GetSchoolsWithMaxPrice            = "getSchoolsWithMaxPrice"
-	_GetSchoolsWithMinGraduateSalary   = "getSchoolsWithMinGraduateSalary"
-	_GetSchoolsWithMinJobPlacementRate = "getSchoolsWithMinJobPlacementRate"
-	_GetSchoolsWithMinLength           = "getSchoolsWithMinLength"
+	_GetSchoolsWithSearchText  = "getSchoolsWithSearchText"
+	_GetSchoolsWithLocation    = "getSchoolsWithLocation"
+	_GetSchoolsWithPaymentType = "getSchoolsWithPaymentType"
+	_GetSchoolsWithMaxPrice    = "getSchoolsWithMaxPrice"
+	_GetSchoolsWithMinLength   = "getSchoolsWithMinLength"
 )
 
 type SchoolDB interface {
@@ -33,8 +31,6 @@ type SchoolDB interface {
 	GetSchoolsWithLocation(locationUUID string) ([]models.School, error)
 	GetSchoolsWithPaymentType(paymentType string) ([]models.School, error)
 	GetSchoolsWithMaxPrice(maxPrice int) ([]models.School, error)
-	GetSchoolsWithMinGraduateSalary(minGraduateSalary float64) ([]models.School, error)
-	GetSchoolsWithMinJobPlacementRate(minJobPlacementRate float64) ([]models.School, error)
 	GetSchoolsWithMinLength(minLength int) ([]models.School, error)
 }
 
@@ -148,12 +144,8 @@ func (sql *sqlDB) getSchoolCampusLocations(schoolUUID string) ([]models.CampusLo
 		if err != nil || l == nil {
 			return campusLocations, err
 		}
-		ags := cl.MedianGraduateSalary
-		jpr := cl.JobPlacementRate
 		campusLocation := models.CampusLocation{
-			Location:             *l,
-			MedianGraduateSalary: ags,
-			JobPlacementRate:     jpr,
+			Location: *l,
 		}
 		campusLocations = append(campusLocations, campusLocation)
 	}
@@ -189,18 +181,6 @@ func (sql *sqlDB) GetSchoolsWithPaymentType(paymentType string) ([]models.School
 func (sql *sqlDB) GetSchoolsWithMaxPrice(maxPrice int) ([]models.School, error) {
 	schools, err := sql.getSchools(_GetSchoolsWithMaxPrice, map[string]interface{}{
 		"max_price": maxPrice,
-	})
-	return schools, err
-}
-func (sql *sqlDB) GetSchoolsWithMinGraduateSalary(minGraduateSalary float64) ([]models.School, error) {
-	schools, err := sql.getSchools(_GetSchoolsWithMinGraduateSalary, map[string]interface{}{
-		"min_graduate_salary": minGraduateSalary,
-	})
-	return schools, err
-}
-func (sql *sqlDB) GetSchoolsWithMinJobPlacementRate(minJobPlacementRate float64) ([]models.School, error) {
-	schools, err := sql.getSchools(_GetSchoolsWithMinJobPlacementRate, map[string]interface{}{
-		"min_job_placement_rate": minJobPlacementRate,
 	})
 	return schools, err
 }

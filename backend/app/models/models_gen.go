@@ -3,9 +3,7 @@
 package models
 
 type CampusLocation struct {
-	Location             Location `json:"location"`
-	MedianGraduateSalary *float64 `json:"medianGraduateSalary"`
-	JobPlacementRate     *float64 `json:"jobPlacementRate"`
+	Location Location `json:"location"`
 }
 
 type City struct {
@@ -88,14 +86,15 @@ type Review struct {
 }
 
 type School struct {
-	UUID            string           `json:"uuid"`
-	Name            string           `json:"name"`
-	LengthInWeeks   *int             `json:"lengthInWeeks"`
-	IsOnline        *bool            `json:"isOnline"`
-	BasePrice       *int             `json:"basePrice"`
-	PaymentType     *string          `json:"paymentType"`
-	PhotoURI        *string          `json:"photoURI"`
-	CampusLocations []CampusLocation `json:"campusLocations"`
+	UUID                string           `json:"uuid"`
+	Name                string           `json:"name"`
+	LengthInWeeks       *int             `json:"lengthInWeeks"`
+	StudentTeacherRatio *int             `json:"studentTeacherRatio"`
+	IsOnline            *bool            `json:"isOnline"`
+	BasePrice           *int             `json:"basePrice"`
+	PaymentType         *string          `json:"paymentType"`
+	PhotoURI            *string          `json:"photoURI"`
+	CampusLocations     []CampusLocation `json:"campusLocations"`
 }
 
 type SchoolQueryResult struct {
@@ -105,14 +104,12 @@ type SchoolQueryResult struct {
 }
 
 type SchoolSearchParams struct {
-	PageNumber          int      `json:"pageNumber"`
-	SearchText          *string  `json:"searchText"`
-	LocationUUID        *string  `json:"locationUUID"`
-	PaymentType         *string  `json:"paymentType"`
-	MaxPrice            *int     `json:"maxPrice"`
-	MinGraduateSalary   *float64 `json:"minGraduateSalary"`
-	MinJobPlacementRate *float64 `json:"minJobPlacementRate"`
-	MinLength           *int     `json:"minLength"`
+	PageNumber   int     `json:"pageNumber"`
+	SearchText   *string `json:"searchText"`
+	LocationUUID *string `json:"locationUUID"`
+	PaymentType  *string `json:"paymentType"`
+	MaxPrice     *int    `json:"maxPrice"`
+	MinLength    *int    `json:"minLength"`
 }
 
 type Student struct {

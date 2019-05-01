@@ -21,7 +21,7 @@
 .schoolInfoWrapper .price .basePrice {
   color: #000000;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 18px;
   display: inline-block;
 }
 .schoolInfoWrapper .price .paymentType {
@@ -46,7 +46,7 @@
   margin-right: 10px;
 }
 .schoolInfoWrapper .campusLocationsLabel {
-  font-size: 14px;
+  font-size: 12px;
   display: inline-block;
   vertical-align: middle;
   margin-right: 10px;
@@ -54,7 +54,8 @@
   min-width: 64px; /* extra to account for smaller image */
 }
 .schoolInfoWrapper .campusLocations {
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 500;
   display: inline-block;
   vertical-align: middle;
   color: #000000;
@@ -62,6 +63,7 @@
 .schoolInfoWrapper .length {
   display: flex;
   line-height: 15px;
+  margin-bottom: 10px;
 }
 .schoolInfoWrapper .lengthImage > img {
   height: 15px;
@@ -70,7 +72,7 @@
   margin-right: 10px;
 }
 .schoolInfoWrapper .lengthInWeeksLabel {
-  font-size: 14px;
+  font-size: 12px;
   display: inline-block;
   vertical-align: middle;
   margin-right: 10px;
@@ -78,21 +80,74 @@
   min-width: 60px;
 }
 .schoolInfoWrapper .lengthInWeeks {
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+  vertical-align: middle;
+  color: #000000;
+}
+.schoolInfoWrapper .studentTeacherRatio {
+  display: flex;
+  line-height: 15px;
+}
+.schoolInfoWrapper .studentTeacherRatioImage > img {
+  height: 15px;
+  width: 15px;
+  display: inline-block;
+  margin-right: 10px;
+}
+.schoolInfoWrapper .studentTeacherRatioLabel {
+  font-size: 12px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+  color: #828282;
+  min-width: 60px;
+}
+.schoolInfoWrapper .studentTeacherRatioValue {
+  font-size: 12px;
+  font-weight: 500;
   display: inline-block;
   vertical-align: middle;
   color: #000000;
 }
 
 
+
 /* School Stats */
-.schoolStatsWrapper {
+.studentOutcomesWrapper {
   margin-top: 40px;
 }
-.schoolStatsWrapper .statsLabel {
+.studentOutcomesWrapper .studentOutcomesLabel {
   color: #000000;
   font-weight: 500;
   font-size: 20px;
+  margin-bottom: 10px;
+}
+.studentOutcomesWrapper .salary {
+  display: flex;
+  line-height: 15px;
+  margin-bottom: 10px;
+}
+.studentOutcomesWrapper .salary .salaryImage > img {
+  height: 15px;
+  width: 15px;
+  display: inline-block;
+  margin-right: 10px;
+}
+.studentOutcomesWrapper .salary .medianGraduateSalaryLabel {
+  font-size: 14px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+  color: #828282;
+  min-width: 60px;
+}
+.studentOutcomesWrapper .salary .medianGraduateSalaryValue {
+  font-size: 14px;
+  display: inline-block;
+  vertical-align: middle;
+  color: #000000;
 }
 
 /* School Reviews */

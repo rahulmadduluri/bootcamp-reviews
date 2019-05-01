@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import Navbar from '../navbar';
 import SchoolLogo from '../Common/SchoolLogo';
 import {
-  JobPlacementBar,
+  StudentTeacherRatioBar,
   PriceBar,
   SalaryBar,
   LocationBar,
@@ -21,13 +21,12 @@ class School extends Component {
           uuid
           name
           lengthInWeeks
+          studentTeacherRatio
           isOnline
           photoURI
           basePrice
           paymentType
           campusLocations {
-            medianGraduateSalary
-            jobPlacementRate
             location {
               uuid
               city {
@@ -50,13 +49,13 @@ class School extends Component {
             {({ loading, error, data }) => {
               if (loading) return <p>Loading...</p>;
               if (error) return <p>Error :(</p>;
-              const { name, campusLocations, lengthInWeeks, paymentType, basePrice, photoURI } = data.school;
+              const { name, campusLocations, lengthInWeeks, studentTeacherRatio, paymentType, basePrice, photoURI } = data.school;
               return (
                 <div>
                   <div className="schoolInfoWrapper">
                     <div className="defaultContainer column is-three-fifths">
                       <div className="media">
-                        <div className="media-left image is-128x128">
+                        <div className="media-left image is-96x96">
                           <SchoolLogo photoURI={photoURI} />
                         </div>
                         <div className="media-content">
@@ -64,13 +63,14 @@ class School extends Component {
                           <PriceBar basePrice={basePrice} paymentType={paymentType} />
                           <LocationBar showAllLocationsLabel={true} campusLocations={campusLocations} />
                           <LengthBar length={lengthInWeeks} />
+                          <StudentTeacherRatioBar studentTeacherRatio={studentTeacherRatio} />
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="schoolStatsWrapper">
+                  <div className="studentOutcomesWrapper">
                     <div className="defaultContainer column is-three-fifths">
-                      <Stats school={data.school} />
+                      <StudentOutcomes school={data.school} />
                     </div>
                   </div>
                 </div>
@@ -89,13 +89,15 @@ class School extends Component {
   }
 }
 
-const Stats = ({ school }) => {
+// allow user to filter outcomes by school location AND/OR job location
+// median salary before, median salary after, median took X months to get a job after graduating
+const StudentOutcomes = ({ school }) => {
   const { campusLocations } = school;
   return (
     <div>
-      <div className="statsLabel">Stats</div>
+      <div className="studentOutcomesLabel">Student Outcomes</div>
       <SalaryBar campusLocations={campusLocations} />
-      <JobPlacementBar campusLocations={campusLocations} />
+
     </div>
   );
 };

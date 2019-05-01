@@ -371,8 +371,6 @@ class WriteReview extends Component {
 	              name
 	            }
 	          }
-	          medianGraduateSalary
-	          jobPlacementRate
 	        }
 	      }
 	    }

@@ -18,8 +18,6 @@ const GET_SCHOOL_PARAMS = gql`
               locationUUID
               paymentType
               maxPrice
-              minGraduateSalary
-              minJobPlacementRate
               minLength
             }
           }
@@ -47,8 +45,6 @@ const client = new ApolloClient({
 				locationUUID: null,
 				paymentType: null,
 				maxPrice: null,
-				minGraduateSalary: null,
-				minJobPlacementRate: null,
 				minLength: null,
 			}
 		},

@@ -3,8 +3,8 @@ import LocationIcon from '../../images/location_icon.png';
 import ISAPayment from '../../images/isa_payment.png';
 import UpfrontPayment from '../../images/upfront_payment.png';
 import LengthIcon from '../../images/length_icon.png';
-import SalaryIcon from '../../images/salary_icon.png';
-import JobPlacementIcon from '../../images/job_placement_icon.png';
+import SalaryIcon from '../../images/finances_icon.png';
+import TeachingIcon from '../../images/teaching_icon.png';
 import { numToString } from '../../helpers/helpers.js';
 
 export const LocationBar = locationWrapper => {
@@ -94,33 +94,21 @@ export const SalaryBar = locationWrapper => {
         <img src={SalaryIcon} alt="Salary" />
       </div>
       <div className="medianGraduateSalaryLabel">Median Graduate Salary</div>
-      <div className="medianGraduateSalary">
+      <div className="medianGraduateSalaryValue">
         ${numToString(medianGraduateSalary)}
       </div>
     </div>
   );
 };
 
-export const JobPlacementBar = locationWrapper => {
-  let jobPlacementRate = 0;
-
-  for (let i = 0; i < locationWrapper.campusLocations.length; i++) {
-    jobPlacementRate += locationWrapper.campusLocations[i].jobPlacementRate;
-  }
-  if (locationWrapper.campusLocations.length > 0) {
-    jobPlacementRate =
-      Math.round(
-        (jobPlacementRate / locationWrapper.campusLocations.length) * 100,
-      ) / 100;
-  }
-
+export const StudentTeacherRatioBar = studentTeachRatioWrapper => {
   return (
-    <div className="jobPlacement">
-      <div className="jobPlacementImage">
-        <img src={JobPlacementIcon} alt="Job Placement" />
+    <div className="studentTeacherRatio">
+      <div className="studentTeacherRatioImage">
+        <img src={TeachingIcon} alt="Teaching Icon" />
       </div>
-      <div className="jobPlacementRateLabel">Job Placement Rate</div>
-      <div className="jobPlacementRate">{jobPlacementRate}%</div>
+      <div className="studentTeacherRatioLabel">Student Teacher Ratio</div>
+      <div className="studentTeacherRatioValue">{studentTeachRatioWrapper.studentTeacherRatio ? studentTeachRatioWrapper.studentTeacherRatio+":1" : "?"}</div>
     </div>
   );
 };

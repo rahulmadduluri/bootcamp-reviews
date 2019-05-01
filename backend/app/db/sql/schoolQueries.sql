@@ -3,6 +3,7 @@ select
 	schools.uuid as uuid,
 	schools.name as name,
 	schools.length_in_weeks as lengthinweeks,
+	schools.student_teacher_ratio as studentteacherratio,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,
 	schools.payment_type as paymenttype,
@@ -17,6 +18,7 @@ select
 	schools.uuid as uuid,
 	schools.name as name,
 	schools.length_in_weeks as lengthinweeks,
+	schools.student_teacher_ratio as studentteacherratio,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,
 	schools.payment_type as paymenttype,
@@ -32,6 +34,7 @@ select
 	schools.uuid as uuid,
 	schools.name as name,
 	schools.length_in_weeks as lengthinweeks,
+	schools.student_teacher_ratio as studentteacherratio,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,
 	schools.payment_type as paymenttype,
@@ -44,9 +47,7 @@ where schools.uuid = :school_uuid
 -- name: getSchoolCampusLocationsDB
 select
 	campus_locations.school_id as schoolid,
-	campus_locations.location_id as locationid,
-	campus_locations.median_graduate_salary as mediangraduatesalary,
-	campus_locations.job_placement_rate as jobplacementrate
+	campus_locations.location_id as locationid
 from schools
 join campus_locations
 	on campus_locations.school_id = schools.id
@@ -59,6 +60,7 @@ select
 	schools.uuid as uuid,
 	schools.name as name,
 	schools.length_in_weeks as lengthinweeks,
+	schools.student_teacher_ratio as studentteacherratio,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,
 	schools.payment_type as paymenttype,
@@ -72,6 +74,7 @@ select
 	schools.uuid as uuid,
 	schools.name as name,
 	schools.length_in_weeks as lengthinweeks,
+	schools.student_teacher_ratio as studentteacherratio,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,
 	schools.payment_type as paymenttype,
@@ -86,6 +89,7 @@ select
 	schools.uuid as uuid,
 	schools.name as name,
 	schools.length_in_weeks as lengthinweeks,
+	schools.student_teacher_ratio as studentteacherratio,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,
 	schools.payment_type as paymenttype,
@@ -104,6 +108,7 @@ select
 	schools.uuid as uuid,
 	schools.name as name,
 	schools.length_in_weeks as lengthinweeks,
+	schools.student_teacher_ratio as studentteacherratio,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,
 	schools.payment_type as paymenttype,
@@ -118,6 +123,7 @@ select
 	schools.uuid as uuid,
 	schools.name as name,
 	schools.length_in_weeks as lengthinweeks,
+	schools.student_teacher_ratio as studentteacherratio,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,
 	schools.payment_type as paymenttype,
@@ -127,39 +133,12 @@ where schools.base_price <= :max_price
 order by schools.uuid
 ;
 
--- name: getSchoolsWithMinGraduateSalary
-select
-	schools.uuid as uuid,
-	schools.name as name,
-	schools.length_in_weeks as lengthinweeks,
-	schools.is_online as isonline,
-	schools.base_price as baseprice,
-	schools.payment_type as paymenttype,
-	schools.photo_uri as photouri
-from schools
-where schools.median_graduate_salary >= :min_graduate_salary
-order by schools.uuid
-;
-
--- name: getSchoolsWithMinJobPlacementRate
-select
-	schools.uuid as uuid,
-	schools.name as name,
-	schools.length_in_weeks as lengthinweeks,
-	schools.is_online as isonline,
-	schools.base_price as baseprice,
-	schools.payment_type as paymenttype,
-	schools.photo_uri as photouri
-from schools
-where schools.job_placement_rate >= :min_job_placement_rate
-order by schools.uuid
-;
-
 -- name: getSchoolsWithMinLength
 select
 	schools.uuid as uuid,
 	schools.name as name,
 	schools.length_in_weeks as lengthinweeks,
+	schools.student_teacher_ratio as studentteacherratio,
 	schools.is_online as isonline,
 	schools.base_price as baseprice,
 	schools.payment_type as paymenttype,
