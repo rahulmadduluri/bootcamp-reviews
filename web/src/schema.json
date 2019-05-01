@@ -2693,15 +2693,6 @@
     ],
     "directives": [
       {
-        "name": "isAuthenticated",
-        "description": "",
-        "locations": [
-          "FIELD_DEFINITION",
-          "QUERY"
-        ],
-        "args": []
-      },
-      {
         "name": "include",
         "description": "The @include directive may be provided for fields, fragment spreads, and inline fragments, and allows for conditional inclusion during execution as described by the if argument.",
         "locations": [
@@ -2770,6 +2761,15 @@
             "defaultValue": "\"No longer supported\""
           }
         ]
+      },
+      {
+        "name": "isAuthenticated",
+        "description": "",
+        "locations": [
+          "FIELD_DEFINITION",
+          "QUERY"
+        ],
+        "args": []
       }
     ]
   }

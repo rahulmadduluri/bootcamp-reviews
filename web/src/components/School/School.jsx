@@ -63,7 +63,11 @@ class School extends Component {
       <div>
         <Navbar />
         <div className="pageBackground">
-          <Query query={getQuery} variables={{ schoolUUID: this.props.uuid }}>
+          <Query 
+            query={getQuery}
+            variables={{ schoolUUID: this.props.uuid }}
+            fetchPolicy="cache-and-network"
+          >
             {({ loading, error, data }) => {
               if (loading) return <p>Loading...</p>;
               if (error) return <p>Error :(</p>;
@@ -95,8 +99,7 @@ class School extends Component {
                   </div>
                   <div className="schoolReviewsWrapper">
                     <div className="defaultContainer column is-three-fifths">
-                      <ReviewAverages reviewSummary={reviewSummary} />
-                      <ReviewListQuery schoolUUID={this.props.uuid}/>
+                      <ReviewListQuery schoolUUID={this.props.uuid} reviewSummary={reviewSummary} />
                     </div>
                   </div>
                 </div>
@@ -117,19 +120,6 @@ const StudentOutcomes = ({ reviewSummary }) => {
       <div className="studentOutcomesLabel">Student Outcomes</div>
       <SalaryBar after={true} salaryAfter={reviewSummary.averageSalaryAfter} />
       <SalaryBar after={false} salaryBefore={reviewSummary.averageSalaryBefore} />
-    </div>
-  );
-};
-
-const ReviewAverages = ({reviewSummary}) => {
-  const { overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore } = reviewSummary;
-  return (
-    <div>
-      {overallScore}
-      {teachingScore}
-      {courseworkScore}
-      {atmosphereScore}
-      {careerPreparationScore}
     </div>
   );
 };

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Review from './Review.jsx';
+import ReviewScore from './ReviewScore.jsx';
+import { formatFloat } from '../../helpers/helpers.js';
 
 class ReviewList extends Component {
 
@@ -28,6 +30,7 @@ class ReviewList extends Component {
     return (
       <div>
         <div className="schoolReviewsLabel">Reviews</div>
+        <ReviewAverages reviewSummary={this.props.reviewSummary} />
         <ul className="">
           {this.props.reviews.map((review) => (
             <li key={"review:"+review.uuid}>
@@ -39,5 +42,18 @@ class ReviewList extends Component {
     );
   }
 }
+
+const ReviewAverages = ({ reviewSummary }) => {
+  const { overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore } = reviewSummary;
+  return (
+    <ReviewScore
+      overallScore={formatFloat(overallScore, 1)} 
+      teachingScore={formatFloat(teachingScore, 1)} 
+      courseworkScore={formatFloat(courseworkScore, 1)} 
+      atmosphereScore={formatFloat(atmosphereScore, 1)}
+      careerPreparationScore={formatFloat(careerPreparationScore, 1)}/>
+  );
+};
+
 
 export default ReviewList;

@@ -41,7 +41,7 @@ const GET_REVIEWS = gql`
   }
 `;
 
-const ReviewListQuery = ({ schoolUUID }) => (
+const ReviewListQuery = ({ schoolUUID, reviewSummary }) => (
   <Query
     query={GET_REVIEWS}
     variables={{ schoolUUID: schoolUUID, offset: 0 }}
@@ -52,6 +52,7 @@ const ReviewListQuery = ({ schoolUUID }) => (
         return (
           <ReviewList
             reviews={data.reviews || []}
+            reviewSummary={reviewSummary}
             onLoadMore={() =>
               fetchMore({
                 variables: {

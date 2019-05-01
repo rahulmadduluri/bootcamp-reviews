@@ -5,3 +5,8 @@ export function numToString(x) {
 export function stringToNum(x) {
 	return parseFloat(x.replace(/,/g, ''));
 }
+
+export function formatFloat(x, decimals) {
+	const y = Math.pow(10, decimals);
+	return parseFloat(Math.round(x * y) / y).toFixed(decimals);
+}

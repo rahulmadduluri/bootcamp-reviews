@@ -1,7 +1,7 @@
 .reviewWrapper {
 	padding-top: 15px;
 	padding-bottom: 15px;
-	border-bottom: 0.1px solid #D3D3D3;
+	border-top: 0.1px solid #D3D3D3;
 }
 .reviewWrapper .reviewTitle {
   color: #000000;
@@ -70,7 +70,7 @@
 /* Review Score */
 
 .reviewScoreWrapper {
-	margin-bottom: 25px;
+	margin-bottom: 30px;
 }
 .reviewScoreWrapper .reviewOverallScore {
 	width: 50px;

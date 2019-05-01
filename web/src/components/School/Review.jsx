@@ -3,6 +3,7 @@ import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 import moment from 'moment';
 import Reviewer from './Reviewer.jsx';
+import ReviewScore from './ReviewScore.jsx';
 import ReviewText from './ReviewText.jsx';
 import auth from '../../Auth/auth.jsx';
 import Modal from '../Common/Modal.jsx';
@@ -115,7 +116,7 @@ class Review extends Component {
           salaryAfter={salaryAfter} 
           jobLocationName={jobLocationName} 
           jobStartDate={jobStartDate} />
-        <ReviewScore 
+        <ReviewScore
           overallScore={overallScore} 
           teachingScore={teachingScore} 
           courseworkScore={courseworkScore} 
@@ -135,31 +136,6 @@ class Review extends Component {
     );
   }
 }
-
-const ReviewScore = ({ overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore }) => (
-  <div className="reviewScoreWrapper">
-    <div className="columns is-mobile">
-      <div className="column is-narrow">
-        <div className="reviewOverallScore">
-          <div className="scoreText">{overallScore}</div>
-        </div>
-      </div>
-      <SecondaryScoreRating score={careerPreparationScore} title={"Career Prep"} />
-      <SecondaryScoreRating score={teachingScore} title={"Teaching"} />
-      <SecondaryScoreRating score={courseworkScore} title={"Coursework"} />
-      <SecondaryScoreRating score={atmosphereScore} title={"Atmosphere"} />
-    </div>
-  </div>
-);
-
-const SecondaryScoreRating = ({ score, title }) => (
-  <div className="column is-narrow">
-    <div className="secondaryScoreWrapper">
-      <div className="secondaryScore">{score}</div>
-      <div className="secondaryScoreLabel">{title}</div>
-    </div>
-  </div>
-);
 
 const ReviewHelpful = ({ votedHelpful, votedUnhelpful, helpfulUpvotes, helpfulDownvotes, onClickHelpful, onClickUnhelpful }) => (
   <div className="reviewHelpfulwrapper">
