@@ -129,13 +129,15 @@ type ComplexityRoot struct {
 	}
 
 	SchoolReviewSummary struct {
-		AtmosphereScore        func(childComplexity int) int
-		AverageSalaryAfter     func(childComplexity int) int
-		AverageSalaryBefore    func(childComplexity int) int
-		CareerPreparationScore func(childComplexity int) int
-		CourseworkScore        func(childComplexity int) int
-		OverallScore           func(childComplexity int) int
-		TeachingScore          func(childComplexity int) int
+		AtmosphereScore           func(childComplexity int) int
+		AverageMonthsToAcquireJob func(childComplexity int) int
+		AverageSalaryAfter        func(childComplexity int) int
+		AverageSalaryBefore       func(childComplexity int) int
+		CareerPreparationScore    func(childComplexity int) int
+		CourseworkScore           func(childComplexity int) int
+		OverallScore              func(childComplexity int) int
+		TeachingScore             func(childComplexity int) int
+		TotalNumReviews           func(childComplexity int) int
 	}
 
 	Student struct {
@@ -609,6 +611,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.SchoolReviewSummary.AtmosphereScore(childComplexity), true
 
+	case "SchoolReviewSummary.AverageMonthsToAcquireJob":
+		if e.complexity.SchoolReviewSummary.AverageMonthsToAcquireJob == nil {
+			break
+		}
+
+		return e.complexity.SchoolReviewSummary.AverageMonthsToAcquireJob(childComplexity), true
+
 	case "SchoolReviewSummary.AverageSalaryAfter":
 		if e.complexity.SchoolReviewSummary.AverageSalaryAfter == nil {
 			break
@@ -650,6 +659,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.SchoolReviewSummary.TeachingScore(childComplexity), true
+
+	case "SchoolReviewSummary.TotalNumReviews":
+		if e.complexity.SchoolReviewSummary.TotalNumReviews == nil {
+			break
+		}
+
+		return e.complexity.SchoolReviewSummary.TotalNumReviews(childComplexity), true
 
 	case "Student.FirstName":
 		if e.complexity.Student.FirstName == nil {
@@ -827,6 +843,7 @@ type CampusLocation {
 
 # summary of school review info
 type SchoolReviewSummary {
+	totalNumReviews: Int!
 	overallScore: Float!
 	teachingScore: Float!
 	courseworkScore: Float!
@@ -834,6 +851,7 @@ type SchoolReviewSummary {
 	careerPreparationScore: Float!
 	averageSalaryBefore: Int
 	averageSalaryAfter: Int
+	averageMonthsToAcquireJob: Int
 }
 
 type Student {
@@ -2671,6 +2689,33 @@ func (ec *executionContext) _SchoolQueryResult_schoolResults(ctx context.Context
 	return ec.marshalNSchool2ᚕgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐSchool(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _SchoolReviewSummary_totalNumReviews(ctx context.Context, field graphql.CollectedField, obj *models.SchoolReviewSummary) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "SchoolReviewSummary",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TotalNumReviews, nil
+	})
+	if resTmp == nil {
+		if !ec.HasError(rctx) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _SchoolReviewSummary_overallScore(ctx context.Context, field graphql.CollectedField, obj *models.SchoolReviewSummary) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
@@ -2844,6 +2889,30 @@ func (ec *executionContext) _SchoolReviewSummary_averageSalaryAfter(ctx context.
 	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return obj.AverageSalaryAfter, nil
+	})
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _SchoolReviewSummary_averageMonthsToAcquireJob(ctx context.Context, field graphql.CollectedField, obj *models.SchoolReviewSummary) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "SchoolReviewSummary",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AverageMonthsToAcquireJob, nil
 	})
 	if resTmp == nil {
 		return graphql.Null
@@ -4634,6 +4703,11 @@ func (ec *executionContext) _SchoolReviewSummary(ctx context.Context, sel ast.Se
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("SchoolReviewSummary")
+		case "totalNumReviews":
+			out.Values[i] = ec._SchoolReviewSummary_totalNumReviews(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalid = true
+			}
 		case "overallScore":
 			out.Values[i] = ec._SchoolReviewSummary_overallScore(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -4663,6 +4737,8 @@ func (ec *executionContext) _SchoolReviewSummary(ctx context.Context, sel ast.Se
 			out.Values[i] = ec._SchoolReviewSummary_averageSalaryBefore(ctx, field, obj)
 		case "averageSalaryAfter":
 			out.Values[i] = ec._SchoolReviewSummary_averageSalaryAfter(ctx, field, obj)
+		case "averageMonthsToAcquireJob":
+			out.Values[i] = ec._SchoolReviewSummary_averageMonthsToAcquireJob(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}

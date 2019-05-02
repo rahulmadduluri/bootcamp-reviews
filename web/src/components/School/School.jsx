@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import Navbar from '../navbar';
 import SchoolLogo from '../Common/SchoolLogo';
 import SalaryIcon from '../../images/finances_icon.png';
+import JobIcon from '../../images/job_placement_icon.png';
 import {
   StudentTeacherRatioBar,
   PriceBar,
@@ -49,6 +50,7 @@ class School extends Component {
             }
           }
           reviewSummary {
+            totalNumReviews
             overallScore
             teachingScore
             courseworkScore
@@ -56,6 +58,7 @@ class School extends Component {
             careerPreparationScore
             averageSalaryBefore
             averageSalaryAfter
+            averageMonthsToAcquireJob
           }
         }
       }
@@ -153,7 +156,17 @@ const StudentOutcomes = ({ schoolName, reviewSummary }) => {
       </div>
 
       <div className="jobOutcome">
-
+        <div className="jobOutcomeLabel"><img src={JobIcon} alt="Job_Icon"/>Job</div>
+        <div className="monthsTillJob">
+          <div className="monthsTillJobItemLabel">Average # Months (Post-Grad) To Find Job</div>
+          <div className="monthsTillJobItemValue">
+            {
+              reviewSummary.averageMonthsToAcquireJob ? (
+                reviewSummary.averageMonthsToAcquireJob
+              ) : <div/>
+            }
+          </div>
+        </div>
       </div>
 
     </div>

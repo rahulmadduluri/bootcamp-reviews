@@ -534,6 +534,22 @@
         "description": "",
         "fields": [
           {
+            "name": "totalNumReviews",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "overallScore",
             "description": "",
             "args": [],
@@ -627,6 +643,18 @@
           },
           {
             "name": "averageSalaryAfter",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "averageMonthsToAcquireJob",
             "description": "",
             "args": [],
             "type": {

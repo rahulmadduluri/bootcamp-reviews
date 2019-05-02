@@ -15,6 +15,8 @@ const (
 	_GetHelpfulDownvotes = "getHelpfulDownvotes"
 
 	_GetReviewDBWithUUID = "getReviewDBWithUUID"
+
+	_HoursPerMonth = 720
 )
 
 type ReviewDB interface {
@@ -297,8 +299,10 @@ func (sql *sqlDB) getSchoolReviewSummary(schoolUUID string) (models.SchoolReview
 
 	salaryBeforeCount := 0
 	salaryAfterCount := 0
+	monthsToAcquireJobCount := 0
 	averageSalaryBefore := 0
 	averageSalaryAfter := 0
+	averageMonthsToAcquireJob := 0
 
 	var summary models.SchoolReviewSummary
 	reviewsDB := []models.ReviewDBModel{}
@@ -332,6 +336,12 @@ func (sql *sqlDB) getSchoolReviewSummary(schoolUUID string) (models.SchoolReview
 			salaryAfterCount += 1
 			averageSalaryAfter += *rdb.SalaryAfter
 		}
+		if rdb.SchoolGraduationDate != nil && rdb.JobStartDate != nil {
+			timeDiff := (*rdb.JobStartDate).Sub(*rdb.SchoolGraduationDate)
+			monthDiff := timeDiff.Hours() / _HoursPerMonth
+			monthsToAcquireJobCount += 1
+			averageMonthsToAcquireJob += int(monthDiff)
+		}
 		averageOverallScore += float64(rdb.OverallScore)
 		averageTeachingScore += float64(rdb.TeachingScore)
 		averageCourseworkScore += float64(rdb.CourseworkScore)
@@ -339,16 +349,17 @@ func (sql *sqlDB) getSchoolReviewSummary(schoolUUID string) (models.SchoolReview
 		averageCareerPreparationScore += float64(rdb.CareerPreparationScore)
 	}
 
-	if len(reviewsDB) > 0 {
-		reviewDBLen := float64(len(reviewsDB))
-		averageOverallScore = float64(averageOverallScore) / reviewDBLen
-		averageTeachingScore = float64(averageTeachingScore) / reviewDBLen
-		averageCourseworkScore = float64(averageCourseworkScore) / reviewDBLen
-		averageAtmosphereScore = float64(averageAtmosphereScore) / reviewDBLen
-		averageCareerPreparationScore = float64(averageCareerPreparationScore) / reviewDBLen
+	reviewDBLen := float64(len(reviewsDB))
+	if reviewDBLen > 0 {
+		averageOverallScore = averageOverallScore / reviewDBLen
+		averageTeachingScore = averageTeachingScore / reviewDBLen
+		averageCourseworkScore = averageCourseworkScore / reviewDBLen
+		averageAtmosphereScore = averageAtmosphereScore / reviewDBLen
+		averageCareerPreparationScore = averageCareerPreparationScore / reviewDBLen
 	}
 
 	summary = models.SchoolReviewSummary{
+		TotalNumReviews:        int(reviewDBLen),
 		OverallScore:           averageOverallScore,
 		TeachingScore:          averageTeachingScore,
 		CourseworkScore:        averageCourseworkScore,
@@ -362,6 +373,10 @@ func (sql *sqlDB) getSchoolReviewSummary(schoolUUID string) (models.SchoolReview
 	if salaryAfterCount > 0 {
 		averageSalaryAfter = averageSalaryAfter / salaryAfterCount
 		summary.AverageSalaryAfter = &averageSalaryAfter
+	}
+	if monthsToAcquireJobCount > 0 {
+		averageMonthsToAcquireJob = averageMonthsToAcquireJob / monthsToAcquireJobCount
+		summary.AverageMonthsToAcquireJob = &averageMonthsToAcquireJob
 	}
 
 	return summary, err

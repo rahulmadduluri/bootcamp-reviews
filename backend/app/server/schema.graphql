@@ -43,6 +43,7 @@ type CampusLocation {
 
 # summary of school review info
 type SchoolReviewSummary {
+	totalNumReviews: Int!
 	overallScore: Float!
 	teachingScore: Float!
 	courseworkScore: Float!
@@ -50,6 +51,7 @@ type SchoolReviewSummary {
 	careerPreparationScore: Float!
 	averageSalaryBefore: Int
 	averageSalaryAfter: Int
+	averageMonthsToAcquireJob: Int
 }
 
 type Student {

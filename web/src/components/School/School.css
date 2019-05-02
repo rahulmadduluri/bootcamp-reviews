@@ -153,6 +153,34 @@
   display: inline-block;
   font-weight: 500;
 }
+.studentOutcomesWrapper .jobOutcome {
+  margin-top: 15px;
+}
+.studentOutcomesWrapper .jobOutcome .jobOutcomeLabel {
+  color: #000000;
+  font-weight: 500;
+  font-size: 16px;
+  display: inline-block;
+}
+.studentOutcomesWrapper .jobOutcome .jobOutcomeLabel > img {
+  height: 15px;
+  width: 15px;
+  margin-right: 10px;
+}
+.studentOutcomesWrapper .jobOutcome .monthsTillJob {
+  font-size: 14px;
+}
+.studentOutcomesWrapper .jobOutcome .monthsTillJobItemLabel {
+  margin-right: 10px;
+  color: #828282;
+  min-width: 250px;
+  display: inline-block;
+}
+.studentOutcomesWrapper .jobOutcome .monthsTillJobItemValue {
+  color: #000000;
+  display: inline-block;
+  font-weight: 500;
+}
 
 
 /* School Reviews */
@@ -160,9 +188,19 @@
 .schoolReviewsWrapper {
   margin-top: 40px;
 }
-.schoolReviewsWrapper .schoolReviewsLabel {
+.schoolReviewsWrapper .schoolReviewsHeader {
+  margin-bottom: 15px;
+}
+.schoolReviewsWrapper .schoolReviewsHeader .schoolReviewsLabel {
   color: #000000;
   font-weight: 500;
   font-size: 20px;
-  margin-bottom: 15px;
+  display: inline-block;
+  margin-right: 5px;
+}
+.schoolReviewsWrapper .schoolReviewsHeader .schoolReviewsCount {
+  color: #828282;
+  font-weight: 400;
+  font-size: 14px;
+  display: inline-block;
 }

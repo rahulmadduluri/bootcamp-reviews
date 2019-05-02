@@ -27,9 +27,14 @@ class ReviewList extends Component {
   };
 
   render() {
+    const { totalNumReviews } = this.props.reviewSummary;
+
     return (
       <div>
-        <div className="schoolReviewsLabel">Reviews</div>
+        <div className="schoolReviewsHeader">
+          <div className="schoolReviewsLabel">Reviews</div>
+          <div className="schoolReviewsCount">&#8226; {totalNumReviews} student reviews</div>
+        </div>
         <ReviewAverages reviewSummary={this.props.reviewSummary} />
         <ul className="">
           {this.props.reviews.map((review) => (
