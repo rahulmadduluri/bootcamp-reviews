@@ -13,7 +13,7 @@ import {
   LengthBar,
 } from '../Common/SchoolStats';
 import ReviewListQuery from './ReviewListQuery.jsx';
-import { numToString } from '../../helpers/helpers.js';
+import { numToString, formatFloat } from '../../helpers/helpers.js';
 import './School.css';
 
 class School extends Component {
@@ -122,17 +122,12 @@ class School extends Component {
 const StudentOutcomes = ({ schoolName, reviewSummary }) => {
   return (
     <div>
-      <div className="studentOutcomesLabel">Student Outcomes</div>
+      <div className="studentOutcomesLabel">Student Outcomes (on average)</div>
 
       <div className="salaryOutcome">
-        <div className="salaryOutcomeLabel">
-          <img src={SalaryIcon} alt="Salary" />
-          Salary
-        </div>
+        <div className="salaryOutcomeLabel"><img src={SalaryIcon} alt="Salary" />Salary</div>
         <div className="salaryOutcomeBefore">
-          <div className="salaryOutcomeItemLabel">
-            Average Salary Before {schoolName}
-          </div>
+          <div className="salaryOutcomeItemLabel">Salary Before {schoolName}</div>
           <div className="salaryOutcomeItemValue">
             {
               reviewSummary.averageSalaryBefore ? (
@@ -142,9 +137,7 @@ const StudentOutcomes = ({ schoolName, reviewSummary }) => {
           </div>
         </div>
         <div className="salaryOutcomeAfter">
-          <div className="salaryOutcomeItemLabel">
-            Average Salary After {schoolName}
-          </div>
+          <div className="salaryOutcomeItemLabel">Salary After {schoolName}</div>
           <div className="salaryOutcomeItemValue">
             {
               reviewSummary.averageSalaryAfter ? (
@@ -158,11 +151,11 @@ const StudentOutcomes = ({ schoolName, reviewSummary }) => {
       <div className="jobOutcome">
         <div className="jobOutcomeLabel"><img src={JobIcon} alt="Job_Icon"/>Job</div>
         <div className="monthsTillJob">
-          <div className="monthsTillJobItemLabel">Average # Months (Post-Grad) To Find Job</div>
+          <div className="monthsTillJobItemLabel">Time Between Graduation & Job Offer</div>
           <div className="monthsTillJobItemValue">
             {
               reviewSummary.averageMonthsToAcquireJob ? (
-                reviewSummary.averageMonthsToAcquireJob
+                formatFloat(reviewSummary.averageMonthsToAcquireJob, 1) + " months"
               ) : <div/>
             }
           </div>

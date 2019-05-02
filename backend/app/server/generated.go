@@ -94,8 +94,8 @@ type ComplexityRoot struct {
 		HasJob                    func(childComplexity int) int
 		HelpfulDownvotes          func(childComplexity int) int
 		HelpfulUpvotes            func(childComplexity int) int
+		JobFoundTimestamp         func(childComplexity int) int
 		JobLocation               func(childComplexity int) int
-		JobStartTimestamp         func(childComplexity int) int
 		OverallScore              func(childComplexity int) int
 		SalaryAfter               func(childComplexity int) int
 		SalaryBefore              func(childComplexity int) int
@@ -422,19 +422,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Review.HelpfulUpvotes(childComplexity), true
 
+	case "Review.JobFoundTimestamp":
+		if e.complexity.Review.JobFoundTimestamp == nil {
+			break
+		}
+
+		return e.complexity.Review.JobFoundTimestamp(childComplexity), true
+
 	case "Review.JobLocation":
 		if e.complexity.Review.JobLocation == nil {
 			break
 		}
 
 		return e.complexity.Review.JobLocation(childComplexity), true
-
-	case "Review.JobStartTimestamp":
-		if e.complexity.Review.JobStartTimestamp == nil {
-			break
-		}
-
-		return e.complexity.Review.JobStartTimestamp(childComplexity), true
 
 	case "Review.OverallScore":
 		if e.complexity.Review.OverallScore == nil {
@@ -851,7 +851,7 @@ type SchoolReviewSummary {
 	careerPreparationScore: Float!
 	averageSalaryBefore: Int
 	averageSalaryAfter: Int
-	averageMonthsToAcquireJob: Int
+	averageMonthsToAcquireJob: Float
 }
 
 type Student {
@@ -915,7 +915,7 @@ type Review {
 	schoolLocation: Location!
 	schoolGraduationTimestamp: Int
 	jobLocation: Location
-	jobStartTimestamp: Int
+	jobFoundTimestamp: Int
 	createdTimestamp: Int!
 }
 
@@ -942,8 +942,8 @@ input NewReviewParams {
 	salaryAfter: Int
 	jobLocationUUID: ID
 	jobLocationOtherName: String # if location isn't in given options
-	jobStartMonth: Int
-	jobStartYear: Int
+	jobFoundMonth: Int
+	jobFoundYear: Int
 }
 
 type Query {
@@ -2311,7 +2311,7 @@ func (ec *executionContext) _Review_jobLocation(ctx context.Context, field graph
 	return ec.marshalOLocation2ᚖgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐLocation(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Review_jobStartTimestamp(ctx context.Context, field graphql.CollectedField, obj *models.Review) graphql.Marshaler {
+func (ec *executionContext) _Review_jobFoundTimestamp(ctx context.Context, field graphql.CollectedField, obj *models.Review) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
@@ -2324,7 +2324,7 @@ func (ec *executionContext) _Review_jobStartTimestamp(ctx context.Context, field
 	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.JobStartTimestamp, nil
+		return obj.JobFoundTimestamp, nil
 	})
 	if resTmp == nil {
 		return graphql.Null
@@ -2917,10 +2917,10 @@ func (ec *executionContext) _SchoolReviewSummary_averageMonthsToAcquireJob(ctx c
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*int)
+	res := resTmp.(*float64)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+	return ec.marshalOFloat2ᚖfloat64(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Student_uuid(ctx context.Context, field graphql.CollectedField, obj *models.Student) graphql.Marshaler {
@@ -4069,15 +4069,15 @@ func (ec *executionContext) unmarshalInputNewReviewParams(ctx context.Context, v
 			if err != nil {
 				return it, err
 			}
-		case "jobStartMonth":
+		case "jobFoundMonth":
 			var err error
-			it.JobStartMonth, err = ec.unmarshalOInt2ᚖint(ctx, v)
+			it.JobFoundMonth, err = ec.unmarshalOInt2ᚖint(ctx, v)
 			if err != nil {
 				return it, err
 			}
-		case "jobStartYear":
+		case "jobFoundYear":
 			var err error
-			it.JobStartYear, err = ec.unmarshalOInt2ᚖint(ctx, v)
+			it.JobFoundYear, err = ec.unmarshalOInt2ᚖint(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -4589,8 +4589,8 @@ func (ec *executionContext) _Review(ctx context.Context, sel ast.SelectionSet, o
 			out.Values[i] = ec._Review_schoolGraduationTimestamp(ctx, field, obj)
 		case "jobLocation":
 			out.Values[i] = ec._Review_jobLocation(ctx, field, obj)
-		case "jobStartTimestamp":
-			out.Values[i] = ec._Review_jobStartTimestamp(ctx, field, obj)
+		case "jobFoundTimestamp":
+			out.Values[i] = ec._Review_jobFoundTimestamp(ctx, field, obj)
 		case "createdTimestamp":
 			out.Values[i] = ec._Review_createdTimestamp(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -5587,6 +5587,29 @@ func (ec *executionContext) marshalOFilters2ᚖgithubᚗcomᚋrahulmadduluriᚋr
 		return graphql.Null
 	}
 	return ec._Filters(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalOFloat2float64(ctx context.Context, v interface{}) (float64, error) {
+	return graphql.UnmarshalFloat(v)
+}
+
+func (ec *executionContext) marshalOFloat2float64(ctx context.Context, sel ast.SelectionSet, v float64) graphql.Marshaler {
+	return graphql.MarshalFloat(v)
+}
+
+func (ec *executionContext) unmarshalOFloat2ᚖfloat64(ctx context.Context, v interface{}) (*float64, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalOFloat2float64(ctx, v)
+	return &res, err
+}
+
+func (ec *executionContext) marshalOFloat2ᚖfloat64(ctx context.Context, sel ast.SelectionSet, v *float64) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec.marshalOFloat2float64(ctx, sel, *v)
 }
 
 func (ec *executionContext) unmarshalOID2string(ctx context.Context, v interface{}) (string, error) {

@@ -51,7 +51,7 @@ type SchoolReviewSummary {
 	careerPreparationScore: Float!
 	averageSalaryBefore: Int
 	averageSalaryAfter: Int
-	averageMonthsToAcquireJob: Int
+	averageMonthsToAcquireJob: Float
 }
 
 type Student {
@@ -115,7 +115,7 @@ type Review {
 	schoolLocation: Location!
 	schoolGraduationTimestamp: Int
 	jobLocation: Location
-	jobStartTimestamp: Int
+	jobFoundTimestamp: Int
 	createdTimestamp: Int!
 }
 
@@ -142,8 +142,8 @@ input NewReviewParams {
 	salaryAfter: Int
 	jobLocationUUID: ID
 	jobLocationOtherName: String # if location isn't in given options
-	jobStartMonth: Int
-	jobStartYear: Int
+	jobFoundMonth: Int
+	jobFoundYear: Int
 }
 
 type Query {

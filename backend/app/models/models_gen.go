@@ -57,8 +57,8 @@ type NewReviewParams struct {
 	SalaryAfter            *int    `json:"salaryAfter"`
 	JobLocationUUID        *string `json:"jobLocationUUID"`
 	JobLocationOtherName   *string `json:"jobLocationOtherName"`
-	JobStartMonth          *int    `json:"jobStartMonth"`
-	JobStartYear           *int    `json:"jobStartYear"`
+	JobFoundMonth          *int    `json:"jobFoundMonth"`
+	JobFoundYear           *int    `json:"jobFoundYear"`
 }
 
 type Review struct {
@@ -81,7 +81,7 @@ type Review struct {
 	SchoolLocation            Location  `json:"schoolLocation"`
 	SchoolGraduationTimestamp *int      `json:"schoolGraduationTimestamp"`
 	JobLocation               *Location `json:"jobLocation"`
-	JobStartTimestamp         *int      `json:"jobStartTimestamp"`
+	JobFoundTimestamp         *int      `json:"jobFoundTimestamp"`
 	CreatedTimestamp          int       `json:"createdTimestamp"`
 }
 
@@ -105,15 +105,15 @@ type SchoolQueryResult struct {
 }
 
 type SchoolReviewSummary struct {
-	TotalNumReviews           int     `json:"totalNumReviews"`
-	OverallScore              float64 `json:"overallScore"`
-	TeachingScore             float64 `json:"teachingScore"`
-	CourseworkScore           float64 `json:"courseworkScore"`
-	AtmosphereScore           float64 `json:"atmosphereScore"`
-	CareerPreparationScore    float64 `json:"careerPreparationScore"`
-	AverageSalaryBefore       *int    `json:"averageSalaryBefore"`
-	AverageSalaryAfter        *int    `json:"averageSalaryAfter"`
-	AverageMonthsToAcquireJob *int    `json:"averageMonthsToAcquireJob"`
+	TotalNumReviews           int      `json:"totalNumReviews"`
+	OverallScore              float64  `json:"overallScore"`
+	TeachingScore             float64  `json:"teachingScore"`
+	CourseworkScore           float64  `json:"courseworkScore"`
+	AtmosphereScore           float64  `json:"atmosphereScore"`
+	CareerPreparationScore    float64  `json:"careerPreparationScore"`
+	AverageSalaryBefore       *int     `json:"averageSalaryBefore"`
+	AverageSalaryAfter        *int     `json:"averageSalaryAfter"`
+	AverageMonthsToAcquireJob *float64 `json:"averageMonthsToAcquireJob"`
 }
 
 type SchoolSearchParams struct {

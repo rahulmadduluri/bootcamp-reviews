@@ -659,7 +659,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "Float",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1315,7 +1315,7 @@
             "deprecationReason": null
           },
           {
-            "name": "jobStartTimestamp",
+            "name": "jobFoundTimestamp",
             "description": "",
             "args": [],
             "type": {
@@ -1898,7 +1898,7 @@
             "defaultValue": null
           },
           {
-            "name": "jobStartMonth",
+            "name": "jobFoundMonth",
             "description": "",
             "type": {
               "kind": "SCALAR",
@@ -1908,7 +1908,7 @@
             "defaultValue": null
           },
           {
-            "name": "jobStartYear",
+            "name": "jobFoundYear",
             "description": "",
             "type": {
               "kind": "SCALAR",

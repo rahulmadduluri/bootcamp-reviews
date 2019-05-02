@@ -35,7 +35,7 @@ const GET_REVIEWS = gql`
       salaryBefore
       salaryAfter
       schoolGraduationTimestamp
-      jobStartTimestamp
+      jobFoundTimestamp
       createdTimestamp
     }
   }

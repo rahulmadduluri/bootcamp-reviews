@@ -19,7 +19,7 @@ select
 	reviews.school_location_id as schoollocationid,
 	reviews.job_location_id as joblocationid,
 	reviews.school_graduation_date as schoolgraduationdate,
-	reviews.job_start_date as jobstartdate,
+	reviews.job_found_date as jobfounddate,
 	reviews.created_timestamp_server as createdtimestampserver
 from reviews
 join schools
@@ -49,7 +49,7 @@ select
 	reviews.school_location_id as schoollocationid,
 	reviews.job_location_id as joblocationid,
 	reviews.school_graduation_date as schoolgraduationdate,
-	reviews.job_start_date as jobstartdate,
+	reviews.job_found_date as jobfounddate,
 	reviews.created_timestamp_server as createdtimestampserver
 from reviews
 where reviews.uuid = :review_uuid
@@ -102,7 +102,7 @@ insert into reviews_pre_processed (
 	school_location_id,
 	job_location_id,
 	school_graduation_date,
-	job_start_date,
+	job_found_date,
 	created_timestamp_server
 )
 	select
@@ -124,6 +124,6 @@ insert into reviews_pre_processed (
 		:school_location_id,
 		:job_location_id,
 		:school_graduation_date,
-		:job_start_date,
+		:job_found_date,
 		:created_timestamp_server
 ;

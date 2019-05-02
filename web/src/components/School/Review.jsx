@@ -86,14 +86,14 @@ class Review extends Component {
       schoolLocation,
       schoolGraduationTimestamp,
       jobLocation,
-      jobStartTimestamp,
+      jobFoundTimestamp,
       createdTimestamp
     } = this.props.review;
 
     const schoolLocationName = schoolLocation.city.name;
     const jobLocationName = jobLocation.city.name;
     const schoolGradDate = moment.unix(schoolGraduationTimestamp).format('MMM YYYY');
-    const jobStartDate = moment.unix(jobStartTimestamp).format('MMM YYYY');
+    const jobFoundDate = moment.unix(jobFoundTimestamp).format('MMM YYYY');
     const createdDate = moment.unix(createdTimestamp).format('MM/DD/YYYY');
 
     return (
@@ -115,7 +115,7 @@ class Review extends Component {
           salaryBefore={salaryBefore} 
           salaryAfter={salaryAfter} 
           jobLocationName={jobLocationName} 
-          jobStartDate={jobStartDate} />
+          jobFoundDate={jobFoundDate} />
         <ReviewScore
           overallScore={overallScore} 
           teachingScore={teachingScore} 

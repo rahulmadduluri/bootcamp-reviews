@@ -110,18 +110,18 @@ class WriteReview extends Component {
   };
 
   // job handlers
-  handleSelectJobStartMonth = (event) => {
+  handleSelectJobFoundMonth = (event) => {
   	if (event.target.value === 'none') {
-  		this.setState({ jobStartMonth: null });
+  		this.setState({ jobFoundMonth: null });
   	} else {
-  		this.setState({ jobStartMonth: event.target.value });
+  		this.setState({ jobFoundMonth: event.target.value });
   	}
   };
-  handleSelectJobStartYear = (event) => {
+  handleSelectJobFoundYear = (event) => {
   	if (event.target.value === 'none') {
-  		this.setState({ jobStartYear: null });
+  		this.setState({ jobFoundYear: null });
   	} else {
-  		this.setState({ jobStartYear: event.target.value });
+  		this.setState({ jobFoundYear: event.target.value });
   	}
   };
   handleHasJob = (event) => {
@@ -165,9 +165,9 @@ class WriteReview extends Component {
 	    // create review params object
 	    const { studentUUID } = auth.getProfile();
 	    const { title, studentExperience, studentAdvice, overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
-	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, jobLocationUUID, jobLocationOtherName, jobStartMonth, jobStartYear } = this.state;
+	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, jobLocationUUID, jobLocationOtherName, jobFoundMonth, jobFoundYear } = this.state;
 	    let reviewParams = { title, studentExperience, studentAdvice, overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
-	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, jobLocationUUID, jobLocationOtherName, jobStartMonth, jobStartYear, studentUUID };
+	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, jobLocationUUID, jobLocationOtherName, jobFoundMonth, jobFoundYear, studentUUID };
 
 	    const { data } = await this.props.client.mutate({
 	    	mutation: submitReviewMutation,
@@ -256,8 +256,8 @@ class WriteReview extends Component {
 	salaryAfter: null,
 	jobLocationUUID: null,
 	jobLocationOtherName: null,
-	jobStartMonth: null,
-	jobStartYear: null
+	jobFoundMonth: null,
+	jobFoundYear: null
   };
 
   render() {
@@ -553,7 +553,7 @@ class WriteReview extends Component {
   	return (
   		// do you have a job?
   		<div>
-  			<FieldWrapper label="Did you get a job (in the same field as your schooling) after graduation?" required={true}>
+  			<FieldWrapper label="Did you find a job (in the same field as your schooling) after graduation?" required={true}>
 			  <input className="is-checkradio" id="hasJobYes" type="radio" name="exampleRadioDefault2" onChange={this.handleHasJob} />
 			  <label htmlFor="hasJobYes">Yes</label>
 			  <input className="is-checkradio" id="hasJobNo" type="radio" name="exampleRadioDefault2" onChange={this.handleHasJob} />
@@ -586,9 +586,9 @@ class WriteReview extends Component {
 			{
 				// when did you get the job?
 				this.state.hasJob ? (
-					<FieldWrapper label="When did you start your job?" required={false}>
-					  	<MonthDropdown handleSelectMonth={this.handleSelectJobStartMonth} />
-					  	<YearDropdown handleSelectYear={this.handleSelectJobStartYear} />
+					<FieldWrapper label="When did you get your job offer?" required={false}>
+					  	<MonthDropdown handleSelectMonth={this.handleSelectJobFoundMonth} />
+					  	<YearDropdown handleSelectYear={this.handleSelectJobFoundYear} />
 					</FieldWrapper>
 				) : <div/>
 			}

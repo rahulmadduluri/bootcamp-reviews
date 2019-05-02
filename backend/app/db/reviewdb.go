@@ -41,7 +41,7 @@ type ReviewDB interface {
 		jobLocationUUID *string,
 		salaryBefore *int,
 		salaryAfter *int,
-		jobStartDate *time.Time,
+		jobFoundDate *time.Time,
 	) error
 }
 
@@ -93,10 +93,10 @@ func (sql *sqlDB) GetReviews(schoolUUID string) ([]models.Review, error) {
 			t := int((*rdb.SchoolGraduationDate).Unix())
 			graduationTimestamp = &t
 		}
-		var jobStartTimestamp *int
-		if rdb.JobStartDate != nil {
-			t := int((*rdb.JobStartDate).Unix())
-			jobStartTimestamp = &t
+		var jobFoundTimestamp *int
+		if rdb.JobFoundDate != nil {
+			t := int((*rdb.JobFoundDate).Unix())
+			jobFoundTimestamp = &t
 		}
 
 		// get helpful upvotes
@@ -123,7 +123,7 @@ func (sql *sqlDB) GetReviews(schoolUUID string) ([]models.Review, error) {
 			SchoolLocation:            *schoolLocation,
 			SchoolGraduationTimestamp: graduationTimestamp,
 			JobLocation:               jobLocation,
-			JobStartTimestamp:         jobStartTimestamp,
+			JobFoundTimestamp:         jobFoundTimestamp,
 			CreatedTimestamp:          rdb.CreatedTimestampServer,
 		}
 		reviews = append(reviews, review)
@@ -151,7 +151,7 @@ func (sql *sqlDB) CreateTempReview(
 	jobLocationUUID *string,
 	salaryBefore *int,
 	salaryAfter *int,
-	jobStartDate *time.Time,
+	jobFoundDate *time.Time,
 ) error {
 	// student
 	student, err := sql.getStudentDBWithUUID(studentUUID)
@@ -199,7 +199,7 @@ func (sql *sqlDB) CreateTempReview(
 			"job_location_id":          jobLocationID,
 			"salary_before":            salaryBefore,
 			"salary_after":             salaryAfter,
-			"job_start_date":           jobStartDate,
+			"job_found_date":           jobFoundDate,
 			"helpful_upvotes":          0,
 			"helpful_downvotes":        0,
 			"created_timestamp_server": createdTimestamp,
@@ -302,7 +302,7 @@ func (sql *sqlDB) getSchoolReviewSummary(schoolUUID string) (models.SchoolReview
 	monthsToAcquireJobCount := 0
 	averageSalaryBefore := 0
 	averageSalaryAfter := 0
-	averageMonthsToAcquireJob := 0
+	averageMonthsToAcquireJob := 0.0
 
 	var summary models.SchoolReviewSummary
 	reviewsDB := []models.ReviewDBModel{}
@@ -336,11 +336,11 @@ func (sql *sqlDB) getSchoolReviewSummary(schoolUUID string) (models.SchoolReview
 			salaryAfterCount += 1
 			averageSalaryAfter += *rdb.SalaryAfter
 		}
-		if rdb.SchoolGraduationDate != nil && rdb.JobStartDate != nil {
-			timeDiff := (*rdb.JobStartDate).Sub(*rdb.SchoolGraduationDate)
+		if rdb.SchoolGraduationDate != nil && rdb.JobFoundDate != nil {
+			timeDiff := (*rdb.JobFoundDate).Sub(*rdb.SchoolGraduationDate)
 			monthDiff := timeDiff.Hours() / _HoursPerMonth
 			monthsToAcquireJobCount += 1
-			averageMonthsToAcquireJob += int(monthDiff)
+			averageMonthsToAcquireJob += monthDiff
 		}
 		averageOverallScore += float64(rdb.OverallScore)
 		averageTeachingScore += float64(rdb.TeachingScore)
@@ -375,7 +375,7 @@ func (sql *sqlDB) getSchoolReviewSummary(schoolUUID string) (models.SchoolReview
 		summary.AverageSalaryAfter = &averageSalaryAfter
 	}
 	if monthsToAcquireJobCount > 0 {
-		averageMonthsToAcquireJob = averageMonthsToAcquireJob / monthsToAcquireJobCount
+		averageMonthsToAcquireJob = averageMonthsToAcquireJob / float64(monthsToAcquireJobCount)
 		summary.AverageMonthsToAcquireJob = &averageMonthsToAcquireJob
 	}
 

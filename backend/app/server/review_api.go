@@ -35,10 +35,10 @@ func (r *mutationResolver) SubmitReview(ctx context.Context, reviewParams models
 		t := time.Date(*reviewParams.SchoolGraduationYear, time.Month(*reviewParams.SchoolGraduationMonth), 15, 0, 0, 0, 0, time.UTC)
 		gradDate = &t
 	}
-	var jobStartDate *time.Time
-	if reviewParams.JobStartMonth != nil && reviewParams.JobStartYear != nil {
-		t := time.Date(*reviewParams.JobStartYear, time.Month(*reviewParams.JobStartMonth), 15, 0, 0, 0, 0, time.UTC)
-		jobStartDate = &t
+	var jobFoundDate *time.Time
+	if reviewParams.JobFoundMonth != nil && reviewParams.JobFoundYear != nil {
+		t := time.Date(*reviewParams.JobFoundYear, time.Month(*reviewParams.JobFoundMonth), 15, 0, 0, 0, 0, time.UTC)
+		jobFoundDate = &t
 	}
 
 	err := db.Handler().SQL().CreateTempReview(
@@ -60,7 +60,7 @@ func (r *mutationResolver) SubmitReview(ctx context.Context, reviewParams models
 		reviewParams.JobLocationUUID,
 		reviewParams.SalaryBefore,
 		reviewParams.SalaryAfter,
-		jobStartDate,
+		jobFoundDate,
 	)
 	if err != nil {
 		return false, err

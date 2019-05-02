@@ -23,7 +23,7 @@ class Reviewer extends Component {
       salaryBefore,
       salaryAfter,
       jobLocationName,
-      jobStartDate
+      jobFoundDate
     } = this.props;
 
     return (
@@ -53,7 +53,7 @@ class Reviewer extends Component {
                   <div className="reviewerStatHeader">Job</div>
                   <ReviewerStat label="Has Job?" stat={hasJob ? "Yes" : "No"} />
                   <ReviewerStat label="Location" stat={jobLocationName} />
-                  <ReviewerStat label="Start Date" stat={jobStartDate} />
+                  <ReviewerStat label="Offer Date" stat={jobFoundDate} />
                 </div>
                 {
                   salaryAfter ? (
