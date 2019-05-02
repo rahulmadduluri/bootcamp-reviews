@@ -7,6 +7,7 @@ import auth from './Auth/auth.jsx';
 import gql from 'graphql-tag';
 import ApolloClient, { InMemoryCache } from "apollo-boost"
 import { persistCache } from 'apollo-cache-persist';
+import {DefaultSchoolSearchParams} from './helpers/helpers.js';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
@@ -38,15 +39,7 @@ const client = new ApolloClient({
 	},
 	clientState: {
 		defaults: {
-			schoolSearchParams: {
-				__typename: 'SchoolSearchParams',
-				pageNumber: 0,
-				searchText: null,
-				locationUUID: null,
-				paymentType: null,
-				maxPrice: null,
-				minLength: null,
-			}
+			schoolSearchParams: DefaultSchoolSearchParams
 		},
 	    resolvers: {
 	      Mutation: {

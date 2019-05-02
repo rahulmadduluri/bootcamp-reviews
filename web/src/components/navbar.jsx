@@ -94,7 +94,7 @@ class Navbar extends React.Component {
               <div className="buttons">
                 {
                   ( isAuthenticated ) ? 
-                  <button className="button is-primary navProfileImage" href={'/students/' + profile.studentUUID}><img src={profile.linkedInPhotoURL} alt="ProfilePhoto" /></button> :  
+                  <a className="navProfileImage" href={'/students/' + profile.studentUUID}><img src={profile.linkedInPhotoURL} alt="ProfilePhoto" /></a> :  
                   <button className="button is-primary" onClick={this.onSignInLink}><strong>Log In</strong></button>
                 }
               </div>

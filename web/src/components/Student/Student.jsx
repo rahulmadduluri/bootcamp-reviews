@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import {withRouter} from 'react-router-dom';
-import { Query } from 'react-apollo';
+import { Query, withApollo } from 'react-apollo';
 import auth from '../../Auth/auth.jsx';
 import Navbar from '../navbar.jsx';
 import gql from 'graphql-tag';
+import {DefaultSchoolSearchParams} from '../../helpers/helpers.js';
+import { compose } from 'recompose';
 import './Student.css';
 
 class Student extends Component {
 
   onSignOutLink = () => {
+    // NOTE: It is important to reset cache before logging out
+    this.props.client.cache.writeData({ data: { 
+      schoolSearchParams: DefaultSchoolSearchParams
+    }});
+    
     auth.logout();
   };
 
@@ -104,4 +111,4 @@ const ProfileButtons = ({ onSignOutLink, onUpdatingStatusLink, onUpdateProfileLi
   </div>
 );
 
-export default withRouter(Student);
+export default compose(withApollo, withRouter)(Student);

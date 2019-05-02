@@ -17,6 +17,7 @@ nav .searchBar {
   width: 35px;
   height: 35px;
   max-height: 35px;
+  border: none;
   border-radius: 50%
 }
 
