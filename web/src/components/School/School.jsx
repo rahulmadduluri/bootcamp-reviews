@@ -8,7 +8,6 @@ import JobIcon from '../../images/job_placement_icon.png';
 import {
   StudentTeacherRatioBar,
   PriceBar,
-  SalaryBar,
   LocationBar,
   LengthBar,
 } from '../Common/SchoolStats';

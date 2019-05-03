@@ -1,0 +1,15 @@
+.aboutBody {
+  margin: auto;
+  padding-top: 20px;
+}
+.aboutBody .aboutTitle {
+  color: #000000;
+  font-weight: 500;
+  font-size: 28px;
+  margin-bottom: 20px;  
+  text-align: center;
+  display: block;
+}
+.aboutBody .balserosSubtitle {
+  font-size: 12px;
+}
