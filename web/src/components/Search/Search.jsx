@@ -6,6 +6,7 @@ import Navbar from '../navbar.jsx';
 import FilterBar from './filterbar.jsx';
 import Pagination from './pagination.jsx';
 import SchoolLogo from '../Common/SchoolLogo';
+import { formatFloat, numToString } from '../../helpers/helpers.js';
 import {
   StudentTeacherRatioBar,
   PriceBar,
@@ -54,6 +55,7 @@ const schoolsQuery = gql`
           }
         }
         reviewSummary {
+          totalNumReviews
           overallScore
           averageSalaryAfter
         }
@@ -131,7 +133,13 @@ const List = ({ schools }) => (
           reviewSummary
         }) => (
           <Link to={`/schools/${uuid}`} key={uuid}>
-            <div className="card">
+            <div className="card schoolListing">
+              <div className="reviewOverallScore ">
+                <div className="scoreText">{formatFloat(reviewSummary.overallScore, 1)}</div>
+              </div>
+              <div className="reviewTotalNumText">
+                { numToString(reviewSummary.totalNumReviews) } reviews
+              </div>
               <SchoolLogo photoURI={photoURI} />
               <div className="schoolStatsWrapper" style={{ marginTop: 0, marginLeft: '30px' }}>
                 <div className="name">{name}</div>
