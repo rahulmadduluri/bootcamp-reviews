@@ -1,0 +1,22 @@
+.supportBody {
+  margin: auto;
+  padding-top: 20px;
+}
+.supportBody .supportTitle {
+  color: #000000;
+  font-weight: 500;
+  font-size: 28px;
+  margin-bottom: 20px;  
+  text-align: center;
+  display: block;
+}
+
+.studentFAQ ul li {
+	list-style-type : disc;
+	font-weight: 500;
+}
+
+.schoolFAQ ul li {
+	list-style-type : disc;
+	font-weight: 500;
+}

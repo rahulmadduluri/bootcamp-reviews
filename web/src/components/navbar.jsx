@@ -89,7 +89,7 @@ class Navbar extends React.Component {
           <div className="navbar-end">
             <a className="navbar-item" href="/reviews/new">Write a Review</a>
             <a className="navbar-item" href="/about">About</a>
-            <a className="navbar-item" href="/">Support</a>
+            <a className="navbar-item" href="/support">Support</a>
             <div className="navbar-item">
               <div className="buttons">
                 {
