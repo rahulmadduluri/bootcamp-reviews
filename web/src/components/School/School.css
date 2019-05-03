@@ -46,7 +46,7 @@
   margin-right: 10px;
 }
 .schoolInfoWrapper .campusLocationsLabel {
-  font-size: 12px;
+  font-size: 14px;
   display: inline-block;
   vertical-align: middle;
   margin-right: 10px;
@@ -54,7 +54,7 @@
   min-width: 64px; /* extra to account for smaller image */
 }
 .schoolInfoWrapper .campusLocations {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   display: inline-block;
   vertical-align: middle;
@@ -72,7 +72,7 @@
   margin-right: 10px;
 }
 .schoolInfoWrapper .lengthInWeeksLabel {
-  font-size: 12px;
+  font-size: 14px;
   display: inline-block;
   vertical-align: middle;
   margin-right: 10px;
@@ -80,7 +80,7 @@
   min-width: 60px;
 }
 .schoolInfoWrapper .lengthInWeeks {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   display: inline-block;
   vertical-align: middle;
@@ -97,7 +97,7 @@
   margin-right: 10px;
 }
 .schoolInfoWrapper .studentTeacherRatioLabel {
-  font-size: 12px;
+  font-size: 14px;
   display: inline-block;
   vertical-align: middle;
   margin-right: 10px;
@@ -105,7 +105,7 @@
   min-width: 60px;
 }
 .schoolInfoWrapper .studentTeacherRatioValue {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   display: inline-block;
   vertical-align: middle;

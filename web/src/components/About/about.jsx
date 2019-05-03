@@ -24,22 +24,20 @@ class About extends Component {
 	      	<div className="whyRaft">
 	      		<div className="aboutTitle">Why Raft?</div>
 	      		<div>
-	      			100 years ago, society viewed the University as the uncontested home of intellectual freedom. 
-	      			Today, intellectual freedom has found a new home on the Internet.
-	      			For most people, the University is now a rite of passage to economic freedom: complete your degree and a career will find you.
-	      			Unfortunately, the well-paved road to economic freedom is increasingly obstructed by student debt and outdated programs.
-	      			Compared to lumbering universities, trade schools are nimble, affordable, and do the job you paid them to do: help you start your career.
+	      			In recent years, the University has become a rite of passage to economic freedom: complete your degree and a career will find you.
+	      			Unfortunately, the well-paved road to economic freedom is increasingly obstructed by student debt and irrelevant coursework.
+	      			Compared to lumbering universities, trade schools are focused, affordable, and do the job you paid them to do -- launch your career.
 	      			<br/><br/>
-	      			We believe the wave of new software engineering schools offer a life-changing opportunity for people to enter the growing tech industry.
-	      			However, not all schools are created equal: some will be online . . . others in-person; some may be project-oriented . . . others more theoretical; some will charge a flat fee . . . others only charge once you get a job.
-	      			If you're searching for schools, you might feel lost in an ocean of bold claims and factors to consider.
+	      			We believe the new wave of software engineering schools offer a life-changing opportunity for people to enter the growing tech industry.
+	      			However, choosing a school is no simple task: How long is the coursework? Is it in-person or online-only? How many classmates will I have? What career resources are there? How will I pay?
+	      			If you're searching for schools, you might feel lost in an ocean of factors to consider.
 	      			<br/><br/>
 	      			We started Raft to help students like you navigate these uncharted waters.
 		      	</div>
 	      	</div>
 		    <br/><br/><br/>
       		<img src={Balseros} alt="Balseros" />
-      		<div className="balserosSubtitle">In 1994, 35,000 Cuban refugees (called Balseros) set sail on makeshift rafts in hopes of finding economic opportunity in a foreign land.</div>
+      		<div className="balserosSubtitle">The OG Rafters. In 1994, makeshift rafts took 35,000 Cuban refugees -- in search of economic opportunity -- to Florida to start a new life.</div>
       	</div>
       </div>
     );
