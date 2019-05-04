@@ -20,13 +20,15 @@ cd ./backend/app
 #go mod init github.com/rahulmadduluri/raft-education/backend/app
 
 # build command
-go build -o application main/main.go
+mkdir bin
+GOOS=linux GOARCH=amd64 go build -o application -ldflags="-s -w"
+#go build -o application main/main.go
 
 # Modify permissons to make the binary executable.
-chmod +x application
+#chmod +x application
 
 # Move the binary back to staging dir.
-mkdir "$APP_STAGING_DIR/backend/app/bin"
+#mkdir "$APP_STAGING_DIR/backend/app/bin"
 mv application "$APP_STAGING_DIR/backend/app/bin"
 
 # Clean up.
