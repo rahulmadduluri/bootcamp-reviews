@@ -1,7 +1,6 @@
 package main
 
 import (
-	"html/template"
 	"log"
 	"net/http"
 	"os"
@@ -42,10 +41,14 @@ func main() {
 
 	// Set up Router to route to landing page & playground
 	r := mux.NewRouter()
-	r.HandleFunc("/", landingPage)
 
 	if auth.IsEnvPlayground() == true {
 		r.HandleFunc("/playground", handler.Playground("GraphQL playground", "/api"))
+	} else if auth.IsEnvProd() == true {
+		buildHandler := http.FileServer(http.Dir("../../web/build"))
+		r.PathPrefix("/").Handler(buildHandler)
+		staticHandler := http.StripPrefix("/static/", http.FileServer(http.Dir("../../web/build/static")))
+		r.PathPrefix("/static/").Handler(staticHandler)
 	}
 
 	// create API router & middleware (additional auth middleware for prod mode)
@@ -73,25 +76,6 @@ func main() {
 	n := negroni.Classic()
 	n.UseHandler(r)
 	n.Run(":" + port)
-}
-
-func landingPage(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles(
-		"../../web/public/index.html",
-	)
-	if err != nil {
-		log.Println("template parsing error: ", err)
-	}
-	err = t.Execute(w, nil)
-	if err != nil {
-		log.Print("template executing error: ", err)
-	}
-
-}
-
-func serveResource(w http.ResponseWriter, req *http.Request) {
-	path := "../../web" + req.URL.Path
-	http.ServeFile(w, req, path)
 }
 
 func serveFromS3(w http.ResponseWriter, req *http.Request) {

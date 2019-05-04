@@ -2,7 +2,7 @@
 set -xe
 
 GOPATH="/tmp/go"
-APP_BUILD_DIR="/var/app/build"  # We will build the app here
+APP_BUILD_DIR="/var/app/raft-build"  # We will build the app here
 APP_STAGING_DIR="$(pwd)" # make staging current directory
 
 # Remove the $APP_BUILD_DIR just in case it was left behind in a failed build.
