@@ -2,19 +2,9 @@
 set -xe
 
 GOPATH="/tmp/go"
-APP_BUILD_DIR="$(pwd)/raft-build"  # We will build the app here
-APP_STAGING_DIR="$(pwd)/raft-staging"                        # Current directory
 
-# Remove the $APP_BUILD_DIR just in case it was left behind in a failed build.
-rm -rf $APP_BUILD_DIR
-
-# Setup the application directory
-mkdir -p $APP_BUILD_DIR
-
-# cp all files to $APP_BUILD_DIR
-cp -r ./ $APP_BUILD_DIR
-cd $APP_BUILD_DIR
 cd ./backend/app
+rm -rf ./bin
 
 # install packages and dependencies
 go mod init github.com/rahulmadduluri/raft-education/backend/app
@@ -26,8 +16,8 @@ go build -o application main/main.go
 chmod +x application
 
 # Move the binary back to staging dir.
-mkdir "$APP_STAGING_DIR/backend/app/bin"
-mv application "$APP_STAGING_DIR/backend/app/bin"
+mkdir bin
+mv application bin
 
 # Clean up.
 rm -rf $APP_BUILD_DIR
