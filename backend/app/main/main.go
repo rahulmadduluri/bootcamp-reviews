@@ -44,11 +44,6 @@ func main() {
 
 	if auth.IsEnvPlayground() == true {
 		r.HandleFunc("/playground", handler.Playground("GraphQL playground", "/api"))
-	} else if auth.IsEnvProd() == true {
-		buildHandler := http.FileServer(http.Dir("../../web/build"))
-		r.PathPrefix("/").Handler(buildHandler)
-		staticHandler := http.StripPrefix("/static/", http.FileServer(http.Dir("../../web/build/static")))
-		r.PathPrefix("/static/").Handler(staticHandler)
 	}
 
 	// create API router & middleware (additional auth middleware for prod mode)
@@ -67,6 +62,16 @@ func main() {
 		negroni.Wrap(api),
 	))
 	r.PathPrefix("/s3/").Handler(negroni.New(negroni.Wrap(s3router)))
+	// add web router for prod environment
+	if auth.IsEnvProd() == true {
+		webRouter := mux.NewRouter()
+		buildHandler := http.FileServer(http.Dir("../../web/build"))
+		webRouter.PathPrefix("/").Handler(buildHandler)
+		staticHandler := http.StripPrefix("/static/", http.FileServer(http.Dir("../../web/build/static")))
+		webRouter.PathPrefix("/static/").Handler(staticHandler)
+
+		r.PathPrefix("/").Handler(negroni.New(negroni.Wrap(webRouter)))
+	}
 
 	// Run Server
 	port := os.Getenv(_PortKey)
