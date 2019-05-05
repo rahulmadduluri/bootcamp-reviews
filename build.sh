@@ -30,5 +30,9 @@ chmod +x application
 mkdir "$APP_STAGING_DIR/backend/app/bin"
 mv application "$APP_STAGING_DIR/backend/app/bin"
 
+# Build web
+cd ../../web
+npm run build
+
 # Clean up.
 rm -rf $APP_BUILD_DIR

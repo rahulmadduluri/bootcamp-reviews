@@ -1,9 +1,6 @@
 package db
 
 import (
-	"log"
-	"os"
-
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"github.com/nleof/goyesql"
@@ -39,13 +36,6 @@ type sqlDB struct {
 }
 
 func generateQueries() sqlQueries {
-	dir, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Println("LOLOL")
-	log.Println(dir)
-
 	schoolQueries := goyesql.MustParseFile(_schoolQueriesPath)
 	filtersQueries := goyesql.MustParseFile(_filtersQueriesPath)
 	locationQueries := goyesql.MustParseFile(_locationQueriesPath)
