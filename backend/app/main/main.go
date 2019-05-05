@@ -33,8 +33,6 @@ func main() {
 
 	// config MySQL
 	log.Println("Starting application")
-	log.Println(os.Getenv("RDS_USERNAME"))
-	log.Println(os.Getenv("RDS_HOSTNAME"))
 	db.ConfigHandler()
 	defer db.Handler().Close()
 
