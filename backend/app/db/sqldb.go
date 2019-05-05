@@ -10,11 +10,11 @@ import (
 )
 
 const (
-	_schoolQueriesPath   = "./db/sql/schoolQueries.sql"
-	_filtersQueriesPath  = "./db/sql/filtersQueries.sql"
-	_locationQueriesPath = "./db/sql/locationQueries.sql"
-	_studentQueriesPath  = "./db/sql/studentQueries.sql"
-	_reviewQueriesPath   = "./db/sql/reviewQueries.sql"
+	_schoolQueriesPath   = "/db/sql/schoolQueries.sql"
+	_filtersQueriesPath  = "/db/sql/filtersQueries.sql"
+	_locationQueriesPath = "/db/sql/locationQueries.sql"
+	_studentQueriesPath  = "/db/sql/studentQueries.sql"
+	_reviewQueriesPath   = "/db/sql/reviewQueries.sql"
 )
 
 type SQLDB interface {
@@ -46,11 +46,11 @@ func generateQueries() sqlQueries {
 	log.Println("LOLOL")
 	log.Println(dir)
 
-	schoolQueries := goyesql.MustParseFile(_schoolQueriesPath)
-	filtersQueries := goyesql.MustParseFile(_filtersQueriesPath)
-	locationQueries := goyesql.MustParseFile(_locationQueriesPath)
-	studentQueries := goyesql.MustParseFile(_studentQueriesPath)
-	reviewQueries := goyesql.MustParseFile(_reviewQueriesPath)
+	schoolQueries := goyesql.MustParseFile(dir + _schoolQueriesPath)
+	filtersQueries := goyesql.MustParseFile(dir + _filtersQueriesPath)
+	locationQueries := goyesql.MustParseFile(dir + _locationQueriesPath)
+	studentQueries := goyesql.MustParseFile(dir + _studentQueriesPath)
+	reviewQueries := goyesql.MustParseFile(dir + _reviewQueriesPath)
 	return sqlQueries{
 		schoolQueries:   schoolQueries,
 		filtersQueries:  filtersQueries,
