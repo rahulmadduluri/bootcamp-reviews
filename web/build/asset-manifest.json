@@ -1,0 +1,23 @@
+{
+  "main.css": "/static/css/main.6d0a07a8.chunk.css",
+  "main.js": "/static/js/main.c1a4fd69.chunk.js",
+  "main.js.map": "/static/js/main.c1a4fd69.chunk.js.map",
+  "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+  "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+  "static/css/2.fa0f13f2.chunk.css": "/static/css/2.fa0f13f2.chunk.css",
+  "static/js/2.84091c00.chunk.js": "/static/js/2.84091c00.chunk.js",
+  "static/js/2.84091c00.chunk.js.map": "/static/js/2.84091c00.chunk.js.map",
+  "index.html": "/index.html",
+  "precache-manifest.8368f4c96f0e7a475dbc6125327de1a5.js": "/precache-manifest.8368f4c96f0e7a475dbc6125327de1a5.js",
+  "service-worker.js": "/service-worker.js",
+  "static/css/2.fa0f13f2.chunk.css.map": "/static/css/2.fa0f13f2.chunk.css.map",
+  "static/css/main.6d0a07a8.chunk.css.map": "/static/css/main.6d0a07a8.chunk.css.map",
+  "static/media/balseros.png": "/static/media/balseros.a9ea258c.png",
+  "static/media/finances_icon.png": "/static/media/finances_icon.573c0234.png",
+  "static/media/isa_payment.png": "/static/media/isa_payment.17efd490.png",
+  "static/media/Landing.css": "/static/media/raft_background_mobile.aaba681d.png",
+  "static/media/student_female_icon.png": "/static/media/student_female_icon.58326038.png",
+  "static/media/student_male_icon.png": "/static/media/student_male_icon.e4627fee.png",
+  "static/media/teaching_icon.png": "/static/media/teaching_icon.0a597f6b.png",
+  "static/media/upfront_payment.png": "/static/media/upfront_payment.9c1498d0.png"
+}
