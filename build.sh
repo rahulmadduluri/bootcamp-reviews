@@ -17,7 +17,7 @@ cd $APP_BUILD_DIR
 cd ./backend/app
 
 # install packages and dependencies
-go mod init github.com/rahulmadduluri/raft-education/backend/app
+#go mod init github.com/rahulmadduluri/raft-education/backend/app
 
 # build command
 GOOS=linux GOARCH=amd64 go build -o application -ldflags="-s -w"
