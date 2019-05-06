@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {withRouter} from 'react-router-dom';
-import { Redirect } from 'react-router';
 import { Query, withApollo } from 'react-apollo';
 import auth from '../../Auth/auth.jsx';
 import Navbar from '../navbar.jsx';
@@ -48,7 +47,7 @@ class Student extends Component {
                   {({ loading, error, data }) => {
                     if (loading) return <p></p>;
                     if (error || !data.student) {
-                      return <Redirect push to="/students/new" />;
+                      return <p>Error :(</p>;
                     }
 
 
