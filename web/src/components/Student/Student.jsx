@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {withRouter} from 'react-router-dom';
 import { Query, withApollo } from 'react-apollo';
+import { Redirect } from 'react-router';
 import auth from '../../Auth/auth.jsx';
 import Navbar from '../navbar.jsx';
 import gql from 'graphql-tag';
@@ -47,9 +48,8 @@ class Student extends Component {
                   {({ loading, error, data }) => {
                     if (loading) return <p></p>;
                     if (error || !data.student) {
-                      return <p>Error :(</p>;
+                      return <Redirect push to={`/students/new`} />;
                     }
-
 
                     let isMe = false;
                     if (data.student.uuid && data.student.uuid === auth.getProfile().studentUUID) {
