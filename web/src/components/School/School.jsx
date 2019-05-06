@@ -73,7 +73,7 @@ class School extends Component {
             fetchPolicy="cache-and-network"
           >
             {({ loading, error, data }) => {
-              if (loading) return <p>Loading...</p>;
+              if (loading) return <p></p>;
               if (error) return <p>Error :(</p>;
 
               const { name, campusLocations, lengthInWeeks, studentTeacherRatio, paymentType, basePrice, photoURI, reviewSummary } = data.school;
