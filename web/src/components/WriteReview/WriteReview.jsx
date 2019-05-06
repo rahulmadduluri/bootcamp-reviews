@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { withApollo } from 'react-apollo';
 import Navbar from '../navbar.jsx';
 import gql from 'graphql-tag';
@@ -614,7 +614,7 @@ class WriteReview extends Component {
 	  <div>
 		<div className="field">
 		  <input className="is-checkradio" id="termsCheckbox" type="checkbox" name="termsCheckbox" onChange={this.handleDidSelectTerms} />
-		  <label htmlFor="termsCheckbox">I agree to the <Link to={`/terms`} >terms and conditions</Link><br/>and have read the <Link to={`/privacy`} >privacy policy</Link></label>
+		  <label htmlFor="termsCheckbox">I agree to the <a href='/terms' target="_blank">terms and conditions</a><br/>and have read the <a href="/privacy" target="_blank">privacy policy</a></label>
 		</div>
 	    <div className="buttons">
 	      <a className="button is-primary" key="submit" onClick={this.handleSubmit}><strong>Submit</strong></a>

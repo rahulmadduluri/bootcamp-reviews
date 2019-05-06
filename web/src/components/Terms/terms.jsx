@@ -4,7 +4,7 @@ import './terms.css';
 
 class Terms extends Component {
 
-  loadTerms() {
+  componentDidMount() {
     const script = document.createElement("script");
 
     script.src = "https://app.termly.io/embed-policy.min.js";
@@ -19,11 +19,7 @@ class Terms extends Component {
       <div>
       	<Navbar />
       	<div className="termsBody column is-two-fifths">
-
           <div name="termly-embed" data-id="3e54b83b-ba72-4264-a848-94ff07ce5304" data-type="iframe"></div>
-          {
-            this.loadTerms()
-          }
         </div>
       </div>
     );
