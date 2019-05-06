@@ -6,8 +6,6 @@ function SchoolLogo({ photoURI }) {
     url = window.location.protocol + '//localhost:8080/s3/schools/' + photoURI;
   } else {
     url =
-      window.location.protocol +
-      window.location.hostname +
       '/s3/schools/' +
       photoURI;
   }
