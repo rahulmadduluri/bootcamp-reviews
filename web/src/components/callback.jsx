@@ -40,7 +40,10 @@ class Callback extends Component {
         >
           {({ loading, error, data }) => {
             if (loading) return <p></p>;
-            if (error) return <p>Error :(</p>;
+            if (error) {
+              auth.logout();
+              return <p>Error :(</p>;
+            }
 
               if (data.student) {
                 return (<Redirect push to="/home" />);
