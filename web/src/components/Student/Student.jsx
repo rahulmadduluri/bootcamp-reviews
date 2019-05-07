@@ -11,6 +11,10 @@ import './Student.css';
 
 class Student extends Component {
 
+  state = {
+    firstFetchFailed: false
+  };
+
   onSignOutLink = () => {
     // NOTE: It is important to reset cache before logging out
     this.props.client.cache.writeData({ data: { 
@@ -18,6 +22,10 @@ class Student extends Component {
     }});
     
     auth.logout();
+  };
+
+  fetchFailed = () => {
+    this.setState({ firstFetchFailed: true });
   };
 
   render() {
@@ -32,7 +40,6 @@ class Student extends Component {
         }
       }
     `;
-
     return (
       <div>
         <Navbar />
@@ -48,7 +55,12 @@ class Student extends Component {
                   {({ loading, error, data }) => {
                     if (loading) return <p></p>;
                     if (error || !data.student) {
-                      return <Redirect push to={`/students/new`} />;
+                      if (this.state.firstFetchFailed === false) {
+                        this.fetchFailed();
+                        return <p>Error :( </p>;
+                      } else {
+                        return <Redirect push to={`/students/new`} />;
+                      }
                     }
 
                     let isMe = false;
