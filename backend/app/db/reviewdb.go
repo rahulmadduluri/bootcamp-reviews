@@ -38,7 +38,8 @@ type ReviewDB interface {
 		schoolGraduationDate *time.Time,
 		didGraduate bool,
 		hasJob bool,
-		jobLocationUUID *string,
+		companyUUID *string,
+		companyLocationUUID *string,
 		salaryBefore *int,
 		salaryAfter *int,
 		jobFoundDate *time.Time,
@@ -148,7 +149,8 @@ func (sql *sqlDB) CreateTempReview(
 	schoolGraduationDate *time.Time,
 	didGraduate bool,
 	hasJob bool,
-	jobLocationUUID *string,
+	companyUUID *string,
+	companyLocationUUID *string,
 	salaryBefore *int,
 	salaryAfter *int,
 	jobFoundDate *time.Time,
@@ -163,18 +165,26 @@ func (sql *sqlDB) CreateTempReview(
 	if err != nil {
 		return err
 	}
-	// locations
 	schoolLocation, err := sql.getLocationDBForUUID(schoolLocationUUID)
 	if err != nil {
 		return err
 	}
-	var jobLocationID *int
-	if jobLocationUUID != nil {
-		jobLocation, err := sql.getLocationDBForUUID(*jobLocationUUID)
+	// company
+	var companyID *int
+	if companyUUID != nil {
+		company, err := sql.getCompanyDBWithUUID(*companyUUID)
 		if err != nil {
 			return err
 		}
-		jobLocationID = &jobLocation.ID
+		companyID = &company.ID
+	}
+	var companyLocationID *int
+	if companyLocationUUID != nil {
+		companyLocation, err := sql.getLocationDBForUUID(*companyLocationUUID)
+		if err != nil {
+			return err
+		}
+		companyLocationID = &companyLocation.ID
 	}
 
 	createdTimestamp := int(time.Now().Unix())
@@ -196,7 +206,8 @@ func (sql *sqlDB) CreateTempReview(
 			"school_graduation_date":   schoolGraduationDate,
 			"did_graduate":             didGraduate,
 			"has_job":                  hasJob,
-			"job_location_id":          jobLocationID,
+			"company_id":               companyID,
+			"company_location_id":      companyLocationID,
 			"salary_before":            salaryBefore,
 			"salary_after":             salaryAfter,
 			"job_found_date":           jobFoundDate,

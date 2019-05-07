@@ -11,6 +11,13 @@ type City struct {
 	Name string `json:"name"`
 }
 
+type Company struct {
+	UUID      string     `json:"uuid"`
+	Name      string     `json:"name"`
+	PhotoURI  *string    `json:"photoURI"`
+	Locations []Location `json:"locations"`
+}
+
 type Country struct {
 	UUID string `json:"uuid"`
 	Name string `json:"name"`
@@ -53,10 +60,10 @@ type NewReviewParams struct {
 	SchoolGraduationMonth  *int    `json:"schoolGraduationMonth"`
 	SchoolGraduationYear   *int    `json:"schoolGraduationYear"`
 	HasJob                 bool    `json:"hasJob"`
+	CompanyUUID            *string `json:"companyUUID"`
+	CompanyLocationUUID    *string `json:"companyLocationUUID"`
 	SalaryBefore           *int    `json:"salaryBefore"`
 	SalaryAfter            *int    `json:"salaryAfter"`
-	JobLocationUUID        *string `json:"jobLocationUUID"`
-	JobLocationOtherName   *string `json:"jobLocationOtherName"`
 	JobFoundMonth          *int    `json:"jobFoundMonth"`
 	JobFoundYear           *int    `json:"jobFoundYear"`
 }

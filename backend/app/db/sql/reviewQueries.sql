@@ -100,7 +100,8 @@ insert into reviews_pre_processed (
 	salary_after,
 	student_id,
 	school_location_id,
-	job_location_id,
+	company_id,
+	company_location_id,
 	school_graduation_date,
 	job_found_date,
 	created_timestamp_server
@@ -122,7 +123,8 @@ insert into reviews_pre_processed (
 		:salary_after,
 		:student_id,
 		:school_location_id,
-		:job_location_id,
+		:company_id,
+		:company_location_id,
 		:school_graduation_date,
 		:job_found_date,
 		:created_timestamp_server

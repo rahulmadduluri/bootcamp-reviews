@@ -74,6 +74,24 @@ INSERT INTO campus_locations VALUES
 	(11, 12), # Launch Academy Boston
 	(12, 15), # Turing School Denver
 	(13, 14); # Project Shift Durham
+INSERT INTO companies VALUES
+	(NULL, 'uuid-1', 'Google', 'google', 1000),
+	(NULL, 'uuid-2', 'Amazon', 'amazon', 1000),
+	(NULL, 'uuid-3', 'Apple', 'apple', 1000),
+	(NULL, 'uuid-4', 'Cisco', 'cisco', 1000);
+INSERT INTO company_locations VALUES
+	(1, 1), # Google, Online
+	(1, 2), # Google, San Francisco
+	(1, 4), # Google, New York
+	(2, 1), # Amazon, Online
+	(2, 2), # Amazon, San Francisco
+	(2, 4), # Amazon, New York
+	(3, 1), # Apple, Online
+	(3, 2), # Apple, San Francisco
+	(3, 4), # Apple, New York
+	(4, 1), # Cisco, Online
+	(4, 2), # Cisco, San Francisco
+	(4, 4); # Cisco, New York
 INSERT INTO students VALUES
 INSERT INTO reviews VALUES
 ;

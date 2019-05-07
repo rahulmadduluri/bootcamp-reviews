@@ -388,43 +388,6 @@ class WriteReview extends Component {
 	  <div>
 	        <label className="label"><div className="reviewFieldLabel required">Which school did you attend?</div></label>
 
-		    {
-		    	selectedSchool ? <div/> : (
-			    	// Dropdown -- Which school did you go to?
-			    	shouldFetchSchools ?
-				       <Query
-				          query={schoolsQuery}
-				          variables={{ searchParams: searchParams }}
-				          onCompleted={data => this.updateSchoolResults(data.schools.schoolResults)}
-				        >
-				          {({ loading, error, data }) => {
-				            if (loading) return <p></p>;
-				            if (error) return <p>Error :(</p>;
-
-
-				          	return (
-				          		<FieldWrapper>
-								  	<SchoolDropdown 
-								  		schools={data.schools.schoolResults} 
-								  		handleSelectSchoolButtonPress={this.handleSelectSchoolButtonPress} 
-								  		handleSelectSchool={this.handleSelectSchool} 
-								  		dropdownActive={schoolDropdownActive} />
-				          		</FieldWrapper>
-				          	);
-				          }}
-				        </Query> : (
-				        	<FieldWrapper>
-							  	<SchoolDropdown 
-							  		schools={schoolResults} 
-							  		handleSelectSchoolButtonPress={this.handleSelectSchoolButtonPress} 
-							  		handleSelectSchool={this.handleSelectSchool} 
-							  		dropdownActive={schoolDropdownActive} />
-				        	</FieldWrapper>
-				        )
-			    )
-		    	
-		    }
-
 	        {
 	          // Show the school if the user has already selected it
 	          selectedSchool ?
@@ -453,9 +416,45 @@ class WriteReview extends Component {
 	        	selectedSchool ? <div/> :
 			        <div className="field-body">
 			        	<div className="field has-addons">
+			        		<div className="control">
+							    {
+							    	// Dropdown -- Which school did you go to?
+							    	shouldFetchSchools ?
+								       <Query
+								          query={schoolsQuery}
+								          variables={{ searchParams: searchParams }}
+								          onCompleted={data => this.updateSchoolResults(data.schools.schoolResults)}
+								        >
+								          {({ loading, error, data }) => {
+								            if (loading) return <p></p>;
+								            if (error) return <p>Error :(</p>;
+
+
+								          	return (
+								          		<FieldWrapper>
+												  	<SchoolDropdown 
+												  		schools={data.schools.schoolResults} 
+												  		handleSelectSchoolButtonPress={this.handleSelectSchoolButtonPress} 
+												  		handleSelectSchool={this.handleSelectSchool} 
+												  		dropdownActive={schoolDropdownActive} />
+								          		</FieldWrapper>
+								          	);
+								          }}
+								        </Query> : (
+								        	<FieldWrapper>
+											  	<SchoolDropdown 
+											  		schools={schoolResults} 
+											  		handleSelectSchoolButtonPress={this.handleSelectSchoolButtonPress} 
+											  		handleSelectSchool={this.handleSelectSchool} 
+											  		dropdownActive={schoolDropdownActive} />
+								        	</FieldWrapper>
+								        )
+							    }
+
+			        		</div>
 							<div className="control">
 								{
-									<input className="input" type="text" placeholder="Search By Name" onChange={this.handleUpdateSchoolSearch} />
+									<input className="input" type="text" placeholder="Search for School" onChange={this.handleUpdateSchoolSearch} />
 								}
 							</div>
 							<div className="control">
@@ -629,7 +628,7 @@ const SchoolDropdown = ({ schools, handleSelectSchoolButtonPress, handleSelectSc
 	<div className={dropdownActive ? "dropdown is-active" : "dropdown"}>
 	  <div className="dropdown-trigger">
 	    <button className="button" aria-haspopup="true" aria-controls="dropdown-menu2" onClick={handleSelectSchoolButtonPress}>
-	      <span>Select School</span>
+	      <span>School</span>
 	      <span className="icon is-small">
 	        <i className="fas fa-angle-down" aria-hidden="true"></i>
 	      </span>

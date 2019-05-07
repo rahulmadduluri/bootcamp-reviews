@@ -52,6 +52,23 @@ CREATE TABLE IF NOT EXISTS campus_locations (
 	FOREIGN KEY (location_id) REFERENCES locations (id)
 );
 
+CREATE TABLE IF NOT EXISTS companies (
+	id 							int 			NOT NULL AUTO_INCREMENT,
+	uuid						varchar(36)		NOT NULL,
+	name 						varchar(200)	NOT NULL,
+	photo_uri 					varchar(200)	NOT NULL,
+	created_timestamp_server	int				NOT NULL,
+	UNIQUE KEY (uuid),
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS company_locations (
+	company_id  			int 			NOT NULL,
+	location_id				int 			NOT NULL,
+	FOREIGN KEY (company_id) REFERENCES companies (id),
+	FOREIGN KEY (location_id) REFERENCES locations (id)
+);
+
 CREATE TABLE IF NOT EXISTS students (
 	id 							int 			NOT NULL AUTO_INCREMENT,
 	uuid						varchar(36)		NOT NULL,
@@ -62,10 +79,12 @@ CREATE TABLE IF NOT EXISTS students (
 	linked_in_url				varchar(500),
 	photo_uri 					varchar(200),
 	school_id					int,
+	company_id 					int,
 	created_timestamp_server	int				NOT NULL,
 	UNIQUE KEY (uuid),
 	PRIMARY KEY (id),
-	FOREIGN KEY (school_id) REFERENCES schools (id)
+	FOREIGN KEY (school_id) REFERENCES schools (id),
+	FOREIGN KEY (company_id) REFERENCES companies (id)
 );
 
 CREATE TABLE IF NOT EXISTS reviews (
@@ -86,7 +105,8 @@ CREATE TABLE IF NOT EXISTS reviews (
 	student_id					int 			NOT NULL,
 	school_id 					int 			NOT NULL,
 	school_location_id			int 			NOT NULL,
-	job_location_id 			int,
+	company_id 					int,
+	company_location_id 		int,
 	school_graduation_date		timestamp,
 	job_found_date				timestamp,
 	created_timestamp_server    int 			NOT NULL,
@@ -95,7 +115,8 @@ CREATE TABLE IF NOT EXISTS reviews (
 	FOREIGN KEY (student_id) REFERENCES students (id),
 	FOREIGN KEY (school_id) REFERENCES schools (id),
 	FOREIGN KEY (school_location_id) REFERENCES locations (id),
-	FOREIGN KEY (job_location_id) REFERENCES locations (id)
+	FOREIGN KEY (company_id) REFERENCES companies (id),
+	FOREIGN KEY (company_location_id) REFERENCES locations (id)
 );
 
 # exact copy of reviews table -- will be transferred after moderation
@@ -117,16 +138,18 @@ CREATE TABLE IF NOT EXISTS reviews_pre_processed (
 	student_id					int 			NOT NULL,
 	school_id 					int 			NOT NULL,
 	school_location_id			int 			NOT NULL,
-	job_location_id 			int,
-	school_graduation_date		datetime,
-	job_found_date				datetime,
+	company_id 					int,
+	company_location_id 		int,
+	school_graduation_date		timestamp,
+	job_found_date				timestamp,
 	created_timestamp_server    int 			NOT NULL,
 	UNIQUE KEY (uuid),
 	PRIMARY KEY (id),
 	FOREIGN KEY (student_id) REFERENCES students (id),
 	FOREIGN KEY (school_id) REFERENCES schools (id),
 	FOREIGN KEY (school_location_id) REFERENCES locations (id),
-	FOREIGN KEY (job_location_id) REFERENCES locations (id)
+	FOREIGN KEY (company_id) REFERENCES companies (id),
+	FOREIGN KEY (company_location_id) REFERENCES locations (id)
 );
 
 CREATE TABLE IF NOT EXISTS reviews_helpful (

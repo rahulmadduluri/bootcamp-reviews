@@ -18,6 +18,19 @@ type CampusLocationDBModel struct {
 	LocationID int
 }
 
+type CompanyDBModel struct {
+	ID                     int
+	UUID                   string
+	Name                   string
+	PhotoURI               string
+	CreatedTimestampServer int
+}
+
+type CompanyLocationDBModel struct {
+	CompanyID  int
+	LocationID int
+}
+
 type StudentDBModel struct {
 	ID                     int
 	UUID                   string
@@ -28,6 +41,7 @@ type StudentDBModel struct {
 	LinkedInURL            *string
 	PhotoURI               *string
 	SchoolID               *int
+	CompanyID              *int
 	CreatedTimestampServer int
 }
 

@@ -36,9 +36,19 @@ type Location {
 	country: Country!
 }
 
+# why is this a separte object?
+# unsure if there should be stats associated with location
+# if so, they should be sent down here
 type CampusLocation {
 	location: Location!
 	# stats about school relevant to particular location
+}
+
+type Company {
+	uuid: ID!
+	name: String!
+	photoURI: String
+	locations: [Location!]
 }
 
 # summary of school review info
@@ -138,10 +148,10 @@ input NewReviewParams {
 	
 	# job
 	hasJob: Boolean!
+	companyUUID: ID
+	companyLocationUUID: ID
 	salaryBefore: Int
 	salaryAfter: Int
-	jobLocationUUID: ID
-	jobLocationOtherName: String # if location isn't in given options
 	jobFoundMonth: Int
 	jobFoundYear: Int
 }
@@ -150,6 +160,7 @@ type Query {
 	school(uuid: ID!): School
 	schools(params: SchoolSearchParams!): SchoolQueryResult!
 	filters: Filters
+	companies(searchText: String!): [Company!]!
 
 	student(uuid: ID!): Student @isAuthenticated
 
