@@ -20,7 +20,7 @@ select
 	students.linked_in_url as linkedinurl,
 	students.photo_uri as photouri,
 	students.school_id as schoolid,
-	students.companyid as companyid,
+	students.company_id as companyid,
 	students.created_timestamp_server as createdtimestampserver
 from students
 where students.uuid = :student_uuid

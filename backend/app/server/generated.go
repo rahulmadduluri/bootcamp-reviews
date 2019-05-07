@@ -86,6 +86,7 @@ type ComplexityRoot struct {
 
 	Query struct {
 		Companies func(childComplexity int, searchText string) int
+		Company   func(childComplexity int, uuid string) int
 		Filters   func(childComplexity int) int
 		Reviews   func(childComplexity int, schoolUUID string, offset int) int
 		School    func(childComplexity int, uuid string) int
@@ -168,6 +169,7 @@ type QueryResolver interface {
 	School(ctx context.Context, uuid string) (*models.School, error)
 	Schools(ctx context.Context, params models.SchoolSearchParams) (*models.SchoolQueryResult, error)
 	Filters(ctx context.Context) (*models.Filters, error)
+	Company(ctx context.Context, uuid string) (*models.Company, error)
 	Companies(ctx context.Context, searchText string) ([]models.Company, error)
 	Student(ctx context.Context, uuid string) (*models.Student, error)
 	Reviews(ctx context.Context, schoolUUID string, offset int) ([]models.Review, error)
@@ -359,6 +361,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.Companies(childComplexity, args["searchText"].(string)), true
+
+	case "Query.Company":
+		if e.complexity.Query.Company == nil {
+			break
+		}
+
+		args, err := ec.field_Query_company_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.Company(childComplexity, args["uuid"].(string)), true
 
 	case "Query.Filters":
 		if e.complexity.Query.Filters == nil {
@@ -1009,6 +1023,8 @@ type Query {
 	school(uuid: ID!): School
 	schools(params: SchoolSearchParams!): SchoolQueryResult!
 	filters: Filters
+
+	company(uuid: ID!): Company
 	companies(searchText: String!): [Company!]!
 
 	student(uuid: ID!): Student @isAuthenticated
@@ -1119,6 +1135,20 @@ func (ec *executionContext) field_Query_companies_args(ctx context.Context, rawA
 		}
 	}
 	args["searchText"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_company_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["uuid"]; ok {
+		arg0, err = ec.unmarshalNID2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["uuid"] = arg0
 	return args, nil
 }
 
@@ -1867,6 +1897,37 @@ func (ec *executionContext) _Query_filters(ctx context.Context, field graphql.Co
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
 	return ec.marshalOFilters2ᚖgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐFilters(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Query_company(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "Query",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_company_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	rctx.Args = args
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, nil, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().Company(rctx, args["uuid"].(string))
+	})
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.Company)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalOCompany2ᚖgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐCompany(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_companies(ctx context.Context, field graphql.CollectedField) graphql.Marshaler {
@@ -4704,6 +4765,17 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				res = ec._Query_filters(ctx, field)
 				return res
 			})
+		case "company":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_company(ctx, field)
+				return res
+			})
 		case "companies":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -5877,6 +5949,17 @@ func (ec *executionContext) marshalOCampusLocation2ᚕgithubᚗcomᚋrahulmaddul
 	}
 	wg.Wait()
 	return ret
+}
+
+func (ec *executionContext) marshalOCompany2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐCompany(ctx context.Context, sel ast.SelectionSet, v models.Company) graphql.Marshaler {
+	return ec._Company(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalOCompany2ᚖgithubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐCompany(ctx context.Context, sel ast.SelectionSet, v *models.Company) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._Company(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalOFilters2githubᚗcomᚋrahulmadduluriᚋraftᚑeducationᚋbackendᚋappᚋmodelsᚐFilters(ctx context.Context, sel ast.SelectionSet, v models.Filters) graphql.Marshaler {

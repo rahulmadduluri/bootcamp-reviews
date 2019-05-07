@@ -8,12 +8,54 @@ import (
 
 const (
 	_GetCompaniesWithSearchText = "getCompaniesWithSearchText"
+	_GetCompanyWithUUID         = "getCompanyWithUUID"
 	_GetCompanyDBWithUUID       = "getCompanyDBWithUUID"
 	_GetCompanyLocationsDB      = "getCompanyLocationsDB"
 )
 
 type CompanyDB interface {
+	GetCompany(companyUUID string) (*models.Company, error)
 	GetCompanies(searchText string) ([]models.Company, error)
+}
+
+func (sql *sqlDB) GetCompany(companyUUID string) (*models.Company, error) {
+	var company *models.Company
+
+	// get company
+	rows, err := sql.db.NamedQuery(
+		sql.queries.companyQueries[_GetCompanyWithUUID],
+		map[string]interface{}{
+			"company_uuid": companyUUID,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var temp models.Company
+		err := rows.StructScan(&temp)
+		if err != nil {
+			return nil, err
+		}
+		company = &temp
+		break
+	}
+
+	if company == nil {
+		return nil, nil
+	}
+
+	// get company locations
+	locations, err := sql.getCompanyLocations(companyUUID)
+	if err != nil {
+		return company, err
+	}
+	company.Locations = locations
+
+	return company, err
 }
 
 func (sql *sqlDB) GetCompanies(searchText string) ([]models.Company, error) {
@@ -98,7 +140,7 @@ func (sql *sqlDB) getCompanyDBWithUUID(companyUUID string) (*models.CompanyDBMod
 	var company *models.CompanyDBModel
 
 	rows, err := sql.db.NamedQuery(
-		sql.queries.reviewQueries[_GetCompanyDBWithUUID],
+		sql.queries.companyQueries[_GetCompanyDBWithUUID],
 		map[string]interface{}{
 			"company_uuid": companyUUID,
 		},

@@ -8,6 +8,15 @@ where companies.name like :search_text
 order by companies.uuid
 ;
 
+-- name: getCompanyWithUUID
+select
+	companies.uuid as uuid,
+	companies.name as name,
+	companies.photo_uri as photouri
+from companies
+where companies.uuid = :company_uuid
+;
+
 -- name: getCompanyDBWithUUID
 select
 	companies.id as id,

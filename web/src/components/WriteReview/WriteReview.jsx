@@ -6,6 +6,7 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import auth from '../../Auth/auth.jsx';
 import SchoolLogo from '../Common/SchoolLogo';
+import CompanyLogo from '../Common/CompanyLogo';
 import Modal from '../Common/Modal.jsx';
 import { numToString } from '../../helpers/helpers.js';
 import { compose } from 'recompose';
@@ -27,7 +28,7 @@ class WriteReview extends Component {
   handleUpdateSchoolSearch = (event) => {
   	this.setState({ schoolSearchText: event.target.value });
   };
-  handleSelectSchoolButtonPress = () => {
+  handleSelectSchoolDropdownPress = () => {
   	this.setState({ schoolDropdownActive: !this.state.schoolDropdownActive });
   };
   handleSelectSchool = (school) => {
@@ -110,6 +111,35 @@ class WriteReview extends Component {
   };
 
   // job handlers
+  didSearchForCompanies = () => {
+  	this.setState({ shouldFetchCompanies: true });
+  };
+  updateCompanyResults = (companies) => {
+  	this.setState({ companyResults: companies, shouldFetchCompanies: false });
+  };
+  handleUpdateCompanySearch = (event) => {
+  	this.setState({ companySearchText: event.target.value });
+  };
+  handleSelectCompanyDropdownPress = () => {
+  	this.setState({ companyDropdownActive: !this.state.companyDropdownActive });
+  };
+  handleSelectCompany = (company) => {
+  	this.setState({ companyDropdownActive: !this.state.companyDropdownActive, companyUUID: company.uuid, selectedCompany: company });
+  };
+  handleHasJob = (event) => {
+  	if (event.target.id === "hasJobYes") {
+  		this.setState({ hasJob: true });
+  	} else {
+  		this.setState({ hasJob: false });
+  	}
+  };
+  handleSelectCompanyLocation = (event) => {
+  	if (event.target.value === 'none') {
+  		this.setState({ companyLocationUUID: null });
+  	} else {
+  		this.setState({ companyLocationUUID: event.target.value });
+  	}
+  };
   handleSelectJobFoundMonth = (event) => {
   	if (event.target.value === 'none') {
   		this.setState({ jobFoundMonth: null });
@@ -124,22 +154,19 @@ class WriteReview extends Component {
   		this.setState({ jobFoundYear: event.target.value });
   	}
   };
-  handleHasJob = (event) => {
-  	if (event.target.id === "hasJobYes") {
-  		this.setState({ hasJob: true });
-  	} else {
-  		this.setState({ hasJob: false });
-  	}
-  };
-  handleSelectJobLocation = (event) => {
+  handleSelectSalaryBefore = (event) => {
   	if (event.target.value === 'none') {
-  		this.setState({ jobLocationUUID: null });
+  		this.setState({ salaryBefore: null });
   	} else {
-  		this.setState({ jobLocationUUID: event.target.value });
+  		this.setState({ salaryBefore: event.target.value });
   	}
   };
-  handleUpdateJobLocationOther = (event) => {
-  	this.setState({ jobLocationOtherName: event.target.value });
+  handleSelectSalaryAfter = (event) => {
+  	if (event.target.value === 'none') {
+  		this.setState({ salaryAfter: null });
+  	} else {
+  		this.setState({ salaryAfter: event.target.value });
+  	}
   };
 
   // submit info handlers
@@ -165,9 +192,9 @@ class WriteReview extends Component {
 	    // create review params object
 	    const { studentUUID } = auth.getProfile();
 	    const { title, studentExperience, studentAdvice, overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
-	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, jobLocationUUID, jobLocationOtherName, jobFoundMonth, jobFoundYear } = this.state;
+	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, companyUUID, companyLocationUUID, jobFoundMonth, jobFoundYear } = this.state;
 	    let reviewParams = { title, studentExperience, studentAdvice, overallScore, teachingScore, courseworkScore, atmosphereScore, careerPreparationScore, didGraduate, schoolUUID, schoolLocationUUID, 
-	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, jobLocationUUID, jobLocationOtherName, jobFoundMonth, jobFoundYear, studentUUID };
+	    	schoolGraduationMonth, schoolGraduationYear, hasJob, salaryBefore, salaryAfter, companyUUID, companyLocationUUID, jobFoundMonth, jobFoundYear, studentUUID };
 
 	    const { data } = await this.props.client.mutate({
 	    	mutation: submitReviewMutation,
@@ -230,6 +257,11 @@ class WriteReview extends Component {
   	schoolResults: [],
   	schoolDropdownActive: false,
   	selectedSchool: null,
+  	shouldFetchCompanies: true,
+  	companySearchText: "",
+  	companyResults: [],
+  	companyDropdownActive: false,
+  	selectedCompany: null,
   	didAcceptTerms: false,
   	missingFieldsModalIsOpen: false,
 
@@ -254,8 +286,8 @@ class WriteReview extends Component {
 	hasJob: null,
 	salaryBefore: null,
 	salaryAfter: null,
-	jobLocationUUID: null,
-	jobLocationOtherName: null,
+	companyUUID: null,
+	companyLocationUUID: null,
 	jobFoundMonth: null,
 	jobFoundYear: null
   };
@@ -432,20 +464,22 @@ class WriteReview extends Component {
 
 								          	return (
 								          		<FieldWrapper>
-												  	<SchoolDropdown 
-												  		schools={data.schools.schoolResults} 
-												  		handleSelectSchoolButtonPress={this.handleSelectSchoolButtonPress} 
-												  		handleSelectSchool={this.handleSelectSchool} 
+												  	<SchoolCompanyDropdown
+												  		isSchoolNotCompany={true}
+												  		items={data.schools.schoolResults} 
+												  		handleSelectDropdownPress={this.handleSelectSchoolDropdownPress} 
+												  		handleSelect={this.handleSelectSchool} 
 												  		dropdownActive={schoolDropdownActive} />
 								          		</FieldWrapper>
 								          	);
 								          }}
 								        </Query> : (
 								        	<FieldWrapper>
-											  	<SchoolDropdown 
-											  		schools={schoolResults} 
-											  		handleSelectSchoolButtonPress={this.handleSelectSchoolButtonPress} 
-											  		handleSelectSchool={this.handleSelectSchool} 
+											  	<SchoolCompanyDropdown 
+											  		isSchoolNotCompany={true}
+											  		items={schoolResults} 
+											  		handleSelectDropdownPress={this.handleSelectSchoolDropdownPress} 
+											  		handleSelect={this.handleSelectSchool} 
 											  		dropdownActive={schoolDropdownActive} />
 								        	</FieldWrapper>
 								        )
@@ -534,20 +568,23 @@ class WriteReview extends Component {
   };
 
   jobInfo = () => {
-    const filtersQuery = gql`
-      query GetFilters {
-        filters {
-          locations {
-            uuid
-            city {
-              name
-            }
-            country {
-              name
-            }
-          }
-        }
-      }
+    const companiesQuery = gql`
+	  query GetCompanies($searchText: String!) {
+	    companies(searchText: $searchText) {
+		  uuid
+	      name
+	      photoURI
+	      locations {
+	        uuid
+	        city {
+	          name
+	        }
+	        country {
+	          name
+	        }
+	      }
+	    }
+	  }
     `;
   	return (
   		// do you have a job?
@@ -558,30 +595,91 @@ class WriteReview extends Component {
 			  <input className="is-checkradio" id="hasJobNo" type="radio" name="exampleRadioDefault2" onChange={this.handleHasJob} />
 			  <label htmlFor="hasJobNo">No</label>
   			</FieldWrapper>
-	        {
-	          // where is the job?
-	        	this.state.hasJob ?
-	        	<FieldWrapper label="In which city is your job located?" required={false}>
-			      <Query
-			        query={filtersQuery}
-			      >
-			        {({ loading, error, data }) => {
-			          if (loading) return <p></p>;
-			          if (error) return <p>Error :(</p>;
 
-					  return (
-					  	<div>
-						  	<LocationDropdown 
-						  		locations={data.filters.locations} 
-						  		handleSelectLocation={this.handleSelectJobLocation} 
-						  	/>
-						  	<JobNameOtherField handleUpdateJobLocationOther={this.handleUpdateJobLocationOther} />
-						 </div>
-					  	);
-			        }}
-			      </Query>
-	        	</FieldWrapper> : <div/>
+	        {
+	          // Show the company if the user has already selected it
+	          this.state.selectedCompany ?
+              <div className="media">
+                <div className="media-left image is-32x32">
+                  <CompanyLogo photoURI={this.state.selectedCompany.photoURI} />
+                </div>
+                <div className="writeReviewSelectedSchoolName">{this.state.selectedCompany.name}</div>
+                <br/><br/>
+              </div> : <div/>
 	        }
+
+	        {
+	          // Show the company location if the user has already selected a company
+	        	(this.state.selectedCompany) ? (
+		        	<FieldWrapper label={"Which " + this.state.selectedCompany.name + " location did you work at?"} required={false}>
+					  	<LocationDropdown 
+					  		locations={ this.state.selectedCompany.locations } 
+					  		handleSelectLocation={this.handleSelectCompanyLocation} 
+					  	/>
+		        	</FieldWrapper>
+		        ) : <div/>
+	        }
+
+	        {
+	          // which company?
+	        	(this.state.hasJob && !this.state.selectedCompany) ?  (
+	        		<div>
+	        			<label className="label"><div className="reviewFieldLabel">What company do you work for (select 'Other' if not listed)?</div></label>
+				        <div className="field-body">
+				        	<div className="field has-addons">
+				        		<div className="control">
+								    {
+								    	// Dropdown -- Which company did you go to?
+								    	this.state.shouldFetchCompanies ?
+									       <Query
+									          query={companiesQuery}
+									          variables={{ searchText: this.state.companySearchText }}
+									          onCompleted={data => this.updateCompanyResults(data.companies)}
+									        >
+									          {({ loading, error, data }) => {
+									            if (loading) return <p></p>;
+									            if (error) return <p>Error :(</p>;
+
+
+									          	return (
+									          		<FieldWrapper>
+													  	<SchoolCompanyDropdown
+													  		isSchoolNotCompany={false}
+													  		items={data.companies} 
+													  		handleSelectDropdownPress={this.handleSelectCompanyDropdownPress} 
+													  		handleSelect={this.handleSelectCompany} 
+													  		dropdownActive={this.state.companyDropdownActive} />
+									          		</FieldWrapper>
+									          	);
+									          }}
+									        </Query> : (
+									        	<FieldWrapper>
+												  	<SchoolCompanyDropdown 
+													  	isSchoolNotCompany={false}
+												  		items={this.state.companyResults} 
+												  		handleSelectDropdownPress={this.handleSelectCompanyDropdownPress} 
+												  		handleSelect={this.handleSelectCompany} 
+												  		dropdownActive={this.state.companyDropdownActive} />
+									        	</FieldWrapper>
+									        )
+								    }
+				        		</div>
+								<div className="control">
+									{
+										<input className="input" type="text" placeholder="Search for Company" onChange={this.handleUpdateCompanySearch} />
+									}
+								</div>
+								<div className="control">
+									<a className="button is-info" onClick={ this.didSearchForCompanies }>
+									  Search
+									</a>
+								</div>
+							</div>
+				        </div>
+				    </div>
+			    ) : <div/>
+	        }
+	        <br/>
 			{
 				// when did you get the job?
 				this.state.hasJob ? (
@@ -624,11 +722,11 @@ class WriteReview extends Component {
 
 }
 
-const SchoolDropdown = ({ schools, handleSelectSchoolButtonPress, handleSelectSchool, dropdownActive }) => (
+const SchoolCompanyDropdown = ({ isSchoolNotCompany, items, handleSelectDropdownPress, handleSelect, dropdownActive }) => (
 	<div className={dropdownActive ? "dropdown is-active" : "dropdown"}>
 	  <div className="dropdown-trigger">
-	    <button className="button" aria-haspopup="true" aria-controls="dropdown-menu2" onClick={handleSelectSchoolButtonPress}>
-	      <span>School</span>
+	    <button className="button" aria-haspopup="true" aria-controls="dropdown-menu2" onClick={handleSelectDropdownPress}>
+	      <span>Select</span>
 	      <span className="icon is-small">
 	        <i className="fas fa-angle-down" aria-hidden="true"></i>
 	      </span>
@@ -637,17 +735,19 @@ const SchoolDropdown = ({ schools, handleSelectSchoolButtonPress, handleSelectSc
 	  <div className="dropdown-menu" id="dropdown-menu2" role="menu">
 	    <div className="dropdown-content">
 		  {
-		      	schools.map(
+		      	items.map(
 		        ({
 		          uuid,
 		          name,
 		          photoURI
 		        }, index) => (
 
-		          <a key={uuid} className="dropdown-item" value={uuid} onClick={() => handleSelectSchool(schools[index])} >
+		          <a key={uuid} className="dropdown-item" value={uuid} onClick={() => handleSelect(items[index])} >
 	                  <div className="media">
 	                    <div className="media-left image is-24x24">
-	                      <SchoolLogo photoURI={photoURI} />
+	                    	{
+	                    		isSchoolNotCompany ? <SchoolLogo photoURI={photoURI} /> : <CompanyLogo photoURI={photoURI} />
+	                    	}
 	                    </div>
 	                    <div className="media-content">
 	                      <div className="writeReviewDropdownSchoolName">{name}</div>
@@ -767,13 +867,6 @@ const SalaryDropdown = ({ defaultTitle, handleSelectSalary }) => (
 		  }
 		</select>
     }
-  </div>
-);
-
-const JobNameOtherField = ({ handleUpdateJobLocationOther }) => (
-  <div className="field">
-    <label className="label"><div className="reviewFieldLabel">IF your work location wasn't listed in the options above, manually enter it here:</div></label>
-	<input className="input" type="text" placeholder="City Name" onChange={handleUpdateJobLocationOther} />
   </div>
 );
 

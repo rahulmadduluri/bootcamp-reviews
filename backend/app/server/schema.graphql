@@ -160,6 +160,8 @@ type Query {
 	school(uuid: ID!): School
 	schools(params: SchoolSearchParams!): SchoolQueryResult!
 	filters: Filters
+
+	company(uuid: ID!): Company
 	companies(searchText: String!): [Company!]!
 
 	student(uuid: ID!): Student @isAuthenticated

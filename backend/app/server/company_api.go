@@ -16,3 +16,13 @@ func (r *queryResolver) Companies(ctx context.Context, searchText string) ([]mod
 
 	return companies, err
 }
+
+func (r *queryResolver) Company(ctx context.Context, uuid string) (*models.Company, error) {
+	company, err := db.Handler().SQL().GetCompany(uuid)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return company, err
+}
