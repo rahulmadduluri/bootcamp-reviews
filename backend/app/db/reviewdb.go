@@ -80,9 +80,9 @@ func (sql *sqlDB) GetReviews(schoolUUID string) ([]models.Review, error) {
 		if err != nil {
 			return reviews, err
 		}
-		var jobLocation *models.Location
-		if rdb.JobLocationID != nil {
-			jobLocation, err = sql.getLocationForID(*rdb.JobLocationID)
+		var companyLocation *models.Location
+		if rdb.CompanyLocationID != nil {
+			companyLocation, err = sql.getLocationForID(*rdb.CompanyLocationID)
 			if err != nil {
 				return reviews, err
 			}
@@ -123,7 +123,7 @@ func (sql *sqlDB) GetReviews(schoolUUID string) ([]models.Review, error) {
 			School:                    *school,
 			SchoolLocation:            *schoolLocation,
 			SchoolGraduationTimestamp: graduationTimestamp,
-			JobLocation:               jobLocation,
+			CompanyLocation:           companyLocation,
 			JobFoundTimestamp:         jobFoundTimestamp,
 			CreatedTimestamp:          rdb.CreatedTimestampServer,
 		}

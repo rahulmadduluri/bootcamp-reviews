@@ -97,6 +97,7 @@ type ComplexityRoot struct {
 	Review struct {
 		AtmosphereScore           func(childComplexity int) int
 		CareerPreparationScore    func(childComplexity int) int
+		CompanyLocation           func(childComplexity int) int
 		CourseworkScore           func(childComplexity int) int
 		CreatedTimestamp          func(childComplexity int) int
 		DidGraduate               func(childComplexity int) int
@@ -104,7 +105,6 @@ type ComplexityRoot struct {
 		HelpfulDownvotes          func(childComplexity int) int
 		HelpfulUpvotes            func(childComplexity int) int
 		JobFoundTimestamp         func(childComplexity int) int
-		JobLocation               func(childComplexity int) int
 		OverallScore              func(childComplexity int) int
 		SalaryAfter               func(childComplexity int) int
 		SalaryBefore              func(childComplexity int) int
@@ -443,6 +443,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Review.CareerPreparationScore(childComplexity), true
 
+	case "Review.CompanyLocation":
+		if e.complexity.Review.CompanyLocation == nil {
+			break
+		}
+
+		return e.complexity.Review.CompanyLocation(childComplexity), true
+
 	case "Review.CourseworkScore":
 		if e.complexity.Review.CourseworkScore == nil {
 			break
@@ -491,13 +498,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Review.JobFoundTimestamp(childComplexity), true
-
-	case "Review.JobLocation":
-		if e.complexity.Review.JobLocation == nil {
-			break
-		}
-
-		return e.complexity.Review.JobLocation(childComplexity), true
 
 	case "Review.OverallScore":
 		if e.complexity.Review.OverallScore == nil {
@@ -987,7 +987,7 @@ type Review {
 	school: School!
 	schoolLocation: Location!
 	schoolGraduationTimestamp: Int
-	jobLocation: Location
+	companyLocation: Location
 	jobFoundTimestamp: Int
 	createdTimestamp: Int!
 }
@@ -2558,7 +2558,7 @@ func (ec *executionContext) _Review_schoolGraduationTimestamp(ctx context.Contex
 	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Review_jobLocation(ctx context.Context, field graphql.CollectedField, obj *models.Review) graphql.Marshaler {
+func (ec *executionContext) _Review_companyLocation(ctx context.Context, field graphql.CollectedField, obj *models.Review) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
 	rctx := &graphql.ResolverContext{
@@ -2571,7 +2571,7 @@ func (ec *executionContext) _Review_jobLocation(ctx context.Context, field graph
 	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
 	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.JobLocation, nil
+		return obj.CompanyLocation, nil
 	})
 	if resTmp == nil {
 		return graphql.Null
@@ -4919,8 +4919,8 @@ func (ec *executionContext) _Review(ctx context.Context, sel ast.SelectionSet, o
 			}
 		case "schoolGraduationTimestamp":
 			out.Values[i] = ec._Review_schoolGraduationTimestamp(ctx, field, obj)
-		case "jobLocation":
-			out.Values[i] = ec._Review_jobLocation(ctx, field, obj)
+		case "companyLocation":
+			out.Values[i] = ec._Review_companyLocation(ctx, field, obj)
 		case "jobFoundTimestamp":
 			out.Values[i] = ec._Review_jobFoundTimestamp(ctx, field, obj)
 		case "createdTimestamp":

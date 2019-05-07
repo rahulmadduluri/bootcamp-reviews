@@ -87,7 +87,7 @@ type Review struct {
 	School                    School    `json:"school"`
 	SchoolLocation            Location  `json:"schoolLocation"`
 	SchoolGraduationTimestamp *int      `json:"schoolGraduationTimestamp"`
-	JobLocation               *Location `json:"jobLocation"`
+	CompanyLocation           *Location `json:"companyLocation"`
 	JobFoundTimestamp         *int      `json:"jobFoundTimestamp"`
 	CreatedTimestamp          int       `json:"createdTimestamp"`
 }

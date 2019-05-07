@@ -76,7 +76,8 @@ type ReviewDBModel struct {
 	StudentID              int
 	SchoolID               int
 	SchoolLocationID       int
-	JobLocationID          *int
+	CompanyID              *int
+	CompanyLocationID      *int
 	SchoolGraduationDate   *time.Time
 	JobFoundDate           *time.Time
 	CreatedTimestampServer int

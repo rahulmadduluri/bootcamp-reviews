@@ -124,7 +124,7 @@ type Review {
 	school: School!
 	schoolLocation: Location!
 	schoolGraduationTimestamp: Int
-	jobLocation: Location
+	companyLocation: Location
 	jobFoundTimestamp: Int
 	createdTimestamp: Int!
 }

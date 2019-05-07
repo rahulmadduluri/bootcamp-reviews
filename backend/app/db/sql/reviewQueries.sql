@@ -17,7 +17,8 @@ select
 	reviews.student_id as studentid,
 	reviews.school_id as schoolid,
 	reviews.school_location_id as schoollocationid,
-	reviews.job_location_id as joblocationid,
+	reviews.company_id as companyid,
+	reviews.company_location_id as companylocationid,
 	reviews.school_graduation_date as schoolgraduationdate,
 	reviews.job_found_date as jobfounddate,
 	reviews.created_timestamp_server as createdtimestampserver
@@ -47,7 +48,8 @@ select
 	reviews.student_id as studentid,
 	reviews.school_id as schoolid,
 	reviews.school_location_id as schoollocationid,
-	reviews.job_location_id as joblocationid,
+	reviews.company_id as companyid,
+	reviews.company_location_id as companylocationid,
 	reviews.school_graduation_date as schoolgraduationdate,
 	reviews.job_found_date as jobfounddate,
 	reviews.created_timestamp_server as createdtimestampserver

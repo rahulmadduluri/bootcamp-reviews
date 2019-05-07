@@ -26,7 +26,7 @@ const GET_REVIEWS = gql`
       helpfulDownvotes
       didGraduate
       hasJob
-      jobLocation {
+      companyLocation {
         uuid
         city {
           name

@@ -22,7 +22,7 @@ class Reviewer extends Component {
       schoolGradDate,
       salaryBefore,
       salaryAfter,
-      jobLocationName,
+      companyLocationName,
       jobFoundDate
     } = this.props;
 
@@ -52,7 +52,7 @@ class Reviewer extends Component {
                 <div className="column is-narrow">
                   <div className="reviewerStatHeader">Job</div>
                   <ReviewerStat label="Has Job?" stat={hasJob ? "Yes" : "No"} />
-                  <ReviewerStat label="Location" stat={jobLocationName} />
+                  <ReviewerStat label="Location" stat={companyLocationName} />
                   <ReviewerStat label="Offer Date" stat={jobFoundDate} />
                 </div>
                 {
