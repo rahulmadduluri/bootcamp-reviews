@@ -15,6 +15,7 @@ body {
   background-color: #fafafa;
   min-height: 100vh;
   height: 100%;
+  overflow: hidden;
 }
 
 .defaultContainer {
@@ -108,6 +109,10 @@ body {
   color: #828282;
   font-weight: 300px;
   margin-left: 5px;
+  max-width: 200px;
+  text-overflow: ellipsis;
+  overflow:hidden;
+  white-space:nowrap;
 }
 
 /* Price */
