@@ -96,7 +96,6 @@ body {
 
 /* Location */
 .schoolStatsWrapper .location {
-  margin-top: 3px;
   display: flex;
 }
 .schoolStatsWrapper .location > img {
@@ -118,7 +117,7 @@ body {
 /* Price */
 .schoolStatsWrapper .price {
   margin-top: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 .schoolStatsWrapper .price .basePrice {
   color: #000000;
@@ -139,8 +138,6 @@ body {
 
 /* Length */
 .schoolStatsWrapper .length {
-  margin-top: 5px;
-  margin-top: 7px;
   vertical-align: middle;
 }
 .schoolStatsWrapper .length .lengthImage {
@@ -168,7 +165,6 @@ body {
 
 /* Salary */
 .schoolStatsWrapper .salary {
-  margin-top: 5px;
   vertical-align: middle;
 }
 .schoolStatsWrapper .salary .salaryImage {
@@ -196,7 +192,6 @@ body {
 
 /* Job Placement */
 .schoolStatsWrapper .studentTeacherRatio {
-  margin-top: 5px;
   vertical-align: middle;
 }
 .schoolStatsWrapper .studentTeacherRatio .studentTeacherRatioImage {

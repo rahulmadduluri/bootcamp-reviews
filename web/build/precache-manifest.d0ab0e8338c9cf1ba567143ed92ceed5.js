@@ -1,10 +1,10 @@
 self.__precacheManifest = [
   {
-    "revision": "417308c5a599c5d1a8c1",
-    "url": "/static/css/main.461a650d.chunk.css"
+    "revision": "90a790bce2e5c614262c",
+    "url": "/static/css/main.eddacc27.chunk.css"
   },
   {
-    "revision": "417308c5a599c5d1a8c1",
+    "revision": "90a790bce2e5c614262c",
     "url": "/static/js/main.ccedb4e1.chunk.js"
   },
   {
@@ -56,7 +56,7 @@ self.__precacheManifest = [
     "url": "/static/media/raft-education-background.7e639a78.png"
   },
   {
-    "revision": "9d7fba49d6793ac835e650151ec991c6",
+    "revision": "3b6a76c872ca2f82b97c9d9ef73d3d5c",
     "url": "/index.html"
   }
 ];
