@@ -55,10 +55,10 @@
 }
 .schoolInfoWrapper .campusLocations {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   display: inline-block;
   vertical-align: middle;
-  color: #000000;
+  color: #333333;
 }
 .schoolInfoWrapper .length {
   display: flex;

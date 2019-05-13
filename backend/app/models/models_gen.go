@@ -97,9 +97,9 @@ type School struct {
 	Name                string               `json:"name"`
 	LengthInWeeks       *int                 `json:"lengthInWeeks"`
 	StudentTeacherRatio *int                 `json:"studentTeacherRatio"`
-	IsOnline            *bool                `json:"isOnline"`
 	BasePrice           *int                 `json:"basePrice"`
 	PaymentType         *string              `json:"paymentType"`
+	WebsiteURL          *string              `json:"websiteURL"`
 	PhotoURI            *string              `json:"photoURI"`
 	CampusLocations     []CampusLocation     `json:"campusLocations"`
 	ReviewSummary       *SchoolReviewSummary `json:"reviewSummary"`

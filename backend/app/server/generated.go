@@ -121,7 +121,6 @@ type ComplexityRoot struct {
 	School struct {
 		BasePrice           func(childComplexity int) int
 		CampusLocations     func(childComplexity int) int
-		IsOnline            func(childComplexity int) int
 		LengthInWeeks       func(childComplexity int) int
 		Name                func(childComplexity int) int
 		PaymentType         func(childComplexity int) int
@@ -129,6 +128,7 @@ type ComplexityRoot struct {
 		ReviewSummary       func(childComplexity int) int
 		StudentTeacherRatio func(childComplexity int) int
 		UUID                func(childComplexity int) int
+		WebsiteURL          func(childComplexity int) int
 	}
 
 	SchoolQueryResult struct {
@@ -590,13 +590,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.School.CampusLocations(childComplexity), true
 
-	case "School.IsOnline":
-		if e.complexity.School.IsOnline == nil {
-			break
-		}
-
-		return e.complexity.School.IsOnline(childComplexity), true
-
 	case "School.LengthInWeeks":
 		if e.complexity.School.LengthInWeeks == nil {
 			break
@@ -645,6 +638,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.School.UUID(childComplexity), true
+
+	case "School.WebsiteURL":
+		if e.complexity.School.WebsiteURL == nil {
+			break
+		}
+
+		return e.complexity.School.WebsiteURL(childComplexity), true
 
 	case "SchoolQueryResult.PageNumber":
 		if e.complexity.SchoolQueryResult.PageNumber == nil {
@@ -868,9 +868,9 @@ type School {
 	name: String!
 	lengthInWeeks: Int
 	studentTeacherRatio: Int
-	isOnline: Boolean
 	basePrice: Int
 	paymentType: String # e.g. ISA, Upfront
+	websiteURL: String
 	photoURI: String
 	#countries available
 	campusLocations: [CampusLocation!]
@@ -2735,30 +2735,6 @@ func (ec *executionContext) _School_studentTeacherRatio(ctx context.Context, fie
 	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _School_isOnline(ctx context.Context, field graphql.CollectedField, obj *models.School) graphql.Marshaler {
-	ctx = ec.Tracer.StartFieldExecution(ctx, field)
-	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
-	rctx := &graphql.ResolverContext{
-		Object:   "School",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-	ctx = graphql.WithResolverContext(ctx, rctx)
-	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
-	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.IsOnline, nil
-	})
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*bool)
-	rctx.Result = res
-	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
-}
-
 func (ec *executionContext) _School_basePrice(ctx context.Context, field graphql.CollectedField, obj *models.School) graphql.Marshaler {
 	ctx = ec.Tracer.StartFieldExecution(ctx, field)
 	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
@@ -2797,6 +2773,30 @@ func (ec *executionContext) _School_paymentType(ctx context.Context, field graph
 	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return obj.PaymentType, nil
+	})
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	rctx.Result = res
+	ctx = ec.Tracer.StartFieldChildExecution(ctx)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _School_websiteURL(ctx context.Context, field graphql.CollectedField, obj *models.School) graphql.Marshaler {
+	ctx = ec.Tracer.StartFieldExecution(ctx, field)
+	defer func() { ec.Tracer.EndFieldExecution(ctx) }()
+	rctx := &graphql.ResolverContext{
+		Object:   "School",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+	ctx = graphql.WithResolverContext(ctx, rctx)
+	ctx = ec.Tracer.StartFieldResolverExecution(ctx, rctx)
+	resTmp := ec.FieldMiddleware(ctx, obj, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.WebsiteURL, nil
 	})
 	if resTmp == nil {
 		return graphql.Null
@@ -4964,12 +4964,12 @@ func (ec *executionContext) _School(ctx context.Context, sel ast.SelectionSet, o
 			out.Values[i] = ec._School_lengthInWeeks(ctx, field, obj)
 		case "studentTeacherRatio":
 			out.Values[i] = ec._School_studentTeacherRatio(ctx, field, obj)
-		case "isOnline":
-			out.Values[i] = ec._School_isOnline(ctx, field, obj)
 		case "basePrice":
 			out.Values[i] = ec._School_basePrice(ctx, field, obj)
 		case "paymentType":
 			out.Values[i] = ec._School_paymentType(ctx, field, obj)
+		case "websiteURL":
+			out.Values[i] = ec._School_websiteURL(ctx, field, obj)
 		case "photoURI":
 			out.Values[i] = ec._School_photoURI(ctx, field, obj)
 		case "campusLocations":

@@ -33,10 +33,10 @@ class School extends Component {
           name
           lengthInWeeks
           studentTeacherRatio
-          isOnline
           photoURI
           basePrice
           paymentType
+          websiteURL
           campusLocations {
             location {
               uuid

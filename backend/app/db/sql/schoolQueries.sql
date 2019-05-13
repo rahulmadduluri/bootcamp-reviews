@@ -4,9 +4,9 @@ select
 	schools.name as name,
 	schools.length_in_weeks as lengthinweeks,
 	schools.student_teacher_ratio as studentteacherratio,
-	schools.is_online as isonline,
 	schools.base_price as baseprice,
 	schools.payment_type as paymenttype,
+	schools.website_url as websiteurl,
 	schools.photo_uri as photouri
 from schools
 where schools.uuid = :school_uuid
@@ -19,9 +19,9 @@ select
 	schools.name as name,
 	schools.length_in_weeks as lengthinweeks,
 	schools.student_teacher_ratio as studentteacherratio,
-	schools.is_online as isonline,
 	schools.base_price as baseprice,
 	schools.payment_type as paymenttype,
+	schools.website_url as websiteurl,
 	schools.photo_uri as photouri
 from schools
 where schools.id = :school_id
@@ -35,9 +35,9 @@ select
 	schools.name as name,
 	schools.length_in_weeks as lengthinweeks,
 	schools.student_teacher_ratio as studentteacherratio,
-	schools.is_online as isonline,
 	schools.base_price as baseprice,
 	schools.payment_type as paymenttype,
+	schools.website_url as websiteurl,
 	schools.photo_uri as photouri,
 	schools.created_timestamp_server as createdtimestampserver
 from schools
@@ -61,9 +61,9 @@ select
 	schools.name as name,
 	schools.length_in_weeks as lengthinweeks,
 	schools.student_teacher_ratio as studentteacherratio,
-	schools.is_online as isonline,
 	schools.base_price as baseprice,
 	schools.payment_type as paymenttype,
+	schools.website_url as websiteurl,
 	schools.photo_uri as photouri
 from schools
 order by schools.uuid
@@ -75,9 +75,9 @@ select
 	schools.name as name,
 	schools.length_in_weeks as lengthinweeks,
 	schools.student_teacher_ratio as studentteacherratio,
-	schools.is_online as isonline,
 	schools.base_price as baseprice,
 	schools.payment_type as paymenttype,
+	schools.website_url as websiteurl,
 	schools.photo_uri as photouri
 from schools
 where schools.name like :search_text
@@ -90,9 +90,9 @@ select
 	schools.name as name,
 	schools.length_in_weeks as lengthinweeks,
 	schools.student_teacher_ratio as studentteacherratio,
-	schools.is_online as isonline,
 	schools.base_price as baseprice,
 	schools.payment_type as paymenttype,
+	schools.website_url as websiteurl,
 	schools.photo_uri as photouri
 from schools
 join campus_locations
@@ -103,30 +103,15 @@ where locations.uuid = :location_uuid
 order by schools.uuid
 ;
 
--- name: getSchoolsWithPaymentType
-select
-	schools.uuid as uuid,
-	schools.name as name,
-	schools.length_in_weeks as lengthinweeks,
-	schools.student_teacher_ratio as studentteacherratio,
-	schools.is_online as isonline,
-	schools.base_price as baseprice,
-	schools.payment_type as paymenttype,
-	schools.photo_uri as photouri
-from schools
-where schools.payment_type = :payment_type
-order by schools.uuid
-;
-
 -- name: getSchoolsWithMaxPrice
 select
 	schools.uuid as uuid,
 	schools.name as name,
 	schools.length_in_weeks as lengthinweeks,
 	schools.student_teacher_ratio as studentteacherratio,
-	schools.is_online as isonline,
 	schools.base_price as baseprice,
 	schools.payment_type as paymenttype,
+	schools.website_url as websiteurl,
 	schools.photo_uri as photouri
 from schools
 where schools.base_price <= :max_price
@@ -139,9 +124,9 @@ select
 	schools.name as name,
 	schools.length_in_weeks as lengthinweeks,
 	schools.student_teacher_ratio as studentteacherratio,
-	schools.is_online as isonline,
 	schools.base_price as baseprice,
 	schools.payment_type as paymenttype,
+	schools.website_url as websiteurl,
 	schools.photo_uri as photouri
 from schools
 where schools.length_in_weeks >= :min_length

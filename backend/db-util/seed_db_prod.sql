@@ -1,97 +1,145 @@
+delete from reviews;
+delete from campus_locations;
+delete from company_locations;
+delete from locations;
+delete from countries;
+delete from cities;
+delete from schools;
+delete from companies;
+delete from students;
+delete from reviews;
+
 INSERT INTO schools VALUES
-	(NULL, 'uuid-1', 'Bloc', NULL, 5, 1, 8500, 'Upfront', 'bloc', 1000),
-	(NULL, 'uuid-2', 'Hack Reactor', 14, 5, 1, 17980, 'Upfront', 'hack_reactor', 1000),
-	(NULL, 'uuid-3', 'Tech Elevator', 14, 5, 0, 15000, 'Upfront', 'tech_elevator', 1000),
-	(NULL, 'uuid-4', 'Bottega', 14, 5, 0, 10000, 'Upfront', 'bottega', 1000),
-	(NULL, 'uuid-5', 'The Software Guild', 12, 5, 0, 13875, 'Upfront', 'the_software_guild', 1000),
-	(NULL, 'uuid-6', 'Byte Academy', 14, 5, 0, 14950, 'Upfront', 'byte_academy', 1000),
-	(NULL, 'uuid-7', 'Codesmith', 13, 5, 0, 17700, 'Upfront', 'codesmith', 1000),
-	(NULL, 'uuid-8', 'Eleven Fifty', 12, 5, 0, 13500, 'Upfront', 'eleven_fifty', 1000),
-	(NULL, 'uuid-9', 'Lambda School', 32, 5, 0, 30000, 'ISA', 'lambda_school', 1000),
-	(NULL, 'uuid-10', 'Epicodus', 30, 5, 0, 8500, 'Upfront', 'epicodus', 1000),
-	(NULL, 'uuid-11', 'Launch Academy', 13, 5, 0, 17500, 'Upfront', 'launch_academy', 1000),
-	(NULL, 'uuid-12', 'Turing School', 29, 5, 0, 20000, 'Upfront', 'turing_school', 1000),
-	(NULL, 'uuid-13', 'Project Shift', 13, 5, 0, 12900, 'Upfront', 'project_shift', 1000);
+	(NULL, 'uuid-1', 'Bloc', NULL, 5, 8500, 'Upfront', 'https://www.bloc.io', 'bloc', 1000),
+	(NULL, 'uuid-2', 'Hack Reactor', 14, 5, 17980, 'Upfront', 'https://www.hackreactor.com', 'hack_reactor', 1000),
+	(NULL, 'uuid-3', 'Tech Elevator', 14, 5, 15000, 'Upfront', 'https://www.techelevator.com', 'tech_elevator', 1000),
+	(NULL, 'uuid-4', 'Bottega', 14, 5, 10000, 'Upfront', 'https://bottega.tech', 'bottega', 1000),
+	(NULL, 'uuid-5', 'The Software Guild', 12, 5, 13875, 'Upfront', 'https://www.thesoftwareguild.com', 'the_software_guild', 1000),
+	(NULL, 'uuid-6', 'Byte Academy', 14, 5, 14950, 'Upfront', 'https://byteacademy.co', 'byte_academy', 1000),
+	(NULL, 'uuid-7', 'Codesmith', 13, 5, 17700, 'Upfront', 'https://www.codesmith.io', 'codesmith', 1000),
+	(NULL, 'uuid-8', 'Eleven Fifty', 12, 5, 13500, 'Upfront', 'https://elevenfifty.org', 'eleven_fifty', 1000),
+	(NULL, 'uuid-9', 'Lambda School', 32, 5, 30000, 'ISA', 'https://lambdaschool.com', 'lambda_school', 1000),
+	(NULL, 'uuid-10', 'Epicodus', 30, 5, 8500, 'Upfront', 'https://www.epicodus.com', 'epicodus', 1000),
+	(NULL, 'uuid-11', 'Launch Academy', 13, 5, 17500, 'Upfront', 'https://launchacademy.com', 'launch_academy', 1000),
+	(NULL, 'uuid-12', 'Turing School', 29, 5, 20000, 'Upfront', 'https://turing.io', 'turing_school', 1000),
+	(NULL, 'uuid-13', 'Project Shift', 13, 5, 12900, 'Upfront', 'https://www.projectshift.io', 'project_shift', 1000),
+	(NULL, 'uuid-14', 'App Academy', 12, 5, 12900, 'Placement', 'https://www.appacademy.io', 'app_academy', 1000),
+	(NULL, 'uuid-15', 'Coding Dojo', 14, 5, 13995, 'Upfront', 'https://www.codingdojo.com', 'coding_dojo', 1000);
 INSERT INTO countries VALUES
-	(NULL, 'uuid-1', 'Online'),
-	(NULL, 'uuid-2', 'USA');
+	(NULL, 'uuid-1', 'Other'),
+	(NULL, 'uuid-2', 'Online'),
+	(NULL, 'uuid-3', 'USA');
 INSERT INTO cities VALUES
-	(NULL, 'uuid-1', 'Online'),
-	(NULL, 'uuid-2', 'San Francisco'),
-	(NULL, 'uuid-3', 'Los Angeles'),
-	(NULL, 'uuid-4', 'New York City'),
-	(NULL, 'uuid-5', 'Cleveland'),
-	(NULL, 'uuid-6', 'Columbus'),
-	(NULL, 'uuid-7', 'Salt Lake City'),
-	(NULL, 'uuid-8', 'Louisville'),
-	(NULL, 'uuid-9', 'Minneapolis'),
-	(NULL, 'uuid-10', 'Fishers'),
-	(NULL, 'uuid-11', 'Portland'),
-	(NULL, 'uuid-12', 'Boston'),
-	(NULL, 'uuid-13', 'Seattle'),
-	(NULL, 'uuid-14', 'Durham'),
-	(NULL, 'uuid-15', 'Denver'),
-	(NULL, 'uuid-16', 'Austin'),
-	(NULL, 'uuid-17', 'Cincinnati');
+	(NULL, 'uuid-1', 'Other'),
+	(NULL, 'uuid-2', 'Online'),
+	(NULL, 'uuid-3', 'San Francisco'),
+	(NULL, 'uuid-4', 'Los Angeles'),
+	(NULL, 'uuid-5', 'New York City'),
+	(NULL, 'uuid-6', 'Cleveland'),
+	(NULL, 'uuid-7', 'Columbus'),
+	(NULL, 'uuid-8', 'Salt Lake City'),
+	(NULL, 'uuid-9', 'Louisville'),
+	(NULL, 'uuid-10', 'Minneapolis'),
+	(NULL, 'uuid-11', 'Fishers'),
+	(NULL, 'uuid-12', 'Portland'),
+	(NULL, 'uuid-13', 'Boston'),
+	(NULL, 'uuid-14', 'Seattle'),
+	(NULL, 'uuid-15', 'Durham'),
+	(NULL, 'uuid-16', 'Denver'),
+	(NULL, 'uuid-17', 'Austin'),
+	(NULL, 'uuid-18', 'Cincinnati'),
+	(NULL, 'uuid-19', 'Berkeley'),
+	(NULL, 'uuid-20', 'San Jose'),
+	(NULL, 'uuid-21', 'Chicago'),
+	(NULL, 'uuid-22', 'Dallas'),
+	(NULL, 'uuid-23', 'Boise'),
+	(NULL, 'uuid-24', 'Tulsa'),
+	(NULL, 'uuid-25', 'Costa Mesa'),
+	(NULL, 'uuid-26', 'Tyson''s Corner');
 INSERT INTO locations VALUES
 	(NULL, 'uuid-1', 1, 1, 500),
 	(NULL, 'uuid-2', 2, 2, 500),
-	(NULL, 'uuid-3', 3, 2, 500),
-	(NULL, 'uuid-4', 4, 2, 500),
-	(NULL, 'uuid-5', 5, 2, 500),
-	(NULL, 'uuid-6', 6, 2, 500),
-	(NULL, 'uuid-7', 7, 2, 500),
-	(NULL, 'uuid-8', 8, 2, 500),
-	(NULL, 'uuid-9', 9, 2, 500),
-	(NULL, 'uuid-10', 10, 2, 500),
-	(NULL, 'uuid-11', 11, 2, 500),
-	(NULL, 'uuid-12', 12, 2, 500),
-	(NULL, 'uuid-13', 13, 2, 500),
-	(NULL, 'uuid-14', 14, 2, 500),
-	(NULL, 'uuid-15', 15, 2, 500),
-	(NULL, 'uuid-16', 16, 2, 500),
-	(NULL, 'uuid-17', 17, 2, 500);
+	(NULL, 'uuid-3', 3, 3, 500),
+	(NULL, 'uuid-4', 4, 3, 500),
+	(NULL, 'uuid-5', 5, 3, 500),
+	(NULL, 'uuid-6', 6, 3, 500),
+	(NULL, 'uuid-7', 7, 3, 500),
+	(NULL, 'uuid-8', 8, 3, 500),
+	(NULL, 'uuid-9', 9, 3, 500),
+	(NULL, 'uuid-10', 10, 3, 500),
+	(NULL, 'uuid-11', 11, 3, 500),
+	(NULL, 'uuid-12', 12, 3, 500),
+	(NULL, 'uuid-13', 13, 3, 500),
+	(NULL, 'uuid-14', 14, 3, 500),
+	(NULL, 'uuid-15', 15, 3, 500),
+	(NULL, 'uuid-16', 16, 3, 500),
+	(NULL, 'uuid-17', 17, 3, 500),
+	(NULL, 'uuid-18', 18, 3, 500),
+	(NULL, 'uuid-19', 19, 3, 500),
+	(NULL, 'uuid-20', 20, 3, 500),
+	(NULL, 'uuid-21', 21, 3, 500),
+	(NULL, 'uuid-22', 22, 3, 500),
+	(NULL, 'uuid-23', 23, 3, 500),
+	(NULL, 'uuid-24', 24, 3, 500),
+	(NULL, 'uuid-25', 25, 3, 500),
+	(NULL, 'uuid-26', 26, 3, 500);
 INSERT INTO campus_locations VALUES
-	(1, 1), # Block, Online
-	(2, 3), # Hack Reactor Los Angeles
-	(2, 4), # Hack Reactor Yew York
-	(2, 1), # Hack Reactor Online
-	(2, 2), # Hack Reactor San Francisco
-	(2, 16), # Hack Reactor Austin
-	(3, 5), # Tech Elevator Cleveland
-	(3, 6), # Tech Elevator Columbus
-	(3, 17), # Tech Elevator Cincinnati
-	(4, 7), # Bottega Salt Lake City
-	(5, 8), # The Software Guild Louisville
-	(5, 9), # The Software Guild Minneapolis
-	(6, 4), # Byte Academy New York City
-	(7, 3), # Codesmith Los Angeles
-	(7, 4), # Codesmith New York City
-	(8, 10), # Eleven Fifty Fishers
-	(9, 1), # Lambda School Online
-	(10, 11), # Epicodus Portland
-	(10, 13), # Epicodus Seattle
-	(11, 12), # Launch Academy Boston
-	(12, 15), # Turing School Denver
-	(13, 14); # Project Shift Durham
+	(1, 2), # Block, Online
+	(2, 4), # Hack Reactor Los Angeles
+	(2, 5), # Hack Reactor Yew York
+	(2, 2), # Hack Reactor Online
+	(2, 3), # Hack Reactor San Francisco
+	(2, 17), # Hack Reactor Austin
+	(3, 6), # Tech Elevator Cleveland
+	(3, 7), # Tech Elevator Columbus
+	(3, 18), # Tech Elevator Cincinnati
+	(4, 8), # Bottega Salt Lake City
+	(5, 9), # The Software Guild Louisville
+	(5, 10), # The Software Guild Minneapolis
+	(6, 5), # Byte Academy New York City
+	(7, 4), # Codesmith Los Angeles
+	(7, 5), # Codesmith New York City
+	(8, 11), # Eleven Fifty Fishers
+	(9, 2), # Lambda School Online
+	(10, 12), # Epicodus Portland
+	(10, 14), # Epicodus Seattle
+	(11, 13), # Launch Academy Boston
+	(12, 16), # Turing School Denver
+	(13, 15), # Project Shift Durham
+	(14, 2), # App Academy Online
+	(14, 3), # App Academy San Francisco
+	(14, 5), # App Academy New York City
+	(15, 1), # Coding Dojo Online
+	(15, 4), # Coding Dojo Los Angeles
+	(15, 19), # Coding Dojo Berkeley
+	(15, 20), # Coding Dojo San Jose
+	(15, 14), # Coding Dojo Seattle
+	(15, 21), # Coding Dojo Chicago
+	(15, 22), # Coding Dojo Dallas
+	(15, 23), # Coding Dojo Boise
+	(15, 24), # Coding Dojo Tulsa
+	(15, 25), # Coding Dojo Costa Mesa
+	(15, 26); # Coding Dojo Tyson's Corner
 INSERT INTO companies VALUES
-	(NULL, 'uuid-1', 'Google', 'google', 1000),
-	(NULL, 'uuid-2', 'Amazon', 'amazon', 1000),
-	(NULL, 'uuid-3', 'Apple', 'apple', 1000),
-	(NULL, 'uuid-4', 'Cisco', 'cisco', 1000);
+	(NULL, 'uuid-1', 'Other', 'other', 1000),
+	(NULL, 'uuid-2', 'Google', 'google', 1000),
+	(NULL, 'uuid-3', 'Amazon', 'amazon', 1000),
+	(NULL, 'uuid-4', 'Apple', 'apple', 1000),
+	(NULL, 'uuid-5', 'Cisco', 'cisco', 1000);
 INSERT INTO company_locations VALUES
-	(1, 1), # Google, Online
-	(1, 2), # Google, San Francisco
-	(1, 4), # Google, New York
-	(2, 1), # Amazon, Online
-	(2, 2), # Amazon, San Francisco
-	(2, 4), # Amazon, New York
-	(3, 1), # Apple, Online
-	(3, 2), # Apple, San Francisco
-	(3, 4), # Apple, New York
-	(4, 1), # Cisco, Online
-	(4, 2), # Cisco, San Francisco
-	(4, 4); # Cisco, New York
-INSERT INTO students VALUES
-INSERT INTO reviews VALUES
-;
+	(2, 1), # Google, Other
+	(2, 2), # Google, Online
+	(2, 3), # Google, San Francisco
+	(2, 5), # Google, New York
+	(3, 1), # Amazon, Other
+	(3, 2), # Amazon, Online
+	(3, 3), # Amazon, San Francisco
+	(3, 5), # Amazon, New York
+	(4, 1), # Apple, Other
+	(4, 2), # Apple, Online
+	(4, 3), # Apple, San Francisco
+	(4, 5), # Apple, New York
+	(5, 1), # Cisco, Other
+	(5, 2), # Cisco, Online
+	(5, 3), # Cisco, San Francisco
+	(5, 5); # Cisco, New York

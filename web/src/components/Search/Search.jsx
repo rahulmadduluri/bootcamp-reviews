@@ -39,10 +39,10 @@ const schoolsQuery = gql`
         name
         lengthInWeeks
         studentTeacherRatio
-        isOnline
         photoURI
         basePrice
         paymentType
+        websiteURL
         campusLocations {
           location {
             uuid
@@ -125,7 +125,6 @@ const List = ({ schools }) => (
           name,
           lengthInWeeks,
           studentTeacherRatio,
-          isOnline,
           photoURI,
           basePrice,
           paymentType,

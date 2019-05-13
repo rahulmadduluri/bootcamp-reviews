@@ -5,9 +5,9 @@ type School {
 	name: String!
 	lengthInWeeks: Int
 	studentTeacherRatio: Int
-	isOnline: Boolean
 	basePrice: Int
 	paymentType: String # e.g. ISA, Upfront
+	websiteURL: String
 	photoURI: String
 	#countries available
 	campusLocations: [CampusLocation!]
