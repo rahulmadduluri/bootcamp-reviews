@@ -34,6 +34,7 @@ class ReviewList extends Component {
         <div className="schoolReviewsHeader">
           <div className="schoolReviewsLabel">Reviews</div>
           <div className="schoolReviewsCount">&#8226; {totalNumReviews} student reviews</div>
+          <div className="schoolReviewsNewReview"><a className="button is-primary is-small" href='/reviews/new'>Write a Review</a></div>
         </div>
         <ReviewAverages reviewSummary={this.props.reviewSummary} />
         <ul className="">

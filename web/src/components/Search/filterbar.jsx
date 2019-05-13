@@ -19,7 +19,6 @@ class FilterBar extends React.Component {
               name
             }
           }
-          paymentTypes
           minLengths
           maxPrices
         }
@@ -45,9 +44,6 @@ const FilterList = ({ searchOptions, currentSearchParams }) => (
     <div className="FilterBar">
       <div className="CampusLocation">
         <FilterButton currentOption={currentSearchParams.locationUUID} filterType="Location" allOptions={searchOptions.locations} />
-      </div>
-      <div className="PaymentType">
-        <FilterButton filterType="Payment Type" currentOption={currentSearchParams.paymentType} allOptions={searchOptions.paymentTypes} />
       </div>
       <div className="MinLength">
         <FilterButton filterType="Minimum Length" currentOption={currentSearchParams.minLength} allOptions={searchOptions.minLengths} />

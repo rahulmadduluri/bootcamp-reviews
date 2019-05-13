@@ -145,7 +145,7 @@
 .studentOutcomesWrapper .salaryOutcome .salaryOutcomeItemLabel {
   margin-right: 10px;
   color: #828282;
-  min-width: 200px;
+  min-width: 125px;
   display: inline-block;
 }
 .studentOutcomesWrapper .salaryOutcome .salaryOutcomeItemValue {
@@ -190,6 +190,7 @@
 }
 .schoolReviewsWrapper .schoolReviewsHeader {
   margin-bottom: 15px;
+  position: relative;
 }
 .schoolReviewsWrapper .schoolReviewsHeader .schoolReviewsLabel {
   color: #000000;
@@ -203,4 +204,13 @@
   font-weight: 400;
   font-size: 14px;
   display: inline-block;
+}
+.schoolReviewsWrapper .schoolReviewsHeader .schoolReviewsNewReview {
+  position: absolute;
+  color: #828282;
+  font-weight: 500;
+  font-size: 14px;
+  display: inline-block;
+  top: 5px;
+  right: 5px;
 }

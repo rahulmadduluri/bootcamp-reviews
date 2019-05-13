@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Balseros from '../../images/balseros.png';
 import Navbar from '../navbar';
 import './about.css';
 
@@ -35,9 +34,6 @@ class About extends Component {
 	      			We started Raft to help students like you navigate these uncharted waters.
 		      	</div>
 	      	</div>
-		    <br/><br/><br/>
-      		<img src={Balseros} alt="Balseros" />
-      		<div className="balserosSubtitle">The OG Rafters. In 1994, makeshift rafts took 35,000 Cuban refugees -- in search of economic opportunity -- to Florida to start a new life.</div>
       	</div>
       </div>
     );

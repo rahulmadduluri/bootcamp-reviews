@@ -1,23 +1,23 @@
 self.__precacheManifest = [
   {
-    "revision": "90a790bce2e5c614262c",
-    "url": "/static/css/main.eddacc27.chunk.css"
+    "revision": "101c6a596c090bb91285",
+    "url": "/static/css/main.e506accf.chunk.css"
   },
   {
-    "revision": "90a790bce2e5c614262c",
-    "url": "/static/js/main.ccedb4e1.chunk.js"
+    "revision": "101c6a596c090bb91285",
+    "url": "/static/js/main.3bdeddc3.chunk.js"
   },
   {
     "revision": "42ac5946195a7306e2a5",
     "url": "/static/js/runtime~main.a8a9905a.js"
   },
   {
-    "revision": "ec35bdb5a0d5ca554504",
+    "revision": "d1dd61f2ff70f2be8f50",
     "url": "/static/css/2.fa0f13f2.chunk.css"
   },
   {
-    "revision": "ec35bdb5a0d5ca554504",
-    "url": "/static/js/2.49643505.chunk.js"
+    "revision": "d1dd61f2ff70f2be8f50",
+    "url": "/static/js/2.6e9912f7.chunk.js"
   },
   {
     "revision": "573c023461397268241dbee904fd9beb",
@@ -44,10 +44,6 @@ self.__precacheManifest = [
     "url": "/static/media/student_female_icon.58326038.png"
   },
   {
-    "revision": "a9ea258c2e85f61fe4b4c04be397dd71",
-    "url": "/static/media/balseros.a9ea258c.png"
-  },
-  {
     "revision": "aaba681d5d2573895d15dc2ccc254ed4",
     "url": "/static/media/raft_background_mobile.aaba681d.png"
   },
@@ -56,7 +52,7 @@ self.__precacheManifest = [
     "url": "/static/media/raft-education-background.7e639a78.png"
   },
   {
-    "revision": "3b6a76c872ca2f82b97c9d9ef73d3d5c",
+    "revision": "d66de59a75e451ca7ef0da2ac14a414a",
     "url": "/index.html"
   }
 ];
