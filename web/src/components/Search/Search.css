@@ -1,21 +1,21 @@
 .schoolListing .reviewOverallScore {
 	position: absolute;
-	right: 30px;
-	width: 50px;
+	width: 75px;
 	height: 50px;
-	border: 3px solid #3F44B5;
-	border-radius: 20%;
-	display: flex;
+	bottom: 40px;
 }
 .schoolListing .reviewOverallScore .scoreText {
+	position: relative;
 	color: #000000;
 	margin: auto;
-	font-size: 18px;
+	font-size: 16px;
+	width: 26px;
+	height: 25px;
 	font-weight: 700;
+	border-bottom: 3px solid #3F44B5;
 }
-.schoolListing .reviewTotalNumText {
-	position: absolute;
-	right: 27px;
+.schoolListing .reviewOverallScore .reviewTotalNumText {
+	position: relative;
 	font-size: 12px;
-	top: 70px;
+	margin-top: 2px;
 }

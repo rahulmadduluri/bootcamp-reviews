@@ -133,14 +133,14 @@ const List = ({ schools }) => (
         }) => (
           <Link to={`/schools/${uuid}`} key={uuid}>
             <div className="card schoolListing">
+              <SchoolLogo photoURI={photoURI} />
               <div className="reviewOverallScore ">
                 <div className="scoreText">{formatFloat(reviewSummary.overallScore, 1)}</div>
+                <div className="reviewTotalNumText">
+                  { numToString(reviewSummary.totalNumReviews) } reviews
+                </div>
               </div>
-              <div className="reviewTotalNumText">
-                { numToString(reviewSummary.totalNumReviews) } reviews
-              </div>
-              <SchoolLogo photoURI={photoURI} />
-              <div className="schoolStatsWrapper" style={{ marginTop: 0, marginLeft: '30px' }}>
+              <div className="schoolStatsWrapper" style={{ marginTop: 0, marginLeft: '40px' }}>
                 <div className="name">{name}</div>
                 <LocationBar campusLocations={campusLocations} />
                 <PriceBar basePrice={basePrice} paymentType={paymentType} />

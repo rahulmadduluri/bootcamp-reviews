@@ -33,6 +33,7 @@
     "extends": "react-app"
   },
   "proxy": "http://localhost:8080/",
+  "homepage": "https://raft.one",
   "browserslist": [
     ">0.2%",
     "not dead",
