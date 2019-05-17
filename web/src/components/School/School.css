@@ -37,7 +37,7 @@
 .schoolInfoWrapper .location {
   display: flex;
   line-height: 15px;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
 .schoolInfoWrapper .location > img {
   height: 15px;
@@ -63,7 +63,7 @@
 .schoolInfoWrapper .length {
   display: flex;
   line-height: 15px;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
 .schoolInfoWrapper .lengthImage > img {
   height: 15px;
